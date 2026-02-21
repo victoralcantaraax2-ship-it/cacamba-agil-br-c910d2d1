@@ -1,8 +1,8 @@
 import HeroSection from "@/components/HeroSection";
+import AboutSection from "@/components/AboutSection";
+import DifferentialsSection from "@/components/DifferentialsSection";
 import SocialProof from "@/components/SocialProof";
-import NationalCoverage from "@/components/NationalCoverage";
-import HowItWorks from "@/components/HowItWorks";
-import UrgencySection from "@/components/UrgencySection";
+import GallerySection from "@/components/GallerySection";
 import FAQSection from "@/components/FAQSection";
 import Footer from "@/components/Footer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
@@ -11,10 +11,10 @@ const Index = () => {
   return (
     <main>
       <HeroSection />
+      <AboutSection />
+      <DifferentialsSection />
       <SocialProof />
-      <NationalCoverage />
-      <HowItWorks />
-      <UrgencySection />
+      <GallerySection />
       <FAQSection />
       <Footer />
       <WhatsAppFloat />

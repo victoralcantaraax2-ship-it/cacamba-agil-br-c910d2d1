@@ -7,28 +7,40 @@ import {
 
 const faqs = [
   {
-    q: "Atendem minha cidade?",
-    a: "Trabalhamos com parceiros em diversas regiões do Brasil. Envie uma mensagem pelo WhatsApp e verificamos a disponibilidade na sua localização.",
+    q: "Quais tamanhos de caçamba estão disponíveis?",
+    a: "Trabalhamos com caçambas de 3m³, 5m³ e 7m³, atendendo desde pequenas reformas até grandes obras.",
   },
   {
-    q: "Quanto custa o aluguel da caçamba?",
-    a: "O valor varia conforme a região e o tamanho da caçamba. Entre em contato pelo WhatsApp para receber um orçamento rápido e sem compromisso.",
+    q: "Qual é o prazo de entrega?",
+    a: "Nosso prazo de entrega é de até 24 horas após a confirmação do pedido, dependendo da região.",
   },
   {
-    q: "A entrega é rápida?",
-    a: "Sim! Trabalhamos com agilidade para entregar a caçamba o mais rápido possível, muitas vezes no mesmo dia.",
+    q: "Qual o tempo de locação da caçamba?",
+    a: "O período padrão é de 3 a 7 dias, mas podemos ajustar conforme sua necessidade.",
   },
   {
-    q: "Como funciona o agendamento?",
-    a: "É simples: você entra em contato pelo WhatsApp, informamos a disponibilidade e agendamos a entrega no melhor horário para você.",
+    q: "O que pode ser descartado na caçamba?",
+    a: "Entulho de obra, restos de construção, madeira, ferro, telhas e materiais similares. Lixo orgânico e produtos perigosos não são permitidos.",
+  },
+  {
+    q: "Vocês emitem nota fiscal?",
+    a: "Sim, emitimos nota fiscal para todos os serviços prestados.",
+  },
+  {
+    q: "Quais as formas de pagamento?",
+    a: "Aceitamos PIX, cartão de crédito, débito e boleto bancário.",
+  },
+  {
+    q: "Vocês atendem minha região?",
+    a: "Atendemos diversas regiões. Entre em contato pelo WhatsApp para confirmar a disponibilidade na sua localização.",
   },
 ];
 
 const FAQSection = () => {
   return (
-    <section className="bg-background py-14 md:py-20">
+    <section className="bg-card py-14 md:py-20">
       <div className="container px-4">
-        <h2 className="mb-8 text-center text-2xl font-extrabold text-foreground md:text-3xl">
+        <h2 className="mb-8 text-center text-2xl font-extrabold text-card-foreground md:text-3xl">
           Perguntas Frequentes
         </h2>
         <Accordion type="single" collapsible className="mx-auto max-w-2xl">

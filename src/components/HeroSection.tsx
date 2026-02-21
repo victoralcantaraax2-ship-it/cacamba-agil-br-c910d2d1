@@ -1,11 +1,16 @@
-import { MessageCircle, Star } from "lucide-react";
+import { MessageCircle, Clock, Truck, FileText } from "lucide-react";
 import { getWhatsAppUrl } from "@/lib/whatsapp";
 import heroBg from "@/assets/hero-bg.jpg";
+
+const badges = [
+  { icon: Clock, label: "Atendimento 24h" },
+  { icon: Truck, label: "Entrega Rápida" },
+  { icon: FileText, label: "Orçamento Online" },
+];
 
 const HeroSection = () => {
   return (
     <section className="relative flex min-h-[90vh] items-center justify-center overflow-hidden md:min-h-screen">
-      {/* Background */}
       <div className="absolute inset-0">
         <img
           src={heroBg}
@@ -16,16 +21,20 @@ const HeroSection = () => {
         <div className="absolute inset-0 bg-secondary/85" />
       </div>
 
-      {/* Content */}
       <div className="container relative z-10 px-4 py-16 text-center md:py-24">
-        <h1 className="mb-4 text-3xl font-black uppercase leading-tight tracking-tight text-secondary-foreground text-shadow-hero sm:text-4xl md:text-5xl lg:text-6xl">
-          Aluguel de Caçambas
+        <span className="mb-4 inline-block rounded-full bg-primary px-5 py-2 text-sm font-extrabold uppercase text-primary-foreground">
+          Entrega em até 24h
+        </span>
+
+        <h1 className="mb-4 text-3xl font-black leading-tight tracking-tight text-secondary-foreground sm:text-4xl md:text-5xl lg:text-6xl">
+          Locação de Caçambas com
           <br />
-          <span className="text-primary">Rápido e Sem Complicação</span>
+          <span className="text-primary">Envio Rápido e Atendimento Online</span>
         </h1>
 
         <p className="mx-auto mb-8 max-w-xl text-base text-secondary-foreground/80 md:text-lg">
-          Atendimento rápido • Parceiros em várias regiões • Solicite agora pelo WhatsApp
+          Oferecemos soluções práticas e responsáveis para descarte de entulho.
+          Solicite seu orçamento agora mesmo pelo WhatsApp.
         </p>
 
         <a
@@ -35,21 +44,21 @@ const HeroSection = () => {
           className="inline-flex items-center gap-3 rounded-xl bg-whatsapp px-8 py-5 text-lg font-extrabold uppercase text-whatsapp-foreground shadow-2xl transition-all hover:scale-105 hover:bg-whatsapp-hover animate-bounce-subtle md:px-12 md:py-6 md:text-xl"
         >
           <MessageCircle className="h-7 w-7 fill-current" />
-          Pedir Caçamba Agora
+          Solicitar Orçamento
         </a>
 
-        <div className="mt-8 flex flex-col items-center gap-2">
-          <div className="flex gap-1">
-            {[...Array(5)].map((_, i) => (
-              <Star key={i} className="h-5 w-5 fill-star text-star" />
-            ))}
-          </div>
-          <p className="text-sm font-semibold text-secondary-foreground/90">
-            Clientes satisfeitos em todo o Brasil
-          </p>
-          <p className="text-xs text-secondary-foreground/60">
-            Resposta rápida em poucos minutos.
-          </p>
+        <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center sm:gap-6">
+          {badges.map(({ icon: Icon, label }) => (
+            <div
+              key={label}
+              className="flex items-center gap-2 rounded-lg bg-secondary-foreground/10 px-4 py-2"
+            >
+              <Icon className="h-5 w-5 text-primary" />
+              <span className="text-sm font-bold text-secondary-foreground">
+                {label}
+              </span>
+            </div>
+          ))}
         </div>
       </div>
     </section>
