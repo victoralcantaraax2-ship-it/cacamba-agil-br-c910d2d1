@@ -406,6 +406,16 @@ const Checkout = () => {
                       </div>
                     )}
 
+                    <div className="w-full rounded-lg bg-muted p-4 text-sm space-y-2">
+                      <p className="font-bold text-foreground">Como pagar:</p>
+                      <ol className="list-decimal list-inside space-y-1 text-muted-foreground">
+                        <li>Abra o app do seu banco</li>
+                        <li>Selecione a opção <strong className="text-foreground">PIX</strong></li>
+                        <li>Escaneie o QR Code ou copie o código</li>
+                        <li>Confirme o pagamento</li>
+                      </ol>
+                    </div>
+
                     <p className="text-xs text-muted-foreground text-center">
                       🔒 Pagamento seguro via PIX.
                     </p>
