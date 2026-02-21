@@ -4,11 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
-import { CheckCircle, Copy, ArrowLeft, Plus, Minus } from "lucide-react";
+import { CheckCircle, Copy, ArrowLeft, Plus, Minus, Loader2 } from "lucide-react";
 import { formatCpf, validateCpf } from "@/lib/cpf";
 import { formatPhone, validatePhone } from "@/lib/phone";
 import { captureUtms, type UtmData } from "@/lib/utm";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import logoAmba from "@/assets/logo-amba.png";
 
@@ -42,9 +43,11 @@ const Checkout = () => {
   const [utms, setUtms] = useState<Partial<UtmData>>({});
   const [pixCode, setPixCode] = useState("");
   const [pixQr, setPixQr] = useState("");
+  const [transactionId, setTransactionId] = useState("");
   const [paymentStatus, setPaymentStatus] = useState<"idle" | "loading" | "generated" | "confirmed">("idle");
   const [copied, setCopied] = useState(false);
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   useEffect(() => {
     setUtms(captureUtms());
@@ -125,23 +128,28 @@ const Checkout = () => {
       const data = await res.json();
 
       if (!res.ok) {
-        console.error("Erro PIX:", data);
-        setPaymentStatus("idle");
-        return;
+        throw new Error(data.error || "Erro ao gerar PIX");
       }
 
-      setPixCode(data.pixCode || "");
-      setPixQr(data.pixQrCode || "");
+      setPixCode(data.pix_code || "");
+      setPixQr(data.qr_code || "");
+      setTransactionId(data.transaction_id || "");
       setPaymentStatus("generated");
     } catch (err) {
       console.error("Erro ao gerar PIX:", err);
       setPaymentStatus("idle");
+      toast({
+        variant: "destructive",
+        title: "Erro ao gerar PIX",
+        description: "Não foi possível gerar o PIX no momento. Tente novamente em alguns segundos.",
+      });
     }
   };
 
   const handleCopyPix = () => {
     navigator.clipboard.writeText(pixCode);
     setCopied(true);
+    toast({ title: "Código PIX copiado!" });
     setTimeout(() => setCopied(false), 2000);
   };
 
@@ -367,12 +375,13 @@ const Checkout = () => {
 
               {paymentStatus === "loading" && (
                 <Button disabled className="w-full text-base font-bold" size="lg">
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   Gerando PIX...
                 </Button>
               )}
 
               {(paymentStatus === "generated" || paymentStatus === "confirmed") && (
-                <div className="space-y-4">
+                <div className="animate-in fade-in duration-500 space-y-4">
                   <div className="flex flex-col items-center gap-4 rounded-lg border bg-card p-6">
                     <h3 className="font-bold text-foreground">Pague com PIX</h3>
                     <div className="flex h-48 w-48 items-center justify-center rounded-lg bg-muted text-xs text-muted-foreground">
