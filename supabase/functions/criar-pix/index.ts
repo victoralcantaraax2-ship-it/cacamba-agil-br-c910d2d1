@@ -21,6 +21,14 @@ Deno.serve(async (req) => {
   try {
     const { nome, cpf, email, telefone, plano, quantidade } = await req.json();
 
+    // Validate required fields
+    if (!nome || !cpf || !email || !telefone) {
+      return new Response(JSON.stringify({ error: 'Dados obrigatórios não informados' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
     // Validate plan
     if (!plano || !precos[plano]) {
       return new Response(JSON.stringify({ error: 'Plano inválido' }), {
@@ -38,18 +46,11 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Validate required fields
-    if (!nome || !cpf || !email || !telefone) {
-      return new Response(JSON.stringify({ error: 'Dados obrigatórios não informados' }), {
-        status: 400,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
-    }
-
     const amount = precos[plano] * qty;
 
-    const BLACKCAT_SECRET_KEY = Deno.env.get('BLACKCAT_SECRET_KEY');
-    if (!BLACKCAT_SECRET_KEY) {
+    const BLACKCAT_API_KEY = Deno.env.get('BLACKCAT_SECRET_KEY');
+    if (!BLACKCAT_API_KEY) {
+      console.error('BLACKCAT_SECRET_KEY not configured');
       return new Response(JSON.stringify({ error: 'Chave de pagamento não configurada' }), {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -60,18 +61,15 @@ Deno.serve(async (req) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-API-Key': BLACKCAT_SECRET_KEY,
+        'X-API-Key': BLACKCAT_API_KEY,
       },
       body: JSON.stringify({
+        customer_name: nome,
+        customer_document: cpf.replace(/\D/g, ''),
+        customer_email: email,
+        customer_phone: telefone.replace(/\D/g, ''),
         amount,
-        currency: 'BRL',
-        paymentMethod: 'PIX',
-        customer: {
-          name: nome,
-          email,
-          document: cpf.replace(/\D/g, ''),
-          phone: telefone.replace(/\D/g, ''),
-        },
+        payment_method: 'pix',
         metadata: {
           plano,
           quantidade: qty,
@@ -82,22 +80,24 @@ Deno.serve(async (req) => {
     const data = await blackcatResponse.json();
 
     if (!blackcatResponse.ok) {
-      console.error('BlackCat error:', data);
+      console.error('BlackCat error:', JSON.stringify(data));
       return new Response(JSON.stringify({ error: 'Erro ao gerar PIX. Tente novamente.' }), {
         status: 502,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 
+    // Return only safe data — never expose internal details
     return new Response(JSON.stringify({
-      pixCode: data.pixCode,
-      pixQrCode: data.pixQrCode,
-      valorFinal: amount,
+      qr_code: data.qr_code || data.pixQrCode || '',
+      pix_code: data.pix_code || data.pixCode || '',
+      transaction_id: data.transaction_id || data.id || '',
+      valor_final: amount,
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Server error:', error);
     return new Response(JSON.stringify({ error: 'Erro interno do servidor' }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
