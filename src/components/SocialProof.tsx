@@ -39,7 +39,7 @@ const SocialProof = () => {
             </div>
           </div>
           <p className="mt-1 text-sm text-secondary-foreground/60">
-            Com base em mais de 80 avaliações de clientes reais
+            Com base em mais de 60 avaliações de clientes reais
           </p>
         </div>
 

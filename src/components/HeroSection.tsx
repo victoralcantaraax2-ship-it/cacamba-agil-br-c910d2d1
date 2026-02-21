@@ -29,12 +29,12 @@ const HeroSection = () => {
         <h1 className="mb-4 text-3xl font-black leading-tight tracking-tight text-secondary-foreground sm:text-4xl md:text-5xl lg:text-6xl">
           Locação de Caçambas com
           <br />
-          <span className="text-primary">Envio Rápido e Atendimento Online</span>
+          <span className="text-primary">Atendimento Rápido pelo WhatsApp</span>
         </h1>
 
         <p className="mx-auto mb-8 max-w-xl text-base text-secondary-foreground/80 md:text-lg">
-          Soluções práticas e responsáveis para o descarte de entulho.
-          Peça seu orçamento agora mesmo pelo WhatsApp!
+          Solicite seu orçamento em poucos minutos.
+          Entrega rápida e atendimento online.
         </p>
 
         <a
