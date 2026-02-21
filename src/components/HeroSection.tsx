@@ -1,6 +1,7 @@
 import { MessageCircle, Clock, Truck, FileText } from "lucide-react";
 import { getWhatsAppUrl } from "@/lib/whatsapp";
 import heroBg from "@/assets/hero-bg.jpg";
+import logoAmba from "@/assets/logo-amba.png";
 
 const badges = [
   { icon: Clock, label: "Atendimento 24h" },
@@ -22,6 +23,14 @@ const HeroSection = () => {
       </div>
 
       <div className="container relative z-10 px-4 py-16 text-center md:py-24">
+        <img
+          src={logoAmba}
+          alt="AMBA Caçambas"
+          className="mx-auto mb-4 h-14 w-auto md:h-[70px]"
+        />
+        <p className="mb-6 text-sm font-medium text-secondary-foreground/60 tracking-wide">
+          Atendimento rápido e seguro
+        </p>
         <span className="mb-4 inline-block rounded-full bg-primary px-5 py-2 text-sm font-extrabold uppercase text-primary-foreground">
           Entrega em até 24h
         </span>

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { MessageCircle, X } from "lucide-react";
+import logoAmba from "@/assets/logo-amba.png";
 
 const agents = [
   {
@@ -35,8 +36,8 @@ const WhatsAppFloat = () => {
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 rounded-lg px-3 py-3 transition-colors hover:bg-muted"
               >
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-whatsapp text-whatsapp-foreground">
-                  <MessageCircle className="h-5 w-5 fill-current" />
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-muted overflow-hidden">
+                   <img src={logoAmba} alt="AMBA" className="h-8 w-8 object-contain" />
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-foreground">{agent.name}</p>
