@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle, Copy, ArrowLeft, Plus, Minus, Loader2 } from "lucide-react";
+import { QRCodeSVG } from "qrcode.react";
 import { formatCpf, validateCpf } from "@/lib/cpf";
 import { formatPhone, validatePhone } from "@/lib/phone";
 import { captureUtms, type UtmData } from "@/lib/utm";
@@ -335,7 +336,7 @@ const Checkout = () => {
                   {errors.telefone && <p className="mt-1 text-sm text-destructive">{errors.telefone}</p>}
                 </div>
                 <Button onClick={validateStep3} className="w-full text-base font-bold" size="lg">
-                  Gerar PIX
+                  Ir para Finalização
                 </Button>
               </div>
             </CardContent>
@@ -385,8 +386,8 @@ const Checkout = () => {
                   <div className="flex flex-col items-center gap-4 rounded-lg border bg-card p-6">
                     <h3 className="font-bold text-foreground">Pague com PIX</h3>
                     <div className="flex h-48 w-48 items-center justify-center rounded-lg bg-muted text-xs text-muted-foreground">
-                      {pixQr ? (
-                        <img src={pixQr} alt="QR Code PIX" className="h-full w-full" />
+                      {pixCode ? (
+                        <QRCodeSVG value={pixCode} size={192} />
                       ) : (
                         <span className="text-center px-4">QR Code será exibido após geração</span>
                       )}
