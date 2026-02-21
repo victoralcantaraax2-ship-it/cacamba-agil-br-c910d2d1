@@ -5,12 +5,12 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
 };
 
-const precos: Record<string, number> = {
-  cacamba_3m: 17999,
-  cacamba_5m: 25999,
-  cacamba_6m: 28999,
-  cacamba_8m: 33999,
-  cacamba_10m: 38900,
+const precos: Record<string, { amount: number; title: string }> = {
+  cacamba_3m: { amount: 17999, title: "Caçamba 3m³" },
+  cacamba_5m: { amount: 25999, title: "Caçamba 5m³" },
+  cacamba_6m: { amount: 28999, title: "Caçamba 6m³" },
+  cacamba_8m: { amount: 33999, title: "Caçamba 8m³" },
+  cacamba_10m: { amount: 38900, title: "Caçamba 10m³" },
 };
 
 Deno.serve(async (req) => {
@@ -46,7 +46,8 @@ Deno.serve(async (req) => {
       });
     }
 
-    const amount = precos[plano] * qty;
+    const planData = precos[plano];
+    const amount = planData.amount * qty;
 
     const BLACKCAT_API_KEY = Deno.env.get('BLACKCAT_SECRET_KEY');
     if (!BLACKCAT_API_KEY) {
@@ -66,16 +67,22 @@ Deno.serve(async (req) => {
       body: JSON.stringify({
         amount,
         currency: 'BRL',
-        paymentMethod: 'PIX',
+        paymentMethod: 'pix',
+        items: [
+          {
+            title: planData.title,
+            quantity: qty,
+            tangible: false,
+          },
+        ],
         customer: {
           name: nome,
           email,
-          document: cpf.replace(/\D/g, ''),
+          document: {
+            number: cpf.replace(/\D/g, ''),
+            type: 'cpf',
+          },
           phone: telefone.replace(/\D/g, ''),
-        },
-        metadata: {
-          plano,
-          quantidade: qty,
         },
       }),
     });
