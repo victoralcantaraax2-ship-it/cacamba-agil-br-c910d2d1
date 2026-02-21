@@ -64,12 +64,15 @@ Deno.serve(async (req) => {
         'X-API-Key': BLACKCAT_API_KEY,
       },
       body: JSON.stringify({
-        customer_name: nome,
-        customer_document: cpf.replace(/\D/g, ''),
-        customer_email: email,
-        customer_phone: telefone.replace(/\D/g, ''),
         amount,
-        payment_method: 'pix',
+        currency: 'BRL',
+        paymentMethod: 'PIX',
+        customer: {
+          name: nome,
+          email,
+          document: cpf.replace(/\D/g, ''),
+          phone: telefone.replace(/\D/g, ''),
+        },
         metadata: {
           plano,
           quantidade: qty,
