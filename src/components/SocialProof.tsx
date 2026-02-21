@@ -2,11 +2,11 @@ import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 
 const reviews = [
-  { name: "Josy Araujo", role: "Arquiteta", text: "Atendimento pelo WhatsApp super rápido. Caçamba chegou no mesmo dia. Recomendo demais!" },
-  { name: "Rogerio Pereira", role: "Engenheiro Civil", text: "Muito satisfeito com o serviço. Equipe pontual e comprometida com o prazo." },
+  { name: "Josy Araujo", role: "Arquiteta", text: "Atendimento pelo WhatsApp super rápido. A caçamba chegou no mesmo dia. Recomendo demais!" },
+  { name: "Rogério Pereira", role: "Engenheiro Civil", text: "Muito satisfeito com o serviço. Equipe pontual e comprometida com o prazo." },
   { name: "Laudiane Sousa", role: "Proprietária de Imóvel", text: "Podem contratar sem medo. Processo simples e preço justo." },
-  { name: "Nilson Fucítalo", role: "Mestre de Obras", text: "Cumprem com o combinado. Já é minha terceira locação com eles." },
-  { name: "Carla Mendes", role: "Decoradora", text: "Facilidade de pedir pelo WhatsApp e entrega rápida. Nota 10!" },
+  { name: "Nilson Fucítalo", role: "Mestre de Obras", text: "Cumprem o que prometem. Já é minha terceira locação com eles." },
+  { name: "Carla Mendes", role: "Decoradora", text: "Muito fácil pedir pelo WhatsApp e a entrega foi rápida. Nota 10!" },
 ];
 
 const SocialProof = () => {
@@ -28,7 +28,7 @@ const SocialProof = () => {
       <div className="container px-4">
         <div className="mb-10 text-center">
           <h2 className="mb-2 text-2xl font-extrabold text-secondary-foreground md:text-3xl">
-            O Que Nossos Clientes Dizem
+            O que nossos clientes dizem
           </h2>
           <div className="flex items-center justify-center gap-2">
             <span className="text-lg font-bold text-secondary-foreground">EXCELENTE</span>
@@ -39,7 +39,7 @@ const SocialProof = () => {
             </div>
           </div>
           <p className="mt-1 text-sm text-secondary-foreground/60">
-            Baseado em +80 avaliações de clientes reais
+            Com base em mais de 80 avaliações de clientes reais
           </p>
         </div>
 
@@ -47,7 +47,7 @@ const SocialProof = () => {
           <button
             onClick={prev}
             className="absolute -left-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-secondary-foreground/10 p-2 text-secondary-foreground shadow-lg transition-colors hover:bg-secondary-foreground/20 md:-left-5"
-            aria-label="Anterior"
+            aria-label="Avaliação anterior"
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
@@ -75,7 +75,7 @@ const SocialProof = () => {
           <button
             onClick={next}
             className="absolute -right-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-secondary-foreground/10 p-2 text-secondary-foreground shadow-lg transition-colors hover:bg-secondary-foreground/20 md:-right-5"
-            aria-label="Próximo"
+            aria-label="Próxima avaliação"
           >
             <ChevronRight className="h-5 w-5" />
           </button>
