@@ -26,7 +26,7 @@ const HeroSection = () => {
         <img
           src={logoAmba}
           alt="AMBA Caçambas"
-          className="mx-auto mb-4 h-14 w-auto md:h-[70px]"
+          className="mx-auto mb-4 h-20 w-auto sm:h-24 md:h-28"
         />
         <p className="mb-6 text-sm font-medium text-secondary-foreground/60 tracking-wide">
           Atendimento rápido e seguro

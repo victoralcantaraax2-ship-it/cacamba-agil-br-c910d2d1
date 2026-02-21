@@ -111,7 +111,7 @@ const Checkout = () => {
           <img
             src={logoAmba}
             alt="AMBA Caçambas"
-            className="h-12 w-auto md:h-[60px]"
+            className="h-16 w-auto md:h-20"
           />
           <p className="mt-1 text-xs font-medium text-secondary-foreground/60">
             Atendimento rápido e seguro
