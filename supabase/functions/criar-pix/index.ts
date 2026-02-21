@@ -19,7 +19,9 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { nome, cpf, email, telefone, plano, quantidade } = await req.json();
+    const body = await req.json();
+    const { nome, cpf, email, telefone, plano, quantidade } = body;
+    console.log("PIX REQUEST RECEIVED", JSON.stringify(body));
 
     // Validate required fields
     if (!nome || !cpf || !email || !telefone) {
@@ -88,22 +90,27 @@ Deno.serve(async (req) => {
     });
 
     const data = await blackcatResponse.json();
+    console.log("BLACKCAT RESPONSE:", blackcatResponse.status, JSON.stringify(data));
 
     if (!blackcatResponse.ok) {
-      console.error('BlackCat error:', JSON.stringify(data));
+      console.error('BlackCat error - status:', blackcatResponse.status, 'body:', JSON.stringify(data));
       return new Response(JSON.stringify({ error: 'Erro ao gerar PIX. Tente novamente.' }), {
         status: 502,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 
-    // Return only safe data — never expose internal details
-    return new Response(JSON.stringify({
-      qr_code: data.qr_code || data.pixQrCode || '',
-      pix_code: data.pix_code || data.pixCode || '',
-      transaction_id: data.transaction_id || data.id || '',
+    // Map BlackCat nested response: data.data.paymentData
+    const paymentData = data?.data?.paymentData || {};
+    const result = {
+      qr_code: paymentData.qrCode || paymentData.qrCodeBase64 || paymentData.qrCodeUrl || '',
+      pix_code: paymentData.copyPaste || paymentData.qrCode || '',
+      transaction_id: data?.data?.transactionId || '',
+      invoice_url: data?.data?.invoiceUrl || '',
       valor_final: amount,
-    }), {
+    };
+    console.log("RETURNING TO FRONTEND:", JSON.stringify(result));
+    return new Response(JSON.stringify(result), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
