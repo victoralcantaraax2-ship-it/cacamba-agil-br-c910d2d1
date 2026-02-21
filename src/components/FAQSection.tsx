@@ -8,15 +8,15 @@ import {
 const faqs = [
   {
     q: "Quais tamanhos de caçamba estão disponíveis?",
-    a: "Trabalhamos com caçambas de 3m³, 5m³ e 7m³, atendendo desde pequenas reformas até grandes obras.",
+    a: "Trabalhamos com caçambas de 3 m³, 5 m³ e 7 m³, ideais para pequenas reformas até grandes obras.",
   },
   {
     q: "Qual é o prazo de entrega?",
-    a: "Nosso prazo de entrega é de até 24 horas após a confirmação do pedido, dependendo da região.",
+    a: "A entrega é feita em até 24 horas após a confirmação do pedido, dependendo da região.",
   },
   {
-    q: "Qual o tempo de locação da caçamba?",
-    a: "O período padrão é de 3 a 7 dias, mas podemos ajustar conforme sua necessidade.",
+    q: "Quanto tempo posso ficar com a caçamba?",
+    a: "O período padrão é de 3 a 7 dias, mas podemos ajustar conforme a sua necessidade.",
   },
   {
     q: "O que pode ser descartado na caçamba?",
@@ -24,15 +24,15 @@ const faqs = [
   },
   {
     q: "Vocês emitem nota fiscal?",
-    a: "Sim, emitimos nota fiscal para todos os serviços prestados.",
+    a: "Sim, emitimos nota fiscal para todos os serviços realizados.",
   },
   {
-    q: "Quais as formas de pagamento?",
-    a: "Aceitamos PIX, cartão de crédito, débito e boleto bancário.",
+    q: "Quais são as formas de pagamento?",
+    a: "Aceitamos Pix, cartão de crédito, débito e boleto bancário.",
   },
   {
-    q: "Vocês atendem minha região?",
-    a: "Atendemos diversas regiões. Entre em contato pelo WhatsApp para confirmar a disponibilidade na sua localização.",
+    q: "Vocês atendem a minha região?",
+    a: "Atendemos diversas regiões do Brasil. Entre em contato pelo WhatsApp para confirmar a disponibilidade na sua localização.",
   },
 ];
 

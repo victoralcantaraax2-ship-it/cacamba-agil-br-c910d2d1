@@ -5,17 +5,17 @@ const items = [
   {
     icon: Truck,
     title: "Entrega Rápida",
-    desc: "Entrega ágil após confirmação do pedido. Trabalhamos para que sua caçamba chegue o mais rápido possível.",
+    desc: "Entrega ágil logo após a confirmação do pedido. Trabalhamos para que sua caçamba chegue o mais rápido possível.",
   },
   {
     icon: MessageCircle,
     title: "Atendimento Online",
-    desc: "Suporte completo via WhatsApp para dúvidas, orçamentos e agendamentos. Prático e sem burocracia.",
+    desc: "Suporte completo pelo WhatsApp para tirar dúvidas, fazer orçamentos e agendar entregas. Prático e sem burocracia.",
   },
   {
     icon: Leaf,
     title: "Compromisso Ambiental",
-    desc: "Descarte responsável seguindo todas as normas ambientais vigentes. Cuidamos do meio ambiente por você.",
+    desc: "Descarte responsável, seguindo todas as normas ambientais. Cuidamos do meio ambiente por você.",
   },
 ];
 
@@ -24,7 +24,7 @@ const DifferentialsSection = () => {
     <section className="bg-card py-14 md:py-20">
       <div className="container px-4 text-center">
         <h2 className="mb-10 text-2xl font-extrabold text-card-foreground md:text-3xl">
-          Motivos para escolher nossa empresa
+          Por que escolher a AMBA?
         </h2>
 
         <div className="mx-auto mb-10 grid max-w-4xl grid-cols-1 gap-6 md:grid-cols-3">

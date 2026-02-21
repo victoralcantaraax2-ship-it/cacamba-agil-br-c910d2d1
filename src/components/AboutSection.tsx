@@ -16,9 +16,10 @@ const AboutSection = () => {
             Tradição e Qualidade em Locação de Caçambas
           </h2>
           <p className="mb-10 text-muted-foreground">
-            Somos uma empresa dedicada à locação de caçambas com foco em agilidade,
-            responsabilidade ambiental e satisfação do cliente. Trabalhamos para que
-            o descarte de entulho seja simples, rápido e dentro das normas.
+            Somos uma empresa especializada em locação de caçambas, com foco em
+            agilidade, responsabilidade ambiental e satisfação do cliente. Nosso
+            objetivo é tornar o descarte de entulho simples, rápido e dentro de
+            todas as normas vigentes.
           </p>
         </div>
 

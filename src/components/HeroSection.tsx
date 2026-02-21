@@ -4,8 +4,8 @@ import heroBg from "@/assets/hero-bg.jpg";
 
 const badges = [
   { icon: Clock, label: "Atendimento 24h" },
-  { icon: Truck, label: "Entrega Rápida" },
-  { icon: FileText, label: "Orçamento Online" },
+  { icon: Truck, label: "Entrega rápida" },
+  { icon: FileText, label: "Orçamento online" },
 ];
 
 const HeroSection = () => {
@@ -14,7 +14,7 @@ const HeroSection = () => {
       <div className="absolute inset-0">
         <img
           src={heroBg}
-          alt="Canteiro de obras com caçamba"
+          alt="Canteiro de obras com caçamba estacionária"
           className="h-full w-full object-cover"
           loading="eager"
         />
@@ -33,8 +33,8 @@ const HeroSection = () => {
         </h1>
 
         <p className="mx-auto mb-8 max-w-xl text-base text-secondary-foreground/80 md:text-lg">
-          Oferecemos soluções práticas e responsáveis para descarte de entulho.
-          Solicite seu orçamento agora mesmo pelo WhatsApp.
+          Soluções práticas e responsáveis para o descarte de entulho.
+          Peça seu orçamento agora mesmo pelo WhatsApp!
         </p>
 
         <a
