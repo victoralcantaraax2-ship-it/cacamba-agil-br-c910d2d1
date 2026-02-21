@@ -10,6 +10,7 @@ import { formatPhone, validatePhone } from "@/lib/phone";
 import { captureUtms, type UtmData } from "@/lib/utm";
 import { useNavigate } from "react-router-dom";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
+import logoAmba from "@/assets/logo-amba.png";
 
 type FormData = {
   nome: string;
@@ -106,10 +107,15 @@ const Checkout = () => {
     <main className="min-h-screen bg-background">
       {/* Header */}
       <div className="bg-secondary py-4">
-        <div className="container px-4">
-          <h1 className="text-center text-lg font-bold text-secondary-foreground">
-            AMBA Central de Caçambas
-          </h1>
+        <div className="container flex flex-col items-center px-4">
+          <img
+            src={logoAmba}
+            alt="AMBA Caçambas"
+            className="h-12 w-auto md:h-[60px]"
+          />
+          <p className="mt-1 text-xs font-medium text-secondary-foreground/60">
+            Atendimento rápido e seguro
+          </p>
         </div>
       </div>
 
