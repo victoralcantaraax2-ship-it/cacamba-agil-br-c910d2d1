@@ -67,6 +67,11 @@ const Checkout = () => {
   const [transactionId, setTransactionId] = useState("");
   const [paymentStatus, setPaymentStatus] = useState<"idle" | "loading" | "generated" | "confirmed">("idle");
   const [copied, setCopied] = useState(false);
+  const [couponInput, setCouponInput] = useState("");
+  const [appliedCoupon, setAppliedCoupon] = useState<string | null>(() => {
+    try { return localStorage.getItem("amba_coupon"); } catch { return null; }
+  });
+  const [couponMsg, setCouponMsg] = useState<{ type: "success" | "error"; text: string } | null>(null);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -83,10 +88,31 @@ const Checkout = () => {
   };
 
   const currentPlan = plans.find((p) => p.id === selectedPlan);
-  const totalPrice = currentPlan ? currentPlan.price * quantity : 0;
+  const subtotal = currentPlan ? currentPlan.price * quantity : 0;
+  const discountRate = appliedCoupon === "AMBA10" ? 0.10 : 0;
+  const discountAmount = Math.round(subtotal * discountRate * 100) / 100;
+  const totalPrice = Math.round((subtotal - discountAmount) * 100) / 100;
 
   const formatCurrency = (value: number) =>
     value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+
+  const handleApplyCoupon = () => {
+    const code = couponInput.trim().toUpperCase();
+    if (code === "AMBA10") {
+      setAppliedCoupon("AMBA10");
+      setCouponMsg({ type: "success", text: "Cupom AMBA10 aplicado: 10% OFF" });
+      try { localStorage.setItem("amba_coupon", "AMBA10"); } catch {}
+    } else {
+      setCouponMsg({ type: "error", text: "Cupom inválido" });
+    }
+  };
+
+  const handleRemoveCoupon = () => {
+    setAppliedCoupon(null);
+    setCouponInput("");
+    setCouponMsg(null);
+    try { localStorage.removeItem("amba_coupon"); } catch {}
+  };
 
   // --- CEP lookup ---
   const handleCepChange = (value: string) => {
@@ -181,6 +207,7 @@ const Checkout = () => {
           telefone: form.telefone,
           plano: selectedPlan,
           quantidade: quantity,
+          cupom: appliedCoupon || undefined,
         }),
       });
 
@@ -453,6 +480,38 @@ const Checkout = () => {
               </CardContent>
             </Card>
 
+            {/* --- Cupom de desconto --- */}
+            <Card>
+              <CardContent className="pt-4 pb-4">
+                <h2 className="text-base font-bold text-foreground leading-tight mb-3">Cupom de desconto</h2>
+                {!appliedCoupon ? (
+                  <div className="flex gap-2">
+                    <Input
+                      placeholder="Digite seu cupom"
+                      value={couponInput}
+                      onChange={(e) => { setCouponInput(e.target.value); setCouponMsg(null); }}
+                      className="h-9 text-sm"
+                    />
+                    <Button variant="outline" size="sm" className="h-9 shrink-0" onClick={handleApplyCoupon}>
+                      Aplicar
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium text-accent">✅ Cupom AMBA10 aplicado: 10% OFF</span>
+                    <button onClick={handleRemoveCoupon} className="text-xs text-destructive hover:underline">
+                      Remover cupom
+                    </button>
+                  </div>
+                )}
+                {couponMsg && !appliedCoupon && (
+                  <p className={`mt-2 text-xs ${couponMsg.type === "error" ? "text-destructive" : "text-accent"}`}>
+                    {couponMsg.text}
+                  </p>
+                )}
+              </CardContent>
+            </Card>
+
             {/* --- Resumo do Pedido --- */}
             <Card>
               <CardContent className="pt-6">
@@ -470,9 +529,22 @@ const Checkout = () => {
                     </>
                   )}
                   <hr className="my-2 border-border" />
-                  <p className="text-lg font-bold text-primary">
-                    Total: {formatCurrency(totalPrice)}
-                  </p>
+                  <div className="space-y-1">
+                    <div className="flex justify-between">
+                      <span>Subtotal</span>
+                      <span>{formatCurrency(subtotal)}</span>
+                    </div>
+                    {appliedCoupon && (
+                      <div className="flex justify-between text-accent">
+                        <span>Desconto (AMBA10)</span>
+                        <span>-{formatCurrency(discountAmount)}</span>
+                      </div>
+                    )}
+                    <div className="flex justify-between text-lg font-bold text-primary pt-1">
+                      <span>Total</span>
+                      <span>{formatCurrency(totalPrice)}</span>
+                    </div>
+                  </div>
                 </div>
               </CardContent>
             </Card>
