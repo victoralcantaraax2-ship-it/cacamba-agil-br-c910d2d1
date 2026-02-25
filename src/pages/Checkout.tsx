@@ -381,7 +381,7 @@ const Checkout = () => {
             {/* --- Endereço de entrega --- */}
             <Card>
               <CardContent className="pt-6">
-                <h2 className="mb-1 text-lg font-bold text-foreground">Endereço de entrega da caçamba</h2>
+                <h2 className="mb-1 text-lg font-bold text-foreground">Onde vamos entregar a caçamba</h2>
                 <p className="mb-4 text-sm text-muted-foreground">
                   Endereço usado exclusivamente para a entrega da caçamba.
                 </p>
@@ -440,7 +440,7 @@ const Checkout = () => {
                           <Label htmlFor="complemento">Complemento</Label>
                           <Input
                             id="complemento"
-                            placeholder="Apto, Bloco..."
+                            placeholder="Apto, bloco, referência (opcional)"
                             value={address.complemento}
                             onChange={(e) => setAddress({ ...address, complemento: e.target.value })}
                           />
@@ -538,9 +538,10 @@ const Checkout = () => {
                     </div>
 
                     {paymentStatus === "generated" && (
-                      <p className="text-center text-sm text-muted-foreground">
-                        ⏳ Aguardando confirmação automática do pagamento…
-                      </p>
+                      <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+                        <Loader2 className="h-4 w-4 animate-spin text-primary" />
+                        <span>Aguardando confirmação automática do pagamento pelo Pix…</span>
+                      </div>
                     )}
 
                     {paymentStatus === "confirmed" && (
