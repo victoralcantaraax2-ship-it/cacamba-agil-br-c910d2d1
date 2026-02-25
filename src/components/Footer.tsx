@@ -52,6 +52,13 @@ const Footer = () => {
         <p className="mt-2 text-center text-xs text-secondary-foreground/50">
           © 2021–{new Date().getFullYear()} AMBA Central de Caçambas — Todos os direitos reservados.
         </p>
+        <p
+          className="mt-1 text-center text-xs text-secondary-foreground/40 select-none pointer-events-none"
+          style={{ userSelect: "none", WebkitUserSelect: "none" }}
+          aria-hidden="true"
+        >
+          CNPJ: 64.596.513/0001-90
+        </p>
         <p className="mt-1 text-center text-xs text-secondary-foreground/40">
           Política de Privacidade | Termos de Uso
         </p>

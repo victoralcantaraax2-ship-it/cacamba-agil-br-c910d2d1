@@ -124,9 +124,6 @@ const CepSection = () => {
                 Verificar
               </Button>
             </div>
-            <p className="mt-2.5 text-center text-xs text-muted-foreground/70">
-              Validação automática pelo CEP (ViaCEP).
-            </p>
           </div>
 
           {/* Loading */}
