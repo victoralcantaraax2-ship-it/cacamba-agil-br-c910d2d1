@@ -79,6 +79,11 @@ Deno.serve(async (req) => {
         ],
         customer: {
           name: nome,
+          email: `${telefone.replace(/\D/g, '')}@cliente.amba.com.br`,
+          document: {
+            number: '00000000000',
+            type: 'cpf',
+          },
           phone: telefone.replace(/\D/g, ''),
         },
       }),
