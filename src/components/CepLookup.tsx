@@ -9,11 +9,17 @@ export type CepAddress = {
   localidade: string;
   uf: string;
   cep: string;
+  numero: string;
+  complemento: string;
+  referencia: string;
 };
 
 type CepLookupProps = {
   onAddressFound?: (address: CepAddress) => void;
   onClear?: () => void;
+  address: CepAddress | null;
+  onFieldChange?: (field: keyof CepAddress, value: string) => void;
+  errors?: Partial<Record<"cep" | "numero", string>>;
 };
 
 const formatCep = (value: string) => {
@@ -22,19 +28,17 @@ const formatCep = (value: string) => {
   return digits;
 };
 
-const CepLookup = ({ onAddressFound, onClear }: CepLookupProps) => {
-  const [cep, setCep] = useState("");
-  const [address, setAddress] = useState<CepAddress | null>(null);
+const CepLookup = ({ onAddressFound, onClear, address, onFieldChange, errors }: CepLookupProps) => {
+  const [cep, setCep] = useState(address?.cep || "");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(!!address?.logradouro);
 
   useEffect(() => {
     const digits = cep.replace(/\D/g, "");
     if (digits.length === 8) {
       fetchCep(digits);
     } else {
-      setAddress(null);
       setError(false);
       setVisible(false);
       onClear?.();
@@ -44,7 +48,6 @@ const CepLookup = ({ onAddressFound, onClear }: CepLookupProps) => {
   const fetchCep = async (digits: string) => {
     setLoading(true);
     setError(false);
-    setAddress(null);
     setVisible(false);
     try {
       const res = await fetch(`https://viacep.com.br/ws/${digits}/json/`);
@@ -59,10 +62,11 @@ const CepLookup = ({ onAddressFound, onClear }: CepLookupProps) => {
           localidade: data.localidade,
           uf: data.uf,
           cep: data.cep,
+          numero: address?.numero || "",
+          complemento: address?.complemento || "",
+          referencia: address?.referencia || "",
         };
-        setAddress(addr);
         onAddressFound?.(addr);
-        // trigger animation
         setTimeout(() => setVisible(true), 50);
       }
     } catch {
@@ -77,11 +81,8 @@ const CepLookup = ({ onAddressFound, onClear }: CepLookupProps) => {
     <div className="space-y-3">
       <div>
         <Label htmlFor="cep" className="text-sm font-semibold text-foreground">
-          Endereço de atendimento
+          CEP <span className="text-destructive">*</span>
         </Label>
-        <p className="text-xs text-muted-foreground mb-2">
-          Informe o CEP para validarmos a cobertura
-        </p>
         <Input
           id="cep"
           placeholder="00000-000"
@@ -89,8 +90,9 @@ const CepLookup = ({ onAddressFound, onClear }: CepLookupProps) => {
           onChange={(e) => setCep(formatCep(e.target.value))}
           maxLength={9}
           inputMode="numeric"
-          className="text-base"
+          className={`text-base ${errors?.cep ? "border-destructive" : ""}`}
         />
+        {errors?.cep && <p className="mt-1 text-sm text-destructive">{errors.cep}</p>}
       </div>
 
       {loading && (
@@ -106,12 +108,10 @@ const CepLookup = ({ onAddressFound, onClear }: CepLookupProps) => {
         </div>
       )}
 
-      {address && (
+      {address && address.logradouro && (
         <div
-          className={`transition-all duration-500 ease-out ${
-            visible
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-2"
+          className={`transition-all duration-500 ease-out space-y-3 ${
+            visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
           }`}
         >
           {/* Address Card */}
@@ -131,15 +131,53 @@ const CepLookup = ({ onAddressFound, onClear }: CepLookupProps) => {
           </div>
 
           {/* Availability Badge */}
-          <div className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-accent/10 px-3 py-1.5 text-sm font-medium text-accent">
+          <div className="inline-flex items-center gap-1.5 rounded-full bg-accent/10 px-3 py-1.5 text-sm font-medium text-accent">
             <CheckCircle className="h-4 w-4" />
             Atendimento disponível nesta região
           </div>
 
-          {/* Trust microcopy */}
-          <p className="mt-2 text-xs text-muted-foreground">
-            Localização validada automaticamente pelo CEP informado.
-          </p>
+          {/* Número + Complemento */}
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <Label htmlFor="numero" className="text-sm font-semibold text-foreground">
+                Número <span className="text-destructive">*</span>
+              </Label>
+              <Input
+                id="numero"
+                placeholder="Nº"
+                value={address.numero}
+                onChange={(e) => onFieldChange?.("numero", e.target.value)}
+                className={`text-base ${errors?.numero ? "border-destructive" : ""}`}
+              />
+              {errors?.numero && <p className="mt-1 text-sm text-destructive">{errors.numero}</p>}
+            </div>
+            <div>
+              <Label htmlFor="complemento" className="text-sm text-foreground">
+                Complemento
+              </Label>
+              <Input
+                id="complemento"
+                placeholder="Apto, Bloco..."
+                value={address.complemento}
+                onChange={(e) => onFieldChange?.("complemento", e.target.value)}
+                className="text-base"
+              />
+            </div>
+          </div>
+
+          {/* Ponto de referência */}
+          <div>
+            <Label htmlFor="referencia" className="text-sm text-foreground">
+              Ponto de referência
+            </Label>
+            <Input
+              id="referencia"
+              placeholder="Próximo ao..."
+              value={address.referencia}
+              onChange={(e) => onFieldChange?.("referencia", e.target.value)}
+              className="text-base"
+            />
+          </div>
         </div>
       )}
     </div>

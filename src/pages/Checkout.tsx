@@ -6,7 +6,6 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle, Copy, ArrowLeft, Plus, Minus, Loader2 } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
-import { formatCpf, validateCpf } from "@/lib/cpf";
 import { formatPhone, validatePhone } from "@/lib/phone";
 import { captureUtms, type UtmData } from "@/lib/utm";
 import { useNavigate } from "react-router-dom";
@@ -31,7 +30,6 @@ const plans: Plan[] = [
 
 type FormData = {
   nome: string;
-  cpf: string;
   email: string;
   telefone: string;
 };
@@ -40,8 +38,8 @@ const Checkout = () => {
   const [step, setStep] = useState(1);
   const [selectedPlan, setSelectedPlan] = useState<string>("");
   const [quantity, setQuantity] = useState(1);
-  const [form, setForm] = useState<FormData>({ nome: "", cpf: "", email: "", telefone: "" });
-  const [errors, setErrors] = useState<Partial<FormData & { plan: string }>>({});
+  const [form, setForm] = useState<FormData>({ nome: "", email: "", telefone: "" });
+  const [errors, setErrors] = useState<Partial<FormData & { plan: string; cep: string; numero: string }>>({});
   const [utms, setUtms] = useState<Partial<UtmData>>({});
   const [pixCode, setPixCode] = useState("");
   const [pixQr, setPixQr] = useState("");
@@ -82,9 +80,10 @@ const Checkout = () => {
 
   // Step 2 — name + cpf
   const validateStep2 = () => {
-    const e: Partial<FormData> = {};
+    const e: Partial<FormData & { cep: string; numero: string }> = {};
     if (!form.nome.trim() || form.nome.trim().length < 3) e.nome = "Informe seu nome completo";
-    if (!validateCpf(form.cpf)) e.cpf = "CPF inválido";
+    if (!cepAddress) e.cep = "Informe o CEP de entrega";
+    else if (!cepAddress.numero.trim()) e.numero = "Informe o número";
     setErrors(e);
     if (Object.keys(e).length === 0) goToStep(3);
   };
@@ -120,7 +119,6 @@ const Checkout = () => {
         },
         body: JSON.stringify({
           nome: form.nome,
-          cpf: form.cpf,
           email: form.email,
           telefone: form.telefone,
           plano: selectedPlan,
@@ -271,7 +269,8 @@ const Checkout = () => {
               <button onClick={() => goToStep(1)} className="mb-4 flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
                 <ArrowLeft className="h-4 w-4" /> Voltar
               </button>
-              <h2 className="mb-6 text-xl font-bold text-foreground">Informe seus dados</h2>
+              <h2 className="mb-1 text-xl font-bold text-foreground">Endereço de entrega da caçamba</h2>
+              <p className="mb-6 text-sm text-muted-foreground">Usamos esse endereço apenas para logística de entrega.</p>
               <div className="space-y-4">
                 <div>
                   <Label htmlFor="nome">Nome completo</Label>
@@ -284,23 +283,18 @@ const Checkout = () => {
                   />
                   {errors.nome && <p className="mt-1 text-sm text-destructive">{errors.nome}</p>}
                 </div>
-                <div>
-                  <Label htmlFor="cpf">CPF</Label>
-                  <Input
-                    id="cpf"
-                    placeholder="000.000.000-00"
-                    value={form.cpf}
-                    onChange={(e) => setForm({ ...form, cpf: formatCpf(e.target.value) })}
-                    maxLength={14}
-                    className={errors.cpf ? "border-destructive" : ""}
-                  />
-                  {errors.cpf && <p className="mt-1 text-sm text-destructive">{errors.cpf}</p>}
-                </div>
 
-                {/* CEP Lookup */}
+                {/* CEP Lookup with address fields */}
                 <CepLookup
+                  address={cepAddress}
                   onAddressFound={(addr) => setCepAddress(addr)}
                   onClear={() => setCepAddress(null)}
+                  onFieldChange={(field, value) => {
+                    if (cepAddress) {
+                      setCepAddress({ ...cepAddress, [field]: value });
+                    }
+                  }}
+                  errors={{ cep: errors.cep, numero: errors.numero }}
                 />
 
                 <Button onClick={validateStep2} className="w-full text-base font-bold" size="lg">
@@ -372,13 +366,13 @@ const Checkout = () => {
                 <p><strong>Total:</strong> {formatCurrency(totalPrice)}</p>
                 <hr className="my-2 border-border" />
                 <p><strong>Nome:</strong> {form.nome}</p>
-                <p><strong>CPF:</strong> {form.cpf}</p>
                 <p><strong>Email:</strong> {form.email}</p>
                 <p><strong>Telefone:</strong> {form.telefone}</p>
                 {cepAddress && (
                   <>
                     <hr className="my-2 border-border" />
-                    <p><strong>Endereço:</strong> {cepAddress.logradouro}{cepAddress.bairro ? ` – ${cepAddress.bairro}` : ""}, {cepAddress.localidade}/{cepAddress.uf}</p>
+                    <p><strong>Endereço:</strong> {cepAddress.logradouro}{cepAddress.numero ? `, ${cepAddress.numero}` : ""}{cepAddress.complemento ? ` – ${cepAddress.complemento}` : ""}{cepAddress.bairro ? ` – ${cepAddress.bairro}` : ""}, {cepAddress.localidade}/{cepAddress.uf}</p>
+                    {cepAddress.referencia && <p><strong>Referência:</strong> {cepAddress.referencia}</p>}
                   </>
                 )}
               </div>
