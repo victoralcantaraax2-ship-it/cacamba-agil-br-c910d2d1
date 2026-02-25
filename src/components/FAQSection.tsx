@@ -8,7 +8,7 @@ import {
 const faqs = [
   {
     q: "Quais tamanhos de caçamba estão disponíveis?",
-    a: "Trabalhamos com caçambas de 3 m³, 5 m³ e 7 m³, ideais para pequenas reformas até grandes obras.",
+    a: "Trabalhamos com caçambas de 3 m³, 5 m³, 7 m³ e 10 m³, ideais para pequenas reformas até grandes obras.",
   },
   {
     q: "Qual é o prazo de entrega?",
