@@ -24,7 +24,8 @@ type Plan = {
 const plans: Plan[] = [
   { id: "cacamba_3m", label: "Caçamba 3m³", price: 179.99 },
   { id: "cacamba_5m", label: "Caçamba 5m³", price: 259.99 },
-  { id: "cacamba_7m", label: "Caçamba 7m³", price: 319.99 },
+  { id: "cacamba_6m", label: "Caçamba 6m³", price: 289.99 },
+  { id: "cacamba_8m", label: "Caçamba 8m³", price: 339.99 },
   { id: "cacamba_10m", label: "Caçamba 10m³", price: 389.00 },
 ];
 
