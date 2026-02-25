@@ -1,4 +1,5 @@
 import HeroSection from "@/components/HeroSection";
+import CepSection from "@/components/CepSection";
 import AboutSection from "@/components/AboutSection";
 import DifferentialsSection from "@/components/DifferentialsSection";
 import SocialProof from "@/components/SocialProof";
@@ -11,6 +12,7 @@ const Index = () => {
   return (
     <main>
       <HeroSection />
+      <CepSection />
       <AboutSection />
       <DifferentialsSection />
       <SocialProof />
