@@ -20,11 +20,11 @@ Deno.serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { nome, cpf, email, telefone, plano, quantidade } = body;
+    const { nome, telefone, plano, quantidade } = body;
     console.log("PIX REQUEST RECEIVED", JSON.stringify(body));
 
     // Validate required fields
-    if (!nome || !cpf || !email || !telefone) {
+    if (!nome || !telefone) {
       return new Response(JSON.stringify({ error: 'Dados obrigatórios não informados' }), {
         status: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -79,11 +79,6 @@ Deno.serve(async (req) => {
         ],
         customer: {
           name: nome,
-          email,
-          document: {
-            number: cpf.replace(/\D/g, ''),
-            type: 'cpf',
-          },
           phone: telefone.replace(/\D/g, ''),
         },
       }),
