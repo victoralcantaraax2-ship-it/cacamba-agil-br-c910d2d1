@@ -91,7 +91,7 @@ const CepSection = () => {
           {/* Header */}
           <div className="mb-8 text-center">
             <h2 className="text-2xl font-black text-foreground sm:text-3xl">
-              Atendemos na sua região
+              Verifique a disponibilidade na sua região
             </h2>
             <p className="mt-2 text-sm text-muted-foreground sm:text-base">
               Digite seu CEP para confirmar disponibilidade e o endereço de entrega.
