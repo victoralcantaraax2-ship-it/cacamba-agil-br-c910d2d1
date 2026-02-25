@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MapPin, CheckCircle, XCircle, MessageCircle, Truck, Search } from "lucide-react";
+import { MapPin, CheckCircle, XCircle, MessageCircle, Truck, Search, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 type Address = {
@@ -48,9 +48,19 @@ const CepSection = () => {
     setError(false);
     setAddress(null);
     setVisible(false);
+
+    const startTime = Date.now();
+
     try {
       const res = await fetch(`https://viacep.com.br/ws/${digits}/json/`);
       const data = await res.json();
+
+      // Enforce 2–3s minimum loading for perceived validation
+      const elapsed = Date.now() - startTime;
+      const minDelay = 2000 + Math.random() * 1000;
+      const remaining = Math.max(minDelay - elapsed, 0);
+      await new Promise((r) => setTimeout(r, remaining));
+
       if (data.erro) {
         setError(true);
       } else {
@@ -64,6 +74,9 @@ const CepSection = () => {
         setTimeout(() => setVisible(true), 50);
       }
     } catch {
+      const elapsed = Date.now() - startTime;
+      const remaining = Math.max(2000 - elapsed, 0);
+      await new Promise((r) => setTimeout(r, remaining));
       setError(true);
     } finally {
       setLoading(false);
@@ -128,9 +141,17 @@ const CepSection = () => {
 
           {/* Loading */}
           {loading && (
-            <p className="mt-4 text-center text-sm text-muted-foreground animate-pulse">
-              Carregando endereço…
-            </p>
+            <div className="mx-auto mt-6 max-w-md animate-fade-in">
+              <div className="rounded-xl border border-border bg-card shadow-lg p-6 flex flex-col items-center gap-3">
+                <Loader2 className="h-8 w-8 text-primary animate-spin" />
+                <p className="text-base font-semibold text-foreground">
+                  Verificando disponibilidade para seu CEP…
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  Consultando endereço e área de atendimento
+                </p>
+              </div>
+            </div>
           )}
 
           {/* Error */}
