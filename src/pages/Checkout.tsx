@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
-import { CheckCircle, Copy, ArrowLeft, Plus, Minus, Loader2, MapPin, XCircle } from "lucide-react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { CheckCircle, Copy, ArrowLeft, Plus, Minus, Loader2, MapPin, XCircle, ChevronDown } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import { formatPhone, validatePhone } from "@/lib/phone";
 import { captureUtms, type UtmData } from "@/lib/utm";
@@ -492,48 +493,53 @@ const Checkout = () => {
                 )}
 
                 {(paymentStatus === "generated" || paymentStatus === "confirmed") && (
-                  <div className="animate-in fade-in duration-500 space-y-4">
-                    <div className="flex flex-col items-center gap-4 rounded-lg border bg-card p-6">
-                      <h3 className="font-bold text-foreground">Pague com PIX</h3>
-                      <div className="flex h-48 w-48 items-center justify-center rounded-lg bg-muted text-xs text-muted-foreground">
+                  <div className="animate-in fade-in duration-500 space-y-3">
+                    <div className="flex flex-col items-center gap-3 rounded-lg border bg-card p-4">
+                      <h3 className="font-bold text-foreground text-sm">Pague com PIX</h3>
+                      <div className="flex w-[65%] max-w-[192px] aspect-square items-center justify-center rounded-lg bg-muted">
                         {pixCode ? (
-                          <QRCodeSVG value={pixCode} size={192} />
+                          <QRCodeSVG value={pixCode} className="w-full h-full p-1" />
                         ) : (
-                          <span className="text-center px-4">QR Code será exibido após geração</span>
+                          <span className="text-xs text-muted-foreground text-center px-4">QR Code será exibido após geração</span>
                         )}
                       </div>
 
                       {pixCode && (
                         <div className="w-full">
-                          <Label className="text-xs text-muted-foreground">Código PIX Copia e Cola</Label>
-                          <div className="mt-1 flex gap-2">
-                            <Input value={pixCode} readOnly className="text-xs" />
-                            <Button variant="outline" size="icon" onClick={handleCopyPix} title="Copiar">
-                              <Copy className="h-4 w-4" />
+                          <div className="flex gap-2">
+                            <Input value={pixCode} readOnly className="text-[10px] h-8" />
+                            <Button variant="outline" size="icon" className="h-8 w-8 shrink-0" onClick={handleCopyPix} title="Copiar">
+                              <Copy className="h-3.5 w-3.5" />
                             </Button>
                           </div>
                           {copied && <p className="mt-1 text-xs text-accent">Copiado!</p>}
                         </div>
                       )}
 
-                      <div className="w-full rounded-lg bg-muted p-4 text-sm space-y-2">
-                        <p className="font-bold text-foreground">Como pagar:</p>
-                        <ol className="list-decimal list-inside space-y-1 text-muted-foreground">
-                          <li>Abra o app do seu banco</li>
-                          <li>Selecione a opção <strong className="text-foreground">PIX</strong></li>
-                          <li>Escaneie o QR Code ou copie o código</li>
-                          <li>Confirme o pagamento</li>
-                        </ol>
-                      </div>
+                      <Accordion type="single" collapsible className="w-full">
+                        <AccordionItem value="como-pagar" className="border-none">
+                          <AccordionTrigger className="text-sm font-semibold text-foreground py-2 hover:no-underline">
+                            Como pagar com Pix
+                          </AccordionTrigger>
+                          <AccordionContent className="pb-2">
+                            <ol className="list-decimal list-inside space-y-1 text-xs text-muted-foreground">
+                              <li>Abra o app do seu banco</li>
+                              <li>Selecione a opção <strong className="text-foreground">PIX</strong></li>
+                              <li>Escaneie o QR Code ou copie o código</li>
+                              <li>Confirme o pagamento</li>
+                            </ol>
+                          </AccordionContent>
+                        </AccordionItem>
+                      </Accordion>
 
-                      <p className="text-xs text-muted-foreground text-center">
+                      <p className="text-[10px] text-muted-foreground text-center">
                         🔒 Pagamento seguro via PIX.
                       </p>
                     </div>
 
                     {paymentStatus === "generated" && (
                       <p className="text-center text-sm text-muted-foreground">
-                        Aguardando confirmação do pagamento...
+                        ⏳ Aguardando confirmação automática do pagamento…
                       </p>
                     )}
 
