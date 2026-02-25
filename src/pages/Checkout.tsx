@@ -12,6 +12,7 @@ import { captureUtms, type UtmData } from "@/lib/utm";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
+import CepLookup, { type CepAddress } from "@/components/CepLookup";
 import logoAmba from "@/assets/logo-amba.png";
 
 type Plan = {
@@ -47,6 +48,7 @@ const Checkout = () => {
   const [transactionId, setTransactionId] = useState("");
   const [paymentStatus, setPaymentStatus] = useState<"idle" | "loading" | "generated" | "confirmed">("idle");
   const [copied, setCopied] = useState(false);
+  const [cepAddress, setCepAddress] = useState<CepAddress | null>(null);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -294,6 +296,13 @@ const Checkout = () => {
                   />
                   {errors.cpf && <p className="mt-1 text-sm text-destructive">{errors.cpf}</p>}
                 </div>
+
+                {/* CEP Lookup */}
+                <CepLookup
+                  onAddressFound={(addr) => setCepAddress(addr)}
+                  onClear={() => setCepAddress(null)}
+                />
+
                 <Button onClick={validateStep2} className="w-full text-base font-bold" size="lg">
                   Continuar
                 </Button>
@@ -366,6 +375,12 @@ const Checkout = () => {
                 <p><strong>CPF:</strong> {form.cpf}</p>
                 <p><strong>Email:</strong> {form.email}</p>
                 <p><strong>Telefone:</strong> {form.telefone}</p>
+                {cepAddress && (
+                  <>
+                    <hr className="my-2 border-border" />
+                    <p><strong>Endereço:</strong> {cepAddress.logradouro}{cepAddress.bairro ? ` – ${cepAddress.bairro}` : ""}, {cepAddress.localidade}/{cepAddress.uf}</p>
+                  </>
+                )}
               </div>
 
               {paymentStatus === "idle" && (
