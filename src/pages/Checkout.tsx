@@ -4,14 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
-import { CheckCircle, Copy, ArrowLeft, Plus, Minus, Loader2 } from "lucide-react";
+import { CheckCircle, Copy, ArrowLeft, Plus, Minus, Loader2, MapPin, XCircle } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import { formatPhone, validatePhone } from "@/lib/phone";
 import { captureUtms, type UtmData } from "@/lib/utm";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
-import CepLookup, { type CepAddress } from "@/components/CepLookup";
 import logoAmba from "@/assets/logo-amba.png";
 
 type Plan = {
@@ -30,23 +29,43 @@ const plans: Plan[] = [
 
 type FormData = {
   nome: string;
-  email: string;
   telefone: string;
+};
+
+type AddressData = {
+  cep: string;
+  logradouro: string;
+  bairro: string;
+  localidade: string;
+  uf: string;
+  numero: string;
+  complemento: string;
+};
+
+const formatCep = (value: string) => {
+  const digits = value.replace(/\D/g, "").slice(0, 8);
+  if (digits.length > 5) return `${digits.slice(0, 5)}-${digits.slice(5)}`;
+  return digits;
 };
 
 const Checkout = () => {
   const [step, setStep] = useState(1);
   const [selectedPlan, setSelectedPlan] = useState<string>("");
   const [quantity, setQuantity] = useState(1);
-  const [form, setForm] = useState<FormData>({ nome: "", email: "", telefone: "" });
-  const [errors, setErrors] = useState<Partial<FormData & { plan: string; cep: string; numero: string }>>({});
+  const [form, setForm] = useState<FormData>({ nome: "", telefone: "" });
+  const [address, setAddress] = useState<AddressData>({
+    cep: "", logradouro: "", bairro: "", localidade: "", uf: "", numero: "", complemento: "",
+  });
+  const [cepFound, setCepFound] = useState(false);
+  const [cepLoading, setCepLoading] = useState(false);
+  const [cepError, setCepError] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [utms, setUtms] = useState<Partial<UtmData>>({});
   const [pixCode, setPixCode] = useState("");
   const [pixQr, setPixQr] = useState("");
   const [transactionId, setTransactionId] = useState("");
   const [paymentStatus, setPaymentStatus] = useState<"idle" | "loading" | "generated" | "confirmed">("idle");
   const [copied, setCopied] = useState(false);
-  const [cepAddress, setCepAddress] = useState<CepAddress | null>(null);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -54,7 +73,7 @@ const Checkout = () => {
     setUtms(captureUtms());
   }, []);
 
-  const totalSteps = 4;
+  const totalSteps = 3;
   const progressValue = (step / totalSteps) * 100;
 
   const goToStep = (next: number) => {
@@ -68,7 +87,48 @@ const Checkout = () => {
   const formatCurrency = (value: number) =>
     value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 
-  // Step 1 — select plan
+  // --- CEP lookup ---
+  const handleCepChange = (value: string) => {
+    const formatted = formatCep(value);
+    setAddress((prev) => ({ ...prev, cep: formatted }));
+    setCepError(false);
+
+    const digits = formatted.replace(/\D/g, "");
+    if (digits.length === 8) {
+      fetchCep(digits);
+    } else {
+      setCepFound(false);
+      setAddress((prev) => ({ ...prev, logradouro: "", bairro: "", localidade: "", uf: "" }));
+    }
+  };
+
+  const fetchCep = async (digits: string) => {
+    setCepLoading(true);
+    setCepError(false);
+    setCepFound(false);
+    try {
+      const res = await fetch(`https://viacep.com.br/ws/${digits}/json/`);
+      const data = await res.json();
+      if (data.erro) {
+        setCepError(true);
+      } else {
+        setAddress((prev) => ({
+          ...prev,
+          logradouro: data.logradouro || "",
+          bairro: data.bairro || "",
+          localidade: data.localidade || "",
+          uf: data.uf || "",
+        }));
+        setCepFound(true);
+      }
+    } catch {
+      setCepError(true);
+    } finally {
+      setCepLoading(false);
+    }
+  };
+
+  // --- Validations ---
   const validateStep1 = () => {
     if (!selectedPlan) {
       setErrors({ plan: "Selecione um tamanho de caçamba" });
@@ -78,32 +138,30 @@ const Checkout = () => {
     goToStep(2);
   };
 
-  // Step 2 — name + cpf
   const validateStep2 = () => {
-    const e: Partial<FormData & { cep: string; numero: string }> = {};
+    const e: Record<string, string> = {};
     if (!form.nome.trim() || form.nome.trim().length < 3) e.nome = "Informe seu nome completo";
-    if (!cepAddress) e.cep = "Informe o CEP de entrega";
-    else if (!cepAddress.numero.trim()) e.numero = "Informe o número";
-    setErrors(e);
-    if (Object.keys(e).length === 0) goToStep(3);
-  };
-
-  // Step 3 — email + phone
-  const validateStep3 = () => {
-    const e: Partial<FormData> = {};
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(form.email)) e.email = "Email inválido";
-    if (!validatePhone(form.telefone)) e.telefone = "Telefone inválido";
+    if (!validatePhone(form.telefone)) e.telefone = "Informe um telefone válido";
     setErrors(e);
     if (Object.keys(e).length === 0) {
       if (typeof window !== "undefined" && (window as any).fbq) {
         (window as any).fbq("track", "InitiateCheckout");
       }
-      goToStep(4);
+      goToStep(3);
     }
   };
 
+  const validateAddress = (): boolean => {
+    const e: Record<string, string> = {};
+    if (!cepFound) e.cep = "Informe um CEP válido";
+    if (!address.numero.trim()) e.numero = "Informe o número";
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  };
+
   const handleGeneratePix = async () => {
+    if (!validateAddress()) return;
+
     setPaymentStatus("loading");
 
     try {
@@ -119,7 +177,6 @@ const Checkout = () => {
         },
         body: JSON.stringify({
           nome: form.nome,
-          email: form.email,
           telefone: form.telefone,
           plano: selectedPlan,
           quantidade: quantity,
@@ -154,6 +211,8 @@ const Checkout = () => {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const fullAddress = `${address.logradouro}${address.numero ? `, ${address.numero}` : ""}${address.complemento ? ` – ${address.complemento}` : ""}${address.bairro ? ` – ${address.bairro}` : ""}, ${address.localidade}/${address.uf}`;
+
   return (
     <main className="min-h-screen bg-background">
       {/* Header */}
@@ -171,14 +230,14 @@ const Checkout = () => {
         <div className="mb-2 flex justify-between text-xs font-medium text-muted-foreground">
           <span className={step >= 1 ? "text-primary font-bold" : ""}>1. Caçamba</span>
           <span className={step >= 2 ? "text-primary font-bold" : ""}>2. Identificação</span>
-          <span className={step >= 3 ? "text-primary font-bold" : ""}>3. Contato</span>
-          <span className={step >= 4 ? "text-primary font-bold" : ""}>4. Pagamento</span>
+          <span className={step >= 3 ? "text-primary font-bold" : ""}>3. Pagamento</span>
         </div>
         <Progress value={progressValue} className="h-2" />
       </div>
 
       <div className="container max-w-lg px-4 py-8">
-        {/* Step 1 — Plan Selection */}
+
+        {/* ========== STEP 1 — CAÇAMBA ========== */}
         {step === 1 && (
           <div className="animate-in fade-in slide-in-from-right-4 duration-300 space-y-4">
             <h2 className="text-xl font-bold text-foreground">Escolha sua caçamba</h2>
@@ -262,15 +321,17 @@ const Checkout = () => {
           </div>
         )}
 
-        {/* Step 2 — Name + CPF */}
+        {/* ========== STEP 2 — IDENTIFICAÇÃO ========== */}
         {step === 2 && (
           <Card className="animate-in fade-in slide-in-from-right-4 duration-300">
             <CardContent className="pt-6">
               <button onClick={() => goToStep(1)} className="mb-4 flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
                 <ArrowLeft className="h-4 w-4" /> Voltar
               </button>
-              <h2 className="mb-1 text-xl font-bold text-foreground">Endereço de entrega da caçamba</h2>
-              <p className="mb-6 text-sm text-muted-foreground">Usamos esse endereço apenas para logística de entrega.</p>
+              <h2 className="mb-1 text-xl font-bold text-foreground">Identificação</h2>
+              <p className="mb-6 text-sm text-muted-foreground">
+                Precisamos apenas dessas informações para confirmar a entrega.
+              </p>
               <div className="space-y-4">
                 <div>
                   <Label htmlFor="nome">Nome completo</Label>
@@ -284,18 +345,22 @@ const Checkout = () => {
                   {errors.nome && <p className="mt-1 text-sm text-destructive">{errors.nome}</p>}
                 </div>
 
-                {/* CEP Lookup with address fields */}
-                <CepLookup
-                  address={cepAddress}
-                  onAddressFound={(addr) => setCepAddress(addr)}
-                  onClear={() => setCepAddress(null)}
-                  onFieldChange={(field, value) => {
-                    if (cepAddress) {
-                      setCepAddress({ ...cepAddress, [field]: value });
-                    }
-                  }}
-                  errors={{ cep: errors.cep, numero: errors.numero }}
-                />
+                <div>
+                  <Label htmlFor="telefone">Telefone / WhatsApp</Label>
+                  <Input
+                    id="telefone"
+                    placeholder="(11) 9XXXX-XXXX"
+                    value={form.telefone}
+                    onChange={(e) => setForm({ ...form, telefone: formatPhone(e.target.value) })}
+                    maxLength={15}
+                    inputMode="tel"
+                    className={errors.telefone ? "border-destructive" : ""}
+                  />
+                  {errors.telefone && <p className="mt-1 text-sm text-destructive">{errors.telefone}</p>}
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    Usaremos seu WhatsApp apenas para confirmar a entrega da caçamba.
+                  </p>
+                </div>
 
                 <Button onClick={validateStep2} className="w-full text-base font-bold" size="lg">
                   Continuar
@@ -305,147 +370,189 @@ const Checkout = () => {
           </Card>
         )}
 
-        {/* Step 3 — Email + Phone */}
+        {/* ========== STEP 3 — PAGAMENTO ========== */}
         {step === 3 && (
-          <Card className="animate-in fade-in slide-in-from-right-4 duration-300">
-            <CardContent className="pt-6">
-              <button onClick={() => goToStep(2)} className="mb-4 flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
-                <ArrowLeft className="h-4 w-4" /> Voltar
-              </button>
-              <h2 className="mb-6 text-xl font-bold text-foreground">Como podemos falar com você?</h2>
-              <div className="space-y-4">
-                <div>
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="seu@email.com"
-                    value={form.email}
-                    onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    className={errors.email ? "border-destructive" : ""}
-                  />
-                  {errors.email && <p className="mt-1 text-sm text-destructive">{errors.email}</p>}
-                </div>
-                <div>
-                  <Label htmlFor="telefone">Telefone</Label>
-                  <Input
-                    id="telefone"
-                    placeholder="(11) 99999-9999"
-                    value={form.telefone}
-                    onChange={(e) => setForm({ ...form, telefone: formatPhone(e.target.value) })}
-                    maxLength={15}
-                    className={errors.telefone ? "border-destructive" : ""}
-                  />
-                  {errors.telefone && <p className="mt-1 text-sm text-destructive">{errors.telefone}</p>}
-                </div>
-                <Button onClick={validateStep3} className="w-full text-base font-bold" size="lg">
-                  Ir para Finalização
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        )}
+          <div className="animate-in fade-in slide-in-from-right-4 duration-300 space-y-6">
+            <button onClick={() => goToStep(2)} className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
+              <ArrowLeft className="h-4 w-4" /> Voltar
+            </button>
 
-        {/* Step 4 — PIX Payment */}
-        {step === 4 && (
-          <Card className="animate-in fade-in slide-in-from-right-4 duration-300">
-            <CardContent className="pt-6">
-              <button onClick={() => goToStep(3)} className="mb-4 flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
-                <ArrowLeft className="h-4 w-4" /> Voltar
-              </button>
+            {/* --- Endereço de entrega --- */}
+            <Card>
+              <CardContent className="pt-6">
+                <h2 className="mb-1 text-lg font-bold text-foreground">Endereço de entrega da caçamba</h2>
+                <p className="mb-4 text-sm text-muted-foreground">
+                  Endereço usado exclusivamente para a entrega da caçamba.
+                </p>
 
-              <div className="mb-6 flex items-center gap-2 rounded-lg bg-accent/10 p-3 text-sm text-accent">
-                <CheckCircle className="h-5 w-5 shrink-0" />
-                <span>Atendimento iniciado após confirmação automática do pagamento.</span>
-              </div>
-
-              <h2 className="mb-4 text-xl font-bold text-foreground">Resumo da solicitação</h2>
-              <div className="mb-6 space-y-2 rounded-lg bg-muted p-4 text-sm">
-                <p><strong>Serviço:</strong> {currentPlan?.label}</p>
-                <p><strong>Quantidade:</strong> {quantity}</p>
-                <p><strong>Total:</strong> {formatCurrency(totalPrice)}</p>
-                <hr className="my-2 border-border" />
-                <p><strong>Nome:</strong> {form.nome}</p>
-                <p><strong>Email:</strong> {form.email}</p>
-                <p><strong>Telefone:</strong> {form.telefone}</p>
-                {cepAddress && (
-                  <>
-                    <hr className="my-2 border-border" />
-                    <p><strong>Endereço:</strong> {cepAddress.logradouro}{cepAddress.numero ? `, ${cepAddress.numero}` : ""}{cepAddress.complemento ? ` – ${cepAddress.complemento}` : ""}{cepAddress.bairro ? ` – ${cepAddress.bairro}` : ""}, {cepAddress.localidade}/{cepAddress.uf}</p>
-                    {cepAddress.referencia && <p><strong>Referência:</strong> {cepAddress.referencia}</p>}
-                  </>
-                )}
-              </div>
-
-              {paymentStatus === "idle" && (
-                <Button onClick={handleGeneratePix} className="w-full text-base font-bold" size="lg">
-                  Gerar PIX
-                </Button>
-              )}
-
-              {paymentStatus === "loading" && (
-                <Button disabled className="w-full text-base font-bold" size="lg">
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Gerando PIX...
-                </Button>
-              )}
-
-              {(paymentStatus === "generated" || paymentStatus === "confirmed") && (
-                <div className="animate-in fade-in duration-500 space-y-4">
-                  <div className="flex flex-col items-center gap-4 rounded-lg border bg-card p-6">
-                    <h3 className="font-bold text-foreground">Pague com PIX</h3>
-                    <div className="flex h-48 w-48 items-center justify-center rounded-lg bg-muted text-xs text-muted-foreground">
-                      {pixCode ? (
-                        <QRCodeSVG value={pixCode} size={192} />
-                      ) : (
-                        <span className="text-center px-4">QR Code será exibido após geração</span>
-                      )}
-                    </div>
-
-                    {pixCode && (
-                      <div className="w-full">
-                        <Label className="text-xs text-muted-foreground">Código PIX Copia e Cola</Label>
-                        <div className="mt-1 flex gap-2">
-                          <Input value={pixCode} readOnly className="text-xs" />
-                          <Button variant="outline" size="icon" onClick={handleCopyPix} title="Copiar">
-                            <Copy className="h-4 w-4" />
-                          </Button>
-                        </div>
-                        {copied && <p className="mt-1 text-xs text-accent">Copiado!</p>}
-                      </div>
-                    )}
-
-                    <div className="w-full rounded-lg bg-muted p-4 text-sm space-y-2">
-                      <p className="font-bold text-foreground">Como pagar:</p>
-                      <ol className="list-decimal list-inside space-y-1 text-muted-foreground">
-                        <li>Abra o app do seu banco</li>
-                        <li>Selecione a opção <strong className="text-foreground">PIX</strong></li>
-                        <li>Escaneie o QR Code ou copie o código</li>
-                        <li>Confirme o pagamento</li>
-                      </ol>
-                    </div>
-
-                    <p className="text-xs text-muted-foreground text-center">
-                      🔒 Pagamento seguro via PIX.
-                    </p>
+                <div className="space-y-3">
+                  <div>
+                    <Label htmlFor="cep">CEP <span className="text-destructive">*</span></Label>
+                    <Input
+                      id="cep"
+                      placeholder="00000-000"
+                      value={address.cep}
+                      onChange={(e) => handleCepChange(e.target.value)}
+                      maxLength={9}
+                      inputMode="numeric"
+                      className={`text-base ${errors.cep ? "border-destructive" : ""}`}
+                    />
+                    {errors.cep && <p className="mt-1 text-sm text-destructive">{errors.cep}</p>}
                   </div>
 
-                  {paymentStatus === "generated" && (
-                    <p className="text-center text-sm text-muted-foreground">
-                      Aguardando confirmação do pagamento...
-                    </p>
+                  {cepLoading && (
+                    <p className="text-sm text-muted-foreground animate-pulse">Buscando endereço...</p>
                   )}
 
-                  {paymentStatus === "confirmed" && (
-                    <div className="flex items-center justify-center gap-2 text-accent">
-                      <CheckCircle className="h-5 w-5" />
-                      <span className="font-bold">Pagamento confirmado! Redirecionando...</span>
+                  {cepError && (
+                    <div className="flex items-center gap-2 rounded-lg border border-destructive/30 bg-destructive/5 p-3 text-sm text-destructive animate-fade-in">
+                      <XCircle className="h-4 w-4 shrink-0" />
+                      <span>CEP não encontrado. Verifique e tente novamente.</span>
+                    </div>
+                  )}
+
+                  {cepFound && (
+                    <div className="animate-fade-in space-y-3">
+                      <div className="rounded-xl border-l-4 border-l-accent bg-accent/5 p-3 flex items-start gap-2">
+                        <MapPin className="h-5 w-5 text-accent shrink-0 mt-0.5" />
+                        <div>
+                          <p className="font-semibold text-foreground text-sm leading-tight">
+                            {address.logradouro || "Endereço"}{address.bairro ? ` – ${address.bairro}` : ""}
+                          </p>
+                          <p className="text-xs text-muted-foreground">{address.localidade} – {address.uf}</p>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <Label htmlFor="numero">Número <span className="text-destructive">*</span></Label>
+                          <Input
+                            id="numero"
+                            placeholder="Nº"
+                            value={address.numero}
+                            onChange={(e) => setAddress({ ...address, numero: e.target.value })}
+                            className={errors.numero ? "border-destructive" : ""}
+                          />
+                          {errors.numero && <p className="mt-1 text-sm text-destructive">{errors.numero}</p>}
+                        </div>
+                        <div>
+                          <Label htmlFor="complemento">Complemento</Label>
+                          <Input
+                            id="complemento"
+                            placeholder="Apto, Bloco..."
+                            value={address.complemento}
+                            onChange={(e) => setAddress({ ...address, complemento: e.target.value })}
+                          />
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>
-              )}
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+
+            {/* --- Resumo do Pedido --- */}
+            <Card>
+              <CardContent className="pt-6">
+                <h2 className="mb-4 text-lg font-bold text-foreground">Resumo do pedido</h2>
+                <div className="space-y-2 text-sm">
+                  <p><strong>Serviço:</strong> {currentPlan?.label}</p>
+                  <p><strong>Quantidade:</strong> {quantity}</p>
+                  <hr className="my-2 border-border" />
+                  <p><strong>Nome:</strong> {form.nome}</p>
+                  <p><strong>Telefone:</strong> {form.telefone}</p>
+                  {cepFound && (
+                    <>
+                      <hr className="my-2 border-border" />
+                      <p><strong>Entrega:</strong> {fullAddress}</p>
+                    </>
+                  )}
+                  <hr className="my-2 border-border" />
+                  <p className="text-lg font-bold text-primary">
+                    Total: {formatCurrency(totalPrice)}
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* --- Pagamento PIX --- */}
+            <Card>
+              <CardContent className="pt-6">
+                {paymentStatus === "idle" && (
+                  <Button onClick={handleGeneratePix} className="w-full text-base font-bold" size="lg">
+                    Pagar com Pix
+                  </Button>
+                )}
+
+                {paymentStatus === "loading" && (
+                  <Button disabled className="w-full text-base font-bold" size="lg">
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Gerando PIX...
+                  </Button>
+                )}
+
+                {(paymentStatus === "generated" || paymentStatus === "confirmed") && (
+                  <div className="animate-in fade-in duration-500 space-y-4">
+                    <div className="flex flex-col items-center gap-4 rounded-lg border bg-card p-6">
+                      <h3 className="font-bold text-foreground">Pague com PIX</h3>
+                      <div className="flex h-48 w-48 items-center justify-center rounded-lg bg-muted text-xs text-muted-foreground">
+                        {pixCode ? (
+                          <QRCodeSVG value={pixCode} size={192} />
+                        ) : (
+                          <span className="text-center px-4">QR Code será exibido após geração</span>
+                        )}
+                      </div>
+
+                      {pixCode && (
+                        <div className="w-full">
+                          <Label className="text-xs text-muted-foreground">Código PIX Copia e Cola</Label>
+                          <div className="mt-1 flex gap-2">
+                            <Input value={pixCode} readOnly className="text-xs" />
+                            <Button variant="outline" size="icon" onClick={handleCopyPix} title="Copiar">
+                              <Copy className="h-4 w-4" />
+                            </Button>
+                          </div>
+                          {copied && <p className="mt-1 text-xs text-accent">Copiado!</p>}
+                        </div>
+                      )}
+
+                      <div className="w-full rounded-lg bg-muted p-4 text-sm space-y-2">
+                        <p className="font-bold text-foreground">Como pagar:</p>
+                        <ol className="list-decimal list-inside space-y-1 text-muted-foreground">
+                          <li>Abra o app do seu banco</li>
+                          <li>Selecione a opção <strong className="text-foreground">PIX</strong></li>
+                          <li>Escaneie o QR Code ou copie o código</li>
+                          <li>Confirme o pagamento</li>
+                        </ol>
+                      </div>
+
+                      <p className="text-xs text-muted-foreground text-center">
+                        🔒 Pagamento seguro via PIX.
+                      </p>
+                    </div>
+
+                    {paymentStatus === "generated" && (
+                      <p className="text-center text-sm text-muted-foreground">
+                        Aguardando confirmação do pagamento...
+                      </p>
+                    )}
+
+                    {paymentStatus === "confirmed" && (
+                      <div className="flex items-center justify-center gap-2 text-accent">
+                        <CheckCircle className="h-5 w-5" />
+                        <span className="font-bold">Pagamento confirmado! Redirecionando...</span>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                <div className="mt-4 flex items-center gap-2 rounded-lg bg-accent/10 p-3 text-sm text-accent">
+                  <CheckCircle className="h-5 w-5 shrink-0" />
+                  <span>Atendimento iniciado após confirmação automática do pagamento.</span>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         )}
       </div>
 
