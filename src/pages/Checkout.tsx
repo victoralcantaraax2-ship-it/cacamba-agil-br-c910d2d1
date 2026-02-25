@@ -380,15 +380,15 @@ const Checkout = () => {
 
             {/* --- Endereço de entrega --- */}
             <Card>
-              <CardContent className="pt-6">
-                <h2 className="mb-1 text-lg font-bold text-foreground">Onde vamos entregar a caçamba</h2>
-                <p className="mb-4 text-sm text-muted-foreground">
+              <CardContent className="pt-4 pb-4">
+                <h2 className="text-base font-bold text-foreground leading-tight">Onde vamos entregar a caçamba</h2>
+                <p className="mb-3 text-xs text-muted-foreground">
                   Endereço usado exclusivamente para a entrega da caçamba.
                 </p>
 
-                <div className="space-y-3">
+                <div className="space-y-2">
                   <div>
-                    <Label htmlFor="cep">CEP <span className="text-destructive">*</span></Label>
+                    <Label htmlFor="cep" className="text-xs">CEP <span className="text-destructive">*</span></Label>
                     <Input
                       id="cep"
                       placeholder="00000-000"
@@ -396,53 +396,54 @@ const Checkout = () => {
                       onChange={(e) => handleCepChange(e.target.value)}
                       maxLength={9}
                       inputMode="numeric"
-                      className={`text-base ${errors.cep ? "border-destructive" : ""}`}
+                      className={`text-sm h-9 ${errors.cep ? "border-destructive" : ""}`}
                     />
-                    {errors.cep && <p className="mt-1 text-sm text-destructive">{errors.cep}</p>}
+                    {errors.cep && <p className="mt-0.5 text-xs text-destructive">{errors.cep}</p>}
                   </div>
 
                   {cepLoading && (
-                    <p className="text-sm text-muted-foreground animate-pulse">Buscando endereço...</p>
+                    <p className="text-xs text-muted-foreground animate-pulse">Buscando endereço...</p>
                   )}
 
                   {cepError && (
-                    <div className="flex items-center gap-2 rounded-lg border border-destructive/30 bg-destructive/5 p-3 text-sm text-destructive animate-fade-in">
-                      <XCircle className="h-4 w-4 shrink-0" />
+                    <div className="flex items-center gap-2 rounded border border-destructive/30 bg-destructive/5 p-2 text-xs text-destructive">
+                      <XCircle className="h-3.5 w-3.5 shrink-0" />
                       <span>CEP não encontrado. Verifique e tente novamente.</span>
                     </div>
                   )}
 
                   {cepFound && (
-                    <div className="animate-fade-in space-y-3">
-                      <div className="rounded-xl border-l-4 border-l-accent bg-accent/5 p-3 flex items-start gap-2">
-                        <MapPin className="h-5 w-5 text-accent shrink-0 mt-0.5" />
+                    <div className="animate-fade-in space-y-2">
+                      <div className="rounded-lg border-l-3 border-l-accent bg-accent/5 px-3 py-2 flex items-start gap-2">
+                        <MapPin className="h-4 w-4 text-accent shrink-0 mt-0.5" />
                         <div>
-                          <p className="font-semibold text-foreground text-sm leading-tight">
+                          <p className="font-medium text-foreground text-xs leading-tight">
                             {address.logradouro || "Endereço"}{address.bairro ? ` – ${address.bairro}` : ""}
                           </p>
-                          <p className="text-xs text-muted-foreground">{address.localidade} – {address.uf}</p>
+                          <p className="text-[11px] text-muted-foreground">{address.localidade} – {address.uf}</p>
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-2 gap-3">
+                      <div className="grid grid-cols-2 gap-2">
                         <div>
-                          <Label htmlFor="numero">Número <span className="text-destructive">*</span></Label>
+                          <Label htmlFor="numero" className="text-xs">Número <span className="text-destructive">*</span></Label>
                           <Input
                             id="numero"
                             placeholder="Nº"
                             value={address.numero}
                             onChange={(e) => setAddress({ ...address, numero: e.target.value })}
-                            className={errors.numero ? "border-destructive" : ""}
+                            className={`h-9 text-sm ${errors.numero ? "border-destructive" : ""}`}
                           />
-                          {errors.numero && <p className="mt-1 text-sm text-destructive">{errors.numero}</p>}
+                          {errors.numero && <p className="mt-0.5 text-xs text-destructive">{errors.numero}</p>}
                         </div>
                         <div>
-                          <Label htmlFor="complemento">Complemento</Label>
+                          <Label htmlFor="complemento" className="text-xs">Complemento</Label>
                           <Input
                             id="complemento"
                             placeholder="Apto, bloco, referência (opcional)"
                             value={address.complemento}
                             onChange={(e) => setAddress({ ...address, complemento: e.target.value })}
+                            className="h-9 text-sm"
                           />
                         </div>
                       </div>
@@ -540,7 +541,7 @@ const Checkout = () => {
                     {paymentStatus === "generated" && (
                       <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
                         <Loader2 className="h-4 w-4 animate-spin text-primary" />
-                        <span>Aguardando confirmação automática do pagamento pelo Pix…</span>
+                        <span>Processando confirmação automática do pagamento via Pix…</span>
                       </div>
                     )}
 
