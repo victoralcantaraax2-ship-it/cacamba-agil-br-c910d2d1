@@ -23,6 +23,13 @@ const reviews = [
   { name: "Thiago Nascimento", role: "Pedreiro autônomo", stars: 5, text: "Trabalho com reforma e sempre preciso de caçamba. A AMBA nunca me deixou na mão." },
   { name: "Luciana Ferreira", role: "Designer de Interiores", stars: 5, text: "Usei na reforma do meu escritório. Entrega rápida e serviço impecável." },
   { name: "Eduardo Takahashi", role: "Proprietário – São Paulo/SP", stars: 5, text: "Contratei de SP mesmo e entregaram em Guarulhos sem problema. Atendimento nota 10." },
+  { name: "Felipe Monteiro", role: "Engenheiro – Mogi das Cruzes/SP", stars: 5, text: "Precisei de caçamba para uma obra em Mogi e a AMBA atendeu super rápido. Serviço impecável!" },
+  { name: "Renata Campos", role: "Arquiteta – Itapecerica da Serra/SP", stars: 5, text: "Contratei para reforma residencial em Itapecerica. Entrega pontual e equipe muito educada." },
+  { name: "Marcos Vinicius", role: "Construtor – Campinas/SP", stars: 5, text: "Mesmo sendo em Campinas, o atendimento foi excelente. Caçamba chegou no prazo combinado." },
+  { name: "Daniela Souza", role: "Síndica – Barueri/SP", stars: 5, text: "Contratei para limpeza do condomínio em Barueri. Moradores aprovaram o serviço. Recomendo!" },
+  { name: "Roberto Almeida", role: "Mestre de Obras – Juiz de Fora/MG", stars: 5, text: "Empresa séria e comprometida. Entregaram dentro do prazo na região de Juiz de Fora." },
+  { name: "Cláudia Ribeiro", role: "Proprietária – Belo Horizonte/MG", stars: 5, text: "Reformei meu apartamento em BH e a AMBA cuidou de todo o descarte. Serviço nota 10!" },
+  { name: "André Machado", role: "Empreiteiro – Uberaba/MG", stars: 5, text: "Caçamba bem conservada e entrega rápida em Uberaba. Já estou na segunda locação com eles." },
 ];
 
 const scrollTo = (id: string) => {
