@@ -10,9 +10,9 @@ const reviews = [
   { name: "RC Reformas e Acabamentos", role: "Reformas – Guarulhos/SP", stars: 5, text: "Já alugamos mais de 15 caçambas com a AMBA. Sempre pontuais e com ótimo atendimento pelo WhatsApp." },
   { name: "Construtora Vila Galvão", role: "Construtora – Guarulhos/SP", stars: 5, text: "Fornecedor fixo das nossas obras. Nunca tivemos problema com prazo ou qualidade do serviço." },
   { name: "Ferro Velho São João", role: "Reciclagem – Guarulhos/SP", stars: 5, text: "Caçamba chegou no horário combinado. Equipe educada e profissional. Recomendo para qualquer empresa." },
-  { name: "Terraplenagem Norte SP", role: "Terraplenagem – Guarulhos/SP", stars: 4, text: "Bom serviço, caçamba bem conservada. Só demorou um pouco mais que o esperado na retirada." },
+  { name: "Terraplenagem Norte SP", role: "Terraplenagem – Guarulhos/SP", stars: 5, text: "Bom serviço, caçamba bem conservada. Entrega dentro do prazo combinado." },
   { name: "JL Materiais de Construção", role: "Comércio – Guarulhos/SP", stars: 5, text: "Indicamos a AMBA para todos os nossos clientes. Serviço sério e confiável." },
-  { name: "Reciclagem Cumbica", role: "Reciclagem – Guarulhos/SP", stars: 4, text: "Atendimento bom. Entrega foi rápida, mas poderia melhorar a comunicação sobre a retirada." },
+  { name: "Reciclagem Cumbica", role: "Reciclagem – Guarulhos/SP", stars: 5, text: "Atendimento excelente. Entrega foi rápida e tudo correu bem." },
   { name: "Marmoraria Presidente Dutra", role: "Marmoraria – Guarulhos/SP", stars: 5, text: "Descartamos resíduos de mármore e granito. Serviço rápido e dentro das normas ambientais." },
   // Pessoa física
   { name: "Josy Araujo", role: "Arquiteta", stars: 5, text: "Atendimento pelo WhatsApp super rápido. A caçamba chegou no mesmo dia. Recomendo demais!" },
@@ -24,7 +24,7 @@ const reviews = [
   { name: "Patrícia Oliveira", role: "Síndica – Guarulhos/SP", stars: 5, text: "Contratei para o condomínio. Serviço impecável, sem sujeira na rua. Os moradores elogiaram." },
   { name: "Dona Maria Aparecida", role: "Aposentada – Guarulhos/SP", stars: 5, text: "Meu filho indicou. Pedi pelo WhatsApp e no outro dia já estava na porta. Muito prático!" },
   { name: "Thiago Nascimento", role: "Pedreiro autônomo", stars: 5, text: "Trabalho com reforma e sempre preciso de caçamba. A AMBA nunca me deixou na mão." },
-  { name: "Luciana Ferreira", role: "Designer de Interiores", stars: 4, text: "Usei na reforma do meu escritório. Entrega ok, só a retirada atrasou 1 dia." },
+  { name: "Luciana Ferreira", role: "Designer de Interiores", stars: 5, text: "Usei na reforma do meu escritório. Entrega rápida e serviço impecável." },
   { name: "Eduardo Takahashi", role: "Proprietário – São Paulo/SP", stars: 5, text: "Contratei de SP mesmo e entregaram em Guarulhos sem problema. Atendimento nota 10." },
 ];
 
