@@ -198,10 +198,6 @@ const CepSection = () => {
                 </span>
               </div>
 
-              {/* Microcopy */}
-              <p className="mt-2 text-center text-xs text-muted-foreground">
-                Endereço validado automaticamente pelo CEP.
-              </p>
 
               {/* WhatsApp CTA */}
               <div className="mt-6 flex justify-center">
