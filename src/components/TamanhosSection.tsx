@@ -1,5 +1,6 @@
-import { Check, MessageCircle } from "lucide-react";
+import { Check } from "lucide-react";
 import { getWhatsAppUrl } from "@/lib/whatsapp";
+import phoneIcon from "@/assets/phone-icon.png";
 
 const sizes = [
   {
@@ -109,7 +110,7 @@ const TamanhosSection = () => {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-sm font-semibold text-whatsapp transition-colors hover:underline"
           >
-            <MessageCircle className="h-4 w-4 fill-current" />
+            <img src={phoneIcon} alt="WhatsApp" className="h-4 w-4" />
             Dúvidas? Fale conosco pelo WhatsApp
           </a>
         </div>

@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { MapPin, CheckCircle, XCircle, MessageCircle, Search, Loader2, Zap } from "lucide-react";
+import { MapPin, CheckCircle, XCircle, Search, Loader2, Zap } from "lucide-react";
+import phoneIcon from "@/assets/phone-icon.png";
 import { Button } from "@/components/ui/button";
 
 type Address = {
@@ -189,7 +190,7 @@ const CepSection = () => {
                   size="lg"
                   className="gap-2 bg-whatsapp text-whatsapp-foreground hover:bg-whatsapp-hover text-sm font-bold shadow-lg hover:scale-105 transition-transform"
                 >
-                  <MessageCircle className="h-5 w-5 fill-current" />
+                  <img src={phoneIcon} alt="WhatsApp" className="h-5 w-5" />
                   Pedir caçamba agora
                 </Button>
               </div>
