@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import logoAmba from "@/assets/logo-amba.png";
+import cacambaImg from "@/assets/cacamba-generica.png";
 
 type Plan = {
   id: string;
@@ -23,8 +24,7 @@ type Plan = {
 const plans: Plan[] = [
   { id: "cacamba_3m", label: "Caçamba 3m³", price: 179.99 },
   { id: "cacamba_5m", label: "Caçamba 5m³", price: 259.99 },
-  { id: "cacamba_6m", label: "Caçamba 6m³", price: 289.99 },
-  { id: "cacamba_8m", label: "Caçamba 8m³", price: 339.99 },
+  { id: "cacamba_7m", label: "Caçamba 7m³", price: 319.99 },
   { id: "cacamba_10m", label: "Caçamba 10m³", price: 389.00 },
 ];
 
@@ -285,11 +285,14 @@ const Checkout = () => {
                     onClick={() => setSelectedPlan(plan.id)}
                   >
                     <CardContent className="flex items-center justify-between p-4">
-                      <div>
-                        <p className="font-bold text-foreground">{plan.label}</p>
-                        <p className="text-sm text-muted-foreground">
-                          {formatCurrency(plan.price)} / unidade
-                        </p>
+                      <div className="flex items-center gap-3">
+                        <img src={cacambaImg} alt={plan.label} className="h-12 w-16 object-contain shrink-0" />
+                        <div>
+                          <p className="font-bold text-foreground">{plan.label}</p>
+                          <p className="text-sm text-muted-foreground">
+                            {formatCurrency(plan.price)} / unidade
+                          </p>
+                        </div>
                       </div>
                       <div className="flex items-center gap-2">
                         {isSelected && (
