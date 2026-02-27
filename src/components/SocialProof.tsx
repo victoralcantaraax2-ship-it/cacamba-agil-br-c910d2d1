@@ -1,5 +1,7 @@
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
+import googleLogo from "@/assets/google-logo.png";
+import ra1000Selo from "@/assets/ra1000-selo.png";
 
 const reviews = [
   { name: "Josy Araujo", role: "Arquiteta", text: "Atendimento pelo WhatsApp super rápido. A caçamba chegou no mesmo dia. Recomendo demais!" },
@@ -30,15 +32,21 @@ const SocialProof = () => {
           <h2 className="mb-2 text-2xl font-extrabold text-secondary-foreground md:text-3xl">
             O que nossos clientes dizem
           </h2>
-          <div className="flex items-center justify-center gap-2">
-            <span className="text-lg font-bold text-secondary-foreground">EXCELENTE</span>
-            <div className="flex gap-0.5">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="h-5 w-5 fill-star text-star" />
-              ))}
+          <div className="flex items-center justify-center gap-6 flex-wrap">
+            <div className="flex flex-col items-center gap-1">
+              <img src={googleLogo} alt="Google" className="h-7 w-auto" />
+              <div className="flex items-center gap-1.5">
+                <div className="flex gap-0.5">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-5 w-5 fill-star text-star" />
+                  ))}
+                </div>
+                <span className="text-sm font-bold text-secondary-foreground">5.0</span>
+              </div>
             </div>
+            <img src={ra1000Selo} alt="Certificado RA 1000 Reclame Aqui" className="h-12 w-auto" />
           </div>
-          <p className="mt-1 text-sm text-secondary-foreground/60">
+          <p className="mt-2 text-sm text-secondary-foreground/60">
             Com base em mais de 60 avaliações de clientes reais
           </p>
         </div>
