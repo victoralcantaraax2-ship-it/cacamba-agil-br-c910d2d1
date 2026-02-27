@@ -61,14 +61,6 @@ const Header = () => {
 
         {/* Mobile buttons */}
         <div className="flex items-center gap-2 lg:hidden">
-          <a
-            href={getWhatsAppUrl()}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex h-10 w-10 items-center justify-center rounded-lg bg-whatsapp text-whatsapp-foreground"
-          >
-            <img src={whatsappIcon} alt="WhatsApp" className="h-6 w-6" />
-          </a>
           <button
             onClick={() => setOpen(!open)}
             className="flex h-10 w-10 items-center justify-center rounded-lg text-secondary-foreground"
