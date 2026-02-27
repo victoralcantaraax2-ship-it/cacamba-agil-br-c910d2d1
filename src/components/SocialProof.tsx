@@ -1,5 +1,5 @@
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import googleLogo from "@/assets/google-logo.png";
 
 const reviews = [
@@ -38,15 +38,16 @@ const scrollTo = (id: string) => {
 };
 
 const SocialProof = () => {
+  const shuffled = useMemo(() => [...reviews].sort(() => Math.random() - 0.5), []);
   const [current, setCurrent] = useState(0);
 
-  const prev = () => setCurrent((c) => (c === 0 ? reviews.length - 1 : c - 1));
-  const next = () => setCurrent((c) => (c === reviews.length - 1 ? 0 : c + 1));
+  const prev = () => setCurrent((c) => (c === 0 ? shuffled.length - 1 : c - 1));
+  const next = () => setCurrent((c) => (c === shuffled.length - 1 ? 0 : c + 1));
 
   const getVisibleReviews = () => {
     const visible: typeof reviews = [];
     for (let i = 0; i < 3; i++) {
-      visible.push(reviews[(current + i) % reviews.length]);
+      visible.push(shuffled[(current + i) % shuffled.length]);
     }
     return visible;
   };
