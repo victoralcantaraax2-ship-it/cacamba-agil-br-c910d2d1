@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
-import whatsappIcon from "@/assets/whatsapp-icon.png";
+import phoneIcon from "@/assets/phone-icon.png";
 import logoAmba from "@/assets/logo-amba-horizontal.jpeg";
 import { getWhatsAppUrl } from "@/lib/whatsapp";
 
@@ -61,6 +61,15 @@ const Header = () => {
 
         {/* Mobile buttons */}
         <div className="flex items-center gap-2 lg:hidden">
+          <a
+            href={getWhatsAppUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 rounded-lg bg-primary px-3 py-2 text-sm font-bold text-primary-foreground"
+          >
+            <img src={phoneIcon} alt="Telefone" className="h-4 w-4" />
+            Orçamentos
+          </a>
           <button
             onClick={() => setOpen(!open)}
             className="flex h-10 w-10 items-center justify-center rounded-lg text-secondary-foreground"
