@@ -4,11 +4,20 @@ import googleLogo from "@/assets/google-logo.png";
 
 
 const reviews = [
+  // Empresas da região
+  { name: "MF Engenharia", role: "Construtora – Guarulhos/SP", text: "Usamos a AMBA em todas as nossas obras na região. Entrega rápida e preço competitivo. Parceria de confiança." },
+  { name: "Papelão Guarulhos Reciclagem", role: "Reciclagem – Guarulhos/SP", text: "Precisávamos de caçamba urgente para descarte de papelão e entulho. Resolveram no mesmo dia, excelente!" },
+  { name: "RC Reformas e Acabamentos", role: "Reformas – Guarulhos/SP", text: "Já alugamos mais de 15 caçambas com a AMBA. Sempre pontuais e com ótimo atendimento pelo WhatsApp." },
+  { name: "Construtora Vila Galvão", role: "Construtora – Guarulhos/SP", text: "Fornecedor fixo das nossas obras. Nunca tivemos problema com prazo ou qualidade do serviço." },
+  { name: "Ferro Velho São João", role: "Reciclagem – Guarulhos/SP", text: "Caçamba chegou no horário combinado. Equipe educada e profissional. Recomendo para qualquer empresa." },
+  // Pessoa física
   { name: "Josy Araujo", role: "Arquiteta", text: "Atendimento pelo WhatsApp super rápido. A caçamba chegou no mesmo dia. Recomendo demais!" },
   { name: "Rogério Pereira", role: "Engenheiro Civil", text: "Muito satisfeito com o serviço. Equipe pontual e comprometida com o prazo." },
   { name: "Laudiane Sousa", role: "Proprietária de Imóvel", text: "Podem contratar sem medo. Processo simples e preço justo." },
   { name: "Nilson Fucítalo", role: "Mestre de Obras", text: "Cumprem o que prometem. Já é minha terceira locação com eles." },
   { name: "Carla Mendes", role: "Decoradora", text: "Muito fácil pedir pelo WhatsApp e a entrega foi rápida. Nota 10!" },
+  { name: "Anderson Lima", role: "Proprietário – Guarulhos/SP", text: "Reformei minha casa e precisei de 2 caçambas. Preço justo e entrega no dia seguinte. Super indico!" },
+  { name: "Patrícia Oliveira", role: "Síndica – Guarulhos/SP", text: "Contratei para o condomínio. Serviço impecável, sem sujeira na rua. Os moradores elogiaram." },
 ];
 
 const SocialProof = () => {
