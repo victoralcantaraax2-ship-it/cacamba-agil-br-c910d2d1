@@ -5,28 +5,27 @@ import googleLogo from "@/assets/google-logo.png";
 
 const reviews = [
   // Empresas da região
-  { name: "MF Engenharia", role: "Construtora – Guarulhos/SP", stars: 5, text: "Usamos a AMBA em todas as nossas obras na região. Entrega rápida e preço competitivo. Parceria de confiança." },
+  { name: "MF Engenharia", role: "Construtora – Guarulhos/SP", stars: 5, text: "Usamos a AMBA em todas as nossas obras na região. Entrega rápida e equipe muito profissional." },
   { name: "Papelão Guarulhos Reciclagem", role: "Reciclagem – Guarulhos/SP", stars: 5, text: "Precisávamos de caçamba urgente para descarte de papelão e entulho. Resolveram no mesmo dia, excelente!" },
   { name: "RC Reformas e Acabamentos", role: "Reformas – Guarulhos/SP", stars: 5, text: "Já alugamos mais de 15 caçambas com a AMBA. Sempre pontuais e com ótimo atendimento pelo WhatsApp." },
   { name: "Construtora Vila Galvão", role: "Construtora – Guarulhos/SP", stars: 5, text: "Fornecedor fixo das nossas obras. Nunca tivemos problema com prazo ou qualidade do serviço." },
   { name: "Ferro Velho São João", role: "Reciclagem – Guarulhos/SP", stars: 5, text: "Caçamba chegou no horário combinado. Equipe educada e profissional. Recomendo para qualquer empresa." },
   { name: "Terraplenagem Norte SP", role: "Terraplenagem – Guarulhos/SP", stars: 4, text: "Bom serviço, caçamba bem conservada. Só demorou um pouco mais que o esperado na retirada." },
   { name: "JL Materiais de Construção", role: "Comércio – Guarulhos/SP", stars: 5, text: "Indicamos a AMBA para todos os nossos clientes. Serviço sério e confiável." },
-  { name: "Reciclagem Cumbica", role: "Reciclagem – Guarulhos/SP", stars: 4, text: "Atendimento bom, preço na média. Entrega foi rápida, mas poderia melhorar a comunicação de retirada." },
+  { name: "Reciclagem Cumbica", role: "Reciclagem – Guarulhos/SP", stars: 4, text: "Atendimento bom. Entrega foi rápida, mas poderia melhorar a comunicação sobre a retirada." },
+  { name: "Marmoraria Presidente Dutra", role: "Marmoraria – Guarulhos/SP", stars: 5, text: "Descartamos resíduos de mármore e granito. Serviço rápido e dentro das normas ambientais." },
   // Pessoa física
   { name: "Josy Araujo", role: "Arquiteta", stars: 5, text: "Atendimento pelo WhatsApp super rápido. A caçamba chegou no mesmo dia. Recomendo demais!" },
   { name: "Rogério Pereira", role: "Engenheiro Civil", stars: 5, text: "Muito satisfeito com o serviço. Equipe pontual e comprometida com o prazo." },
-  { name: "Laudiane Sousa", role: "Proprietária de Imóvel", stars: 5, text: "Podem contratar sem medo. Processo simples e preço justo." },
+  { name: "Laudiane Sousa", role: "Proprietária de Imóvel", stars: 5, text: "Podem contratar sem medo. Processo simples e atendimento excelente." },
   { name: "Nilson Fucítalo", role: "Mestre de Obras", stars: 5, text: "Cumprem o que prometem. Já é minha terceira locação com eles." },
   { name: "Carla Mendes", role: "Decoradora", stars: 5, text: "Muito fácil pedir pelo WhatsApp e a entrega foi rápida. Nota 10!" },
-  { name: "Anderson Lima", role: "Proprietário – Guarulhos/SP", stars: 5, text: "Reformei minha casa e precisei de 2 caçambas. Preço justo e entrega no dia seguinte. Super indico!" },
+  { name: "Anderson Lima", role: "Proprietário – Guarulhos/SP", stars: 5, text: "Reformei minha casa e precisei de 2 caçambas. Entrega no dia seguinte. Super indico!" },
   { name: "Patrícia Oliveira", role: "Síndica – Guarulhos/SP", stars: 5, text: "Contratei para o condomínio. Serviço impecável, sem sujeira na rua. Os moradores elogiaram." },
-  { name: "Felipe Santos", role: "Proprietário – Guarulhos/SP", stars: 4, text: "Serviço bom no geral. A caçamba veio limpa e no prazo. Só achei o valor um pouco acima." },
   { name: "Dona Maria Aparecida", role: "Aposentada – Guarulhos/SP", stars: 5, text: "Meu filho indicou. Pedi pelo WhatsApp e no outro dia já estava na porta. Muito prático!" },
   { name: "Thiago Nascimento", role: "Pedreiro autônomo", stars: 5, text: "Trabalho com reforma e sempre preciso de caçamba. A AMBA nunca me deixou na mão." },
-  { name: "Luciana Ferreira", role: "Designer de Interiores", stars: 4, text: "Ótimo custo-benefício. Usei na reforma do meu escritório. Entrega ok, só a retirada atrasou 1 dia." },
+  { name: "Luciana Ferreira", role: "Designer de Interiores", stars: 4, text: "Usei na reforma do meu escritório. Entrega ok, só a retirada atrasou 1 dia." },
   { name: "Eduardo Takahashi", role: "Proprietário – São Paulo/SP", stars: 5, text: "Contratei de SP mesmo e entregaram em Guarulhos sem problema. Atendimento nota 10." },
-  { name: "Marmoraria Presidente Dutra", role: "Marmoraria – Guarulhos/SP", stars: 5, text: "Descartamos resíduos de mármore e granito. Serviço rápido e dentro das normas ambientais." },
 ];
 
 const SocialProof = () => {
