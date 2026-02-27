@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Menu, X, MessageCircle } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import whatsappIcon from "@/assets/whatsapp-icon.png";
 import logoAmba from "@/assets/logo-amba-horizontal.jpeg";
 import { getWhatsAppUrl } from "@/lib/whatsapp";
 
@@ -66,7 +67,7 @@ const Header = () => {
             rel="noopener noreferrer"
             className="flex h-10 w-10 items-center justify-center rounded-lg bg-whatsapp text-whatsapp-foreground"
           >
-            <MessageCircle className="h-5 w-5 fill-current" />
+            <img src={whatsappIcon} alt="WhatsApp" className="h-6 w-6" />
           </a>
           <button
             onClick={() => setOpen(!open)}
