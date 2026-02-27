@@ -62,12 +62,12 @@ const TamanhosSection = () => {
               key={item.size}
               className={`relative flex flex-col rounded-2xl border-2 bg-card p-5 md:p-6 transition-all hover:shadow-xl ${
                 item.popular
-                  ? "border-primary shadow-lg scale-[1.02]"
+                  ? "border-primary shadow-lg scale-[1.02] animate-border-glow"
                   : "border-border hover:border-primary/40"
               }`}
             >
               {item.popular && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-primary px-3 py-1 text-[10px] md:text-xs font-bold uppercase text-primary-foreground flex items-center gap-1">
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-primary px-3 py-1 text-[10px] md:text-xs font-bold uppercase text-primary-foreground flex items-center gap-1 animate-badge-shimmer">
                   <Star className="h-3 w-3 fill-current" />
                   {item.popularLabel}
                 </span>
@@ -103,7 +103,7 @@ const TamanhosSection = () => {
                 rel="noopener noreferrer"
                 className={`block w-full rounded-lg py-3 text-center text-sm font-bold uppercase transition-all active:scale-95 hover:scale-105 ${
                   item.popular
-                    ? "bg-primary text-primary-foreground shadow-lg"
+                    ? "bg-primary text-primary-foreground shadow-lg animate-btn-breathe"
                     : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
                 }`}
               >

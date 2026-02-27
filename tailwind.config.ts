@@ -98,6 +98,18 @@ export default {
           "0%, 100%": { opacity: "0.7" },
           "50%": { opacity: "1", textShadow: "0 0 8px hsl(45 100% 50% / 0.4)" },
         },
+        "border-glow": {
+          "0%, 100%": { boxShadow: "0 0 8px 0 hsl(var(--primary) / 0.15)" },
+          "50%": { boxShadow: "0 0 18px 2px hsl(var(--primary) / 0.3)" },
+        },
+        "btn-breathe": {
+          "0%, 100%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.02)" },
+        },
+        "badge-shimmer": {
+          "0%, 100%": { opacity: "0.85" },
+          "50%": { opacity: "1" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -105,6 +117,9 @@ export default {
         "pulse-green": "pulse-green 2s ease-in-out infinite",
         "bounce-subtle": "bounce-subtle 2s ease-in-out infinite",
         "glow-breathe": "glow-breathe 3s ease-in-out infinite",
+        "border-glow": "border-glow 4s ease-in-out infinite",
+        "btn-breathe": "btn-breathe 3.5s ease-in-out infinite",
+        "badge-shimmer": "badge-shimmer 3s ease-in-out infinite",
       },
     },
   },
