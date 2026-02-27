@@ -12,7 +12,7 @@ const faqs = [
   },
   {
     q: "Em quanto tempo entregam?",
-    a: "A entrega é feita em até 24 horas após a confirmação do pedido, dependendo da região de atendimento.",
+    a: "A entrega é feita em até 2 horas após a confirmação do pedido, dependendo da região de atendimento.",
   },
   {
     q: "Por quanto tempo posso ficar com a caçamba?",
