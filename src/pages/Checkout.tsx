@@ -421,7 +421,7 @@ const Checkout = () => {
                     <Label htmlFor="cep" className="text-xs">CEP <span className="text-destructive">*</span></Label>
                     <Input
                       id="cep"
-                      placeholder="00000-000"
+                      placeholder="Informe o seu CEP"
                       value={address.cep}
                       onChange={(e) => handleCepChange(e.target.value)}
                       maxLength={9}

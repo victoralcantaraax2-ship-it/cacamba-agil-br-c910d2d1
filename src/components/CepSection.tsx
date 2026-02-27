@@ -106,7 +106,7 @@ const CepSection = () => {
                 <MapPin className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/60" />
                 <input
                   id="cep-home"
-                  placeholder="00000-000"
+                  placeholder="Informe o seu CEP"
                   value={cep}
                   onChange={(e) => handleCepChange(e.target.value)}
                   maxLength={9}

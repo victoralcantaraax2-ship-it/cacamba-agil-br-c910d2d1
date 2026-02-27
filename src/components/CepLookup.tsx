@@ -85,7 +85,7 @@ const CepLookup = ({ onAddressFound, onClear, address, onFieldChange, errors }: 
         </Label>
         <Input
           id="cep"
-          placeholder="00000-000"
+          placeholder="Informe o seu CEP"
           value={cep}
           onChange={(e) => setCep(formatCep(e.target.value))}
           maxLength={9}
