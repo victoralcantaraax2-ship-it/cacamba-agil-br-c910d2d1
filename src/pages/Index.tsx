@@ -1,17 +1,16 @@
 import { useEffect } from "react";
+import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
-import CepSection from "@/components/CepSection";
-import AboutSection from "@/components/AboutSection";
-import DifferentialsSection from "@/components/DifferentialsSection";
+import TamanhosSection from "@/components/TamanhosSection";
+import ComoFuncionaSection from "@/components/ComoFuncionaSection";
 import SocialProof from "@/components/SocialProof";
-import GallerySection from "@/components/GallerySection";
-
+import AboutSection from "@/components/AboutSection";
+import FAQSection from "@/components/FAQSection";
 import Footer from "@/components/Footer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 
 const Index = () => {
   useEffect(() => {
-    // Google tag (gtag.js) — apenas na página inicial
     const script = document.createElement("script");
     script.src = "https://www.googletagmanager.com/gtag/js?id=AW-17975915134";
     script.async = true;
@@ -31,13 +30,13 @@ const Index = () => {
 
   return (
     <main>
+      <Header />
       <HeroSection />
-      <CepSection />
-      <AboutSection />
-      <DifferentialsSection />
+      <TamanhosSection />
+      <ComoFuncionaSection />
       <SocialProof />
-      <GallerySection />
-      
+      <AboutSection />
+      <FAQSection />
       <Footer />
       <WhatsAppFloat />
     </main>

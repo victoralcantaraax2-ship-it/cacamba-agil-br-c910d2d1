@@ -2,9 +2,7 @@ import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import googleLogo from "@/assets/google-logo.png";
 
-
 const reviews = [
-  // Empresas da região
   { name: "MF Engenharia", role: "Construtora – Guarulhos/SP", stars: 5, text: "Usamos a AMBA em todas as nossas obras na região. Entrega rápida e equipe muito profissional." },
   { name: "Papelão Guarulhos Reciclagem", role: "Reciclagem – Guarulhos/SP", stars: 5, text: "Precisávamos de caçamba urgente para descarte de papelão e entulho. Resolveram no mesmo dia, excelente!" },
   { name: "RC Reformas e Acabamentos", role: "Reformas – Guarulhos/SP", stars: 5, text: "Já alugamos mais de 15 caçambas com a AMBA. Sempre pontuais e com ótimo atendimento pelo WhatsApp." },
@@ -14,7 +12,6 @@ const reviews = [
   { name: "JL Materiais de Construção", role: "Comércio – Guarulhos/SP", stars: 5, text: "Indicamos a AMBA para todos os nossos clientes. Serviço sério e confiável." },
   { name: "Reciclagem Cumbica", role: "Reciclagem – Guarulhos/SP", stars: 5, text: "Atendimento excelente. Entrega foi rápida e tudo correu bem." },
   { name: "Marmoraria Presidente Dutra", role: "Marmoraria – Guarulhos/SP", stars: 5, text: "Descartamos resíduos de mármore e granito. Serviço rápido e dentro das normas ambientais." },
-  // Pessoa física
   { name: "Josy Araujo", role: "Arquiteta", stars: 5, text: "Atendimento pelo WhatsApp super rápido. A caçamba chegou no mesmo dia. Recomendo demais!" },
   { name: "Rogério Pereira", role: "Engenheiro Civil", stars: 5, text: "Muito satisfeito com o serviço. Equipe pontual e comprometida com o prazo." },
   { name: "Laudiane Sousa", role: "Proprietária de Imóvel", stars: 5, text: "Podem contratar sem medo. Processo simples e atendimento excelente." },
@@ -27,6 +24,11 @@ const reviews = [
   { name: "Luciana Ferreira", role: "Designer de Interiores", stars: 5, text: "Usei na reforma do meu escritório. Entrega rápida e serviço impecável." },
   { name: "Eduardo Takahashi", role: "Proprietário – São Paulo/SP", stars: 5, text: "Contratei de SP mesmo e entregaram em Guarulhos sem problema. Atendimento nota 10." },
 ];
+
+const scrollTo = (id: string) => {
+  const el = document.querySelector(id);
+  if (el) el.scrollIntoView({ behavior: "smooth" });
+};
 
 const SocialProof = () => {
   const [current, setCurrent] = useState(0);
@@ -43,7 +45,7 @@ const SocialProof = () => {
   };
 
   return (
-    <section className="bg-secondary py-14 md:py-20">
+    <section id="depoimentos" className="bg-secondary py-16 md:py-24">
       <div className="container px-4">
         <div className="mb-10 text-center">
           <h2 className="mb-2 text-2xl font-extrabold text-secondary-foreground md:text-3xl">
@@ -61,7 +63,6 @@ const SocialProof = () => {
                 <span className="text-sm font-bold text-secondary-foreground">4.8</span>
               </div>
             </div>
-            
           </div>
           <p className="mt-2 text-sm text-secondary-foreground/60">
             Com base em mais de 60 avaliações de clientes reais
@@ -103,6 +104,15 @@ const SocialProof = () => {
             aria-label="Próxima avaliação"
           >
             <ChevronRight className="h-5 w-5" />
+          </button>
+        </div>
+
+        <div className="mt-10 text-center">
+          <button
+            onClick={() => scrollTo("#tamanhos")}
+            className="rounded-xl bg-primary px-8 py-4 text-base font-bold uppercase text-primary-foreground shadow-lg transition-all hover:scale-105 hover:bg-primary/90"
+          >
+            Quero pedir agora
           </button>
         </div>
       </div>
