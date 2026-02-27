@@ -162,9 +162,16 @@ const CepSection = () => {
                     Cobertura confirmada
                   </span>
                 </div>
-                <p className="text-sm text-muted-foreground pl-7">
-                  {address.bairro && `${address.bairro} – `}{address.localidade}/{address.uf}
-                </p>
+                <div className="pl-7 space-y-0.5">
+                  {address.logradouro && (
+                    <p className="text-sm font-semibold text-foreground">
+                      {address.logradouro}
+                    </p>
+                  )}
+                  <p className="text-sm text-muted-foreground">
+                    {address.bairro && `${address.bairro} – `}{address.localidade}/{address.uf}
+                  </p>
+                </div>
 
                 {/* Animated delivery badge */}
                 <div className="mt-3 pl-7">
