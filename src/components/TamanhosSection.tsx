@@ -8,7 +8,7 @@ const sizes = [
     bags: "Aprox. 18 sacos",
     
     popular: false,
-    benefits: ["Ideal para banheiros e cozinhas", "Descarte de entulho leve", "Entrega em até 24h", "Retirada programada"],
+    benefits: ["Ideal para banheiros e cozinhas", "Descarte de entulho leve", "Entrega em até 2h", "Retirada programada"],
   },
   {
     size: "5m³",
@@ -16,7 +16,7 @@ const sizes = [
     bags: "Aprox. 30 sacos",
     
     popular: true,
-    benefits: ["Reformas completas de cômodos", "Sobras de construção", "Entrega em até 24h", "Retirada programada"],
+    benefits: ["Reformas completas de cômodos", "Sobras de construção", "Entrega em até 2h", "Retirada programada"],
   },
   {
     size: "7m³",
@@ -24,7 +24,7 @@ const sizes = [
     bags: "Aprox. 42 sacos",
     
     popular: false,
-    benefits: ["Demolições parciais", "Obras maiores", "Entrega em até 24h", "Retirada programada"],
+    benefits: ["Demolições parciais", "Obras maiores", "Entrega em até 2h", "Retirada programada"],
   },
   {
     size: "10m³",
@@ -32,7 +32,7 @@ const sizes = [
     bags: "Aprox. 60 sacos",
     
     popular: false,
-    benefits: ["Construções e demolições", "Alto volume de entulho", "Entrega em até 24h", "Retirada programada"],
+    benefits: ["Construções e demolições", "Alto volume de entulho", "Entrega em até 2h", "Retirada programada"],
   },
 ];
 
