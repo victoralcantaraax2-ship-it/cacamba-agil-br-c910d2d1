@@ -7,7 +7,7 @@ const sizes = [
     size: "3m³",
     title: "Pequenas reformas",
     bags: "Aprox. 18 sacos",
-    price: "R$ 179,99",
+    
     popular: false,
     benefits: ["Ideal para banheiros e cozinhas", "Descarte de entulho leve", "Entrega em até 24h", "Retirada programada"],
   },
@@ -15,7 +15,7 @@ const sizes = [
     size: "5m³",
     title: "Reformas médias",
     bags: "Aprox. 30 sacos",
-    price: "R$ 259,99",
+    
     popular: true,
     benefits: ["Reformas completas de cômodos", "Sobras de construção", "Entrega em até 24h", "Retirada programada"],
   },
@@ -23,7 +23,7 @@ const sizes = [
     size: "7m³",
     title: "Grandes reformas",
     bags: "Aprox. 42 sacos",
-    price: "R$ 319,99",
+    
     popular: false,
     benefits: ["Demolições parciais", "Obras maiores", "Entrega em até 24h", "Retirada programada"],
   },
@@ -31,7 +31,7 @@ const sizes = [
     size: "10m³",
     title: "Obras completas",
     bags: "Aprox. 60 sacos",
-    price: "R$ 389,00",
+    
     popular: false,
     benefits: ["Construções e demolições", "Alto volume de entulho", "Entrega em até 24h", "Retirada programada"],
   },
@@ -74,9 +74,6 @@ const TamanhosSection = () => {
                 <p className="text-xs text-muted-foreground/70">{item.bags}</p>
               </div>
 
-              <div className="mb-4 text-center">
-                <span className="text-2xl font-extrabold text-primary">{item.price}</span>
-              </div>
 
               <ul className="mb-6 flex-1 space-y-2">
                 {item.benefits.map((b) => (
