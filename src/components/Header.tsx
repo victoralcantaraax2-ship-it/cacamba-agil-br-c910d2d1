@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Menu, X, MessageCircle } from "lucide-react";
-import logoAmba from "@/assets/logo-amba.png";
+import logoAmba from "@/assets/logo-amba-horizontal.jpeg";
 import { getWhatsAppUrl } from "@/lib/whatsapp";
 
 const navLinks = [
@@ -36,7 +36,7 @@ const Header = () => {
     >
       <div className="container flex h-16 items-center justify-between px-4">
         <a href="#" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
-          <img src={logoAmba} alt="AMBA Caçambas" className="h-10 w-auto" />
+          <img src={logoAmba} alt="AMBA Caçambas" className="h-11 w-auto md:h-12" />
         </a>
 
         {/* Desktop nav */}

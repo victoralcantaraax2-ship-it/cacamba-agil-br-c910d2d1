@@ -1,6 +1,5 @@
 import { Check, MessageCircle } from "lucide-react";
 import { getWhatsAppUrl } from "@/lib/whatsapp";
-import { useNavigate } from "react-router-dom";
 
 const sizes = [
   {
@@ -38,7 +37,10 @@ const sizes = [
 ];
 
 const TamanhosSection = () => {
-  const navigate = useNavigate();
+  const getWhatsAppUrlForSize = (size: string) => {
+    const msg = encodeURIComponent(`Olá! Quero alugar uma caçamba de ${size}. Pode me passar disponibilidade e valor?`);
+    return `https://wa.me/5511968359074?text=${msg}`;
+  };
 
   return (
     <section id="tamanhos" className="bg-background py-16 md:py-24">
@@ -84,16 +86,18 @@ const TamanhosSection = () => {
                 ))}
               </ul>
 
-              <button
-                onClick={() => navigate("/finalizacao")}
-                className={`w-full rounded-lg py-3 text-sm font-bold uppercase transition-all hover:scale-105 ${
+              <a
+                href={getWhatsAppUrlForSize(item.size)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`block w-full rounded-lg py-3 text-center text-sm font-bold uppercase transition-all hover:scale-105 ${
                   item.popular
                     ? "bg-primary text-primary-foreground shadow-lg"
                     : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
                 }`}
               >
                 {item.popular ? "Pedir agora" : "Cotar agora"}
-              </button>
+              </a>
             </div>
           ))}
         </div>
