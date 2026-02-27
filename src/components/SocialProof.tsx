@@ -1,7 +1,7 @@
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import googleLogo from "@/assets/google-logo.png";
-import ra1000Selo from "@/assets/ra1000-selo.png";
+
 
 const reviews = [
   { name: "Josy Araujo", role: "Arquiteta", text: "Atendimento pelo WhatsApp super rápido. A caçamba chegou no mesmo dia. Recomendo demais!" },
@@ -44,7 +44,7 @@ const SocialProof = () => {
                 <span className="text-sm font-bold text-secondary-foreground">5.0</span>
               </div>
             </div>
-            <img src={ra1000Selo} alt="Certificado RA 1000 Reclame Aqui" className="h-12 w-auto" />
+            
           </div>
           <p className="mt-2 text-sm text-secondary-foreground/60">
             Com base em mais de 60 avaliações de clientes reais
