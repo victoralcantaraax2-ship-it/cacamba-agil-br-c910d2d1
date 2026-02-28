@@ -6,11 +6,11 @@ const corsHeaders = {
 };
 
 const precos: Record<string, { amount: number; title: string }> = {
-  cacamba_3m: { amount: 17999, title: "Caçamba 3m³" },
-  cacamba_5m: { amount: 25999, title: "Caçamba 5m³" },
-  cacamba_6m: { amount: 28999, title: "Caçamba 6m³" },
-  cacamba_8m: { amount: 33999, title: "Caçamba 8m³" },
-  cacamba_10m: { amount: 38900, title: "Caçamba 10m³" },
+  cacamba_3m: { amount: 23000, title: "Caçamba 3m³" },
+  cacamba_4m: { amount: 30000, title: "Caçamba 4m³" },
+  cacamba_5m: { amount: 36000, title: "Caçamba 5m³" },
+  cacamba_7m: { amount: 45000, title: "Caçamba 7m³" },
+  cacamba_10m: { amount: 59000, title: "Caçamba 10m³" },
 };
 
 Deno.serve(async (req) => {

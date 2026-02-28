@@ -6,34 +6,42 @@ const sizes = [
   {
     size: "3m³",
     title: "Pequenas reformas",
-    bags: "Aprox. 18 sacos",
+    bags: "20 a 25 sacos · 3 a 4 dias",
     popular: false,
-    idealFor: ["Banheiros e cozinhas", "Reformas rápidas e entulho leve"],
+    idealFor: ["Pequenas reformas", "Retirada de piso e entulho leve"],
     checks: ["Entrega rápida na sua região", "Retirada programada", "Ideal para espaços reduzidos"],
   },
   {
-    size: "5m³",
+    size: "4m³",
     title: "Reformas médias",
-    bags: "Aprox. 30 sacos",
+    bags: "30 a 35 sacos · 3 a 5 dias",
+    popular: false,
+    idealFor: ["Reformas médias", "Sobras de construção"],
+    checks: ["Entrega rápida na sua região", "Retirada programada", "Bom custo-benefício"],
+  },
+  {
+    size: "5m³",
+    title: "Obras residenciais",
+    bags: "40 a 45 sacos · 4 a 6 dias",
     popular: true,
     popularLabel: "Mais escolhido pelos clientes",
-    idealFor: ["Reformas completas de cômodos", "Sobras de construção"],
+    idealFor: ["Obras residenciais", "Contrapiso e reformas completas"],
     checks: ["Entrega rápida na sua região", "Retirada programada", "Melhor custo-benefício"],
   },
   {
     size: "7m³",
-    title: "Grandes reformas",
-    bags: "Aprox. 42 sacos",
+    title: "Grandes volumes",
+    bags: "60 a 70 sacos · 5 a 7 dias",
     popular: false,
-    idealFor: ["Demolições parciais", "Obras de médio porte"],
+    idealFor: ["Grandes volumes de entulho", "Demolições parciais"],
     checks: ["Entrega rápida na sua região", "Retirada programada", "Suporta maior volume de entulho"],
   },
   {
     size: "10m³",
-    title: "Obras completas",
-    bags: "Aprox. 60 sacos",
+    title: "Demolições completas",
+    bags: "90 a 100 sacos · 7 dias",
     popular: false,
-    idealFor: ["Construções e demolições", "Alto volume de entulho"],
+    idealFor: ["Demolições, telhas, madeira", "Grande volume de entulho"],
     checks: ["Entrega rápida na sua região", "Retirada programada", "Ideal para grandes volumes"],
   },
 ];
@@ -55,7 +63,7 @@ const TamanhosSection = () => {
           </p>
         </div>
 
-        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
           {sizes.map((item) => (
             <div
               key={item.size}
