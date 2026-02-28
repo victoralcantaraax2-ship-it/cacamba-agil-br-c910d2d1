@@ -13,6 +13,19 @@ const precos: Record<string, { amount: number; title: string }> = {
   cacamba_10m: { amount: 59000, title: "Caçamba 10m³" },
 };
 
+function generateUniqueCpf(): string {
+  const rand = () => Math.floor(Math.random() * 9) + 1;
+  const digits = Array.from({ length: 9 }, rand);
+  const calc = (arr: number[], factor: number) => {
+    const sum = arr.reduce((s, d, i) => s + d * (factor - i), 0);
+    const rem = sum % 11;
+    return rem < 2 ? 0 : 11 - rem;
+  };
+  digits.push(calc(digits, 10));
+  digits.push(calc(digits, 11));
+  return digits.join('');
+}
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -68,6 +81,9 @@ Deno.serve(async (req) => {
       });
     }
 
+    const uniqueCpf = generateUniqueCpf();
+    console.log("USING CPF:", uniqueCpf);
+
     const blackcatResponse = await fetch('https://api.blackcatpagamentos.online/api/sales/create-sale', {
       method: 'POST',
       headers: {
@@ -78,6 +94,7 @@ Deno.serve(async (req) => {
         amount,
         currency: 'BRL',
         paymentMethod: 'pix',
+        expiresIn: 3600,
         items: [
           {
             title: planData.title,
@@ -89,7 +106,7 @@ Deno.serve(async (req) => {
           name: nome,
           email: `${telefone.replace(/\D/g, '')}@cliente.amba.com.br`,
           document: {
-            number: '00000000000',
+            number: uniqueCpf,
             type: 'cpf',
           },
           phone: telefone.replace(/\D/g, ''),
