@@ -52,7 +52,7 @@ Deno.serve(async (req) => {
     let amount = planData.amount * qty;
 
     // Apply coupon discount server-side
-    const validCoupons: Record<string, number> = { AMBA10: 0.10 };
+    const validCoupons: Record<string, number> = { AMBA10: 0.10, AMBA15: 0.15 };
     const couponCode = typeof cupom === 'string' ? cupom.trim().toUpperCase() : '';
     const discountRate = validCoupons[couponCode] || 0;
     const discountAmount = Math.round(amount * discountRate);
