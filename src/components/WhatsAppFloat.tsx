@@ -1,6 +1,6 @@
 import whatsappIcon from "@/assets/whatsapp-icon.png";
 
-const WHATSAPP_URL = "https://wa.me/5511968359074?text=Olá,%20quero%20alugar";
+const WHATSAPP_URL = "https://wa.me/5511969795930?text=Olá,%20quero%20alugar";
 
 const WhatsAppFloat = () => {
   return (
