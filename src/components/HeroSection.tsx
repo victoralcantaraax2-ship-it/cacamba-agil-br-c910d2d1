@@ -2,6 +2,7 @@ import { Truck, Leaf, MessageCircle } from "lucide-react";
 import { getWhatsAppUrl } from "@/lib/whatsapp";
 import heroBg from "@/assets/hero-bg.jpg";
 import whatsappIcon from "@/assets/whatsapp-icon.png";
+import logoAmba from "@/assets/logo-amba-horizontal.jpeg";
 import { Star, Users, Zap } from "lucide-react";
 
 const badges = [
@@ -36,6 +37,7 @@ const HeroSection = () => {
         </div>
 
         <div className="container relative z-10 px-4 py-16 text-center md:py-24">
+          <img src={logoAmba} alt="AMBA Caçambas" className="mx-auto mb-6 h-14 w-auto md:h-16" />
           <h1 className="mb-4 text-3xl font-black leading-tight tracking-tight text-secondary-foreground sm:text-4xl md:text-5xl lg:text-6xl">
             Locação de Caçambas com
             <br />
