@@ -36,9 +36,7 @@ const Header = () => {
       }`}
     >
       <div className="container flex h-16 items-center justify-between px-4">
-        <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="text-lg font-bold text-secondary-foreground">
-          AMBA Caçambas
-        </button>
+        <div className="w-10" />
 
         {/* Desktop nav */}
         <nav className="hidden items-center gap-6 lg:flex">

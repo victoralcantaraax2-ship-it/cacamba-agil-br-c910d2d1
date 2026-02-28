@@ -2,7 +2,7 @@ import { Truck, Leaf, MessageCircle } from "lucide-react";
 import { getWhatsAppUrl } from "@/lib/whatsapp";
 import heroBg from "@/assets/hero-bg.jpg";
 import whatsappIcon from "@/assets/whatsapp-icon.png";
-import logoAmba from "@/assets/logo-amba-horizontal.jpeg";
+import logoAmba from "@/assets/logo-amba-vertical.jpeg";
 import { Star, Users, Zap } from "lucide-react";
 
 const badges = [
