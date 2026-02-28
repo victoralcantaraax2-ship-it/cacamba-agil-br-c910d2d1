@@ -1,5 +1,5 @@
 import { Check, Star } from "lucide-react";
-import { getWhatsAppUrl } from "@/lib/whatsapp";
+import { handleWhatsAppClick } from "@/lib/whatsapp";
 import phoneIcon from "@/assets/phone-icon.png";
 
 const sizes = [
@@ -39,9 +39,8 @@ const sizes = [
 ];
 
 const TamanhosSection = () => {
-  const getWhatsAppUrlForSize = (size: string) => {
-    const msg = encodeURIComponent(`Olá! Quero alugar uma caçamba de ${size}. Pode me passar disponibilidade e valor?`);
-    return `https://wa.me/5511969795930?text=${msg}`;
+  const handleSizeClick = (size: string) => {
+    handleWhatsAppClick(`Olá! Quero alugar uma caçamba de ${size}. Pode me passar disponibilidade e valor?`);
   };
 
   return (
@@ -97,10 +96,8 @@ const TamanhosSection = () => {
                 ))}
               </ul>
 
-              <a
-                href={getWhatsAppUrlForSize(item.size)}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={() => handleSizeClick(item.size)}
                 className={`block w-full rounded-lg py-3 text-center text-sm font-bold uppercase transition-all active:scale-95 hover:scale-105 ${
                   item.popular
                     ? "bg-primary text-primary-foreground shadow-lg animate-btn-breathe"
@@ -108,21 +105,19 @@ const TamanhosSection = () => {
                 }`}
               >
                 {item.popular ? "Pedir agora" : "Cotar agora"}
-              </a>
+              </button>
             </div>
           ))}
         </div>
 
         <div className="mt-8 md:mt-10 text-center">
-          <a
-            href={getWhatsAppUrl()}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={() => handleWhatsAppClick()}
             className="inline-flex items-center gap-2 text-sm font-semibold text-whatsapp transition-colors hover:underline"
           >
             <img src={phoneIcon} alt="WhatsApp" className="h-4 w-4" />
             Dúvidas? Fale conosco pelo WhatsApp
-          </a>
+          </button>
         </div>
       </div>
     </section>

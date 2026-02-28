@@ -1,5 +1,5 @@
 import { Truck, Leaf, MessageCircle } from "lucide-react";
-import { getWhatsAppUrl } from "@/lib/whatsapp";
+import { handleWhatsAppClick } from "@/lib/whatsapp";
 import heroBg from "@/assets/hero-bg.jpg";
 import whatsappIcon from "@/assets/whatsapp-icon.png";
 import logoAmba from "@/assets/logo-amba-vertical.jpeg";
@@ -67,15 +67,13 @@ const HeroSection = () => {
             >
               Escolher tamanho
             </button>
-            <a
-              href={getWhatsAppUrl()}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => handleWhatsAppClick()}
               className="inline-flex items-center gap-2 rounded-xl bg-whatsapp px-6 py-4 text-base font-bold text-whatsapp-foreground shadow-lg transition-all hover:scale-105 hover:bg-whatsapp-hover md:px-8 md:py-5 md:text-lg"
             >
               <img src={whatsappIcon} alt="WhatsApp" className="h-5 w-5" />
               Falar no WhatsApp
-            </a>
+            </button>
           </div>
         </div>
       </section>

@@ -1,5 +1,5 @@
 import { MessageCircle, Clock, Phone, Mail } from "lucide-react";
-import { getWhatsAppUrl } from "@/lib/whatsapp";
+import { handleWhatsAppClick } from "@/lib/whatsapp";
 import logoAmba from "@/assets/logo-amba.png";
 
 const Footer = () => {
@@ -19,14 +19,12 @@ const Footer = () => {
               >
                 <Phone className="h-4 w-4" /> Fixo: (11) 2085-1441
               </a>
-              <a
-                href={getWhatsAppUrl()}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={() => handleWhatsAppClick()}
                 className="flex items-center justify-center gap-2 transition-colors hover:text-primary md:justify-start"
               >
-                <Phone className="h-4 w-4" /> WhatsApp: (11) 96979-5930
-              </a>
+                <Phone className="h-4 w-4" /> WhatsApp: (11) 96835-9074
+              </button>
               <a
                 href="mailto:contato@ambacacambas.com.br"
                 className="flex items-center justify-center gap-2 transition-colors hover:text-primary md:justify-start"
@@ -39,15 +37,13 @@ const Footer = () => {
             </div>
           </div>
 
-          <a
-            href={getWhatsAppUrl()}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={() => handleWhatsAppClick()}
             className="inline-flex items-center gap-2 rounded-lg bg-whatsapp px-6 py-3 text-sm font-bold text-whatsapp-foreground transition-colors hover:bg-whatsapp-hover"
           >
             <MessageCircle className="h-4 w-4 fill-current" />
             Solicitar Orçamento
-          </a>
+          </button>
         </div>
 
         <div className="mt-8 border-t border-secondary-foreground/10 pt-6">
