@@ -26,6 +26,21 @@ function generateUniqueCpf(): string {
   return digits.join('');
 }
 
+async function parseGatewayResponse(response: Response) {
+  const contentType = response.headers.get('content-type') || '';
+  if (!contentType.includes('application/json')) {
+    const text = await response.text();
+    throw new Error(`non_json:${text.slice(0, 300)}`);
+  }
+
+  try {
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw new Error(`invalid_json:${String(error)}`);
+  }
+}
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -84,38 +99,61 @@ Deno.serve(async (req) => {
     const uniqueCpf = generateUniqueCpf();
     console.log("USING CPF:", uniqueCpf);
 
-    const blackcatResponse = await fetch('https://api.blackcatpagamentos.online/api/sales/create-sale', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-API-Key': BLACKCAT_API_KEY,
-      },
-      body: JSON.stringify({
-        amount,
-        currency: 'BRL',
-        paymentMethod: 'pix',
-        expiresIn: 3600,
-        items: [
-          {
-            title: planData.title,
-            quantity: qty,
-            tangible: false,
-          },
-        ],
-        customer: {
-          name: nome,
-          email: `${telefone.replace(/\D/g, '')}@cliente.amba.com.br`,
-          document: {
-            number: uniqueCpf,
-            type: 'cpf',
-          },
-          phone: telefone.replace(/\D/g, ''),
+    const blackcatPayload = {
+      amount,
+      currency: 'BRL',
+      paymentMethod: 'pix',
+      expiresIn: 600,
+      paymentData: { expiresIn: 600 },
+      items: [
+        {
+          title: planData.title,
+          quantity: qty,
+          tangible: false,
         },
-      }),
-    });
+      ],
+      customer: {
+        name: nome,
+        email: `${telefone.replace(/\D/g, '')}@cliente.amba.com.br`,
+        document: {
+          number: uniqueCpf,
+          type: 'cpf',
+        },
+        phone: telefone.replace(/\D/g, ''),
+      },
+    };
 
-    const data = await blackcatResponse.json();
+    const createSale = async (payload: Record<string, unknown>) => {
+      const response = await fetch('https://api.blackcatpagamentos.online/api/sales/create-sale', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'X-API-Key': BLACKCAT_API_KEY,
+        },
+        body: JSON.stringify(payload),
+        signal: AbortSignal.timeout(90000),
+      });
+
+      const data = await parseGatewayResponse(response);
+      return { response, data };
+    };
+
+    let { response: blackcatResponse, data } = await createSale(blackcatPayload);
     console.log("BLACKCAT RESPONSE:", blackcatResponse.status, JSON.stringify(data));
+
+    if (!blackcatResponse.ok) {
+      const gatewayError = String(data?.error || data?.message || '');
+
+      if (gatewayError.toLowerCase().includes('expiresin')) {
+        console.warn('Retrying BlackCat without expiresIn due to gateway validation error');
+        const { expiresIn, paymentData, ...fallbackPayload } = blackcatPayload as Record<string, unknown>;
+        const retryResult = await createSale(fallbackPayload);
+        blackcatResponse = retryResult.response;
+        data = retryResult.data;
+        console.log("BLACKCAT RETRY RESPONSE:", blackcatResponse.status, JSON.stringify(data));
+      }
+    }
 
     if (!blackcatResponse.ok) {
       console.error('BlackCat error - status:', blackcatResponse.status, 'body:', JSON.stringify(data));
