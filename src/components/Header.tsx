@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import phoneIcon from "@/assets/phone-icon.png";
-import logoAmba from "@/assets/logo-amba-horizontal.jpeg";
+
 import { getWhatsAppUrl } from "@/lib/whatsapp";
 
 const navLinks = [
@@ -36,9 +36,9 @@ const Header = () => {
       }`}
     >
       <div className="container flex h-16 items-center justify-between px-4">
-        <a href="#" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
-          <img src={logoAmba} alt="AMBA Caçambas" className="h-11 w-auto md:h-12" />
-        </a>
+        <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="text-lg font-bold text-secondary-foreground">
+          AMBA Caçambas
+        </button>
 
         {/* Desktop nav */}
         <nav className="hidden items-center gap-6 lg:flex">
