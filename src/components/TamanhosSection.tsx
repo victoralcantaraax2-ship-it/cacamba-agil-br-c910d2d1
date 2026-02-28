@@ -41,7 +41,7 @@ const sizes = [
 const TamanhosSection = () => {
   const getWhatsAppUrlForSize = (size: string) => {
     const msg = encodeURIComponent(`Olá! Quero alugar uma caçamba de ${size}. Pode me passar disponibilidade e valor?`);
-    return `https://wa.me/5511968359074?text=${msg}`;
+    return `https://wa.me/5511969795930?text=${msg}`;
   };
 
   return (

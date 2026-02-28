@@ -25,7 +25,7 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 transition-colors hover:text-primary md:justify-start"
               >
-                <Phone className="h-4 w-4" /> WhatsApp: (11) 96835-9074
+                <Phone className="h-4 w-4" /> WhatsApp: (11) 96979-5930
               </a>
               <a
                 href="mailto:contato@ambacacambas.com.br"
