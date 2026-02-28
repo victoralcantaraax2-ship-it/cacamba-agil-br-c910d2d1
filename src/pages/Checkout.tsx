@@ -90,7 +90,8 @@ const Checkout = () => {
 
   const currentPlan = plans.find((p) => p.id === selectedPlan);
   const subtotal = currentPlan ? currentPlan.price * quantity : 0;
-  const discountRate = appliedCoupon === "AMBA10" ? 0.10 : 0;
+  const validCoupons: Record<string, number> = { AMBA10: 0.10, AMBA15: 0.15 };
+  const discountRate = appliedCoupon ? (validCoupons[appliedCoupon] || 0) : 0;
   const discountAmount = Math.round(subtotal * discountRate * 100) / 100;
   const totalPrice = Math.round((subtotal - discountAmount) * 100) / 100;
 
@@ -99,10 +100,14 @@ const Checkout = () => {
 
   const handleApplyCoupon = () => {
     const code = couponInput.trim().toUpperCase();
-    if (code === "AMBA10") {
-      setAppliedCoupon("AMBA10");
-      setCouponMsg({ type: "success", text: "Cupom AMBA10 aplicado: 10% OFF" });
-      try { localStorage.setItem("amba_coupon", "AMBA10"); } catch {}
+    const coupons: Record<string, { rate: number; label: string }> = {
+      AMBA10: { rate: 0.10, label: "10% OFF" },
+      AMBA15: { rate: 0.15, label: "15% OFF" },
+    };
+    if (coupons[code]) {
+      setAppliedCoupon(code);
+      setCouponMsg({ type: "success", text: `Cupom ${code} aplicado: ${coupons[code].label}` });
+      try { localStorage.setItem("amba_coupon", code); } catch {}
     } else {
       setCouponMsg({ type: "error", text: "Cupom inválido" });
     }
@@ -502,7 +507,7 @@ const Checkout = () => {
                   </div>
                 ) : (
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-accent">✅ Cupom AMBA10 aplicado: 10% OFF</span>
+                    <span className="text-sm font-medium text-accent">✅ Cupom {appliedCoupon} aplicado: {Math.round(discountRate * 100)}% OFF</span>
                     <button onClick={handleRemoveCoupon} className="text-xs text-destructive hover:underline">
                       Remover cupom
                     </button>
@@ -540,7 +545,7 @@ const Checkout = () => {
                     </div>
                     {appliedCoupon && (
                       <div className="flex justify-between text-accent">
-                        <span>Desconto (AMBA10)</span>
+                        <span>Desconto ({appliedCoupon})</span>
                         <span>-{formatCurrency(discountAmount)}</span>
                       </div>
                     )}
