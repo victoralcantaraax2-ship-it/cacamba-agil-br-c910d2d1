@@ -45,7 +45,7 @@ const HeroSection = () => {
           </h1>
 
           <p className="mx-auto mb-8 max-w-xl text-base text-secondary-foreground/80 md:text-lg">
-            Solicite online. Entrega em até 2h. Retirada programada.
+            Solicite agora. Entrega em até 2h. Retirada programada.
           </p>
 
           <div className="mb-8 flex flex-wrap items-center justify-center gap-3">
