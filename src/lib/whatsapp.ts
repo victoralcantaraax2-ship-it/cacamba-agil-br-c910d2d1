@@ -8,10 +8,19 @@ export const getWhatsAppUrl = (customMessage?: string) => {
 };
 
 export const handleWhatsAppClick = (customMessage?: string) => {
+  const url = getWhatsAppUrl(customMessage);
   if (typeof window !== "undefined" && typeof (window as any).gtag === "function") {
     (window as any).gtag("event", "conversion", {
-      send_to: "AW-17982986700/6SafCNzr-_4bEP7kyvtC",
+      send_to: "AW-17982986700/r6dFCKnmvYAcEMyz-v5C",
+      value: 1.0,
+      currency: "BRL",
+      event_callback: () => {
+        window.open(url, "_blank");
+      },
     });
+    // fallback caso o callback não dispare em 1s
+    setTimeout(() => window.open(url, "_blank"), 1000);
+  } else {
+    window.open(url, "_blank");
   }
-  window.open(getWhatsAppUrl(customMessage), "_blank");
 };
