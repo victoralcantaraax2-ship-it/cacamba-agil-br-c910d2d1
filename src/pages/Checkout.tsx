@@ -598,22 +598,25 @@ const Checkout = () => {
                         </div>
                       )}
 
-                      <Accordion type="single" collapsible className="w-full">
-                        <AccordionItem value="como-pagar" className="border-none">
-                          <AccordionTrigger className="text-sm font-semibold text-foreground py-2 hover:no-underline">
-                            Como pagar com Pix
-                          </AccordionTrigger>
-                          <AccordionContent className="pb-2">
-                            <ol className="list-decimal list-inside space-y-1 text-xs text-muted-foreground">
-                              <li>Abra o app do seu banco</li>
-                              <li>Toque em <strong className="text-foreground">PIX</strong></li>
-                              <li>Escolha <strong className="text-foreground">Pix Copia e Cola</strong> ou <strong className="text-foreground">Escanear QR Code</strong></li>
-                              <li>Cole o código ou escaneie o QR</li>
-                              <li>Confirme o pagamento ✅</li>
-                            </ol>
-                          </AccordionContent>
-                        </AccordionItem>
-                      </Accordion>
+                      <div className="bg-primary/10 border border-primary/30 rounded-lg p-4 space-y-3">
+                        <h4 className="text-sm font-bold text-primary flex items-center gap-2">
+                          💡 Como pagar pedidos com Pix
+                        </h4>
+                        <div className="space-y-3">
+                          <div className="flex gap-3 items-start">
+                            <span className="bg-primary text-primary-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center shrink-0">1</span>
+                            <p className="text-xs text-muted-foreground">Copie o código que foi gerado</p>
+                          </div>
+                          <div className="flex gap-3 items-start">
+                            <span className="bg-primary text-primary-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center shrink-0">2</span>
+                            <p className="text-xs text-muted-foreground">Abra um aplicativo em que você tenha o Pix habilitado e use a opção <strong className="text-foreground">Pix Copia e Cola</strong></p>
+                          </div>
+                          <div className="flex gap-3 items-start">
+                            <span className="bg-primary text-primary-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center shrink-0">3</span>
+                            <p className="text-xs text-muted-foreground">Cole o código, confirme o valor e faça o pagamento. Ele será confirmado na hora :)</p>
+                          </div>
+                        </div>
+                      </div>
 
                       <p className="text-[10px] text-muted-foreground text-center">
                         🔒 Pagamento seguro via PIX.
