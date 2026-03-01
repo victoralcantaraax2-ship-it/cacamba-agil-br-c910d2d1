@@ -68,7 +68,7 @@ const Checkout = () => {
   const [pixQr, setPixQr] = useState("");
   const [transactionId, setTransactionId] = useState("");
   const [paymentStatus, setPaymentStatus] = useState<"idle" | "loading" | "generated" | "confirmed">("idle");
-  const [copied, setCopied] = useState(false);
+  
   const [couponInput, setCouponInput] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState<string | null>(() => {
     try { return localStorage.getItem("amba_coupon"); } catch { return null; }
@@ -239,11 +239,12 @@ const Checkout = () => {
     }
   };
 
+  const [copyToastVisible, setCopyToastVisible] = useState(false);
+
   const handleCopyPix = async () => {
     try {
       await navigator.clipboard.writeText(pixCode);
     } catch {
-      // Fallback for Safari/iOS
       const textarea = document.createElement("textarea");
       textarea.value = pixCode;
       textarea.setAttribute("readonly", "");
@@ -254,14 +255,26 @@ const Checkout = () => {
       document.execCommand("copy");
       document.body.removeChild(textarea);
     }
-    setCopied(true);
-    setTimeout(() => setCopied(false), 5000);
+    setCopyToastVisible(true);
+    setTimeout(() => setCopyToastVisible(false), 5000);
   };
 
   const fullAddress = `${address.logradouro}${address.numero ? `, ${address.numero}` : ""}${address.complemento ? ` – ${address.complemento}` : ""}${address.bairro ? ` – ${address.bairro}` : ""}, ${address.localidade}/${address.uf}`;
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-background relative">
+      {/* Toast flutuante de cópia */}
+      {copyToastVisible && (
+        <div
+          role="status"
+          className="fixed top-4 left-1/2 -translate-x-1/2 z-[200] flex items-center gap-2.5 rounded-xl bg-green-600 px-5 py-3 shadow-lg shadow-green-900/20 animate-in fade-in slide-in-from-top-2 duration-300 data-[closing=true]:animate-out data-[closing=true]:fade-out"
+        >
+          <span className="flex items-center justify-center h-6 w-6 rounded-full bg-white/20">
+            <CheckCircle className="h-4 w-4 text-white" />
+          </span>
+          <span className="text-sm font-semibold text-white whitespace-nowrap">Código copiado com sucesso</span>
+        </div>
+      )}
       {/* Header */}
       <div className="bg-secondary py-4">
         <div className="container flex flex-col items-center px-4">
@@ -600,7 +613,7 @@ const Checkout = () => {
                       </div>
 
                       {pixCode && (
-                        <div className="w-full space-y-2">
+                        <div className="w-full">
                           <button
                             type="button"
                             onClick={handleCopyPix}
@@ -610,14 +623,6 @@ const Checkout = () => {
                             <span className="flex-1 text-[10px] text-foreground break-all leading-relaxed select-all">{pixCode}</span>
                             <Copy className="h-4 w-4 shrink-0 text-muted-foreground group-hover:text-primary transition-colors" />
                           </button>
-                          {copied && (
-                            <p className="text-xs text-green-600 font-medium animate-in fade-in duration-300">
-                              Código copiado com sucesso ✅
-                            </p>
-                          )}
-                          <p className="text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded-md px-3 py-2">
-                            ⚠️ Este código NÃO é chave Pix. Use a opção <strong>"Pix Copia e Cola"</strong> ou <strong>"QR Code"</strong> no app do seu banco.
-                          </p>
                         </div>
                       )}
 
