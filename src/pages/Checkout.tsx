@@ -606,9 +606,10 @@ const Checkout = () => {
                           <AccordionContent className="pb-2">
                             <ol className="list-decimal list-inside space-y-1 text-xs text-muted-foreground">
                               <li>Abra o app do seu banco</li>
-                              <li>Selecione a opção <strong className="text-foreground">PIX</strong></li>
-                              <li>Escaneie o QR Code ou copie o código</li>
-                              <li>Confirme o pagamento</li>
+                              <li>Toque em <strong className="text-foreground">PIX</strong></li>
+                              <li>Escolha <strong className="text-foreground">Pix Copia e Cola</strong> ou <strong className="text-foreground">Escanear QR Code</strong></li>
+                              <li>Cole o código ou escaneie o QR</li>
+                              <li>Confirme o pagamento ✅</li>
                             </ol>
                           </AccordionContent>
                         </AccordionItem>
