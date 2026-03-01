@@ -628,7 +628,7 @@ const Checkout = () => {
 
                       <div className="bg-primary/10 border border-primary/30 rounded-lg p-4 space-y-3">
                         <h4 className="text-sm font-bold text-primary flex items-center gap-2">
-                          Como pagar pedidos com Pix
+                          Como pagar com Pix
                         </h4>
                         <div className="space-y-3">
                           <div className="flex gap-3 items-start">
