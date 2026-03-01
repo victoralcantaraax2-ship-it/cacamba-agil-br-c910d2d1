@@ -603,10 +603,9 @@ const Checkout = () => {
                 {(paymentStatus === "generated" || paymentStatus === "confirmed") && (
                   <div className="animate-in fade-in duration-500 space-y-3">
                     <div className="flex flex-col items-center gap-3 rounded-lg border bg-card p-4">
-                      <h3 className="font-bold text-foreground text-sm">Pague com PIX</h3>
-                      <div className="flex w-[65%] max-w-[192px] aspect-square items-center justify-center rounded-lg bg-muted">
+                      <div className="w-[200px] md:w-[220px] aspect-square flex items-center justify-center rounded-lg bg-white p-3">
                         {pixCode ? (
-                          <QRCodeSVG value={pixCode} className="w-full h-full p-1" />
+                          <QRCodeSVG value={pixCode} className="w-full h-full" />
                         ) : (
                           <span className="text-xs text-muted-foreground text-center px-4">QR Code será exibido após geração</span>
                         )}
