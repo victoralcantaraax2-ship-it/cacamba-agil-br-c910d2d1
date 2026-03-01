@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import logoAmba from "@/assets/logo-amba.png";
+import pixLogo from "@/assets/pix-logo.png";
 import cacambaImg from "@/assets/cacamba-generica.png";
 
 type Plan = {
@@ -562,7 +563,8 @@ const Checkout = () => {
             <Card>
               <CardContent className="pt-6">
                 {paymentStatus === "idle" && (
-                  <Button onClick={handleGeneratePix} className="w-full text-base font-bold" size="lg">
+                  <Button onClick={handleGeneratePix} className="w-full text-base font-bold flex items-center justify-center gap-2" size="lg">
+                    <img src={pixLogo} alt="Pix" className="w-5 h-5" />
                     Pagar com Pix
                   </Button>
                 )}
@@ -600,7 +602,7 @@ const Checkout = () => {
 
                       <div className="bg-primary/10 border border-primary/30 rounded-lg p-4 space-y-3">
                         <h4 className="text-sm font-bold text-primary flex items-center gap-2">
-                          💡 Como pagar pedidos com Pix
+                          Como pagar pedidos com Pix
                         </h4>
                         <div className="space-y-3">
                           <div className="flex gap-3 items-start">
