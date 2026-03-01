@@ -563,8 +563,7 @@ const Checkout = () => {
             <Card>
               <CardContent className="pt-6">
                 {paymentStatus === "idle" && (
-                  <Button onClick={handleGeneratePix} className="w-full text-base font-bold flex items-center justify-center gap-2" size="lg">
-                    <img src={pixLogo} alt="Pix" className="w-5 h-5" />
+                  <Button onClick={handleGeneratePix} className="w-full text-base font-bold" size="lg">
                     Pagar com Pix
                   </Button>
                 )}
