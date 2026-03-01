@@ -14,6 +14,7 @@ import { useToast } from "@/hooks/use-toast";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import logoAmba from "@/assets/logo-amba.png";
 import pixLogo from "@/assets/pix-logo.png";
+import lockIcon from "@/assets/lock-icon.png";
 import cacambaImg from "@/assets/cacamba-generica.png";
 
 type Plan = {
@@ -645,8 +646,9 @@ const Checkout = () => {
                         </div>
                       </div>
 
-                      <p className="text-[10px] text-muted-foreground text-center">
-                        🔒 Pagamento seguro via PIX.
+                      <p className="text-[10px] text-muted-foreground text-center inline-flex items-center justify-center gap-1">
+                        <img src={lockIcon} alt="Cadeado" className="h-3 w-3 inline-block" />
+                        Pagamento seguro via PIX.
                       </p>
                     </div>
 
