@@ -239,11 +239,23 @@ const Checkout = () => {
     }
   };
 
-  const handleCopyPix = () => {
-    navigator.clipboard.writeText(pixCode);
+  const handleCopyPix = async () => {
+    try {
+      await navigator.clipboard.writeText(pixCode);
+    } catch {
+      // Fallback for Safari/iOS
+      const textarea = document.createElement("textarea");
+      textarea.value = pixCode;
+      textarea.setAttribute("readonly", "");
+      textarea.style.position = "absolute";
+      textarea.style.left = "-9999px";
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+    }
     setCopied(true);
-    toast({ title: "Código PIX copiado!" });
-    setTimeout(() => setCopied(false), 2000);
+    setTimeout(() => setCopied(false), 5000);
   };
 
   const fullAddress = `${address.logradouro}${address.numero ? `, ${address.numero}` : ""}${address.complemento ? ` – ${address.complemento}` : ""}${address.bairro ? ` – ${address.bairro}` : ""}, ${address.localidade}/${address.uf}`;
@@ -588,14 +600,24 @@ const Checkout = () => {
                       </div>
 
                       {pixCode && (
-                        <div className="w-full">
-                          <div className="flex gap-2">
-                            <Input value={pixCode} readOnly className="text-[10px] h-8" />
-                            <Button variant="outline" size="icon" className="h-8 w-8 shrink-0" onClick={handleCopyPix} title="Copiar">
-                              <Copy className="h-3.5 w-3.5" />
-                            </Button>
-                          </div>
-                          {copied && <p className="mt-1 text-xs text-accent">Copiado!</p>}
+                        <div className="w-full space-y-2">
+                          <button
+                            type="button"
+                            onClick={handleCopyPix}
+                            aria-label="Copiar código Pix"
+                            className="w-full flex items-center gap-2 rounded-md border border-input bg-muted/50 px-3 py-2.5 text-left cursor-pointer hover:bg-muted transition-colors group"
+                          >
+                            <span className="flex-1 text-[10px] text-foreground break-all leading-relaxed select-all">{pixCode}</span>
+                            <Copy className="h-4 w-4 shrink-0 text-muted-foreground group-hover:text-primary transition-colors" />
+                          </button>
+                          {copied && (
+                            <p className="text-xs text-green-600 font-medium animate-in fade-in duration-300">
+                              Código copiado com sucesso ✅
+                            </p>
+                          )}
+                          <p className="text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded-md px-3 py-2">
+                            ⚠️ Este código NÃO é chave Pix. Use a opção <strong>"Pix Copia e Cola"</strong> ou <strong>"QR Code"</strong> no app do seu banco.
+                          </p>
                         </div>
                       )}
 
