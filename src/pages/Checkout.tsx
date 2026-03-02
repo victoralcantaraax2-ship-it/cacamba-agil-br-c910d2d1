@@ -92,7 +92,7 @@ const Checkout = () => {
 
   const currentPlan = plans.find((p) => p.id === selectedPlan);
   const subtotal = currentPlan ? currentPlan.price * quantity : 0;
-  const validCoupons: Record<string, number> = { AMBA10: 0.10, AMBA15: 0.15 };
+  const validCoupons: Record<string, number> = { AMBA10: 0.10, AMBA15: 0.15, AMBA20: 0.20, AMBA25: 0.25 };
   const discountRate = appliedCoupon ? (validCoupons[appliedCoupon] || 0) : 0;
   const discountAmount = Math.round(subtotal * discountRate * 100) / 100;
   const totalPrice = Math.round((subtotal - discountAmount) * 100) / 100;
@@ -105,6 +105,8 @@ const Checkout = () => {
     const coupons: Record<string, { rate: number; label: string }> = {
       AMBA10: { rate: 0.10, label: "10% OFF" },
       AMBA15: { rate: 0.15, label: "15% OFF" },
+      AMBA20: { rate: 0.20, label: "20% OFF" },
+      AMBA25: { rate: 0.25, label: "25% OFF" },
     };
     if (coupons[code]) {
       setAppliedCoupon(code);
