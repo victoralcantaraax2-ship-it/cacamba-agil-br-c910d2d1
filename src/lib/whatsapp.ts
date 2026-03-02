@@ -9,11 +9,11 @@ export const getWhatsAppUrl = (customMessage?: string) => {
 
 export const handleWhatsAppClick = (customMessage?: string) => {
   const url = getWhatsAppUrl(customMessage);
-  if (typeof window !== "undefined" && typeof (window as any).gtag === "function") {
+  const isFinalizacao = typeof window !== "undefined" && window.location.pathname === "/finalizacao";
+
+  if (!isFinalizacao && typeof window !== "undefined" && typeof (window as any).gtag === "function") {
     (window as any).gtag("event", "conversion", {
-      send_to: "AW-17987081129/U4CRCN7ZuIEcEKmn9IBD",
-      value: 1.0,
-      currency: "BRL",
+      send_to: "AW-17987081129/U4CRCN7zuIEcEkmn9IBD",
       event_callback: () => {
         window.open(url, "_blank");
       },
