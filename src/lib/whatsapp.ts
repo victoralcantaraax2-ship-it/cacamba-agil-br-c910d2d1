@@ -1,4 +1,4 @@
-const WHATSAPP_NUMBER = "5511969795930";
+const WHATSAPP_NUMBER = "5511968359162";
 const WHATSAPP_MESSAGE = "Olá! Quero alugar uma caçamba. Pode me passar valores e disponibilidade?";
 
 export const getWhatsAppUrl = (customMessage?: string) => {
