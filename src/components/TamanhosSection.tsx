@@ -44,6 +44,14 @@ const sizes = [
     idealFor: ["Demolições, telhas, madeira", "Grande volume de entulho"],
     checks: ["Entrega rápida na sua região", "Retirada programada", "Ideal para grandes volumes"],
   },
+  {
+    size: "26m³",
+    title: "Projetos de grande porte",
+    bags: "200+ sacos · sob consulta",
+    popular: false,
+    idealFor: ["Grandes demolições", "Obras comerciais e industriais"],
+    checks: ["Entrega rápida na sua região", "Retirada programada", "Capacidade máxima"],
+  },
 ];
 
 const TamanhosSection = () => {

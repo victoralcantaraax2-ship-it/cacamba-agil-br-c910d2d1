@@ -29,6 +29,7 @@ const plans: Plan[] = [
   { id: "cacamba_5m", label: "Caçamba 5m³", price: 360.00 },
   { id: "cacamba_7m", label: "Caçamba 7m³", price: 450.00 },
   { id: "cacamba_10m", label: "Caçamba 10m³", price: 590.00 },
+  { id: "cacamba_26m", label: "Caçamba 26m³", price: 990.00 },
 ];
 
 type FormData = {

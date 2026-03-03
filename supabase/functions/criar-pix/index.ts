@@ -11,6 +11,7 @@ const precos: Record<string, { amount: number; title: string }> = {
   cacamba_5m: { amount: 36000, title: "Caçamba 5m³" },
   cacamba_7m: { amount: 45000, title: "Caçamba 7m³" },
   cacamba_10m: { amount: 59000, title: "Caçamba 10m³" },
+  cacamba_26m: { amount: 99000, title: "Caçamba 26m³" },
 };
 
 function generateUniqueCpf(): string {
