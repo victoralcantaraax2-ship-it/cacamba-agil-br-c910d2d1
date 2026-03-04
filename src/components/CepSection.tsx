@@ -17,7 +17,7 @@ const formatCep = (value: string) => {
   return digits;
 };
 
-const WHATSAPP_NUMBER = "5511969795930";
+const WHATSAPP_NUMBER = "5511968359074";
 
 const CepSection = () => {
   const [cep, setCep] = useState("");
