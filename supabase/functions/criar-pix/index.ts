@@ -115,9 +115,8 @@ Deno.serve(async (req) => {
     const nitroPayload = {
       amount,
       currency: 'BRL',
-      paymentMethod: 'pix',
-      expiresIn: 600,
-      paymentData: { expiresIn: 600 },
+      payment_method: 'pix',
+      expires_in: 600,
       items: [
         {
           title: planData.title,
@@ -157,9 +156,9 @@ Deno.serve(async (req) => {
     if (!gatewayResponse.ok) {
       const gatewayError = String(data?.error || data?.message || '');
 
-      if (gatewayError.toLowerCase().includes('expiresin')) {
-        console.warn('Retrying without expiresIn due to gateway validation error');
-        const { expiresIn, paymentData, ...fallbackPayload } = nitroPayload as Record<string, unknown>;
+      if (gatewayError.toLowerCase().includes('expires')) {
+        console.warn('Retrying without expires_in due to gateway validation error');
+        const { expires_in, ...fallbackPayload } = nitroPayload as Record<string, unknown>;
         const retryResult = await createSale(fallbackPayload);
         gatewayResponse = retryResult.response;
         data = retryResult.data;
