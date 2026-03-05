@@ -29,17 +29,24 @@ function generateUniqueCpf(): string {
 
 async function parseGatewayResponse(response: Response) {
   const contentType = response.headers.get('content-type') || '';
-  if (!contentType.includes('application/json')) {
-    const text = await response.text();
-    console.error('Non-JSON response from gateway. Status:', response.status, 'Preview:', text.slice(0, 500));
-    throw new Error(`non_json_status_${response.status}:${text.slice(0, 200)}`);
+  const text = await response.text();
+
+  if (!text) {
+    return { data: null, rawText: '' };
   }
 
   try {
-    const data = await response.json();
-    return data;
+    return { data: JSON.parse(text), rawText: text };
   } catch (error) {
-    throw new Error(`invalid_json:${String(error)}`);
+    console.error(
+      'Invalid JSON response from gateway. Status:',
+      response.status,
+      'Content-Type:',
+      contentType,
+      'Preview:',
+      text.slice(0, 500),
+    );
+    return { data: null, rawText: text };
   }
 }
 
@@ -130,11 +137,8 @@ Deno.serve(async (req) => {
       customer: {
         name: nome,
         email: `${telefone.replace(/\D/g, '')}@cliente.amba.com.br`,
-        document: {
-          number: uniqueCpf,
-          type: 'cpf',
-        },
         phone: telefone.replace(/\D/g, ''),
+        document: uniqueCpf,
       },
     };
 
@@ -149,41 +153,42 @@ Deno.serve(async (req) => {
         signal: AbortSignal.timeout(90000),
       });
 
-      const data = await parseGatewayResponse(response);
-      return { response, data };
+      const parsed = await parseGatewayResponse(response);
+      return { response, data: parsed.data, rawText: parsed.rawText };
     };
 
-    let { response: gatewayResponse, data } = await createSale(nitroPayload);
-    console.log("NITRO RESPONSE:", gatewayResponse.status, JSON.stringify(data));
+    const { response: gatewayResponse, data, rawText } = await createSale(nitroPayload);
+    console.log("NITRO RESPONSE:", gatewayResponse.status, data ? JSON.stringify(data) : rawText.slice(0, 300));
 
     if (!gatewayResponse.ok) {
-      const gatewayError = String(data?.error || data?.message || '');
-
-      if (gatewayError.toLowerCase().includes('expires')) {
-        console.warn('Retrying without expires_in due to gateway validation error');
-        const { expires_in, ...fallbackPayload } = nitroPayload as Record<string, unknown>;
-        const retryResult = await createSale(fallbackPayload);
-        gatewayResponse = retryResult.response;
-        data = retryResult.data;
-        console.log("NITRO RETRY RESPONSE:", gatewayResponse.status, JSON.stringify(data));
-      }
-    }
-
-    if (!gatewayResponse.ok) {
-      console.error('Nitro error - status:', gatewayResponse.status, 'body:', JSON.stringify(data));
+      console.error(
+        'Nitro error - status:',
+        gatewayResponse.status,
+        'body:',
+        data ? JSON.stringify(data) : rawText.slice(0, 500),
+      );
       return new Response(JSON.stringify({ error: 'Erro ao gerar PIX. Tente novamente.' }), {
         status: 502,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 
-    // Map response: data.data.paymentData
-    const paymentData = data?.data?.paymentData || {};
+    if (!data) {
+      console.error('Nitro returned success status but invalid JSON body:', rawText.slice(0, 500));
+      return new Response(JSON.stringify({ error: 'Erro ao gerar PIX. Tente novamente.' }), {
+        status: 502,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    // Map response (supports old and new Nitro formats)
+    const gatewayData = data?.data || {};
+    const paymentData = gatewayData.paymentData || gatewayData;
     const result = {
-      qr_code: paymentData.qrCode || paymentData.qrCodeBase64 || paymentData.qrCodeUrl || '',
-      pix_code: paymentData.copyPaste || paymentData.qrCode || '',
-      transaction_id: data?.data?.transactionId || '',
-      invoice_url: data?.data?.invoiceUrl || '',
+      qr_code: paymentData.qrCode || paymentData.qrCodeBase64 || paymentData.qrCodeUrl || paymentData.pix_qr_code || '',
+      pix_code: paymentData.copyPaste || paymentData.qrCode || paymentData.pix_code || paymentData.pix_qr_code || '',
+      transaction_id: gatewayData.transactionId || gatewayData.id || '',
+      invoice_url: gatewayData.invoiceUrl || gatewayData.invoice_url || '',
       valor_final: amount,
     };
     console.log("RETURNING TO FRONTEND:", JSON.stringify(result));
