@@ -42,6 +42,16 @@ async function parseGatewayResponse(response: Response) {
   }
 }
 
+function buildBasicAuth(): string {
+  const publicKey = Deno.env.get('NITRO_PUBLIC_KEY');
+  const secretKey = Deno.env.get('NITRO_SECRET_KEY');
+  if (!publicKey || !secretKey) {
+    throw new Error('NITRO_KEYS_MISSING');
+  }
+  const credentials = `${publicKey}:${secretKey}`;
+  return btoa(credentials);
+}
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -88,9 +98,11 @@ Deno.serve(async (req) => {
     amount = amount - discountAmount;
     console.log("COUPON:", couponCode, "DISCOUNT:", discountAmount, "FINAL AMOUNT:", amount);
 
-    const BLACKCAT_API_KEY = Deno.env.get('BLACKCAT_SECRET_KEY');
-    if (!BLACKCAT_API_KEY) {
-      console.error('BLACKCAT_SECRET_KEY not configured');
+    let encodedAuth: string;
+    try {
+      encodedAuth = buildBasicAuth();
+    } catch {
+      console.error('Nitro payment keys not configured');
       return new Response(JSON.stringify({ error: 'Chave de pagamento não configurada' }), {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -100,7 +112,7 @@ Deno.serve(async (req) => {
     const uniqueCpf = generateUniqueCpf();
     console.log("USING CPF:", uniqueCpf);
 
-    const blackcatPayload = {
+    const nitroPayload = {
       amount,
       currency: 'BRL',
       paymentMethod: 'pix',
@@ -125,12 +137,11 @@ Deno.serve(async (req) => {
     };
 
     const createSale = async (payload: Record<string, unknown>) => {
-      const response = await fetch('https://api.blackcatpagamentos.online/api/sales/create-sale', {
+      const response = await fetch('https://api.nitropagamento.app', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'X-API-Key': BLACKCAT_API_KEY,
+          'Authorization': `Basic ${encodedAuth}`,
         },
         body: JSON.stringify(payload),
         signal: AbortSignal.timeout(90000),
@@ -140,31 +151,31 @@ Deno.serve(async (req) => {
       return { response, data };
     };
 
-    let { response: blackcatResponse, data } = await createSale(blackcatPayload);
-    console.log("BLACKCAT RESPONSE:", blackcatResponse.status, JSON.stringify(data));
+    let { response: gatewayResponse, data } = await createSale(nitroPayload);
+    console.log("NITRO RESPONSE:", gatewayResponse.status, JSON.stringify(data));
 
-    if (!blackcatResponse.ok) {
+    if (!gatewayResponse.ok) {
       const gatewayError = String(data?.error || data?.message || '');
 
       if (gatewayError.toLowerCase().includes('expiresin')) {
-        console.warn('Retrying BlackCat without expiresIn due to gateway validation error');
-        const { expiresIn, paymentData, ...fallbackPayload } = blackcatPayload as Record<string, unknown>;
+        console.warn('Retrying without expiresIn due to gateway validation error');
+        const { expiresIn, paymentData, ...fallbackPayload } = nitroPayload as Record<string, unknown>;
         const retryResult = await createSale(fallbackPayload);
-        blackcatResponse = retryResult.response;
+        gatewayResponse = retryResult.response;
         data = retryResult.data;
-        console.log("BLACKCAT RETRY RESPONSE:", blackcatResponse.status, JSON.stringify(data));
+        console.log("NITRO RETRY RESPONSE:", gatewayResponse.status, JSON.stringify(data));
       }
     }
 
-    if (!blackcatResponse.ok) {
-      console.error('BlackCat error - status:', blackcatResponse.status, 'body:', JSON.stringify(data));
+    if (!gatewayResponse.ok) {
+      console.error('Nitro error - status:', gatewayResponse.status, 'body:', JSON.stringify(data));
       return new Response(JSON.stringify({ error: 'Erro ao gerar PIX. Tente novamente.' }), {
         status: 502,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 
-    // Map BlackCat nested response: data.data.paymentData
+    // Map response: data.data.paymentData
     const paymentData = data?.data?.paymentData || {};
     const result = {
       qr_code: paymentData.qrCode || paymentData.qrCodeBase64 || paymentData.qrCodeUrl || '',
