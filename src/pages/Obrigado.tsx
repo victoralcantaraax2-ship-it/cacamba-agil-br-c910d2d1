@@ -23,7 +23,7 @@ const Obrigado = () => {
 
         <div className="flex flex-col gap-3">
           <a
-            href="https://wa.me/5511968359162?text=Olá!%20Acabei%20de%20realizar%20o%20pagamento."
+            href="https://wa.me/5511987604407?text=Olá!%20Acabei%20de%20realizar%20o%20pagamento."
             target="_blank"
             rel="noopener noreferrer"
           >
