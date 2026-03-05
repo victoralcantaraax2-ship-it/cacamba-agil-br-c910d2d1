@@ -31,7 +31,8 @@ async function parseGatewayResponse(response: Response) {
   const contentType = response.headers.get('content-type') || '';
   if (!contentType.includes('application/json')) {
     const text = await response.text();
-    throw new Error(`non_json:${text.slice(0, 300)}`);
+    console.error('Non-JSON response from gateway. Status:', response.status, 'Preview:', text.slice(0, 500));
+    throw new Error(`non_json_status_${response.status}:${text.slice(0, 200)}`);
   }
 
   try {
@@ -112,14 +113,16 @@ Deno.serve(async (req) => {
     const uniqueCpf = generateUniqueCpf();
     console.log("USING CPF:", uniqueCpf);
 
+    const amountDecimal = amount / 100; // Nitro expects amount in BRL (e.g. 230.00), not cents
+
     const nitroPayload = {
-      amount,
-      currency: 'BRL',
+      amount: amountDecimal,
       payment_method: 'pix',
-      expires_in: 600,
+      description: `${planData.title} x${qty} - Amba Caçambas`,
       items: [
         {
           title: planData.title,
+          unitPrice: planData.amount,
           quantity: qty,
           tangible: false,
         },
