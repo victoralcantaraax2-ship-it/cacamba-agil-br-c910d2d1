@@ -13,6 +13,9 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ["Outfit", "sans-serif"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -96,7 +99,7 @@ export default {
         },
         "glow-breathe": {
           "0%, 100%": { opacity: "0.7" },
-          "50%": { opacity: "1", textShadow: "0 0 8px hsl(45 100% 50% / 0.4)" },
+          "50%": { opacity: "1", textShadow: "0 0 8px hsl(168 80% 38% / 0.4)" },
         },
         "border-glow": {
           "0%, 100%": { boxShadow: "0 0 8px 0 hsl(var(--primary) / 0.15)" },

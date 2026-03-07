@@ -1,9 +1,9 @@
 import { Clock, Eye, Leaf } from "lucide-react";
 
 const values = [
-  { icon: Clock, label: "Pontualidade", desc: "Cumprimos prazos de entrega e retirada com rigor." },
-  { icon: Eye, label: "Transparência", desc: "Sem taxas escondidas. Tudo claro desde o orçamento." },
-  { icon: Leaf, label: "Responsabilidade ambiental", desc: "Descarte dentro das normas e leis ambientais." },
+  { icon: Clock, label: "Compromisso com horários", desc: "Respeitamos prazos de entrega e recolhimento à risca." },
+  { icon: Eye, label: "Clareza total", desc: "Sem custos ocultos. Tudo definido desde a cotação." },
+  { icon: Leaf, label: "Sustentabilidade", desc: "Destinação ecológica, conforme as normas vigentes." },
 ];
 
 const AboutSection = () => {
@@ -12,19 +12,19 @@ const AboutSection = () => {
       <div className="container px-4">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="mb-4 text-2xl font-extrabold text-foreground md:text-3xl">
-            Sobre a AMBA Central de Caçambas
+            Conheça a AMBA Locação
           </h2>
           <p className="mb-4 text-muted-foreground leading-relaxed">
-            A AMBA é uma central especializada em locação de caçambas, com foco
-            em agilidade, atendimento humanizado e descarte responsável. Nosso
-            objetivo é simplificar o processo para quem está reformando,
+            A AMBA é especializada no aluguel de caçambas, com foco em
+            rapidez, suporte personalizado e destinação correta dos resíduos. Nosso
+            propósito é tornar o processo mais simples para quem está reformando,
             construindo ou fazendo limpeza — sem burocracia e com total suporte
             via WhatsApp.
           </p>
           <p className="mb-10 text-muted-foreground leading-relaxed">
-            Trabalhamos com diferentes tamanhos de caçamba para atender desde
-            pequenas reformas residenciais até grandes obras comerciais, sempre
-            garantindo pontualidade na entrega e retirada.
+            Oferecemos diferentes capacidades para atender desde
+            ajustes residenciais até empreendimentos de grande porte, sempre
+            cumprindo os prazos de entrega e recolhimento.
           </p>
         </div>
 

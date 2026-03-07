@@ -3,33 +3,33 @@ import { useState, useMemo, useCallback, useRef } from "react";
 import googleLogo from "@/assets/google-logo.png";
 
 const reviews = [
-  { name: "MF Engenharia", role: "Construtora – Guarulhos/SP", stars: 5, text: "Usamos a AMBA em todas as nossas obras na região. Entrega rápida e equipe muito profissional." },
-  { name: "Papelão Guarulhos Reciclagem", role: "Reciclagem – Guarulhos/SP", stars: 5, text: "Precisávamos de caçamba urgente para descarte de papelão e entulho. Resolveram no mesmo dia, excelente!" },
-  { name: "RC Reformas e Acabamentos", role: "Reformas – Guarulhos/SP", stars: 5, text: "Já alugamos mais de 15 caçambas com a AMBA. Sempre pontuais e com ótimo atendimento pelo WhatsApp." },
-  { name: "Construtora Vila Galvão", role: "Construtora – Guarulhos/SP", stars: 5, text: "Fornecedor fixo das nossas obras. Nunca tivemos problema com prazo ou qualidade do serviço." },
-  { name: "Ferro Velho São João", role: "Reciclagem – Guarulhos/SP", stars: 5, text: "Caçamba chegou no horário combinado. Equipe educada e profissional. Recomendo para qualquer empresa." },
-  { name: "Terraplenagem Norte SP", role: "Terraplenagem – Guarulhos/SP", stars: 5, text: "Bom serviço, caçamba bem conservada. Entrega dentro do prazo combinado." },
-  { name: "JL Materiais de Construção", role: "Comércio – Guarulhos/SP", stars: 5, text: "Indicamos a AMBA para todos os nossos clientes. Serviço sério e confiável." },
-  { name: "Reciclagem Cumbica", role: "Reciclagem – Guarulhos/SP", stars: 5, text: "Atendimento excelente. Entrega foi rápida e tudo correu bem." },
-  { name: "Marmoraria Presidente Dutra", role: "Marmoraria – Guarulhos/SP", stars: 5, text: "Descartamos resíduos de mármore e granito. Serviço rápido e dentro das normas ambientais." },
-  { name: "Josy Araujo", role: "Arquiteta – Mogi das Cruzes/SP", stars: 5, text: "Atendimento pelo WhatsApp super rápido. A caçamba chegou no mesmo dia. Recomendo demais!" },
-  { name: "Rogério Pereira", role: "Engenheiro Civil – Campinas/SP", stars: 5, text: "Muito satisfeito com o serviço. Equipe pontual e comprometida com o prazo." },
-  { name: "Laudiane Sousa", role: "Proprietária de Imóvel – Barueri/SP", stars: 5, text: "Podem contratar sem medo. Processo simples e atendimento excelente." },
+  { name: "MF Engenharia", role: "Construtora – Guarulhos/SP", stars: 5, text: "Usamos a AMBA em todas as nossas obras na região. Chegada ágil e time muito competente." },
+  { name: "Papelão Guarulhos Reciclagem", role: "Reciclagem – Guarulhos/SP", stars: 5, text: "Precisávamos de caçamba com urgência para descarte. Solucionaram no mesmo dia, excelente!" },
+  { name: "RC Reformas e Acabamentos", role: "Reformas – Guarulhos/SP", stars: 5, text: "Já locamos mais de 15 caçambas com a AMBA. Sempre no horário e com ótimo suporte." },
+  { name: "Construtora Vila Galvão", role: "Construtora – Guarulhos/SP", stars: 5, text: "Parceiro fixo das nossas obras. Nunca tivemos problema com prazo ou qualidade." },
+  { name: "Ferro Velho São João", role: "Reciclagem – Guarulhos/SP", stars: 5, text: "Caçamba chegou no horário combinado. Time educado e competente. Indico para qualquer empresa." },
+  { name: "Terraplenagem Norte SP", role: "Terraplenagem – Guarulhos/SP", stars: 5, text: "Bom serviço, caçamba bem conservada. Dentro do prazo combinado." },
+  { name: "JL Materiais de Construção", role: "Comércio – Guarulhos/SP", stars: 5, text: "Indicamos a AMBA para todos os nossos clientes. Serviço sério e de confiança." },
+  { name: "Reciclagem Cumbica", role: "Reciclagem – Guarulhos/SP", stars: 5, text: "Suporte excelente. Chegada foi ágil e tudo ocorreu bem." },
+  { name: "Marmoraria Presidente Dutra", role: "Marmoraria – Guarulhos/SP", stars: 5, text: "Descartamos resíduos de mármore e granito. Serviço ágil e dentro das normas ambientais." },
+  { name: "Josy Araujo", role: "Arquiteta – Mogi das Cruzes/SP", stars: 5, text: "Suporte pelo WhatsApp super ágil. A caçamba chegou no mesmo dia. Recomendo muito!" },
+  { name: "Rogério Pereira", role: "Engenheiro Civil – Campinas/SP", stars: 5, text: "Muito satisfeito com o serviço. Time pontual e comprometido com o prazo." },
+  { name: "Laudiane Sousa", role: "Proprietária de Imóvel – Barueri/SP", stars: 5, text: "Podem contratar sem receio. Processo simples e suporte excelente." },
   { name: "Nilson Fucítalo", role: "Mestre de Obras – Juiz de Fora/MG", stars: 5, text: "Cumprem o que prometem. Já é minha terceira locação com eles." },
-  { name: "Carla Mendes", role: "Decoradora – Belo Horizonte/MG", stars: 5, text: "Muito fácil pedir pelo WhatsApp e a entrega foi rápida. Nota 10!" },
-  { name: "Anderson Lima", role: "Proprietário – Guarulhos/SP", stars: 5, text: "Reformei minha casa e precisei de 2 caçambas. Entrega no dia seguinte. Super indico!" },
-  { name: "Patrícia Oliveira", role: "Síndica – Guarulhos/SP", stars: 5, text: "Contratei para o condomínio. Serviço impecável, sem sujeira na rua. Os moradores elogiaram." },
+  { name: "Carla Mendes", role: "Decoradora – Belo Horizonte/MG", stars: 5, text: "Muito fácil solicitar pelo WhatsApp e a chegada foi ágil. Nota 10!" },
+  { name: "Anderson Lima", role: "Proprietário – Guarulhos/SP", stars: 5, text: "Reformei minha casa e precisei de 2 caçambas. Chegaram no dia seguinte. Super indico!" },
+  { name: "Patrícia Oliveira", role: "Síndica – Guarulhos/SP", stars: 5, text: "Contratei para o condomínio. Serviço impecável, sem sujeira na rua. Moradores elogiaram." },
   { name: "Dona Maria Aparecida", role: "Aposentada – Itapecerica da Serra/SP", stars: 5, text: "Meu filho indicou. Pedi pelo WhatsApp e no outro dia já estava na porta. Muito prático!" },
   { name: "Thiago Nascimento", role: "Pedreiro autônomo – Uberaba/MG", stars: 5, text: "Trabalho com reforma e sempre preciso de caçamba. A AMBA nunca me deixou na mão." },
-  { name: "Luciana Ferreira", role: "Designer de Interiores – Campinas/SP", stars: 5, text: "Usei na reforma do meu escritório. Entrega rápida e serviço impecável." },
-  { name: "Eduardo Takahashi", role: "Proprietário – São Paulo/SP", stars: 5, text: "Contratei de SP mesmo e entregaram em Guarulhos sem problema. Atendimento nota 10." },
-  { name: "Felipe Monteiro", role: "Engenheiro – Mogi das Cruzes/SP", stars: 5, text: "Precisei de caçamba para uma obra em Mogi e a AMBA atendeu super rápido. Serviço impecável!" },
-  { name: "Renata Campos", role: "Arquiteta – Itapecerica da Serra/SP", stars: 5, text: "Contratei para reforma residencial em Itapecerica. Entrega pontual e equipe muito educada." },
-  { name: "Marcos Vinicius", role: "Construtor – Campinas/SP", stars: 5, text: "Mesmo sendo em Campinas, o atendimento foi excelente. Caçamba chegou no prazo combinado." },
-  { name: "Daniela Souza", role: "Síndica – Barueri/SP", stars: 5, text: "Contratei para limpeza do condomínio em Barueri. Moradores aprovaram o serviço. Recomendo!" },
+  { name: "Luciana Ferreira", role: "Designer de Interiores – Campinas/SP", stars: 5, text: "Usei na reforma do meu escritório. Chegada ágil e serviço impecável." },
+  { name: "Eduardo Takahashi", role: "Proprietário – São Paulo/SP", stars: 5, text: "Contratei de SP e entregaram em Guarulhos sem problema. Suporte nota 10." },
+  { name: "Felipe Monteiro", role: "Engenheiro – Mogi das Cruzes/SP", stars: 5, text: "Precisei de caçamba para uma obra em Mogi e a AMBA respondeu super rápido. Impecável!" },
+  { name: "Renata Campos", role: "Arquiteta – Itapecerica da Serra/SP", stars: 5, text: "Contratei para reforma residencial em Itapecerica. Pontual e time muito educado." },
+  { name: "Marcos Vinicius", role: "Construtor – Campinas/SP", stars: 5, text: "Mesmo sendo em Campinas, o suporte foi excelente. Caçamba chegou no prazo combinado." },
+  { name: "Daniela Souza", role: "Síndica – Barueri/SP", stars: 5, text: "Contratei para limpeza do condomínio em Barueri. Moradores aprovaram. Recomendo!" },
   { name: "Roberto Almeida", role: "Mestre de Obras – Juiz de Fora/MG", stars: 5, text: "Empresa séria e comprometida. Entregaram dentro do prazo na região de Juiz de Fora." },
-  { name: "Cláudia Ribeiro", role: "Proprietária – Belo Horizonte/MG", stars: 5, text: "Reformei meu apartamento em BH e a AMBA cuidou de todo o descarte. Serviço nota 10!" },
-  { name: "André Machado", role: "Empreiteiro – Uberaba/MG", stars: 5, text: "Caçamba bem conservada e entrega rápida em Uberaba. Já estou na segunda locação com eles." },
+  { name: "Cláudia Ribeiro", role: "Proprietária – Belo Horizonte/MG", stars: 5, text: "Reformei meu apartamento em BH e a AMBA cuidou de todo o descarte. Nota 10!" },
+  { name: "André Machado", role: "Empreiteiro – Uberaba/MG", stars: 5, text: "Caçamba bem conservada e chegada ágil em Uberaba. Já estou na segunda locação com eles." },
 ];
 
 const scrollTo = (id: string) => {
@@ -71,7 +71,7 @@ const SocialProof = () => {
       <div className="container px-4">
         <div className="mb-6 md:mb-10 text-center">
           <h2 className="mb-2 text-xl font-extrabold text-secondary-foreground md:text-3xl">
-            O que nossos clientes dizem
+            Quem já usou, recomenda
           </h2>
           <div className="flex items-center justify-center gap-6 flex-wrap">
             <div className="flex flex-col items-center gap-1">
@@ -130,7 +130,6 @@ const SocialProof = () => {
           </button>
         </div>
 
-        {/* Indicadores de paginação mobile */}
         <div className="mt-4 flex justify-center gap-1.5 md:hidden">
           {shuffled.slice(0, Math.min(shuffled.length, 8)).map((_, idx) => (
             <button
@@ -149,7 +148,7 @@ const SocialProof = () => {
             onClick={() => scrollTo("#tamanhos")}
             className="rounded-xl bg-primary px-6 md:px-8 py-3 md:py-4 text-sm md:text-base font-bold uppercase text-primary-foreground shadow-lg transition-all hover:scale-105 active:scale-95 hover:bg-primary/90"
           >
-            Quero pedir agora
+            Quero solicitar agora
           </button>
         </div>
       </div>

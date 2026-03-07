@@ -85,7 +85,7 @@ const CepSection = () => {
 
   const handleWhatsApp = () => {
     if (!address) return;
-    const msg = `Olá! Quero alugar uma caçamba. Meu CEP é ${address.cep}. Endereço: ${address.logradouro}, ${address.bairro} – ${address.localidade}/${address.uf}. Pode me informar disponibilidade e valores?`;
+    const msg = `Olá! Tenho interesse em alugar uma caçamba. Meu CEP é ${address.cep}. Endereço: ${address.logradouro}, ${address.bairro} – ${address.localidade}/${address.uf}. Podem informar disponibilidade e valores?`;
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
@@ -94,19 +94,17 @@ const CepSection = () => {
       <div className="container px-4">
         <div className="mx-auto max-w-2xl">
 
-          {/* Compact header */}
           <h2 className="mb-3 text-center text-lg font-extrabold text-foreground md:text-xl">
-            Consulte disponibilidade na sua região
+            Verifique se atendemos sua área
           </h2>
 
-          {/* CEP Input Row */}
           <div className="mx-auto max-w-md">
             <div className="flex gap-2">
               <div className="relative flex-1">
                 <MapPin className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/60" />
                 <input
                   id="cep-home"
-                  placeholder="Informe o seu CEP"
+                  placeholder="Digite o seu CEP"
                   value={cep}
                   onChange={(e) => handleCepChange(e.target.value)}
                   maxLength={9}
@@ -121,46 +119,42 @@ const CepSection = () => {
                 className="h-11 gap-1.5 text-sm font-bold shrink-0 px-5"
               >
                 <Search className="h-4 w-4" />
-                Consultar
+                Verificar
               </Button>
             </div>
           </div>
 
-          {/* Loading */}
           {loading && (
             <div className="mx-auto mt-4 max-w-md animate-fade-in text-center">
               <div className="flex items-center justify-center gap-2 py-3">
                 <Loader2 className="h-5 w-5 text-primary animate-spin" />
                 <span className="text-sm font-medium text-muted-foreground">
-                  Verificando cobertura…
+                  Checando cobertura…
                 </span>
               </div>
             </div>
           )}
 
-          {/* Error */}
           {error && (
             <div className="mx-auto mt-3 max-w-md animate-fade-in">
               <div className="flex items-center gap-2 rounded-lg border border-destructive/30 bg-destructive/5 p-2.5 text-sm text-destructive">
                 <XCircle className="h-4 w-4 shrink-0" />
-                <span>CEP não encontrado. Verifique e tente novamente.</span>
+                <span>CEP não localizado. Confira e tente novamente.</span>
               </div>
             </div>
           )}
 
-          {/* Result */}
           {address && (
             <div
               className={`mx-auto mt-4 max-w-md transition-all duration-500 ease-out ${
                 visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
               }`}
             >
-              {/* Confirmed Card */}
               <div className="rounded-xl border border-accent/30 bg-accent/5 p-4">
                 <div className="flex items-center gap-2 mb-2">
                   <CheckCircle className="h-5 w-5 text-accent shrink-0" />
                   <span className="text-sm font-black uppercase tracking-wide text-accent">
-                    Cobertura confirmada
+                    Área atendida
                   </span>
                 </div>
                 <div className="pl-7 space-y-0.5">
@@ -174,7 +168,6 @@ const CepSection = () => {
                   </p>
                 </div>
 
-                {/* Animated delivery badge */}
                 <div className="mt-3 pl-7">
                   <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-primary animate-[glow-breathe_3s_ease-in-out_infinite]">
                     <Zap className="h-3.5 w-3.5" />
@@ -183,7 +176,6 @@ const CepSection = () => {
                 </div>
               </div>
 
-              {/* CTA */}
               <div className="mt-4 flex justify-center">
                 <Button
                   onClick={handleWhatsApp}
@@ -191,7 +183,7 @@ const CepSection = () => {
                   className="gap-2 bg-whatsapp text-whatsapp-foreground hover:bg-whatsapp-hover text-sm font-bold shadow-lg hover:scale-105 transition-transform"
                 >
                   <img src={phoneIcon} alt="WhatsApp" className="h-5 w-5" />
-                  Pedir caçamba agora
+                  Solicitar caçamba agora
                 </Button>
               </div>
             </div>

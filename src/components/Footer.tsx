@@ -8,9 +8,9 @@ const Footer = () => {
       <div className="container px-4">
         <div className="flex flex-col items-center gap-8 text-center md:flex-row md:justify-between md:text-left">
           <div>
-            <img src={logoAmba} alt="AMBA Caçambas" className="mx-auto mb-3 h-12 w-auto md:mx-0" />
+            <img src={logoAmba} alt="AMBA Locação" className="mx-auto mb-3 h-12 w-auto md:mx-0" />
             <p className="mb-4 max-w-sm text-sm text-secondary-foreground/60">
-              Soluções rápidas e confiáveis para descarte de entulho.
+              Soluções ágeis e seguras para descarte de resíduos.
             </p>
             <div className="flex flex-col gap-2 text-sm text-secondary-foreground/70">
               <a
@@ -42,13 +42,13 @@ const Footer = () => {
             className="inline-flex items-center gap-2 rounded-lg bg-whatsapp px-6 py-3 text-sm font-bold text-whatsapp-foreground transition-colors hover:bg-whatsapp-hover"
           >
             <MessageCircle className="h-4 w-4 fill-current" />
-            Solicitar Orçamento
+            Pedir Cotação
           </button>
         </div>
 
         <div className="mt-8 border-t border-secondary-foreground/10 pt-6">
           <p className="text-center text-xs text-secondary-foreground/50">
-            © 2021–{new Date().getFullYear()} AMBA Central de Caçambas — Todos os direitos reservados.
+            © 2021–{new Date().getFullYear()} AMBA Locação de Caçambas — Todos os direitos reservados.
           </p>
           <p
             className="mt-1 text-center text-xs text-secondary-foreground/40 select-none pointer-events-none"

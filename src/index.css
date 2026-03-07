@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,23 +6,23 @@
 
 @layer base {
   :root {
-    --background: 220 20% 97%;
-    --foreground: 220 25% 10%;
+    --background: 210 25% 96%;
+    --foreground: 210 30% 10%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 25% 10%;
+    --card-foreground: 210 30% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 25% 10%;
+    --popover-foreground: 210 30% 10%;
 
-    --primary: 45 100% 50%;
-    --primary-foreground: 220 25% 10%;
+    --primary: 168 80% 38%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 20% 14%;
+    --secondary: 215 25% 12%;
     --secondary-foreground: 0 0% 98%;
 
-    --muted: 220 15% 92%;
-    --muted-foreground: 220 10% 45%;
+    --muted: 210 15% 92%;
+    --muted-foreground: 210 10% 45%;
 
     --accent: 145 70% 42%;
     --accent-foreground: 0 0% 100%;
@@ -30,9 +30,9 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 220 15% 88%;
-    --input: 220 15% 88%;
-    --ring: 45 100% 50%;
+    --border: 210 15% 88%;
+    --input: 210 15% 88%;
+    --ring: 168 80% 38%;
 
     --radius: 0.75rem;
 
@@ -40,11 +40,11 @@
     --whatsapp-foreground: 0 0% 100%;
     --whatsapp-hover: 145 70% 36%;
 
-    --hero-overlay: 220 25% 8%;
-    --trust-bg: 220 20% 14%;
+    --hero-overlay: 215 30% 8%;
+    --trust-bg: 215 25% 12%;
     --trust-foreground: 0 0% 98%;
-    --urgency-bg: 45 100% 50%;
-    --urgency-foreground: 220 25% 10%;
+    --urgency-bg: 168 80% 38%;
+    --urgency-foreground: 0 0% 100%;
     --star: 45 100% 50%;
 
     --sidebar-background: 0 0% 98%;
@@ -58,25 +58,25 @@
   }
 
   .dark {
-    --background: 220 25% 8%;
+    --background: 215 30% 8%;
     --foreground: 0 0% 98%;
-    --card: 220 20% 12%;
+    --card: 215 25% 12%;
     --card-foreground: 0 0% 98%;
-    --popover: 220 20% 12%;
+    --popover: 215 25% 12%;
     --popover-foreground: 0 0% 98%;
-    --primary: 45 100% 50%;
-    --primary-foreground: 220 25% 10%;
-    --secondary: 220 20% 18%;
+    --primary: 168 80% 38%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 215 25% 16%;
     --secondary-foreground: 0 0% 98%;
-    --muted: 220 15% 18%;
-    --muted-foreground: 220 10% 60%;
+    --muted: 215 15% 18%;
+    --muted-foreground: 210 10% 60%;
     --accent: 145 70% 42%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-    --border: 220 15% 20%;
-    --input: 220 15% 20%;
-    --ring: 45 100% 50%;
+    --border: 215 15% 20%;
+    --input: 215 15% 20%;
+    --ring: 168 80% 38%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -94,7 +94,7 @@
   }
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', sans-serif;
   }
 }
 
