@@ -1,6 +1,6 @@
 import { MessageCircle, Clock, Phone, Mail } from "lucide-react";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
-import logoAmba from "@/assets/logo-amba.png";
+import logoAmba from "@/assets/logo-amba-nova.png";
 
 const Footer = () => {
   return (
