@@ -32,7 +32,7 @@ const Footer = () => {
                 <Mail className="h-4 w-4" /> contato@ambalocacao.com
               </a>
               <span className="flex items-center justify-center gap-2 md:justify-start">
-                <Clock className="h-4 w-4" /> Seg–Sáb 7h às 18h
+                <Clock className="h-4 w-4" /> Seg–Sáb 06h às 19h | Dom 07h às 18h
               </span>
             </div>
           </div>
