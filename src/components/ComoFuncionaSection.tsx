@@ -1,22 +1,23 @@
+import { memo } from "react";
 import { FileText, MapPin, Truck } from "lucide-react";
 
 const steps = [
   {
     icon: FileText,
     step: "1",
-    title: "Defina a capacidade",
+    title: "Escolha o tamanho",
     desc: "Veja qual caçamba é a mais adequada para o seu projeto.",
   },
   {
     icon: MapPin,
     step: "2",
-    title: "Passe o local e a data",
+    title: "Informe o local e a data",
     desc: "Diga onde e quando precisa receber a caçamba.",
   },
   {
     icon: Truck,
     step: "3",
-    title: "Levamos e buscamos",
+    title: "Entregamos e retiramos",
     desc: "A caçamba é entregue e retirada conforme o combinado.",
   },
 ];
@@ -26,16 +27,16 @@ const scrollTo = (id: string) => {
   if (el) el.scrollIntoView({ behavior: "smooth" });
 };
 
-const ComoFuncionaSection = () => {
+const ComoFuncionaSection = memo(() => {
   return (
     <section id="como-funciona" className="bg-muted/40 py-16 md:py-24">
       <div className="container px-4">
         <div className="mb-12 text-center">
           <h2 className="mb-3 text-2xl font-extrabold text-foreground md:text-3xl">
-            Passo a Passo
+            Como Funciona
           </h2>
           <p className="text-muted-foreground">
-            Três etapas para resolver o descarte do seu entulho.
+            Três etapas simples para resolver o descarte do seu entulho.
           </p>
         </div>
 
@@ -65,6 +66,8 @@ const ComoFuncionaSection = () => {
       </div>
     </section>
   );
-};
+});
+
+ComoFuncionaSection.displayName = "ComoFuncionaSection";
 
 export default ComoFuncionaSection;

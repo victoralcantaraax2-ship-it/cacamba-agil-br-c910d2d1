@@ -1,14 +1,15 @@
+import { memo } from "react";
 import { MessageCircle, Clock, Phone, Mail } from "lucide-react";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
 import logoAmba from "@/assets/logo-amba-nova.png";
 
-const Footer = () => {
+const Footer = memo(() => {
   return (
     <footer id="contato" className="bg-secondary py-12">
       <div className="container px-4">
         <div className="flex flex-col items-center gap-8 text-center md:flex-row md:justify-between md:text-left">
           <div>
-            <img src={logoAmba} alt="AMBA Locação" className="mx-auto mb-3 h-12 w-auto md:mx-0" />
+            <img src={logoAmba} alt="AMBA Locação de Caçambas" className="mx-auto mb-3 h-12 w-auto md:mx-0" width={160} height={48} loading="lazy" />
             <p className="mb-4 max-w-sm text-sm text-secondary-foreground/60">
               Locação de caçambas para entulho com soluções ágeis e seguras para descarte de resíduos.
             </p>
@@ -48,7 +49,7 @@ const Footer = () => {
 
         <div className="mt-8 border-t border-secondary-foreground/10 pt-6">
           <p className="text-center text-xs text-secondary-foreground/50">
-            © 2021–{new Date().getFullYear()} AMBA Locação de Caçambas e Entulho — Todos os direitos reservados.
+            © 2021–{new Date().getFullYear()} AMBA Locação de Caçambas — Todos os direitos reservados.
           </p>
           <p
             className="mt-1 text-center text-xs text-secondary-foreground/40 select-none pointer-events-none"
@@ -64,6 +65,8 @@ const Footer = () => {
       </div>
     </footer>
   );
-};
+});
+
+Footer.displayName = "Footer";
 
 export default Footer;

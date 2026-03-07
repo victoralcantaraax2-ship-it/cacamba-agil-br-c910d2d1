@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, memo } from "react";
 import { Menu, X } from "lucide-react";
 import phoneIcon from "@/assets/phone-icon.png";
-
 import { handleWhatsAppClick } from "@/lib/whatsapp";
 
 const navLinks = [
@@ -13,15 +12,8 @@ const navLinks = [
   { label: "Contato", href: "#contato" },
 ];
 
-const Header = () => {
+const Header = memo(() => {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   const handleClick = (href: string) => {
     setOpen(false);
@@ -30,11 +22,7 @@ const Header = () => {
   };
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-secondary/95 backdrop-blur-md shadow-lg" : "bg-secondary/80 backdrop-blur-sm"
-      }`}
-    >
+    <header className="fixed top-0 left-0 right-0 z-50 bg-secondary/95 backdrop-blur-md shadow-lg">
       <div className="container flex h-16 items-center justify-between px-4">
         <div className="w-10" />
 
@@ -61,12 +49,13 @@ const Header = () => {
             onClick={() => handleWhatsAppClick()}
             className="flex items-center gap-1.5 rounded-lg bg-primary px-3 py-2 text-sm font-bold text-primary-foreground"
           >
-            <img src={phoneIcon} alt="Telefone" className="h-4 w-4" />
+            <img src={phoneIcon} alt="Telefone" className="h-4 w-4" width={16} height={16} />
             Cotação
           </button>
           <button
             onClick={() => setOpen(!open)}
             className="flex h-10 w-10 items-center justify-center rounded-lg text-secondary-foreground"
+            aria-label={open ? "Fechar menu" : "Abrir menu"}
           >
             {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
@@ -94,6 +83,8 @@ const Header = () => {
       )}
     </header>
   );
-};
+});
+
+Header.displayName = "Header";
 
 export default Header;
