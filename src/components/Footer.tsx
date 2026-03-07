@@ -55,7 +55,7 @@ const Footer = () => {
             style={{ userSelect: "none", WebkitUserSelect: "none" }}
             aria-hidden="true"
           >
-            CNPJ: 64.596.513/0001-90
+            CNPJ: 48.983.125/0001-05
           </p>
           <p className="mt-1 text-center text-xs text-secondary-foreground/40">
             Política de Privacidade | Termos de Uso
