@@ -20,6 +20,9 @@ export const handleWhatsAppClick = (customMessage?: string) => {
         window.open(url, "_blank");
       },
     });
+    (window as any).gtag("event", "conversion", {
+      send_to: "AW-17999414284/L7e-CMbymIQcEIyI5YZD",
+    });
     // fallback caso o callback não dispare em 1s
     setTimeout(() => window.open(url, "_blank"), 1000);
   } else {
