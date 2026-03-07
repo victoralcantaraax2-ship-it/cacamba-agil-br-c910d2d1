@@ -10,7 +10,7 @@ const WhatsAppFloat = () => {
         aria-label="Abrir WhatsApp"
       >
         <img src={whatsappIcon} alt="WhatsApp" className="h-7 w-7" />
-        <span className="hidden text-base font-bold sm:inline">WhatsApp</span>
+        <span className="hidden text-base font-bold sm:inline">Cotação</span>
       </button>
     </div>
   );

@@ -5,11 +5,11 @@ import phoneIcon from "@/assets/phone-icon.png";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
 
 const navLinks = [
-  { label: "Tamanhos", href: "#tamanhos" },
-  { label: "Como funciona", href: "#como-funciona" },
-  { label: "Depoimentos", href: "#depoimentos" },
-  { label: "Sobre nós", href: "#sobre-nos" },
-  { label: "FAQ", href: "#faq" },
+  { label: "Opções", href: "#tamanhos" },
+  { label: "Passo a passo", href: "#como-funciona" },
+  { label: "Avaliações", href: "#depoimentos" },
+  { label: "Quem somos", href: "#sobre-nos" },
+  { label: "Dúvidas", href: "#faq" },
   { label: "Contato", href: "#contato" },
 ];
 
@@ -38,7 +38,6 @@ const Header = () => {
       <div className="container flex h-16 items-center justify-between px-4">
         <div className="w-10" />
 
-        {/* Desktop nav */}
         <nav className="hidden items-center gap-6 lg:flex">
           {navLinks.map((link) => (
             <button
@@ -53,18 +52,17 @@ const Header = () => {
             onClick={() => handleClick("#tamanhos")}
             className="rounded-lg bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground transition-all hover:scale-105 hover:bg-primary/90"
           >
-            Pedir agora
+            Solicitar agora
           </button>
         </nav>
 
-        {/* Mobile buttons */}
         <div className="flex items-center gap-2 lg:hidden">
           <button
             onClick={() => handleWhatsAppClick()}
             className="flex items-center gap-1.5 rounded-lg bg-primary px-3 py-2 text-sm font-bold text-primary-foreground"
           >
             <img src={phoneIcon} alt="Telefone" className="h-4 w-4" />
-            Orçamentos
+            Cotação
           </button>
           <button
             onClick={() => setOpen(!open)}
@@ -75,7 +73,6 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Mobile menu */}
       {open && (
         <nav className="border-t border-secondary-foreground/10 bg-secondary px-4 pb-4 pt-2 lg:hidden">
           {navLinks.map((link) => (
@@ -91,7 +88,7 @@ const Header = () => {
             onClick={() => handleClick("#tamanhos")}
             className="mt-2 w-full rounded-lg bg-primary py-3 text-center text-base font-bold text-primary-foreground"
           >
-            Pedir agora
+            Solicitar agora
           </button>
         </nav>
       )}

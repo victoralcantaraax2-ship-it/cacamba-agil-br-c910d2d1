@@ -4,18 +4,18 @@ import { getWhatsAppUrl } from "@/lib/whatsapp";
 const items = [
   {
     icon: Truck,
-    title: "Entrega Rápida",
-    desc: "Entrega ágil logo após a confirmação do pedido. Trabalhamos para que sua caçamba chegue o mais rápido possível.",
+    title: "Agilidade na Entrega",
+    desc: "Chegada rápida logo após a confirmação. Trabalhamos para que sua caçamba esteja no local o quanto antes.",
   },
   {
     icon: MessageCircle,
-    title: "Atendimento Online",
-    desc: "Suporte completo pelo WhatsApp para tirar dúvidas, fazer orçamentos e agendar entregas. Prático e sem burocracia.",
+    title: "Suporte Digital",
+    desc: "Atendimento completo pelo WhatsApp para cotações, dúvidas e agendamentos. Prático e direto.",
   },
   {
     icon: Leaf,
-    title: "Compromisso Ambiental",
-    desc: "Descarte responsável, seguindo todas as normas ambientais. Cuidamos do meio ambiente por você.",
+    title: "Destinação Ecológica",
+    desc: "Descarte responsável, cumprindo todas as regulamentações ambientais. Cuidamos da natureza por você.",
   },
 ];
 
@@ -24,7 +24,7 @@ const DifferentialsSection = () => {
     <section className="bg-card py-14 md:py-20">
       <div className="container px-4 text-center">
         <h2 className="mb-10 text-2xl font-extrabold text-card-foreground md:text-3xl">
-          Motivos para escolher a AMBA
+          Por que escolher a AMBA
         </h2>
 
         <div className="mx-auto mb-10 grid max-w-4xl grid-cols-1 gap-6 md:grid-cols-3">
@@ -49,7 +49,7 @@ const DifferentialsSection = () => {
           className="inline-flex items-center gap-2 rounded-xl bg-whatsapp px-8 py-4 text-base font-extrabold uppercase text-whatsapp-foreground shadow-lg transition-all hover:scale-105 hover:bg-whatsapp-hover"
         >
           <MessageCircle className="h-5 w-5 fill-current" />
-          Solicitar Orçamento
+          Pedir Cotação
         </a>
       </div>
     </section>

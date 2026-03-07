@@ -1,23 +1,23 @@
-import { ClipboardList, MapPin, Truck } from "lucide-react";
+import { FileText, MapPin, Truck } from "lucide-react";
 
 const steps = [
   {
-    icon: ClipboardList,
+    icon: FileText,
     step: "1",
-    title: "Escolha o tamanho",
-    desc: "Selecione a caçamba ideal para sua obra ou reforma.",
+    title: "Defina a capacidade",
+    desc: "Veja qual caçamba é a mais adequada para o seu projeto.",
   },
   {
     icon: MapPin,
     step: "2",
-    title: "Informe endereço e data",
-    desc: "Preencha onde e quando precisa da entrega.",
+    title: "Passe o local e a data",
+    desc: "Diga onde e quando precisa receber a caçamba.",
   },
   {
     icon: Truck,
     step: "3",
-    title: "Entregamos e retiramos",
-    desc: "Receba a caçamba e agende a retirada quando precisar.",
+    title: "Levamos e buscamos",
+    desc: "A caçamba é entregue e retirada conforme o combinado.",
   },
 ];
 
@@ -32,10 +32,10 @@ const ComoFuncionaSection = () => {
       <div className="container px-4">
         <div className="mb-12 text-center">
           <h2 className="mb-3 text-2xl font-extrabold text-foreground md:text-3xl">
-            Como Funciona
+            Passo a Passo
           </h2>
           <p className="text-muted-foreground">
-            Em 3 passos simples você resolve o descarte de entulho.
+            Três etapas para resolver o descarte do seu entulho.
           </p>
         </div>
 
@@ -59,7 +59,7 @@ const ComoFuncionaSection = () => {
             onClick={() => scrollTo("#tamanhos")}
             className="rounded-xl bg-primary px-8 py-4 text-base font-bold uppercase text-primary-foreground shadow-lg transition-all hover:scale-105 hover:bg-primary/90"
           >
-            Pedir agora
+            Solicitar agora
           </button>
         </div>
       </div>
