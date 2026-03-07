@@ -15,7 +15,7 @@ export const handleWhatsAppClick = (customMessage?: string) => {
     (window as any).gtag("event", "conversion", {
       send_to: "AW-17997709520/wCcjCIPU5IMcENCB_YVD",
       value: 1.0,
-      currency: "INR",
+      currency: "BRL",
       event_callback: () => {
         window.open(url, "_blank");
       },

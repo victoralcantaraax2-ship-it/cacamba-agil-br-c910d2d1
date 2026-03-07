@@ -97,9 +97,3 @@
     font-family: 'Outfit', sans-serif;
   }
 }
-
-@layer utilities {
-  .text-shadow-hero {
-    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
-  }
-}

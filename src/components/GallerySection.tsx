@@ -11,9 +11,9 @@ const items = [
   { src: galleryEntulho, label: "Coleta de Entulho" },
   { src: galleryComercial, label: "Obra Comercial" },
   { src: galleryResidencial, label: "Entrega Residencial" },
-  { src: gallery7m, label: "Caçamba 7m³" },
-  { src: gallery5m, label: "Caçamba 5m³" },
-  { src: gallery3m, label: "Caçamba 3m³" },
+  { src: gallery7m, label: "Caçamba 7 m³" },
+  { src: gallery5m, label: "Caçamba 5 m³" },
+  { src: gallery3m, label: "Caçamba 3 m³" },
 ];
 
 const GallerySection = () => {
@@ -32,6 +32,8 @@ const GallerySection = () => {
                 alt={label}
                 className="aspect-square w-full object-cover transition-transform group-hover:scale-105"
                 loading="lazy"
+                width={400}
+                height={400}
               />
               <div className="absolute inset-x-0 bottom-0 bg-secondary/80 px-3 py-2">
                 <span className="text-sm font-bold text-secondary-foreground">
