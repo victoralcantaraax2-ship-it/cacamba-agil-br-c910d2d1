@@ -1,12 +1,13 @@
+import { memo } from "react";
 import { Clock, Eye, Leaf } from "lucide-react";
 
 const values = [
-  { icon: Clock, label: "Compromisso com horários", desc: "Respeitamos prazos de entrega e recolhimento à risca." },
-  { icon: Eye, label: "Clareza total", desc: "Sem custos ocultos. Tudo definido desde a cotação." },
-  { icon: Leaf, label: "Sustentabilidade", desc: "Destinação ecológica, conforme as normas vigentes." },
+  { icon: Clock, label: "Compromisso com prazos", desc: "Respeitamos os horários de entrega e retirada à risca." },
+  { icon: Eye, label: "Transparência total", desc: "Sem custos ocultos. Tudo combinado desde a cotação." },
+  { icon: Leaf, label: "Sustentabilidade", desc: "Destinação ecológica dos resíduos, conforme as normas vigentes." },
 ];
 
-const AboutSection = () => {
+const AboutSection = memo(() => {
   return (
     <section id="sobre-nos" className="bg-background py-16 md:py-24">
       <div className="container px-4">
@@ -16,15 +17,15 @@ const AboutSection = () => {
           </h2>
           <p className="mb-4 text-muted-foreground leading-relaxed">
             A AMBA é especializada no aluguel de caçambas, com foco em
-            rapidez, suporte personalizado e destinação correta dos resíduos. Nosso
-            propósito é tornar o processo mais simples para quem está reformando,
-            construindo ou fazendo limpeza — sem burocracia e com total suporte
-            via WhatsApp.
+            agilidade, suporte personalizado e destinação correta dos resíduos. Nosso
+            objetivo é tornar o processo mais simples para quem está reformando,
+            construindo ou fazendo limpeza — sem burocracia e com atendimento
+            direto pelo WhatsApp.
           </p>
           <p className="mb-10 text-muted-foreground leading-relaxed">
-            Oferecemos diferentes capacidades para atender desde
-            ajustes residenciais até empreendimentos de grande porte, sempre
-            cumprindo os prazos de entrega e recolhimento.
+            Oferecemos caçambas de diferentes capacidades para atender desde
+            pequenos reparos residenciais até obras de grande porte, sempre
+            cumprindo os prazos combinados.
           </p>
         </div>
 
@@ -45,6 +46,8 @@ const AboutSection = () => {
       </div>
     </section>
   );
-};
+});
+
+AboutSection.displayName = "AboutSection";
 
 export default AboutSection;

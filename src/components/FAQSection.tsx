@@ -1,3 +1,4 @@
+import { memo } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -7,16 +8,16 @@ import {
 
 const faqs = [
   {
-    q: "Quais capacidades estão disponíveis?",
-    a: "Disponibilizamos caçambas de 3m³, 4m³, 5m³, 7m³, 10m³ e 26m³, adequadas desde pequenos reparos até grandes demolições.",
+    q: "Quais tamanhos de caçamba estão disponíveis?",
+    a: "Disponibilizamos caçambas de 3 m³, 4 m³, 5 m³, 7 m³, 10 m³ e 26 m³, adequadas desde pequenos reparos até grandes demolições.",
   },
   {
     q: "Qual o prazo de entrega?",
-    a: "A entrega ocorre em até 2 horas após a confirmação, variando conforme a localização.",
+    a: "A entrega ocorre em até 2 horas após a confirmação, podendo variar conforme a localização.",
   },
   {
-    q: "Quanto tempo posso manter a caçamba?",
-    a: "O período padrão vai de 3 a 7 dias, mas ajustamos conforme sua demanda. Basta combinar pelo WhatsApp.",
+    q: "Quanto tempo posso ficar com a caçamba?",
+    a: "O período padrão vai de 3 a 7 dias, mas ajustamos conforme a sua necessidade. Basta combinar pelo WhatsApp.",
   },
   {
     q: "O que posso descartar na caçamba?",
@@ -24,27 +25,27 @@ const faqs = [
   },
   {
     q: "Quais as formas de pagamento?",
-    a: "Aceitamos Pix, cartão de crédito, débito e boleto bancário. Tudo pode ser feito online.",
+    a: "Aceitamos Pix, cartão de crédito, débito e boleto bancário. Tudo pode ser feito de forma online.",
   },
   {
-    q: "É emitida nota fiscal?",
-    a: "Sim, emitimos nota fiscal para todos os serviços.",
+    q: "Vocês emitem nota fiscal?",
+    a: "Sim, emitimos nota fiscal para todos os serviços prestados.",
   },
   {
-    q: "Como funciona a recolha?",
-    a: "A retirada é marcada conforme sua necessidade. Entre em contato pelo WhatsApp quando a caçamba estiver completa ou no prazo acordado.",
+    q: "Como funciona a retirada da caçamba?",
+    a: "A retirada é agendada conforme a sua necessidade. Entre em contato pelo WhatsApp quando a caçamba estiver cheia ou no prazo combinado.",
   },
 ];
 
-const FAQSection = () => {
+const FAQSection = memo(() => {
   return (
     <section id="faq" className="bg-card py-16 md:py-24">
       <div className="container px-4">
         <div className="mb-8 text-center">
           <h2 className="mb-3 text-2xl font-extrabold text-card-foreground md:text-3xl">
-            Dúvidas Comuns
+            Perguntas Frequentes
           </h2>
-          <p className="text-muted-foreground">Esclareça suas questões sobre o serviço.</p>
+          <p className="text-muted-foreground">Tire suas dúvidas sobre o serviço de locação.</p>
         </div>
         <Accordion type="single" collapsible className="mx-auto max-w-2xl">
           {faqs.map((faq, idx) => (
@@ -61,6 +62,8 @@ const FAQSection = () => {
       </div>
     </section>
   );
-};
+});
+
+FAQSection.displayName = "FAQSection";
 
 export default FAQSection;

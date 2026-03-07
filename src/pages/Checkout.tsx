@@ -4,16 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { CheckCircle, Copy, ArrowLeft, Plus, Minus, Loader2, MapPin, XCircle, ChevronDown } from "lucide-react";
+import { CheckCircle, Copy, ArrowLeft, Plus, Minus, Loader2, MapPin, XCircle } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import { formatPhone, validatePhone } from "@/lib/phone";
 import { captureUtms, type UtmData } from "@/lib/utm";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
-import logoAmba from "@/assets/logo-amba.png";
-import pixLogo from "@/assets/pix-logo.png";
+import logoAmba from "@/assets/logo-amba-nova.png";
 import lockIcon from "@/assets/lock-icon.png";
 import cacambaImg from "@/assets/cacamba-generica.png";
 
