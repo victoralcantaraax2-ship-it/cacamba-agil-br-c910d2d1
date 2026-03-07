@@ -2,7 +2,7 @@ import { ShieldCheck, Headphones, Recycle } from "lucide-react";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
 import heroBg from "@/assets/hero-bg.jpg";
 import whatsappIcon from "@/assets/whatsapp-icon.png";
-import logoAmba from "@/assets/logo-amba-horizontal.png";
+import logoAmba from "@/assets/logo-amba-vertical.jpeg";
 import { Star, Users, Zap } from "lucide-react";
 
 const badges = [
