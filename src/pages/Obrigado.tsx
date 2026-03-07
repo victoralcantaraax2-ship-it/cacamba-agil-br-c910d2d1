@@ -18,7 +18,7 @@ const Obrigado = () => {
           Solicitação confirmada!
         </h1>
         <p className="mb-8 text-base text-muted-foreground">
-          Nossa equipe entrará em contato em breve.
+          Nossa equipe entrará em contato em breve pelo WhatsApp.
         </p>
 
         <div className="flex flex-col gap-3">
@@ -33,12 +33,12 @@ const Obrigado = () => {
             </Button>
           </a>
           <Button variant="outline" onClick={() => navigate("/")} size="lg">
-            Voltar ao site
+            Voltar ao início
           </Button>
         </div>
 
         <p className="mt-10 text-xs text-muted-foreground">
-          © 2021–{new Date().getFullYear()} AMBA Central de Caçambas
+          © 2021–{new Date().getFullYear()} AMBA Locação de Caçambas — Todos os direitos reservados.
         </p>
       </div>
     </main>

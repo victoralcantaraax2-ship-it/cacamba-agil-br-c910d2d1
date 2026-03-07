@@ -1,9 +1,8 @@
-import { ShieldCheck, Headphones, Recycle } from "lucide-react";
+import { ShieldCheck, Headphones, Recycle, Star, Users, Zap } from "lucide-react";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
 import heroBg from "@/assets/hero-bg.jpg";
 import whatsappIcon from "@/assets/whatsapp-icon.png";
 import logoAmba from "@/assets/logo-amba-nova.png";
-import { Star, Users, Zap } from "lucide-react";
 
 const badges = [
   { icon: ShieldCheck, label: "Serviço garantido" },
@@ -13,7 +12,7 @@ const badges = [
 
 const trustItems = [
   { icon: Star, label: "Avaliação 4.8★" },
-  { icon: Users, label: "Mais de 500 locações" },
+  { icon: Users, label: "+500 locações realizadas" },
   { icon: Zap, label: "Resposta imediata" },
 ];
 
@@ -31,13 +30,24 @@ const HeroSection = () => {
             src={heroBg}
             alt="Obra com caçamba para descarte de entulho"
             className="h-full w-full object-cover"
+            width={1920}
+            height={1080}
             loading="eager"
+            fetchPriority="high"
           />
           <div className="absolute inset-0 bg-secondary/90" />
         </div>
 
         <div className="container relative z-10 px-4 py-16 text-center md:py-24">
-          <img src={logoAmba} alt="AMBA Locação" className="mx-auto mb-8 h-28 w-auto md:h-36 lg:h-40" />
+          <img
+            src={logoAmba}
+            alt="AMBA Locação de Caçambas"
+            className="mx-auto mb-8 h-28 w-auto md:h-36 lg:h-40"
+            width={320}
+            height={160}
+            loading="eager"
+            fetchPriority="high"
+          />
           <h1 className="mb-4 text-3xl font-black leading-tight tracking-tight text-secondary-foreground sm:text-4xl md:text-5xl lg:text-6xl">
             Aluguel de Caçambas
             <br />
@@ -45,7 +55,7 @@ const HeroSection = () => {
           </h1>
 
           <p className="mx-auto mb-8 max-w-xl text-base text-secondary-foreground/80 md:text-lg">
-            Peça agora e receba na sua obra. Retirada no prazo combinado.
+            Peça agora e receba na sua obra. Entrega e retirada no prazo combinado.
           </p>
 
           <div className="mb-8 flex flex-wrap items-center justify-center gap-3">
@@ -71,14 +81,14 @@ const HeroSection = () => {
               onClick={() => handleWhatsAppClick()}
               className="inline-flex items-center gap-2 rounded-xl bg-whatsapp px-6 py-4 text-base font-bold text-whatsapp-foreground shadow-lg transition-all hover:scale-105 hover:bg-whatsapp-hover md:px-8 md:py-5 md:text-lg"
             >
-              <img src={whatsappIcon} alt="WhatsApp" className="h-5 w-5" />
+              <img src={whatsappIcon} alt="WhatsApp" className="h-5 w-5" width={20} height={20} />
               Chamar no WhatsApp
             </button>
           </div>
         </div>
       </section>
 
-      {/* Trust mini-block */}
+      {/* Barra de confiança */}
       <div className="bg-secondary border-t border-secondary-foreground/10">
         <div className="container px-4 py-5">
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-8">
