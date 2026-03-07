@@ -14,10 +14,10 @@ const Footer = () => {
             </p>
             <div className="flex flex-col gap-2 text-sm text-secondary-foreground/70">
               <a
-                href="tel:1120851441"
+                href="tel:1120850440"
                 className="flex items-center justify-center gap-2 transition-colors hover:text-primary md:justify-start"
               >
-                <Phone className="h-4 w-4" /> Fixo: (11) 2085-1441
+                <Phone className="h-4 w-4" /> Fixo: (11) 2085-0440
               </a>
               <button
                 onClick={() => handleWhatsAppClick()}
@@ -26,10 +26,10 @@ const Footer = () => {
                 <Phone className="h-4 w-4" /> WhatsApp: (11) 98760-4407
               </button>
               <a
-                href="mailto:contato@ambacacambas.com.br"
+                href="mailto:contato@ambalocacao.com"
                 className="flex items-center justify-center gap-2 transition-colors hover:text-primary md:justify-start"
               >
-                <Mail className="h-4 w-4" /> contato@ambacacambas.com.br
+                <Mail className="h-4 w-4" /> contato@ambalocacao.com
               </a>
               <span className="flex items-center justify-center gap-2 md:justify-start">
                 <Clock className="h-4 w-4" /> Seg–Sáb 7h às 18h
