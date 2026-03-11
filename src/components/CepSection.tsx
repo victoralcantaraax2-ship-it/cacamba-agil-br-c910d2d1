@@ -52,19 +52,26 @@ const CepSection = () => {
     setVisible(false);
 
     const startTime = Date.now();
+    const maxRetries = 2;
+    let lastError = false;
 
-    try {
-      const res = await fetch(`https://viacep.com.br/ws/${digits}/json/`);
-      const data = await res.json();
+    for (let attempt = 0; attempt <= maxRetries; attempt++) {
+      try {
+        const res = await fetch(`https://viacep.com.br/ws/${digits}/json/`, {
+          signal: AbortSignal.timeout(5000),
+        });
+        const data = await res.json();
 
-      const elapsed = Date.now() - startTime;
-      const minDelay = 2000 + Math.random() * 1000;
-      const remaining = Math.max(minDelay - elapsed, 0);
-      await new Promise((r) => setTimeout(r, remaining));
+        if (data.erro) {
+          lastError = true;
+          break;
+        }
 
-      if (data.erro) {
-        setError(true);
-      } else {
+        const elapsed = Date.now() - startTime;
+        const minDelay = 2000 + Math.random() * 1000;
+        const remaining = Math.max(minDelay - elapsed, 0);
+        await new Promise((r) => setTimeout(r, remaining));
+
         setAddress({
           logradouro: data.logradouro,
           bairro: data.bairro,
@@ -73,15 +80,22 @@ const CepSection = () => {
           cep: data.cep,
         });
         setTimeout(() => setVisible(true), 50);
+        setLoading(false);
+        return;
+      } catch {
+        if (attempt < maxRetries) {
+          await new Promise((r) => setTimeout(r, 800));
+          continue;
+        }
+        lastError = true;
       }
-    } catch {
-      const elapsed = Date.now() - startTime;
-      const remaining = Math.max(2000 - elapsed, 0);
-      await new Promise((r) => setTimeout(r, remaining));
-      setError(true);
-    } finally {
-      setLoading(false);
     }
+
+    const elapsed = Date.now() - startTime;
+    const remaining = Math.max(2000 - elapsed, 0);
+    await new Promise((r) => setTimeout(r, remaining));
+    setError(lastError);
+    setLoading(false);
   };
 
   const handleWhatsApp = () => {
