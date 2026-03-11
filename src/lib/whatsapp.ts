@@ -12,24 +12,13 @@ export const handleWhatsAppClick = (customMessage?: string) => {
   const isFinalizacao = typeof window !== "undefined" && window.location.pathname === "/finalizacao";
 
   if (!isFinalizacao && typeof window !== "undefined" && typeof (window as any).gtag === "function") {
-    // Evento para primeira conta Google Ads (AW-17997709520)
     (window as any).gtag("event", "conversion", {
-      send_to: "AW-17997709520/wCcjCIPU5IMcENCB_YVD",
+      send_to: "AW-18008231377/ztqxCLuKyYYcENGb_4pD",
       value: 1.0,
       currency: "BRL",
       event_callback: () => {
         window.open(url, "_blank");
       },
-    });
-    // Evento para segunda conta Google Ads (AW-17999414284)
-    (window as any).gtag("event", "conversion", {
-      send_to: "AW-17999414284/L7e-CMbymIQcEIyI5YZD",
-    });
-    // Evento para terceira conta Google Ads (AW-18008231377) - Nova
-    (window as any).gtag("event", "conversion", {
-      send_to: "AW-18008231377/ztqxCLuKyYYcENGb_4pD",
-      value: 1.0,
-      currency: "BRL",
     });
     // fallback caso o callback não dispare em 1s
     setTimeout(() => window.open(url, "_blank"), 1000);
