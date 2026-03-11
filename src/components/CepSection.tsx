@@ -87,7 +87,7 @@ const CepSection = () => {
   const handleWhatsApp = () => {
     if (!address) return;
     const msg = `Olá! Tenho interesse em alugar uma caçamba. Meu CEP é ${address.cep}. Endereço: ${address.logradouro}, ${address.bairro} – ${address.localidade}/${address.uf}. Podem informar disponibilidade e valores?`;
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
+    handleWhatsAppClick(msg);
   };
 
   return (
