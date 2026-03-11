@@ -2,6 +2,7 @@ import { useState } from "react";
 import { MapPin, CheckCircle, XCircle, Search, Loader2, Zap } from "lucide-react";
 import phoneIcon from "@/assets/phone-icon.png";
 import { Button } from "@/components/ui/button";
+import { handleWhatsAppClick } from "@/lib/whatsapp";
 
 type Address = {
   logradouro: string;
