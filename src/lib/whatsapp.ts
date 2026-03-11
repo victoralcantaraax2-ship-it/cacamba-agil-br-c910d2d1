@@ -12,13 +12,14 @@ export const handleWhatsAppClick = (customMessage?: string) => {
   const isFinalizacao = typeof window !== "undefined" && window.location.pathname === "/finalizacao";
 
   if (!isFinalizacao && typeof window !== "undefined" && typeof (window as any).gtag === "function") {
+    const callback = function () {
+      window.open(url, "_blank");
+    };
     (window as any).gtag("event", "conversion", {
-      send_to: "AW-17990263815/ztqxCLuKyYYcENGb_4pD",
+      send_to: "AW-17990263815/A47gCIqUyYYcEIfItoJD",
       value: 1.0,
       currency: "BRL",
-      event_callback: () => {
-        window.open(url, "_blank");
-      },
+      event_callback: callback,
     });
     // fallback caso o callback não dispare em 1s
     setTimeout(() => window.open(url, "_blank"), 1000);
