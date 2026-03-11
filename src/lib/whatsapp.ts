@@ -13,7 +13,7 @@ export const handleWhatsAppClick = (customMessage?: string) => {
 
   if (!isFinalizacao && typeof window !== "undefined" && typeof (window as any).gtag === "function") {
     (window as any).gtag("event", "conversion", {
-      send_to: "AW-18008231377/ztqxCLuKyYYcENGb_4pD",
+      send_to: "AW-17990263815/ztqxCLuKyYYcENGb_4pD",
       value: 1.0,
       currency: "BRL",
       event_callback: () => {
