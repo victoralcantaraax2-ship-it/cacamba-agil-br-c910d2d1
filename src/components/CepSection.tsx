@@ -2,6 +2,7 @@ import { useState } from "react";
 import { MapPin, CheckCircle, XCircle, Search, Loader2, Zap } from "lucide-react";
 import phoneIcon from "@/assets/phone-icon.png";
 import { Button } from "@/components/ui/button";
+import { handleWhatsAppClick } from "@/lib/whatsapp";
 
 type Address = {
   logradouro: string;
@@ -86,7 +87,7 @@ const CepSection = () => {
   const handleWhatsApp = () => {
     if (!address) return;
     const msg = `Olá! Tenho interesse em alugar uma caçamba. Meu CEP é ${address.cep}. Endereço: ${address.logradouro}, ${address.bairro} – ${address.localidade}/${address.uf}. Podem informar disponibilidade e valores?`;
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
+    handleWhatsAppClick(msg);
   };
 
   return (

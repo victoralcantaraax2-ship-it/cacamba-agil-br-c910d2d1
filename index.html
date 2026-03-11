@@ -22,6 +22,23 @@
   gtag('config', 'AW-18008231377');
 </script>
 <!-- End Google Ads gtag -->
+<!-- Event snippet for Solicitar cotação conversion page -->
+<script>
+function gtag_report_conversion_new(url) {
+  var callback = function () {
+    if (typeof(url) != 'undefined') {
+      window.location = url;
+    }
+  };
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18008231377/ztqxCLuKyYYcENGb_4pD',
+      'value': 1.0,
+      'currency': 'BRL',
+      'event_callback': callback
+  });
+  return false;
+}
+</script>
     <title>AMBA Locação de Caçambas | Aluguel de Caçambas em SP</title>
     <meta name="description" content="Aluguel de caçambas em São Paulo e Região com entrega rápida e atendimento online. Solicite seu orçamento pelo Whatsapp!">
     <meta name="author" content="AMBA Locação de Caçambas" />
