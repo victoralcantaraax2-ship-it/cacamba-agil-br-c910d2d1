@@ -49,13 +49,20 @@ const CepLookup = ({ onAddressFound, onClear, address, onFieldChange, errors }: 
     setLoading(true);
     setError(false);
     setVisible(false);
-    try {
-      const res = await fetch(`https://viacep.com.br/ws/${digits}/json/`);
-      const data = await res.json();
-      if (data.erro) {
-        setError(true);
-        onClear?.();
-      } else {
+    const maxRetries = 2;
+
+    for (let attempt = 0; attempt <= maxRetries; attempt++) {
+      try {
+        const res = await fetch(`https://viacep.com.br/ws/${digits}/json/`, {
+          signal: AbortSignal.timeout(5000),
+        });
+        const data = await res.json();
+        if (data.erro) {
+          setError(true);
+          onClear?.();
+          setLoading(false);
+          return;
+        }
         const addr: CepAddress = {
           logradouro: data.logradouro,
           bairro: data.bairro,
@@ -68,13 +75,18 @@ const CepLookup = ({ onAddressFound, onClear, address, onFieldChange, errors }: 
         };
         onAddressFound?.(addr);
         setTimeout(() => setVisible(true), 50);
+        setLoading(false);
+        return;
+      } catch {
+        if (attempt < maxRetries) {
+          await new Promise((r) => setTimeout(r, 800));
+          continue;
+        }
+        setError(true);
+        onClear?.();
       }
-    } catch {
-      setError(true);
-      onClear?.();
-    } finally {
-      setLoading(false);
     }
+    setLoading(false);
   };
 
   return (
