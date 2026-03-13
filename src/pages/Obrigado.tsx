@@ -1,6 +1,7 @@
 import { CheckCircle, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { handleWhatsAppClick } from "@/lib/whatsapp";
 
 const Obrigado = () => {
   const navigate = useNavigate();
@@ -22,16 +23,14 @@ const Obrigado = () => {
         </p>
 
         <div className="flex flex-col gap-3">
-          <a
-            href="https://wa.me/5511987604407?text=Olá!%20Acabei%20de%20realizar%20o%20pagamento."
-            target="_blank"
-            rel="noopener noreferrer"
+          <Button
+            className="w-full gap-2 bg-whatsapp text-whatsapp-foreground hover:bg-whatsapp-hover"
+            size="lg"
+            onClick={() => handleWhatsAppClick("Olá! Acabei de realizar o pagamento.")}
           >
-            <Button className="w-full gap-2 bg-whatsapp text-whatsapp-foreground hover:bg-whatsapp-hover" size="lg">
-              <MessageCircle className="h-5 w-5 fill-current" />
-              Falar no WhatsApp
-            </Button>
-          </a>
+            <MessageCircle className="h-5 w-5 fill-current" />
+            Falar no WhatsApp
+          </Button>
           <Button variant="outline" onClick={() => navigate("/")} size="lg">
             Voltar ao início
           </Button>
