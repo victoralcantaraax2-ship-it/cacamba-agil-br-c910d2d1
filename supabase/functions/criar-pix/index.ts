@@ -5,13 +5,13 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
 };
 
-const precos: Record<string, { amount: number; title: string }> = {
-  cacamba_3m: { amount: 23002, title: "Caçamba 3m³" },
-  cacamba_4m: { amount: 30002, title: "Caçamba 4m³" },
-  cacamba_5m: { amount: 36002, title: "Caçamba 5m³" },
-  cacamba_7m: { amount: 45002, title: "Caçamba 7m³" },
-  cacamba_10m: { amount: 59002, title: "Caçamba 10m³" },
-  cacamba_26m: { amount: 99002, title: "Caçamba 26m³" },
+const precos: Record<string, { amount: number; title: string; tamanho: string }> = {
+  cacamba_3m: { amount: 23002, title: "Caçamba 3m³", tamanho: "3m³" },
+  cacamba_4m: { amount: 30002, title: "Caçamba 4m³", tamanho: "4m³" },
+  cacamba_5m: { amount: 36002, title: "Caçamba 5m³", tamanho: "5m³" },
+  cacamba_7m: { amount: 45002, title: "Caçamba 7m³", tamanho: "7m³" },
+  cacamba_10m: { amount: 59002, title: "Caçamba 10m³", tamanho: "10m³" },
+  cacamba_26m: { amount: 99002, title: "Caçamba 26m³", tamanho: "26m³" },
 };
 
 function generateUniqueCpf(): string {
