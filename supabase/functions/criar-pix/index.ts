@@ -67,7 +67,7 @@ Deno.serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { nome, telefone, plano, quantidade, cupom } = body;
+    const { nome, telefone, plano, quantidade, cupom, valor_custom, descricao_custom } = body;
     console.log("PIX REQUEST RECEIVED", JSON.stringify(body));
 
     // Validate required fields
@@ -78,33 +78,48 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Validate plan
-    if (!plano || !precos[plano]) {
-      return new Response(JSON.stringify({ error: 'Plano inválido' }), {
-        status: 400,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+    let amount: number;
+    let description: string;
+    let itemTitle: string;
+    let itemQty: number;
+
+    if (valor_custom && typeof valor_custom === 'number' && valor_custom > 0) {
+      // Custom amount mode (admin)
+      amount = Math.round(valor_custom * 100); // convert BRL to cents
+      itemQty = 1;
+      description = descricao_custom || 'Prestação de Serviço – Avulso';
+      itemTitle = descricao_custom || 'Cobrança Avulsa';
+    } else {
+      // Normal checkout mode
+      if (!plano || !precos[plano]) {
+        return new Response(JSON.stringify({ error: 'Plano inválido' }), {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+
+      const qty = Number(quantidade);
+      if (!qty || qty < 1 || qty > 10 || !Number.isInteger(qty)) {
+        return new Response(JSON.stringify({ error: 'Quantidade inválida (1-10)' }), {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+
+      const planData = precos[plano];
+      amount = planData.amount * qty;
+      itemQty = qty;
+      description = `Prestação de Serviço – ${planData.tamanho}`;
+      itemTitle = planData.title;
+
+      // Apply coupon discount server-side
+      const validCoupons: Record<string, number> = { AMBA10: 0.10, AMBA15: 0.15, AMBA20: 0.20, AMBA25: 0.25 };
+      const couponCode = typeof cupom === 'string' ? cupom.trim().toUpperCase() : '';
+      const discountRate = validCoupons[couponCode] || 0;
+      const discountAmount = Math.round(amount * discountRate);
+      amount = amount - discountAmount;
+      console.log("COUPON:", couponCode, "DISCOUNT:", discountAmount, "FINAL AMOUNT:", amount);
     }
-
-    // Validate quantity
-    const qty = Number(quantidade);
-    if (!qty || qty < 1 || qty > 10 || !Number.isInteger(qty)) {
-      return new Response(JSON.stringify({ error: 'Quantidade inválida (1-10)' }), {
-        status: 400,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
-    }
-
-    const planData = precos[plano];
-    let amount = planData.amount * qty;
-
-    // Apply coupon discount server-side
-    const validCoupons: Record<string, number> = { AMBA10: 0.10, AMBA15: 0.15, AMBA20: 0.20, AMBA25: 0.25 };
-    const couponCode = typeof cupom === 'string' ? cupom.trim().toUpperCase() : '';
-    const discountRate = validCoupons[couponCode] || 0;
-    const discountAmount = Math.round(amount * discountRate);
-    amount = amount - discountAmount;
-    console.log("COUPON:", couponCode, "DISCOUNT:", discountAmount, "FINAL AMOUNT:", amount);
 
     let encodedAuth: string;
     try {
@@ -125,12 +140,12 @@ Deno.serve(async (req) => {
     const nitroPayload = {
       amount: amountDecimal,
       payment_method: 'pix',
-      description: `Prestação de Serviço – ${planData.tamanho}`,
+      description: description,
       items: [
         {
-          title: planData.title,
-          unitPrice: planData.amount,
-          quantity: qty,
+          title: itemTitle,
+          unitPrice: amount,
+          quantity: itemQty,
           tangible: false,
         },
       ],
