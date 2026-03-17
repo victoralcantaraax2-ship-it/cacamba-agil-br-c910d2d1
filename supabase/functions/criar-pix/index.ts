@@ -140,12 +140,12 @@ Deno.serve(async (req) => {
     const nitroPayload = {
       amount: amountDecimal,
       payment_method: 'pix',
-      description: `Prestação de Serviço – ${planData.tamanho}`,
+      description: description,
       items: [
         {
-          title: planData.title,
-          unitPrice: planData.amount,
-          quantity: qty,
+          title: itemTitle,
+          unitPrice: amount,
+          quantity: itemQty,
           tangible: false,
         },
       ],
