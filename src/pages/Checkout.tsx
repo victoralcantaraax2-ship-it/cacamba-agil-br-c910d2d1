@@ -620,90 +620,86 @@ const Checkout = () => {
                   <span className="text-[10px] text-muted-foreground">Aprovação instantânea</span>
                 </div>
 
-                {(
-                  <>
-                    {paymentStatus === "idle" && (
-                      <Button onClick={handleGeneratePix} className="w-full text-base font-bold" size="lg">
-                        Pagar com Pix • {formatCurrency(totalPrice)}
-                      </Button>
-                    )}
+                {paymentStatus === "idle" && (
+                  <Button onClick={handleGeneratePix} className="w-full text-base font-bold" size="lg">
+                    Pagar com Pix • {formatCurrency(totalPrice)}
+                  </Button>
+                )}
 
-                    {paymentStatus === "loading" && (
-                      <Button disabled className="w-full text-base font-bold" size="lg">
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Gerando PIX...
-                      </Button>
-                    )}
+                {paymentStatus === "loading" && (
+                  <Button disabled className="w-full text-base font-bold" size="lg">
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Gerando PIX...
+                  </Button>
+                )}
 
-                    {(paymentStatus === "generated" || paymentStatus === "confirmed") && (
-                      <div className="animate-in fade-in duration-500 space-y-3">
-                        <div className="flex flex-col items-center gap-3 rounded-lg border bg-card p-4">
-                          <div className="w-[200px] md:w-[220px] aspect-square flex items-center justify-center rounded-lg bg-white p-3">
-                            {pixCode ? (
-                              <QRCodeSVG value={pixCode} className="w-full h-full" />
-                            ) : (
-                              <span className="text-xs text-muted-foreground text-center px-4">QR Code será exibido após geração</span>
-                            )}
-                          </div>
-
-                          {pixCode && (
-                            <div className="w-full">
-                              <button
-                                type="button"
-                                onClick={handleCopyPix}
-                                aria-label="Copiar código Pix"
-                                className="w-full flex items-center gap-2 rounded-md border border-input bg-muted/50 px-3 py-2.5 text-left cursor-pointer hover:bg-muted transition-colors group"
-                              >
-                                <span className="flex-1 text-[10px] text-foreground break-all leading-relaxed select-all">{pixCode}</span>
-                                <Copy className="h-4 w-4 shrink-0 text-muted-foreground group-hover:text-primary transition-colors" />
-                              </button>
-                            </div>
-                          )}
-
-                          <div className="bg-primary/10 border border-primary/30 rounded-lg p-4 space-y-3">
-                            <h4 className="text-sm font-bold text-primary flex items-center gap-2">
-                              Como pagar com Pix
-                            </h4>
-                            <div className="space-y-3">
-                              <div className="flex gap-3 items-start">
-                                <span className="bg-primary text-primary-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center shrink-0">1</span>
-                                <p className="text-xs text-muted-foreground">Copie o código que foi gerado</p>
-                              </div>
-                              <div className="flex gap-3 items-start">
-                                <span className="bg-primary text-primary-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center shrink-0">2</span>
-                                <p className="text-xs text-muted-foreground">Abra um aplicativo em que você tenha o Pix habilitado e use a opção <strong className="text-foreground">Pix Copia e Cola</strong></p>
-                              </div>
-                              <div className="flex gap-3 items-start">
-                                <span className="bg-primary text-primary-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center shrink-0">3</span>
-                                <p className="text-xs text-muted-foreground">Cole o código, confirme o valor e faça o pagamento. Ele será confirmado na hora :)</p>
-                              </div>
-                            </div>
-                          </div>
-
-                          <p className="text-[10px] text-muted-foreground text-center inline-flex items-center justify-center gap-1">
-                            <img src={lockIcon} alt="Cadeado" className="h-3 w-3 inline-block" />
-                            Pagamento seguro via
-                            <img src={mercadopagoLogo} alt="Mercado Pago" className="h-3.5 inline-block" />
-                          </p>
-                        </div>
-
-                        {paymentStatus === "generated" && (
-                          <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-                            <Loader2 className="h-4 w-4 animate-spin text-primary" />
-                            <span>Processando confirmação automática do pagamento via Pix…</span>
-                          </div>
-                        )}
-
-                        {paymentStatus === "confirmed" && (
-                          <div className="flex items-center justify-center gap-2 text-accent">
-                            <CheckCircle className="h-5 w-5" />
-                            <span className="font-bold">Pagamento confirmado! Redirecionando...</span>
-                          </div>
+                {(paymentStatus === "generated" || paymentStatus === "confirmed") && (
+                  <div className="animate-in fade-in duration-500 space-y-3">
+                    <div className="flex flex-col items-center gap-3 rounded-lg border bg-card p-4">
+                      <div className="w-[200px] md:w-[220px] aspect-square flex items-center justify-center rounded-lg bg-white p-3">
+                        {pixCode ? (
+                          <QRCodeSVG value={pixCode} className="w-full h-full" />
+                        ) : (
+                          <span className="text-xs text-muted-foreground text-center px-4">QR Code será exibido após geração</span>
                         )}
                       </div>
+
+                      {pixCode && (
+                        <div className="w-full">
+                          <button
+                            type="button"
+                            onClick={handleCopyPix}
+                            aria-label="Copiar código Pix"
+                            className="w-full flex items-center gap-2 rounded-md border border-input bg-muted/50 px-3 py-2.5 text-left cursor-pointer hover:bg-muted transition-colors group"
+                          >
+                            <span className="flex-1 text-[10px] text-foreground break-all leading-relaxed select-all">{pixCode}</span>
+                            <Copy className="h-4 w-4 shrink-0 text-muted-foreground group-hover:text-primary transition-colors" />
+                          </button>
+                        </div>
+                      )}
+
+                      <div className="bg-primary/10 border border-primary/30 rounded-lg p-4 space-y-3">
+                        <h4 className="text-sm font-bold text-primary flex items-center gap-2">
+                          Como pagar com Pix
+                        </h4>
+                        <div className="space-y-3">
+                          <div className="flex gap-3 items-start">
+                            <span className="bg-primary text-primary-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center shrink-0">1</span>
+                            <p className="text-xs text-muted-foreground">Copie o código que foi gerado</p>
+                          </div>
+                          <div className="flex gap-3 items-start">
+                            <span className="bg-primary text-primary-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center shrink-0">2</span>
+                            <p className="text-xs text-muted-foreground">Abra um aplicativo em que você tenha o Pix habilitado e use a opção <strong className="text-foreground">Pix Copia e Cola</strong></p>
+                          </div>
+                          <div className="flex gap-3 items-start">
+                            <span className="bg-primary text-primary-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center shrink-0">3</span>
+                            <p className="text-xs text-muted-foreground">Cole o código, confirme o valor e faça o pagamento. Ele será confirmado na hora :)</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <p className="text-[10px] text-muted-foreground text-center inline-flex items-center justify-center gap-1">
+                        <img src={lockIcon} alt="Cadeado" className="h-3 w-3 inline-block" />
+                        Pagamento seguro via
+                        <img src={mercadopagoLogo} alt="Mercado Pago" className="h-3.5 inline-block" />
+                      </p>
+                    </div>
+
+                    {paymentStatus === "generated" && (
+                      <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+                        <Loader2 className="h-4 w-4 animate-spin text-primary" />
+                        <span>Processando confirmação automática do pagamento via Pix…</span>
+                      </div>
                     )}
-                  </>
-                )
+
+                    {paymentStatus === "confirmed" && (
+                      <div className="flex items-center justify-center gap-2 text-accent">
+                        <CheckCircle className="h-5 w-5" />
+                        <span className="font-bold">Pagamento confirmado! Redirecionando...</span>
+                      </div>
+                    )}
+                  </div>
+                )}
                 <div className="mt-4 flex items-center gap-2 rounded-lg bg-accent/10 p-3 text-sm text-accent">
                   <CheckCircle className="h-5 w-5 shrink-0" />
                   <span>Atendimento iniciado após confirmação automática do pagamento.</span>
