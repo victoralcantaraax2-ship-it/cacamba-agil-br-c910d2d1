@@ -18,6 +18,7 @@ import logoAmba from "@/assets/logo-amba-nova.png";
 import lockIcon from "@/assets/lock-icon.png";
 import cacambaImg from "@/assets/cacamba-generica.png";
 import pixLogo from "@/assets/pix-logo.png";
+import mercadopagoLogo from "@/assets/mercadopago-logo.png";
 
 type Plan = {
   id: string;
@@ -755,7 +756,8 @@ const Checkout = () => {
 
                           <p className="text-[10px] text-muted-foreground text-center inline-flex items-center justify-center gap-1">
                             <img src={lockIcon} alt="Cadeado" className="h-3 w-3 inline-block" />
-                            Pagamento seguro via PIX.
+                            Pagamento seguro via
+                            <img src={mercadopagoLogo} alt="Mercado Pago" className="h-3.5 inline-block" />
                           </p>
                         </div>
 
@@ -889,7 +891,8 @@ const Checkout = () => {
 
                         <p className="text-[10px] text-muted-foreground text-center inline-flex items-center justify-center gap-1 w-full">
                           <img src={lockIcon} alt="Cadeado" className="h-3 w-3 inline-block" />
-                          Pagamento seguro via NitroPay
+                          Pagamento seguro via
+                          <img src={mercadopagoLogo} alt="Mercado Pago" className="h-3.5 inline-block" />
                         </p>
                       </div>
                     )}
