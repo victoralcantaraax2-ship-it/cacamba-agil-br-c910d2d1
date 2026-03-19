@@ -703,7 +703,8 @@ const Checkout = () => {
                       </div>
                     )}
                   </>
-                )}
+                )
+
 
                 {/* Card Payment */}
                 {paymentMethod === "card" && (
