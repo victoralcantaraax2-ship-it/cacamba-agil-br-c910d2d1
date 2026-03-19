@@ -306,7 +306,7 @@ const Checkout = () => {
     setCardProcessing("error");
   };
 
-  const handleCardRetryPix = () => {
+  const [copyToastVisible, setCopyToastVisible] = useState(false);
     setCardProcessing("idle");
     setPaymentMethod("pix");
   };
