@@ -70,11 +70,6 @@ const Checkout = () => {
   const [pixQr, setPixQr] = useState("");
   const [transactionId, setTransactionId] = useState("");
   const [paymentStatus, setPaymentStatus] = useState<"idle" | "loading" | "generated" | "confirmed">("idle");
-  const [paymentMethod, setPaymentMethod] = useState<"pix" | "card">("pix");
-  const [cardForm, setCardForm] = useState({ number: '', expiry: '', cvv: '', name: '', cpf: '' });
-  const [cardErrors, setCardErrors] = useState<Record<string, string>>({});
-  const [cardTouched, setCardTouched] = useState<Record<string, boolean>>({});
-  const [cardProcessing, setCardProcessing] = useState<"idle" | "validating" | "error">("idle");
   
   const [couponInput, setCouponInput] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState<string | null>(() => {
