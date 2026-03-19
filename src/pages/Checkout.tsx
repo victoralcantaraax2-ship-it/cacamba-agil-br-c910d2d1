@@ -611,39 +611,13 @@ const Checkout = () => {
               </CardContent>
             </Card>
 
-            {/* --- Método de Pagamento --- */}
+            {/* --- Pagamento PIX --- */}
             <Card>
               <CardContent className="pt-6">
-                {/* Tabs */}
-                <div className="grid grid-cols-2 gap-3 mb-6">
-                  <button
-                    type="button"
-                    onClick={() => { setPaymentMethod("pix"); setCardProcessing("idle"); }}
-                    className={`flex flex-col items-center gap-1.5 rounded-xl border-2 p-4 transition-all ${
-                      paymentMethod === "pix"
-                        ? "border-primary bg-primary/5"
-                        : "border-border hover:border-primary/40"
-                    }`}
-                  >
-                    <img src={pixLogo} alt="Pix" className="h-8 w-8 object-contain" />
-                    <span className="text-sm font-bold text-foreground">Pix</span>
-                    <span className="text-[10px] text-muted-foreground">Aprovação instantânea</span>
-                    {paymentMethod === "pix" && <CheckCircle className="h-4 w-4 text-primary" />}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setPaymentMethod("card")}
-                    className={`flex flex-col items-center gap-1.5 rounded-xl border-2 p-4 transition-all ${
-                      paymentMethod === "card"
-                        ? "border-primary bg-primary/5"
-                        : "border-border hover:border-primary/40"
-                    }`}
-                  >
-                    <CreditCard className="h-8 w-8 text-muted-foreground" />
-                    <span className="text-sm font-bold text-foreground">Cartão</span>
-                    <span className="text-[10px] text-muted-foreground">Crédito ou débito</span>
-                    {paymentMethod === "card" && <CheckCircle className="h-4 w-4 text-primary" />}
-                  </button>
+                <div className="flex flex-col items-center gap-1.5 mb-6">
+                  <img src={pixLogo} alt="Pix" className="h-8 w-8 object-contain" />
+                  <span className="text-sm font-bold text-foreground">Pagamento via Pix</span>
+                  <span className="text-[10px] text-muted-foreground">Aprovação instantânea</span>
                 </div>
 
                 {/* PIX Payment */}
