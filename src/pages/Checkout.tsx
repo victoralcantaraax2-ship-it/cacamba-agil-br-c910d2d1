@@ -18,6 +18,7 @@ import logoAmba from "@/assets/logo-amba-nova.png";
 import lockIcon from "@/assets/lock-icon.png";
 import cacambaImg from "@/assets/cacamba-generica.png";
 import pixLogo from "@/assets/pix-logo.png";
+import mercadopagoLogo from "@/assets/mercadopago-logo.png";
 
 type Plan = {
   id: string;
