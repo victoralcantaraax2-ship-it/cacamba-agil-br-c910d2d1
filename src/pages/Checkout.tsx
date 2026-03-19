@@ -306,10 +306,12 @@ const Checkout = () => {
     setCardProcessing("error");
   };
 
-  const [copyToastVisible, setCopyToastVisible] = useState(false);
+  const handleCardRetryPix = () => {
     setCardProcessing("idle");
     setPaymentMethod("pix");
   };
+
+  const [copyToastVisible, setCopyToastVisible] = useState(false);
 
 
   const handleCopyPix = async () => {
