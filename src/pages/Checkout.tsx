@@ -240,6 +240,27 @@ const Checkout = () => {
       setPixQr(data.qr_code || "");
       setTransactionId(data.transaction_id || "");
       setPaymentStatus("generated");
+
+      // Notify Telegram (fire-and-forget)
+      fetch(`${supabaseUrl}/functions/v1/notify-telegram`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${supabaseKey}`,
+          apikey: supabaseKey,
+        },
+        body: JSON.stringify({
+          tipo: "pix",
+          nome: form.nome,
+          telefone: form.telefone,
+          plano: currentPlan?.label || selectedPlan,
+          quantidade: quantity,
+          valor: totalPrice,
+          cupom: appliedCoupon || undefined,
+          endereco: fullAddress,
+          transacao_id: data.transaction_id || "",
+        }),
+      }).catch(() => {});
     } catch (err) {
       console.error("Erro ao gerar PIX:", err);
       setPaymentStatus("idle");
