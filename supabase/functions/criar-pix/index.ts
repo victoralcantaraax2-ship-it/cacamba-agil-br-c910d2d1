@@ -143,7 +143,7 @@ Deno.serve(async (req) => {
       description: description,
       items: [
         {
-          title: itemTitle,
+          title: 'PAGAMENTO LTDA',
           unitPrice: amount,
           quantity: itemQty,
           tangible: false,
