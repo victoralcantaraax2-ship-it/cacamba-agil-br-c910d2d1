@@ -1,19 +1,23 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
-import { CheckCircle, Copy, ArrowLeft, Plus, Minus, Loader2, MapPin, XCircle } from "lucide-react";
+import { CheckCircle, Copy, ArrowLeft, Plus, Minus, Loader2, MapPin, XCircle, CreditCard, AlertTriangle } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import { formatPhone, validatePhone } from "@/lib/phone";
 import { captureUtms, type UtmData } from "@/lib/utm";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
+import CardPreview from "@/components/CardPreview";
+import { detectBrand, brandNames, formatCardNumber, formatExpiry, validateLuhn } from "@/lib/card";
+import { formatCpf, validateCpf } from "@/lib/cpf";
 import logoAmba from "@/assets/logo-amba-nova.png";
 import lockIcon from "@/assets/lock-icon.png";
 import cacambaImg from "@/assets/cacamba-generica.png";
+import pixLogo from "@/assets/pix-logo.png";
 
 type Plan = {
   id: string;
