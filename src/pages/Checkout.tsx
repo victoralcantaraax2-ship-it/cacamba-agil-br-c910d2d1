@@ -250,7 +250,67 @@ const Checkout = () => {
     }
   };
 
-  const [copyToastVisible, setCopyToastVisible] = useState(false);
+  // --- Card validation on blur ---
+  const validateCardField = (field: string, value: string) => {
+    const e: Record<string, string> = {};
+    const digits = value.replace(/\D/g, '');
+    if (field === 'number') {
+      if (digits.length < 13) e.number = 'Número do cartão incompleto';
+      else if (!validateLuhn(value)) e.number = 'Número do cartão inválido';
+    }
+    if (field === 'expiry') {
+      const parts = value.split('/');
+      if (parts.length !== 2 || parts[1].length !== 2) e.expiry = 'Data inválida';
+      else {
+        const m = parseInt(parts[0], 10);
+        if (m < 1 || m > 12) e.expiry = 'Mês inválido';
+      }
+    }
+    if (field === 'cvv' && (digits.length < 3 || digits.length > 4)) e.cvv = 'CVV inválido';
+    if (field === 'name' && value.trim().length < 3) e.name = 'Informe o nome do titular';
+    if (field === 'cpf' && !validateCpf(value)) e.cpf = 'CPF inválido';
+    setCardErrors(prev => ({ ...prev, [field]: e[field] || '' }));
+  };
+
+  const handleCardBlur = (field: string) => {
+    setCardTouched(prev => ({ ...prev, [field]: true }));
+    validateCardField(field, cardForm[field as keyof typeof cardForm]);
+  };
+
+  const cardBrand = detectBrand(cardForm.number);
+  const cardBrandName = brandNames[cardBrand];
+
+  const handleCardSubmit = async () => {
+    // Validate all fields
+    const fields = ['number', 'expiry', 'cvv', 'name', 'cpf'] as const;
+    const allTouched: Record<string, boolean> = {};
+    fields.forEach(f => { allTouched[f] = true; validateCardField(f, cardForm[f]); });
+    setCardTouched(allTouched);
+    
+    // Check if any error
+    const hasErr = fields.some(f => {
+      const v = cardForm[f];
+      const d = v.replace(/\D/g, '');
+      if (f === 'number') return d.length < 13 || !validateLuhn(v);
+      if (f === 'expiry') { const p = v.split('/'); return p.length !== 2 || p[1].length !== 2; }
+      if (f === 'cvv') return d.length < 3;
+      if (f === 'name') return v.trim().length < 3;
+      if (f === 'cpf') return !validateCpf(v);
+      return false;
+    });
+    if (hasErr) return;
+
+    setCardProcessing("validating");
+    // Simulate processing
+    await new Promise(r => setTimeout(r, 3000));
+    setCardProcessing("error");
+  };
+
+  const handleCardRetryPix = () => {
+    setCardProcessing("idle");
+    setPaymentMethod("pix");
+  };
+
 
   const handleCopyPix = async () => {
     try {
