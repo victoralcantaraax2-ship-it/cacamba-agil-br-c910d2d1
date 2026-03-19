@@ -704,9 +704,6 @@ const Checkout = () => {
                     )}
                   </>
                 )
-
-
-
                 <div className="mt-4 flex items-center gap-2 rounded-lg bg-accent/10 p-3 text-sm text-accent">
                   <CheckCircle className="h-5 w-5 shrink-0" />
                   <span>Atendimento iniciado após confirmação automática do pagamento.</span>
