@@ -620,8 +620,7 @@ const Checkout = () => {
                   <span className="text-[10px] text-muted-foreground">Aprovação instantânea</span>
                 </div>
 
-                {/* PIX Payment */}
-                {paymentMethod === "pix" && (
+                {(
                   <>
                     {paymentStatus === "idle" && (
                       <Button onClick={handleGeneratePix} className="w-full text-base font-bold" size="lg">
