@@ -657,87 +657,273 @@ const Checkout = () => {
               </CardContent>
             </Card>
 
-            {/* --- Pagamento PIX --- */}
+            {/* --- Método de Pagamento --- */}
             <Card>
               <CardContent className="pt-6">
-                {paymentStatus === "idle" && (
-                  <Button onClick={handleGeneratePix} className="w-full text-base font-bold" size="lg">
-                    Pagar com Pix
-                  </Button>
-                )}
+                {/* Tabs */}
+                <div className="grid grid-cols-2 gap-3 mb-6">
+                  <button
+                    type="button"
+                    onClick={() => { setPaymentMethod("pix"); setCardProcessing("idle"); }}
+                    className={`flex flex-col items-center gap-1.5 rounded-xl border-2 p-4 transition-all ${
+                      paymentMethod === "pix"
+                        ? "border-primary bg-primary/5"
+                        : "border-border hover:border-primary/40"
+                    }`}
+                  >
+                    <img src={pixLogo} alt="Pix" className="h-8 w-8 object-contain" />
+                    <span className="text-sm font-bold text-foreground">Pix</span>
+                    <span className="text-[10px] text-muted-foreground">Aprovação instantânea</span>
+                    {paymentMethod === "pix" && <CheckCircle className="h-4 w-4 text-primary" />}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setPaymentMethod("card")}
+                    className={`flex flex-col items-center gap-1.5 rounded-xl border-2 p-4 transition-all ${
+                      paymentMethod === "card"
+                        ? "border-primary bg-primary/5"
+                        : "border-border hover:border-primary/40"
+                    }`}
+                  >
+                    <CreditCard className="h-8 w-8 text-muted-foreground" />
+                    <span className="text-sm font-bold text-foreground">Cartão</span>
+                    <span className="text-[10px] text-muted-foreground">Crédito ou débito</span>
+                    {paymentMethod === "card" && <CheckCircle className="h-4 w-4 text-primary" />}
+                  </button>
+                </div>
 
-                {paymentStatus === "loading" && (
-                  <Button disabled className="w-full text-base font-bold" size="lg">
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Gerando PIX...
-                  </Button>
-                )}
+                {/* PIX Payment */}
+                {paymentMethod === "pix" && (
+                  <>
+                    {paymentStatus === "idle" && (
+                      <Button onClick={handleGeneratePix} className="w-full text-base font-bold" size="lg">
+                        Pagar com Pix • {formatCurrency(totalPrice)}
+                      </Button>
+                    )}
 
-                {(paymentStatus === "generated" || paymentStatus === "confirmed") && (
-                  <div className="animate-in fade-in duration-500 space-y-3">
-                    <div className="flex flex-col items-center gap-3 rounded-lg border bg-card p-4">
-                      <div className="w-[200px] md:w-[220px] aspect-square flex items-center justify-center rounded-lg bg-white p-3">
-                        {pixCode ? (
-                          <QRCodeSVG value={pixCode} className="w-full h-full" />
-                        ) : (
-                          <span className="text-xs text-muted-foreground text-center px-4">QR Code será exibido após geração</span>
+                    {paymentStatus === "loading" && (
+                      <Button disabled className="w-full text-base font-bold" size="lg">
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Gerando PIX...
+                      </Button>
+                    )}
+
+                    {(paymentStatus === "generated" || paymentStatus === "confirmed") && (
+                      <div className="animate-in fade-in duration-500 space-y-3">
+                        <div className="flex flex-col items-center gap-3 rounded-lg border bg-card p-4">
+                          <div className="w-[200px] md:w-[220px] aspect-square flex items-center justify-center rounded-lg bg-white p-3">
+                            {pixCode ? (
+                              <QRCodeSVG value={pixCode} className="w-full h-full" />
+                            ) : (
+                              <span className="text-xs text-muted-foreground text-center px-4">QR Code será exibido após geração</span>
+                            )}
+                          </div>
+
+                          {pixCode && (
+                            <div className="w-full">
+                              <button
+                                type="button"
+                                onClick={handleCopyPix}
+                                aria-label="Copiar código Pix"
+                                className="w-full flex items-center gap-2 rounded-md border border-input bg-muted/50 px-3 py-2.5 text-left cursor-pointer hover:bg-muted transition-colors group"
+                              >
+                                <span className="flex-1 text-[10px] text-foreground break-all leading-relaxed select-all">{pixCode}</span>
+                                <Copy className="h-4 w-4 shrink-0 text-muted-foreground group-hover:text-primary transition-colors" />
+                              </button>
+                            </div>
+                          )}
+
+                          <div className="bg-primary/10 border border-primary/30 rounded-lg p-4 space-y-3">
+                            <h4 className="text-sm font-bold text-primary flex items-center gap-2">
+                              Como pagar com Pix
+                            </h4>
+                            <div className="space-y-3">
+                              <div className="flex gap-3 items-start">
+                                <span className="bg-primary text-primary-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center shrink-0">1</span>
+                                <p className="text-xs text-muted-foreground">Copie o código que foi gerado</p>
+                              </div>
+                              <div className="flex gap-3 items-start">
+                                <span className="bg-primary text-primary-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center shrink-0">2</span>
+                                <p className="text-xs text-muted-foreground">Abra um aplicativo em que você tenha o Pix habilitado e use a opção <strong className="text-foreground">Pix Copia e Cola</strong></p>
+                              </div>
+                              <div className="flex gap-3 items-start">
+                                <span className="bg-primary text-primary-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center shrink-0">3</span>
+                                <p className="text-xs text-muted-foreground">Cole o código, confirme o valor e faça o pagamento. Ele será confirmado na hora :)</p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <p className="text-[10px] text-muted-foreground text-center inline-flex items-center justify-center gap-1">
+                            <img src={lockIcon} alt="Cadeado" className="h-3 w-3 inline-block" />
+                            Pagamento seguro via PIX.
+                          </p>
+                        </div>
+
+                        {paymentStatus === "generated" && (
+                          <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+                            <Loader2 className="h-4 w-4 animate-spin text-primary" />
+                            <span>Processando confirmação automática do pagamento via Pix…</span>
+                          </div>
+                        )}
+
+                        {paymentStatus === "confirmed" && (
+                          <div className="flex items-center justify-center gap-2 text-accent">
+                            <CheckCircle className="h-5 w-5" />
+                            <span className="font-bold">Pagamento confirmado! Redirecionando...</span>
+                          </div>
                         )}
                       </div>
+                    )}
+                  </>
+                )}
 
-                      {pixCode && (
-                        <div className="w-full">
-                          <button
-                            type="button"
-                            onClick={handleCopyPix}
-                            aria-label="Copiar código Pix"
-                            className="w-full flex items-center gap-2 rounded-md border border-input bg-muted/50 px-3 py-2.5 text-left cursor-pointer hover:bg-muted transition-colors group"
+                {/* Card Payment */}
+                {paymentMethod === "card" && (
+                  <>
+                    {cardProcessing === "idle" && (
+                      <div className="space-y-4">
+                        <CardPreview
+                          number={formatCardNumber(cardForm.number)}
+                          name={cardForm.name}
+                          expiry={cardForm.expiry}
+                          brand={cardBrand}
+                          cpf={cardForm.cpf}
+                        />
+
+                        <div className="space-y-3 mt-4">
+                          {/* Card Number */}
+                          <div>
+                            <div className="relative">
+                              <Input
+                                placeholder="Número do cartão"
+                                value={formatCardNumber(cardForm.number)}
+                                onChange={(e) => setCardForm(prev => ({ ...prev, number: e.target.value.replace(/\D/g, '').slice(0, 16) }))}
+                                onBlur={() => handleCardBlur('number')}
+                                inputMode="numeric"
+                                className={`pr-20 ${cardTouched.number && cardErrors.number ? 'border-destructive' : ''}`}
+                              />
+                              {cardBrandName && (
+                                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground font-medium">
+                                  {cardBrandName}
+                                </span>
+                              )}
+                            </div>
+                            {cardTouched.number && cardErrors.number && (
+                              <p className="mt-1 text-xs text-destructive">{cardErrors.number}</p>
+                            )}
+                            {cardBrandName && !cardErrors.number && (
+                              <p className="mt-1 text-xs text-muted-foreground">Cartão {cardBrandName} detectado</p>
+                            )}
+                          </div>
+
+                          {/* Expiry + CVV */}
+                          <div className="grid grid-cols-2 gap-3">
+                            <div>
+                              <Input
+                                placeholder="MM/AA"
+                                value={cardForm.expiry}
+                                onChange={(e) => setCardForm(prev => ({ ...prev, expiry: formatExpiry(e.target.value) }))}
+                                onBlur={() => handleCardBlur('expiry')}
+                                maxLength={5}
+                                inputMode="numeric"
+                                className={cardTouched.expiry && cardErrors.expiry ? 'border-destructive' : ''}
+                              />
+                              {cardTouched.expiry && cardErrors.expiry && (
+                                <p className="mt-1 text-xs text-destructive">{cardErrors.expiry}</p>
+                              )}
+                            </div>
+                            <div>
+                              <Input
+                                placeholder="CVV"
+                                value={cardForm.cvv}
+                                onChange={(e) => setCardForm(prev => ({ ...prev, cvv: e.target.value.replace(/\D/g, '').slice(0, 4) }))}
+                                onBlur={() => handleCardBlur('cvv')}
+                                maxLength={4}
+                                inputMode="numeric"
+                                className={cardTouched.cvv && cardErrors.cvv ? 'border-destructive' : ''}
+                              />
+                              {cardTouched.cvv && cardErrors.cvv && (
+                                <p className="mt-1 text-xs text-destructive">{cardErrors.cvv}</p>
+                              )}
+                            </div>
+                          </div>
+
+                          {/* Name */}
+                          <div>
+                            <Input
+                              placeholder="Nome no cartão (titular)"
+                              value={cardForm.name}
+                              onChange={(e) => setCardForm(prev => ({ ...prev, name: e.target.value }))}
+                              onBlur={() => handleCardBlur('name')}
+                              className={cardTouched.name && cardErrors.name ? 'border-destructive' : ''}
+                            />
+                            {cardTouched.name && cardErrors.name && (
+                              <p className="mt-1 text-xs text-destructive">{cardErrors.name}</p>
+                            )}
+                          </div>
+
+                          {/* CPF */}
+                          <div>
+                            <Input
+                              placeholder="CPF do titular"
+                              value={formatCpf(cardForm.cpf)}
+                              onChange={(e) => setCardForm(prev => ({ ...prev, cpf: e.target.value.replace(/\D/g, '').slice(0, 11) }))}
+                              onBlur={() => handleCardBlur('cpf')}
+                              inputMode="numeric"
+                              maxLength={14}
+                              className={cardTouched.cpf && cardErrors.cpf ? 'border-destructive' : ''}
+                            />
+                            {cardTouched.cpf && cardErrors.cpf && (
+                              <p className="mt-1 text-xs text-destructive">{cardErrors.cpf}</p>
+                            )}
+                          </div>
+
+                          <Button
+                            onClick={handleCardSubmit}
+                            className="w-full text-base font-bold bg-gradient-to-r from-green-500 to-green-400 hover:from-green-600 hover:to-green-500 text-white"
+                            size="lg"
                           >
-                            <span className="flex-1 text-[10px] text-foreground break-all leading-relaxed select-all">{pixCode}</span>
-                            <Copy className="h-4 w-4 shrink-0 text-muted-foreground group-hover:text-primary transition-colors" />
-                          </button>
+                            Confirmar pedido • {formatCurrency(totalPrice)}
+                          </Button>
                         </div>
-                      )}
 
-                      <div className="bg-primary/10 border border-primary/30 rounded-lg p-4 space-y-3">
-                        <h4 className="text-sm font-bold text-primary flex items-center gap-2">
-                          Como pagar com Pix
-                        </h4>
-                        <div className="space-y-3">
-                          <div className="flex gap-3 items-start">
-                            <span className="bg-primary text-primary-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center shrink-0">1</span>
-                            <p className="text-xs text-muted-foreground">Copie o código que foi gerado</p>
-                          </div>
-                          <div className="flex gap-3 items-start">
-                            <span className="bg-primary text-primary-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center shrink-0">2</span>
-                            <p className="text-xs text-muted-foreground">Abra um aplicativo em que você tenha o Pix habilitado e use a opção <strong className="text-foreground">Pix Copia e Cola</strong></p>
-                          </div>
-                          <div className="flex gap-3 items-start">
-                            <span className="bg-primary text-primary-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center shrink-0">3</span>
-                            <p className="text-xs text-muted-foreground">Cole o código, confirme o valor e faça o pagamento. Ele será confirmado na hora :)</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <p className="text-[10px] text-muted-foreground text-center inline-flex items-center justify-center gap-1">
-                        <img src={lockIcon} alt="Cadeado" className="h-3 w-3 inline-block" />
-                        Pagamento seguro via PIX.
-                      </p>
-                    </div>
-
-                    {paymentStatus === "generated" && (
-                      <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-                        <Loader2 className="h-4 w-4 animate-spin text-primary" />
-                        <span>Processando confirmação automática do pagamento via Pix…</span>
+                        <p className="text-[10px] text-muted-foreground text-center inline-flex items-center justify-center gap-1 w-full">
+                          <img src={lockIcon} alt="Cadeado" className="h-3 w-3 inline-block" />
+                          Pagamento seguro via NitroPay
+                        </p>
                       </div>
                     )}
 
-                    {paymentStatus === "confirmed" && (
-                      <div className="flex items-center justify-center gap-2 text-accent">
-                        <CheckCircle className="h-5 w-5" />
-                        <span className="font-bold">Pagamento confirmado! Redirecionando...</span>
+                    {cardProcessing === "validating" && (
+                      <div className="flex flex-col items-center gap-4 py-8">
+                        <Loader2 className="h-10 w-10 animate-spin text-primary" />
+                        <p className="text-base font-semibold text-foreground">Validando dados do cartão…</p>
+                        <p className="text-sm text-muted-foreground">Aguarde enquanto verificamos as informações.</p>
                       </div>
                     )}
-                  </div>
+
+                    {cardProcessing === "error" && (
+                      <div className="animate-in fade-in duration-500 space-y-4">
+                        <div className="flex flex-col items-center gap-3 rounded-xl border border-destructive/30 bg-destructive/5 p-6 text-center">
+                          <AlertTriangle className="h-12 w-12 text-destructive" />
+                          <h3 className="text-lg font-bold text-foreground">Pagamento não autorizado</h3>
+                          <p className="text-sm text-muted-foreground">
+                            O pagamento via cartão não foi aprovado pela operadora. Isso pode ocorrer por diversos motivos (limite, dados incorretos, bloqueio do banco).
+                          </p>
+                          <p className="text-sm font-medium text-foreground">
+                            Você pode concluir o pedido via <strong className="text-primary">Pix</strong> com aprovação instantânea:
+                          </p>
+                        </div>
+                        <Button
+                          onClick={handleCardRetryPix}
+                          className="w-full text-base font-bold"
+                          size="lg"
+                        >
+                          Pagar com Pix • {formatCurrency(totalPrice)}
+                        </Button>
+                      </div>
+                    )}
+                  </>
                 )}
 
                 <div className="mt-4 flex items-center gap-2 rounded-lg bg-accent/10 p-3 text-sm text-accent">
