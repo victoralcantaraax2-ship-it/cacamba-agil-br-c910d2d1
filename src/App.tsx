@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 
 const Checkout = lazy(() => import("./pages/Checkout"));
 const Obrigado = lazy(() => import("./pages/Obrigado"));
+const CidadeLanding = lazy(() => import("./pages/CidadeLanding"));
 const Admin1 = lazy(() => import("./pages/Admin1"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
