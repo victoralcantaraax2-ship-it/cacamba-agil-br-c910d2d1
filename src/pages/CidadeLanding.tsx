@@ -24,7 +24,7 @@ const cities: Record<string, CityConfig> = {
   "cacamba-sao-paulo": {
     name: "São Paulo",
     title: "Aluguel de Caçamba em São Paulo | AMBA Caçambas",
-    description: "Aluguel de caçamba em São Paulo capital com entrega rápida. Caçambas de 3m³ a 26m³. Peça pelo WhatsApp!",
+    description: "Aluguel de caçamba em São Paulo capital com entrega rápida. Caçambas de 3m³ a 5m³. Peça pelo WhatsApp!",
   },
   "cacamba-guarulhos": {
     name: "Guarulhos",
@@ -50,6 +50,36 @@ const cities: Record<string, CityConfig> = {
     name: "São Caetano do Sul",
     title: "Aluguel de Caçamba em São Caetano SP | AMBA Caçambas",
     description: "Caçamba para entulho em São Caetano do Sul/SP. Entrega rápida e peça pelo WhatsApp!",
+  },
+  "cacamba-campinas": {
+    name: "Campinas",
+    title: "Aluguel de Caçamba em Campinas SP | AMBA Caçambas",
+    description: "Caçamba para obra em Campinas/SP. Entrega ágil e atendimento direto pelo WhatsApp!",
+  },
+  "cacamba-sorocaba": {
+    name: "Sorocaba",
+    title: "Aluguel de Caçamba em Sorocaba SP | AMBA Caçambas",
+    description: "Aluguel de caçamba em Sorocaba/SP. Entrega rápida e preço justo. Peça pelo WhatsApp!",
+  },
+  "cacamba-ribeirao-preto": {
+    name: "Ribeirão Preto",
+    title: "Aluguel de Caçamba em Ribeirão Preto SP | AMBA Caçambas",
+    description: "Caçamba para entulho em Ribeirão Preto/SP. Atendimento ágil pelo WhatsApp!",
+  },
+  "cacamba-sao-jose-dos-campos": {
+    name: "São José dos Campos",
+    title: "Aluguel de Caçamba em São José dos Campos SP | AMBA Caçambas",
+    description: "Aluguel de caçamba em São José dos Campos/SP. Entrega rápida pelo WhatsApp!",
+  },
+  "cacamba-sao-jose-do-rio-preto": {
+    name: "São José do Rio Preto",
+    title: "Aluguel de Caçamba em São José do Rio Preto SP | AMBA Caçambas",
+    description: "Caçamba para obra em São José do Rio Preto/SP. Peça agora pelo WhatsApp!",
+  },
+  "cacamba-jandira": {
+    name: "Jandira",
+    title: "Aluguel de Caçamba em Jandira SP | AMBA Caçambas",
+    description: "Aluguel de caçamba em Jandira/SP. Entrega ágil e atendimento pelo WhatsApp!",
   },
 };
 

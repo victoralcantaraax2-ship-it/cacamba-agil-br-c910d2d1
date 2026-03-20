@@ -15,11 +15,11 @@ const AboutSection = memo(() => {
           <h2 className="mb-4 text-2xl font-extrabold text-foreground md:text-3xl">
             Sobre a AMBA Caçambas
           </h2>
-          <p className="mb-4 text-muted-foreground leading-relaxed">
-            A AMBA atua no aluguel de caçambas em São Paulo e região metropolitana, oferecendo
+           <p className="mb-4 text-muted-foreground leading-relaxed">
+            A AMBA atua no aluguel de caçambas em todo o estado de São Paulo, oferecendo
             atendimento direto, logística ágil e descarte dentro das normas ambientais. Cobrimos
-            São Paulo capital, Guarulhos, Osasco, Santo André, São Bernardo, São Caetano e toda
-            a Grande SP. Nosso foco é simplificar o processo — sem burocracia, com suporte pelo WhatsApp.
+            a capital, Guarulhos, Campinas, Osasco, ABC, Sorocaba, Ribeirão Preto, São José dos Campos,
+            São José do Rio Preto, Jandira e diversas outras cidades. Nosso foco é simplificar o processo — sem burocracia, com suporte pelo WhatsApp.
           </p>
           <p className="mb-10 text-muted-foreground leading-relaxed">
             Trabalhamos com caçambas de diversos tamanhos para atender desde
