@@ -21,7 +21,12 @@ const scrollTo = (id: string) => {
   if (el) el.scrollIntoView({ behavior: "smooth" });
 };
 
-const HeroSection = () => {
+const HeroSection = ({ cityName }: { cityName?: string }) => {
+  const h1Text = cityName ? `Aluguel de Caçamba em ${cityName}` : "Aluguel de Caçamba em SC";
+  const subtitle = cityName
+    ? `Entrega rápida em ${cityName} e região. Peça agora e receba na sua obra.`
+    : "Entrega rápida em Joinville, São José, Palhoça, Itapema e toda Santa Catarina.";
+
   return (
     <>
       <section className="relative flex min-h-[85vh] items-center justify-center overflow-hidden pt-16 md:min-h-screen">
