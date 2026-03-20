@@ -49,13 +49,13 @@ const HeroSection = () => {
             fetchPriority="high"
           />
           <h1 className="mb-4 text-3xl font-black leading-tight tracking-tight text-secondary-foreground sm:text-4xl md:text-5xl lg:text-6xl">
-            Aluguel de Caçambas
+            Aluguel de Caçamba em SC
             <br />
             <span className="text-primary">Rápido e Sem Complicação</span>
           </h1>
 
           <p className="mx-auto mb-8 max-w-xl text-base text-secondary-foreground/80 md:text-lg">
-            Peça agora e receba na sua obra. Entrega e retirada no prazo combinado.
+            Entrega rápida em Joinville, São José, Palhoça, Itapema e toda Santa Catarina.
           </p>
 
           <div className="mb-8 flex flex-wrap items-center justify-center gap-3">

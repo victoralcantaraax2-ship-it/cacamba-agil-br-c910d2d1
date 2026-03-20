@@ -439,7 +439,7 @@ const Checkout = () => {
                   <Label htmlFor="telefone">Telefone / WhatsApp</Label>
                   <Input
                     id="telefone"
-                    placeholder="(45) 9XXXX-XXXX"
+                    placeholder="(47) 9XXXX-XXXX"
                     value={form.telefone}
                     onChange={(e) => setForm({ ...form, telefone: formatPhone(e.target.value) })}
                     maxLength={15}

@@ -12,8 +12,12 @@ const faqs = [
     a: "Disponibilizamos caçambas de 3 m³, 4 m³, 5 m³, 7 m³, 10 m³ e 26 m³, adequadas desde pequenos reparos até grandes demolições.",
   },
   {
-    q: "Qual o prazo de entrega?",
-    a: "A entrega ocorre em até 2 horas após a confirmação, podendo variar conforme a localização.",
+    q: "Qual o prazo de entrega em Santa Catarina?",
+    a: "A entrega ocorre em até 2 horas após a confirmação para cidades como Joinville, São José, Palhoça, Itapema, Navegantes e Jaraguá do Sul, podendo variar conforme a localização.",
+  },
+  {
+    q: "Quais cidades de SC vocês atendem?",
+    a: "Atendemos Joinville, São José, Palhoça, Itapema, Navegantes, Jaraguá do Sul, Florianópolis, Blumenau, Balneário Camboriú, Itajaí e diversas outras cidades de Santa Catarina.",
   },
   {
     q: "Quanto tempo posso ficar com a caçamba?",
