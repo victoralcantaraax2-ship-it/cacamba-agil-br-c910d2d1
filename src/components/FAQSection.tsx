@@ -17,7 +17,7 @@ const faqs = [
   },
   {
     q: "Quais regiões de SP vocês cobrem?",
-    a: "Atendemos São Paulo capital, Guarulhos, Osasco, Santo André, São Bernardo, São Caetano e diversas cidades da Grande São Paulo.",
+    a: "Atendemos São Paulo capital, Guarulhos, Campinas, Osasco, ABC (Santo André, São Bernardo, São Caetano), Sorocaba, Ribeirão Preto, São José dos Campos, São José do Rio Preto, Jandira e diversas outras cidades do estado.",
   },
   {
     q: "Por quanto tempo posso ficar com a caçamba?",
