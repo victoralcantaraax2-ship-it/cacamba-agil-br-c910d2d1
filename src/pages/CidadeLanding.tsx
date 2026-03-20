@@ -57,12 +57,15 @@ const CidadeLanding = () => {
   const { cidade } = useParams<{ cidade: string }>();
   const config = cidade ? cities[cidade] : undefined;
 
-  if (!config) return <Navigate to="/" replace />;
+  // Update document title and meta for SEO
+  if (typeof document !== "undefined") {
+    document.title = config.title;
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) metaDesc.setAttribute("content", config.description);
+  }
 
   return (
     <main>
-      <title>{config.title}</title>
-      <meta name="description" content={config.description} />
       <Header />
       <HeroSection cityName={config.name} />
       <TamanhosSection />
