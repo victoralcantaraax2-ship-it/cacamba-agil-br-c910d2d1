@@ -54,13 +54,13 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
             fetchPriority="high"
           />
           <h1 className="mb-4 text-3xl font-black leading-tight tracking-tight text-secondary-foreground sm:text-4xl md:text-5xl lg:text-6xl">
-            Aluguel de Caçamba em SC
+            {h1Text}
             <br />
             <span className="text-primary">Rápido e Sem Complicação</span>
           </h1>
 
           <p className="mx-auto mb-8 max-w-xl text-base text-secondary-foreground/80 md:text-lg">
-            Entrega rápida em Joinville, São José, Palhoça, Itapema e toda Santa Catarina.
+            {subtitle}
           </p>
 
           <div className="mb-8 flex flex-wrap items-center justify-center gap-3">
