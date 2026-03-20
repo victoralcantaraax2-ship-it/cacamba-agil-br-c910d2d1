@@ -7,7 +7,7 @@ const sizes = [
   {
     size: "3 m³",
     title: "Reformas simples",
-    bags: "20 a 25 sacos · 7 dias",
+    bags: "20 a 25 sacos · 2 a 7 dias",
     popular: false,
     idealFor: ["Reparos pontuais", "Remoção de piso e entulho leve"],
     checks: ["Entrega ágil na sua região", "Coleta agendada", "Ideal para espaços compactos"],
