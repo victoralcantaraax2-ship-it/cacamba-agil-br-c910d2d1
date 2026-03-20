@@ -32,7 +32,7 @@ const sizes = [
   {
     size: "7 m³",
     title: "Alto volume",
-    bags: "60 a 70 sacos · 7 dias",
+    bags: "60 a 70 sacos · 3 a 7 dias",
     popular: false,
     idealFor: ["Grande volume de resíduos", "Demolições parciais"],
     checks: ["Entrega ágil na sua região", "Coleta agendada", "Comporta grandes quantidades"],
