@@ -7,7 +7,7 @@ import { CheckCircle, Copy, Loader2 } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import { formatPhone, validatePhone } from "@/lib/phone";
 import { useToast } from "@/hooks/use-toast";
-import logoAmba from "@/assets/logo-amba-nova.png";
+import logoAmba from "@/assets/logo-amba-nova.webp";
 
 const Admin1 = () => {
   const [nome, setNome] = useState("");
