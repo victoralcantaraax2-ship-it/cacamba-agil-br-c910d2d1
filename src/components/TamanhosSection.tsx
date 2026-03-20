@@ -15,7 +15,7 @@ const sizes = [
   {
     size: "4 m³",
     title: "Obras moderadas",
-    bags: "30 a 35 sacos · 7 dias",
+    bags: "30 a 35 sacos · 2 a 7 dias",
     popular: false,
     idealFor: ["Reformas intermediárias", "Resíduos de construção"],
     checks: ["Entrega ágil na sua região", "Coleta agendada", "Ótima relação custo-volume"],
