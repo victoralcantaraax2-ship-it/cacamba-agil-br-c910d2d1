@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { MessageCircle, Clock, Phone, Mail } from "lucide-react";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
-import logoAmba from "@/assets/logo-amba-nova.png";
+import logoAmba from "@/assets/logo-amba-nova.webp";
 
 const Footer = memo(() => {
   return (

@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { Check, Star } from "lucide-react";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
-import phoneIcon from "@/assets/phone-icon.png";
+import phoneIcon from "@/assets/phone-icon.webp";
 
 const sizes = [
   {

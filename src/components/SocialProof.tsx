@@ -1,6 +1,6 @@
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useMemo, useCallback, useRef } from "react";
-import googleLogo from "@/assets/google-logo.png";
+import googleLogo from "@/assets/google-logo.webp";
 
 const reviews = [
   { name: "MF Engenharia", role: "Construtora – Guarulhos/SP", stars: 5, text: "Usamos a AMBA em todas as nossas obras na região. Caçamba sempre no prazo e time competente." },

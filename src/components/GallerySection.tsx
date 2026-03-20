@@ -1,11 +1,11 @@
 import { MessageCircle } from "lucide-react";
 import { getWhatsAppUrl } from "@/lib/whatsapp";
-import galleryEntulho from "@/assets/gallery-entulho.jpg";
-import galleryComercial from "@/assets/gallery-comercial.jpg";
-import galleryResidencial from "@/assets/gallery-residencial.jpg";
-import gallery7m from "@/assets/gallery-7m.jpg";
-import gallery5m from "@/assets/gallery-5m.jpg";
-import gallery3m from "@/assets/gallery-3m.jpg";
+import galleryEntulho from "@/assets/gallery-entulho.webp";
+import galleryComercial from "@/assets/gallery-comercial.webp";
+import galleryResidencial from "@/assets/gallery-residencial.webp";
+import gallery7m from "@/assets/gallery-7m.webp";
+import gallery5m from "@/assets/gallery-5m.webp";
+import gallery3m from "@/assets/gallery-3m.webp";
 
 const items = [
   { src: galleryEntulho, label: "Remoção de Entulho" },

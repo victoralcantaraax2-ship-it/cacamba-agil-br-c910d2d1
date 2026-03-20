@@ -11,11 +11,11 @@ import { captureUtms, type UtmData } from "@/lib/utm";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
-import logoAmba from "@/assets/logo-amba-nova.png";
-import lockIcon from "@/assets/lock-icon.png";
-import cacambaImg from "@/assets/cacamba-generica.png";
-import pixLogo from "@/assets/pix-logo.png";
-import mercadopagoLogo from "@/assets/mercadopago-logo.png";
+import logoAmba from "@/assets/logo-amba-nova.webp";
+import lockIcon from "@/assets/lock-icon.webp";
+import cacambaImg from "@/assets/cacamba-generica.webp";
+import pixLogo from "@/assets/pix-logo.webp";
+import mercadopagoLogo from "@/assets/mercadopago-logo.webp";
 
 type Plan = {
   id: string;

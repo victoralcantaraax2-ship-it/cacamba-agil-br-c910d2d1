@@ -1,6 +1,6 @@
 import { useState, memo } from "react";
 import { Menu, X } from "lucide-react";
-import phoneIcon from "@/assets/phone-icon.png";
+import phoneIcon from "@/assets/phone-icon.webp";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
 
 const navLinks = [

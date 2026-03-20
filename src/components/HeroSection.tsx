@@ -1,8 +1,8 @@
 import { ShieldCheck, Headphones, Recycle, Star, Users, Zap } from "lucide-react";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
-import heroBg from "@/assets/hero-bg.jpg";
-import whatsappIcon from "@/assets/whatsapp-icon.png";
-import logoAmba from "@/assets/logo-amba-nova.png";
+import heroBg from "@/assets/hero-bg.webp";
+import whatsappIcon from "@/assets/whatsapp-icon.webp";
+import logoAmba from "@/assets/logo-amba-nova.webp";
 
 const badges = [
   { icon: ShieldCheck, label: "Compromisso garantido" },
