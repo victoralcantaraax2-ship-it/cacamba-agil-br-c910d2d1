@@ -23,7 +23,7 @@ const sizes = [
   {
     size: "5 m³",
     title: "Projetos residenciais",
-    bags: "40 a 45 sacos · 4 a 6 dias",
+    bags: "40 a 45 sacos · 7 dias",
     popular: true,
     popularLabel: "Mais escolhida pelos clientes",
     idealFor: ["Obras em casas e apartamentos", "Contrapiso e reformas completas"],
