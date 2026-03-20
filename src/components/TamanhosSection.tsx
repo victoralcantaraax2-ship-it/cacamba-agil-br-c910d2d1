@@ -40,7 +40,7 @@ const sizes = [
   {
     size: "10 m³",
     title: "Demolições e limpezas",
-    bags: "90 a 100 sacos · 7 dias",
+    bags: "90 a 100 sacos · 5 a 7 dias",
     popular: false,
     idealFor: ["Demolições, telhas, madeira", "Descarte em grande escala"],
     checks: ["Entrega ágil na sua região", "Coleta agendada", "Capacidade extra"],
