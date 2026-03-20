@@ -5,15 +5,15 @@ import whatsappIcon from "@/assets/whatsapp-icon.png";
 import logoAmba from "@/assets/logo-amba-nova.png";
 
 const badges = [
-  { icon: ShieldCheck, label: "Serviço garantido" },
-  { icon: Headphones, label: "Suporte direto" },
-  { icon: Recycle, label: "Destinação correta" },
+  { icon: ShieldCheck, label: "Compromisso garantido" },
+  { icon: Headphones, label: "Atendimento direto" },
+  { icon: Recycle, label: "Descarte regularizado" },
 ];
 
 const trustItems = [
-  { icon: Star, label: "Avaliação 4.8★" },
-  { icon: Users, label: "+500 locações realizadas" },
-  { icon: Zap, label: "Resposta imediata" },
+  { icon: Star, label: "Nota 4.8★ no Google" },
+  { icon: Users, label: "+500 obras atendidas" },
+  { icon: Zap, label: "Resposta na hora" },
 ];
 
 const scrollTo = (id: string) => {
@@ -22,10 +22,10 @@ const scrollTo = (id: string) => {
 };
 
 const HeroSection = ({ cityName }: { cityName?: string }) => {
-  const h1Text = cityName ? `Aluguel de Caçamba em ${cityName}` : "Aluguel de Caçamba em SC";
+  const h1Text = cityName ? `Caçamba em ${cityName}` : "Caçamba para Obra em SP";
   const subtitle = cityName
-    ? `Entrega rápida em ${cityName} e região. Peça agora e receba na sua obra.`
-    : "Entrega rápida em Joinville, São José, Palhoça, Itapema e toda Santa Catarina.";
+    ? `Receba sua caçamba em ${cityName} com rapidez. Peça agora pelo WhatsApp.`
+    : "Atendemos São Paulo capital, Guarulhos, Osasco e toda a região do ABC. Peça sua caçamba agora.";
 
   return (
     <>
@@ -33,7 +33,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
         <div className="absolute inset-0">
           <img
             src={heroBg}
-            alt="Obra com caçamba para descarte de entulho"
+            alt="Caçamba posicionada em obra para descarte de entulho"
             className="h-full w-full object-cover"
             width={1920}
             height={1080}
@@ -46,7 +46,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
         <div className="container relative z-10 px-4 py-16 text-center md:py-24">
           <img
             src={logoAmba}
-            alt="AMBA Locação de Caçambas"
+            alt="AMBA Caçambas"
             className="mx-auto mb-8 h-28 w-auto md:h-36 lg:h-40"
             width={320}
             height={160}
@@ -56,7 +56,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
           <h1 className="mb-4 text-3xl font-black leading-tight tracking-tight text-secondary-foreground sm:text-4xl md:text-5xl lg:text-6xl">
             {h1Text}
             <br />
-            <span className="text-primary">Rápido e Sem Complicação</span>
+            <span className="text-primary">Ágil e Descomplicado</span>
           </h1>
 
           <p className="mx-auto mb-8 max-w-xl text-base text-secondary-foreground/80 md:text-lg">
@@ -80,14 +80,14 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
               onClick={() => scrollTo("#tamanhos")}
               className="inline-flex items-center gap-3 rounded-xl bg-primary px-8 py-4 text-lg font-extrabold uppercase text-primary-foreground shadow-2xl transition-all hover:scale-105 hover:bg-primary/90 md:px-12 md:py-5 md:text-xl"
             >
-              Ver opções
+              Ver tamanhos
             </button>
             <button
               onClick={() => handleWhatsAppClick()}
               className="inline-flex items-center gap-2 rounded-xl bg-whatsapp px-6 py-4 text-base font-bold text-whatsapp-foreground shadow-lg transition-all hover:scale-105 hover:bg-whatsapp-hover md:px-8 md:py-5 md:text-lg"
             >
               <img src={whatsappIcon} alt="WhatsApp" className="h-5 w-5" width={20} height={20} />
-              Chamar no WhatsApp
+              Falar no WhatsApp
             </button>
           </div>
         </div>

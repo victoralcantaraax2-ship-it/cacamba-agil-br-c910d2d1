@@ -3,33 +3,33 @@ import { useState, useMemo, useCallback, useRef } from "react";
 import googleLogo from "@/assets/google-logo.png";
 
 const reviews = [
-  { name: "MF Engenharia", role: "Construtora – Joinville/SC", stars: 5, text: "Usamos a AMBA em todas as nossas obras na região. Chegada ágil e time muito competente." },
-  { name: "Reciclagem Litoral SC", role: "Reciclagem – Balneário Camboriú/SC", stars: 5, text: "Precisávamos de caçamba com urgência para descarte. Solucionaram no mesmo dia, excelente!" },
-  { name: "RC Reformas e Acabamentos", role: "Reformas – Blumenau/SC", stars: 5, text: "Já locamos mais de 15 caçambas com a AMBA. Sempre no horário e com ótimo suporte." },
-  { name: "Construtora Parque Verde", role: "Construtora – Itajaí/SC", stars: 5, text: "Parceiro fixo das nossas obras. Nunca tivemos problema com prazo ou qualidade." },
-  { name: "Ferro Velho São João", role: "Reciclagem – Joinville/SC", stars: 5, text: "Caçamba chegou no horário combinado. Time educado e competente. Indico para qualquer empresa." },
-  { name: "Terraplenagem Vale", role: "Terraplenagem – Brusque/SC", stars: 5, text: "Bom serviço, caçamba bem conservada. Dentro do prazo combinado." },
-  { name: "JL Materiais de Construção", role: "Comércio – Florianópolis/SC", stars: 5, text: "Indicamos a AMBA para todos os nossos clientes. Serviço sério e de confiança." },
-  { name: "Reciclagem Navegantes", role: "Reciclagem – Navegantes/SC", stars: 5, text: "Suporte excelente. Chegada foi ágil e tudo ocorreu bem." },
-  { name: "Marmoraria Presidente", role: "Marmoraria – Blumenau/SC", stars: 5, text: "Descartamos resíduos de mármore e granito. Serviço ágil e dentro das normas ambientais." },
-  { name: "Josy Araujo", role: "Arquiteta – Jaraguá do Sul/SC", stars: 5, text: "Suporte pelo WhatsApp super ágil. A caçamba chegou no mesmo dia. Recomendo muito!" },
-  { name: "Rogério Pereira", role: "Engenheiro Civil – Criciúma/SC", stars: 5, text: "Muito satisfeito com o serviço. Time pontual e comprometido com o prazo." },
-  { name: "Laudiane Sousa", role: "Proprietária de Imóvel – Chapecó/SC", stars: 5, text: "Podem contratar sem receio. Processo simples e suporte excelente." },
-  { name: "Nilson Fucítalo", role: "Mestre de Obras – Lages/SC", stars: 5, text: "Cumprem o que prometem. Já é minha terceira locação com eles." },
-  { name: "Carla Mendes", role: "Decoradora – Florianópolis/SC", stars: 5, text: "Muito fácil solicitar pelo WhatsApp e a chegada foi ágil. Nota 10!" },
-  { name: "Anderson Lima", role: "Proprietário – Joinville/SC", stars: 5, text: "Reformei minha casa e precisei de 2 caçambas. Chegaram no dia seguinte. Super indico!" },
-  { name: "Patrícia Oliveira", role: "Síndica – Itajaí/SC", stars: 5, text: "Contratei para o condomínio. Serviço impecável, sem sujeira na rua. Moradores elogiaram." },
-  { name: "Dona Maria Aparecida", role: "Aposentada – Balneário Camboriú/SC", stars: 5, text: "Meu filho indicou. Pedi pelo WhatsApp e no outro dia já estava na porta. Muito prático!" },
-  { name: "Thiago Nascimento", role: "Pedreiro autônomo – Tubarão/SC", stars: 5, text: "Trabalho com reforma e sempre preciso de caçamba. A AMBA nunca me deixou na mão." },
-  { name: "Luciana Ferreira", role: "Designer de Interiores – Criciúma/SC", stars: 5, text: "Usei na reforma do meu escritório. Chegada ágil e serviço impecável." },
-  { name: "Eduardo Takahashi", role: "Proprietário – Florianópolis/SC", stars: 5, text: "Contratei de Florianópolis e entregaram sem problema. Suporte nota 10." },
-  { name: "Felipe Monteiro", role: "Engenheiro – Chapecó/SC", stars: 5, text: "Precisei de caçamba para uma obra em Chapecó e a AMBA respondeu super rápido. Impecável!" },
-  { name: "Renata Campos", role: "Arquiteta – São José/SC", stars: 5, text: "Contratei para reforma residencial em São José. Pontual e time muito educado." },
-  { name: "Marcos Vinicius", role: "Construtor – Criciúma/SC", stars: 5, text: "Mesmo sendo em Criciúma, o suporte foi excelente. Caçamba chegou no prazo combinado." },
-  { name: "Daniela Souza", role: "Síndica – Chapecó/SC", stars: 5, text: "Contratei para limpeza do condomínio em Chapecó. Moradores aprovaram. Recomendo!" },
-  { name: "Roberto Almeida", role: "Mestre de Obras – Lages/SC", stars: 5, text: "Empresa séria e comprometida. Entregaram dentro do prazo na região de Lages." },
-  { name: "Cláudia Ribeiro", role: "Proprietária – Florianópolis/SC", stars: 5, text: "Reformei meu apartamento em Florianópolis e a AMBA cuidou de todo o descarte. Nota 10!" },
-  { name: "André Machado", role: "Empreiteiro – Tubarão/SC", stars: 5, text: "Caçamba bem conservada e chegada ágil em Tubarão. Já estou na segunda locação com eles." },
+  { name: "MF Engenharia", role: "Construtora – Guarulhos/SP", stars: 5, text: "Usamos a AMBA em todas as nossas obras na região. Caçamba sempre no prazo e time competente." },
+  { name: "Reciclagem Paulista", role: "Reciclagem – Osasco/SP", stars: 5, text: "Precisávamos de caçamba urgente para descarte. Resolveram no mesmo dia, excelente!" },
+  { name: "RC Reformas e Acabamentos", role: "Reformas – São Paulo/SP", stars: 5, text: "Já alugamos mais de 15 caçambas com a AMBA. Nunca tiveram atraso." },
+  { name: "Construtora Vila Verde", role: "Construtora – Santo André/SP", stars: 5, text: "Parceiro fixo das nossas obras no ABC. Pontualidade e qualidade impecáveis." },
+  { name: "Ferro Velho São Jorge", role: "Reciclagem – Guarulhos/SP", stars: 5, text: "Caçamba no horário combinado. Pessoal educado e profissional. Recomendo para qualquer empresa." },
+  { name: "Terraplenagem Capital", role: "Terraplenagem – São Paulo/SP", stars: 5, text: "Serviço sólido, caçamba bem conservada. Sempre dentro do prazo." },
+  { name: "JL Materiais de Construção", role: "Comércio – São Bernardo/SP", stars: 5, text: "Indicamos a AMBA para nossos clientes. Trabalho sério e confiável." },
+  { name: "Reciclagem Oeste SP", role: "Reciclagem – Osasco/SP", stars: 5, text: "Atendimento nota 10. Caçamba chegou rápido e sem problema." },
+  { name: "Marmoraria Ipiranga", role: "Marmoraria – São Paulo/SP", stars: 5, text: "Descartamos restos de mármore e granito. Ágil e dentro das normas." },
+  { name: "Josy Araujo", role: "Arquiteta – São Caetano/SP", stars: 5, text: "WhatsApp super ágil. Caçamba chegou no mesmo dia. Recomendo demais!" },
+  { name: "Rogério Pereira", role: "Engenheiro Civil – Guarulhos/SP", stars: 5, text: "Muito satisfeito. Time pontual e comprometido." },
+  { name: "Laudiane Sousa", role: "Proprietária – Osasco/SP", stars: 5, text: "Podem contratar tranquilo. Processo simples e suporte de primeira." },
+  { name: "Nilson Fucítalo", role: "Mestre de Obras – Santo André/SP", stars: 5, text: "Cumprem o que prometem. Já é minha terceira locação." },
+  { name: "Carla Mendes", role: "Decoradora – São Paulo/SP", stars: 5, text: "Pedi pelo WhatsApp e a caçamba chegou voando. Nota 10!" },
+  { name: "Anderson Lima", role: "Proprietário – Guarulhos/SP", stars: 5, text: "Reformei minha casa e precisei de 2 caçambas. Chegaram no dia seguinte." },
+  { name: "Patrícia Oliveira", role: "Síndica – São Bernardo/SP", stars: 5, text: "Contratei para o condomínio. Serviço impecável, moradores elogiaram." },
+  { name: "Dona Maria Aparecida", role: "Aposentada – São Paulo/SP", stars: 5, text: "Meu filho indicou. Pedi pelo WhatsApp e no outro dia já estava na porta." },
+  { name: "Thiago Nascimento", role: "Pedreiro autônomo – Osasco/SP", stars: 5, text: "Trabalho com reforma e sempre preciso de caçamba. AMBA nunca me deixou na mão." },
+  { name: "Luciana Ferreira", role: "Designer de Interiores – Santo André/SP", stars: 5, text: "Usei na reforma do escritório. Rápido e impecável." },
+  { name: "Eduardo Takahashi", role: "Proprietário – São Paulo/SP", stars: 5, text: "Contratei da zona sul e entregaram sem problema. Suporte nota 10." },
+  { name: "Felipe Monteiro", role: "Engenheiro – São Caetano/SP", stars: 5, text: "AMBA respondeu super rápido. Serviço impecável!" },
+  { name: "Renata Campos", role: "Arquiteta – Guarulhos/SP", stars: 5, text: "Contratei para reforma residencial. Pontual e time muito educado." },
+  { name: "Marcos Vinicius", role: "Construtor – Osasco/SP", stars: 5, text: "Suporte excelente. Caçamba chegou no prazo combinado." },
+  { name: "Daniela Souza", role: "Síndica – São Bernardo/SP", stars: 5, text: "Contratei para limpeza do condomínio. Moradores aprovaram. Recomendo!" },
+  { name: "Roberto Almeida", role: "Mestre de Obras – Santo André/SP", stars: 5, text: "Empresa séria. Entregaram dentro do prazo no ABC." },
+  { name: "Cláudia Ribeiro", role: "Proprietária – São Paulo/SP", stars: 5, text: "Reformei meu apartamento e a AMBA cuidou de todo o descarte. Nota 10!" },
+  { name: "André Machado", role: "Empreiteiro – Guarulhos/SP", stars: 5, text: "Caçamba bem conservada e entrega ágil. Já estou na segunda locação." },
 ];
 
 const scrollTo = (id: string) => {
@@ -71,7 +71,7 @@ const SocialProof = () => {
       <div className="container px-4">
         <div className="mb-6 md:mb-10 text-center">
           <h2 className="mb-2 text-xl font-extrabold text-secondary-foreground md:text-3xl">
-            Quem já usou, recomenda
+            Clientes que confiam na AMBA
           </h2>
           <div className="flex items-center justify-center gap-6 flex-wrap">
             <div className="flex flex-col items-center gap-1">
@@ -148,7 +148,7 @@ const SocialProof = () => {
             onClick={() => scrollTo("#tamanhos")}
             className="rounded-xl bg-primary px-6 md:px-8 py-3 md:py-4 text-sm md:text-base font-bold uppercase text-primary-foreground shadow-lg transition-all hover:scale-105 active:scale-95 hover:bg-primary/90"
           >
-            Quero solicitar agora
+            Peça sua caçamba agora
           </button>
         </div>
       </div>

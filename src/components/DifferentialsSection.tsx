@@ -4,18 +4,18 @@ import { getWhatsAppUrl } from "@/lib/whatsapp";
 const items = [
   {
     icon: Truck,
-    title: "Agilidade na Entrega",
-    desc: "Chegada rápida logo após a confirmação. Trabalhamos para que sua caçamba esteja no local o quanto antes.",
+    title: "Entrega Expressa",
+    desc: "Sua caçamba chega rápido após a confirmação. Trabalhamos com agilidade para não atrasar sua obra.",
   },
   {
     icon: MessageCircle,
-    title: "Suporte Digital",
-    desc: "Atendimento completo pelo WhatsApp para cotações, dúvidas e agendamentos. Prático e direto.",
+    title: "Atendimento pelo WhatsApp",
+    desc: "Cotação, agendamento e dúvidas resolvidos direto no WhatsApp. Sem enrolação.",
   },
   {
     icon: Leaf,
-    title: "Destinação Ecológica",
-    desc: "Descarte responsável, cumprindo todas as regulamentações ambientais. Cuidamos da natureza por você.",
+    title: "Descarte Legalizado",
+    desc: "Os resíduos vão para destinos licenciados, seguindo toda a legislação ambiental.",
   },
 ];
 
@@ -24,7 +24,7 @@ const DifferentialsSection = () => {
     <section className="bg-card py-14 md:py-20">
       <div className="container px-4 text-center">
         <h2 className="mb-10 text-2xl font-extrabold text-card-foreground md:text-3xl">
-          Por que escolher a AMBA
+          Por que a AMBA é diferente
         </h2>
 
         <div className="mx-auto mb-10 grid max-w-4xl grid-cols-1 gap-6 md:grid-cols-3">

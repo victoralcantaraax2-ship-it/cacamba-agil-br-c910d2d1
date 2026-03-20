@@ -2,9 +2,9 @@ import { memo } from "react";
 import { Clock, Eye, Leaf } from "lucide-react";
 
 const values = [
-  { icon: Clock, label: "Compromisso com prazos", desc: "Respeitamos os horários de entrega e retirada à risca." },
-  { icon: Eye, label: "Transparência total", desc: "Sem custos ocultos. Tudo combinado desde a cotação." },
-  { icon: Leaf, label: "Sustentabilidade", desc: "Destinação ecológica dos resíduos, conforme as normas vigentes." },
+  { icon: Clock, label: "Pontualidade no prazo", desc: "Entregamos e retiramos no horário combinado, sem atrasos." },
+  { icon: Eye, label: "Tudo às claras", desc: "Valores definidos na cotação, sem surpresas na hora de pagar." },
+  { icon: Leaf, label: "Descarte consciente", desc: "Resíduos encaminhados para locais licenciados, dentro das normas." },
 ];
 
 const AboutSection = memo(() => {
@@ -13,19 +13,18 @@ const AboutSection = memo(() => {
       <div className="container px-4">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="mb-4 text-2xl font-extrabold text-foreground md:text-3xl">
-            Conheça a AMBA Locação
+            Sobre a AMBA Caçambas
           </h2>
           <p className="mb-4 text-muted-foreground leading-relaxed">
-            A AMBA é especializada no aluguel de caçambas em Santa Catarina, com foco em
-            agilidade, suporte personalizado e destinação correta dos resíduos. Atendemos
-            Joinville, São José, Palhoça, Itapema, Navegantes, Jaraguá do Sul e toda a região.
-            Nosso objetivo é tornar o processo mais simples — sem burocracia e com atendimento
-            direto pelo WhatsApp.
+            A AMBA atua no aluguel de caçambas em São Paulo e região metropolitana, oferecendo
+            atendimento direto, logística ágil e descarte dentro das normas ambientais. Cobrimos
+            São Paulo capital, Guarulhos, Osasco, Santo André, São Bernardo, São Caetano e toda
+            a Grande SP. Nosso foco é simplificar o processo — sem burocracia, com suporte pelo WhatsApp.
           </p>
           <p className="mb-10 text-muted-foreground leading-relaxed">
-            Oferecemos caçambas de diferentes capacidades para atender desde
-            pequenos reparos residenciais até obras de grande porte, sempre
-            cumprindo os prazos combinados.
+            Trabalhamos com caçambas de diversos tamanhos para atender desde
+            uma reforma simples até obras de grande escala, sempre dentro
+            do prazo acordado.
           </p>
         </div>
 

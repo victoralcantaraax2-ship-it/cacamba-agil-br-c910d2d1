@@ -6,19 +6,19 @@ const steps = [
     icon: FileText,
     step: "1",
     title: "Escolha o tamanho",
-    desc: "Veja qual caçamba é a mais adequada para o seu projeto.",
+    desc: "Confira qual caçamba se encaixa melhor no seu projeto.",
   },
   {
     icon: MapPin,
     step: "2",
-    title: "Informe o local e a data",
-    desc: "Diga onde e quando precisa receber a caçamba.",
+    title: "Envie endereço e data",
+    desc: "Informe onde e quando precisa da caçamba.",
   },
   {
     icon: Truck,
     step: "3",
-    title: "Entregamos e retiramos",
-    desc: "A caçamba é entregue e retirada conforme o combinado.",
+    title: "Receba e devolvemos",
+    desc: "Levamos até você e retiramos no prazo combinado.",
   },
 ];
 
@@ -33,10 +33,10 @@ const ComoFuncionaSection = memo(() => {
       <div className="container px-4">
         <div className="mb-12 text-center">
           <h2 className="mb-3 text-2xl font-extrabold text-foreground md:text-3xl">
-            Como Funciona
+            Passo a Passo
           </h2>
           <p className="text-muted-foreground">
-            Três etapas simples para resolver o descarte do seu entulho.
+            Três passos para resolver o descarte do entulho da sua obra.
           </p>
         </div>
 
@@ -60,7 +60,7 @@ const ComoFuncionaSection = memo(() => {
             onClick={() => scrollTo("#tamanhos")}
             className="rounded-xl bg-primary px-8 py-4 text-base font-bold uppercase text-primary-foreground shadow-lg transition-all hover:scale-105 hover:bg-primary/90"
           >
-            Solicitar agora
+            Peça sua caçamba
           </button>
         </div>
       </div>
