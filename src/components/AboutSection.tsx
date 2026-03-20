@@ -16,10 +16,10 @@ const AboutSection = memo(() => {
             Conheça a AMBA Locação
           </h2>
           <p className="mb-4 text-muted-foreground leading-relaxed">
-            A AMBA é especializada no aluguel de caçambas, com foco em
-            agilidade, suporte personalizado e destinação correta dos resíduos. Nosso
-            objetivo é tornar o processo mais simples para quem está reformando,
-            construindo ou fazendo limpeza — sem burocracia e com atendimento
+            A AMBA é especializada no aluguel de caçambas em Santa Catarina, com foco em
+            agilidade, suporte personalizado e destinação correta dos resíduos. Atendemos
+            Joinville, São José, Palhoça, Itapema, Navegantes, Jaraguá do Sul e toda a região.
+            Nosso objetivo é tornar o processo mais simples — sem burocracia e com atendimento
             direto pelo WhatsApp.
           </p>
           <p className="mb-10 text-muted-foreground leading-relaxed">

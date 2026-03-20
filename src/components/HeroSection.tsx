@@ -21,7 +21,12 @@ const scrollTo = (id: string) => {
   if (el) el.scrollIntoView({ behavior: "smooth" });
 };
 
-const HeroSection = () => {
+const HeroSection = ({ cityName }: { cityName?: string }) => {
+  const h1Text = cityName ? `Aluguel de Caçamba em ${cityName}` : "Aluguel de Caçamba em SC";
+  const subtitle = cityName
+    ? `Entrega rápida em ${cityName} e região. Peça agora e receba na sua obra.`
+    : "Entrega rápida em Joinville, São José, Palhoça, Itapema e toda Santa Catarina.";
+
   return (
     <>
       <section className="relative flex min-h-[85vh] items-center justify-center overflow-hidden pt-16 md:min-h-screen">
@@ -49,13 +54,13 @@ const HeroSection = () => {
             fetchPriority="high"
           />
           <h1 className="mb-4 text-3xl font-black leading-tight tracking-tight text-secondary-foreground sm:text-4xl md:text-5xl lg:text-6xl">
-            Aluguel de Caçambas
+            {h1Text}
             <br />
             <span className="text-primary">Rápido e Sem Complicação</span>
           </h1>
 
           <p className="mx-auto mb-8 max-w-xl text-base text-secondary-foreground/80 md:text-lg">
-            Peça agora e receba na sua obra. Entrega e retirada no prazo combinado.
+            {subtitle}
           </p>
 
           <div className="mb-8 flex flex-wrap items-center justify-center gap-3">
