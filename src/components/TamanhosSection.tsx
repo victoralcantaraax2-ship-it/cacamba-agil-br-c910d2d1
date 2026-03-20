@@ -6,52 +6,52 @@ import phoneIcon from "@/assets/phone-icon.png";
 const sizes = [
   {
     size: "3 m³",
-    title: "Reformas simples",
+    title: "Reforma leve",
     bags: "20 a 25 sacos · 2 a 7 dias",
     popular: false,
     idealFor: ["Reparos pontuais", "Remoção de piso e entulho leve"],
-    checks: ["Entrega ágil na sua região", "Coleta agendada", "Ideal para espaços compactos"],
+    checks: ["Entrega rápida na sua região", "Retirada agendada", "Cabe em espaços compactos"],
   },
   {
     size: "4 m³",
-    title: "Obras moderadas",
+    title: "Obra intermediária",
     bags: "30 a 35 sacos · 2 a 7 dias",
     popular: false,
-    idealFor: ["Reformas intermediárias", "Resíduos de construção"],
-    checks: ["Entrega ágil na sua região", "Coleta agendada", "Ótima relação custo-volume"],
+    idealFor: ["Reformas de médio porte", "Resíduos de construção"],
+    checks: ["Entrega rápida na sua região", "Retirada agendada", "Boa relação custo-volume"],
   },
   {
     size: "5 m³",
-    title: "Projetos residenciais",
+    title: "Residencial completa",
     bags: "40 a 45 sacos · 3 a 7 dias",
     popular: true,
-    popularLabel: "Mais escolhida pelos clientes",
-    idealFor: ["Obras em casas e apartamentos", "Contrapiso e reformas completas"],
-    checks: ["Entrega ágil na sua região", "Coleta agendada", "Melhor custo por m³"],
+    popularLabel: "Mais pedida pelos clientes",
+    idealFor: ["Obras em casas e apartamentos", "Contrapiso e reforma geral"],
+    checks: ["Entrega rápida na sua região", "Retirada agendada", "Melhor custo por m³"],
   },
   {
     size: "7 m³",
-    title: "Alto volume",
+    title: "Volume pesado",
     bags: "60 a 70 sacos · 3 a 7 dias",
     popular: false,
     idealFor: ["Grande volume de resíduos", "Demolições parciais"],
-    checks: ["Entrega ágil na sua região", "Coleta agendada", "Comporta grandes quantidades"],
+    checks: ["Entrega rápida na sua região", "Retirada agendada", "Suporta grandes quantidades"],
   },
   {
     size: "10 m³",
-    title: "Demolições e limpezas",
+    title: "Demolição e limpeza",
     bags: "90 a 100 sacos · 5 a 7 dias",
     popular: false,
-    idealFor: ["Demolições, telhas, madeira", "Descarte em grande escala"],
-    checks: ["Entrega ágil na sua região", "Coleta agendada", "Capacidade extra"],
+    idealFor: ["Demolições, telhas, madeira", "Descarte em larga escala"],
+    checks: ["Entrega rápida na sua região", "Retirada agendada", "Capacidade reforçada"],
   },
   {
     size: "26 m³",
-    title: "Obras de grande porte",
+    title: "Obra de grande porte",
     bags: "200+ sacos · sob consulta",
     popular: false,
     idealFor: ["Demolições totais", "Projetos comerciais e industriais"],
-    checks: ["Entrega ágil na sua região", "Coleta agendada", "Máxima capacidade"],
+    checks: ["Entrega rápida na sua região", "Retirada agendada", "Máxima capacidade"],
   },
 ];
 
@@ -88,7 +88,7 @@ const SizeCard = memo(({ item, onSelect }: { item: typeof sizes[0]; onSelect: (s
     <ul className="mb-5 flex-1 space-y-1.5">
       {item.checks.map((b) => (
         <li key={b} className="flex items-start gap-1.5 text-xs md:text-sm text-card-foreground">
-          <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-accent" />
+          <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" />
           {b}
         </li>
       ))}
@@ -102,7 +102,7 @@ const SizeCard = memo(({ item, onSelect }: { item: typeof sizes[0]; onSelect: (s
           : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
       }`}
     >
-      {item.popular ? "Solicitar agora" : "Pedir cotação"}
+      {item.popular ? "Peça agora" : "Pedir cotação"}
     </button>
   </div>
 ));
@@ -119,10 +119,10 @@ const TamanhosSection = () => {
       <div className="container px-4">
         <div className="mb-8 md:mb-12 text-center">
           <h2 className="mb-2 text-2xl font-extrabold text-foreground md:text-3xl lg:text-4xl">
-            Qual Caçamba Você Precisa?
+            Qual Caçamba Serve pra Você?
           </h2>
           <p className="mx-auto max-w-lg text-sm md:text-base text-muted-foreground">
-            Compare as opções e encontre o tamanho ideal para a sua obra.
+            Compare os tamanhos e escolha o ideal para a sua obra.
           </p>
         </div>
 
@@ -138,7 +138,7 @@ const TamanhosSection = () => {
             className="inline-flex items-center gap-2 text-sm font-semibold text-whatsapp transition-colors hover:underline"
           >
             <img src={phoneIcon} alt="WhatsApp" className="h-4 w-4" width={16} height={16} loading="lazy" />
-            Tem dúvidas? Fale pelo WhatsApp
+            Ficou com dúvida? Fale pelo WhatsApp
           </button>
         </div>
       </div>

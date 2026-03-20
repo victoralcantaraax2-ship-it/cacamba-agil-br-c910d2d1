@@ -6,33 +6,33 @@
 
 @layer base {
   :root {
-    --background: 210 25% 96%;
-    --foreground: 210 30% 10%;
+    --background: 0 0% 96%;
+    --foreground: 0 0% 17%;
 
     --card: 0 0% 100%;
-    --card-foreground: 210 30% 10%;
+    --card-foreground: 0 0% 17%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 210 30% 10%;
+    --popover-foreground: 0 0% 17%;
 
-    --primary: 168 80% 38%;
+    --primary: 22 75% 45%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 215 25% 12%;
+    --secondary: 0 0% 17%;
     --secondary-foreground: 0 0% 98%;
 
-    --muted: 210 15% 92%;
-    --muted-foreground: 210 10% 45%;
+    --muted: 0 0% 92%;
+    --muted-foreground: 0 0% 40%;
 
-    --accent: 145 70% 42%;
+    --accent: 22 75% 45%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 210 15% 88%;
-    --input: 210 15% 88%;
-    --ring: 168 80% 38%;
+    --border: 0 0% 88%;
+    --input: 0 0% 88%;
+    --ring: 22 75% 45%;
 
     --radius: 0.75rem;
 
@@ -40,10 +40,10 @@
     --whatsapp-foreground: 0 0% 100%;
     --whatsapp-hover: 145 70% 36%;
 
-    --hero-overlay: 215 30% 8%;
-    --trust-bg: 215 25% 12%;
+    --hero-overlay: 0 0% 10%;
+    --trust-bg: 0 0% 17%;
     --trust-foreground: 0 0% 98%;
-    --urgency-bg: 168 80% 38%;
+    --urgency-bg: 22 75% 45%;
     --urgency-foreground: 0 0% 100%;
     --star: 45 100% 50%;
 
@@ -58,25 +58,25 @@
   }
 
   .dark {
-    --background: 215 30% 8%;
+    --background: 0 0% 10%;
     --foreground: 0 0% 98%;
-    --card: 215 25% 12%;
+    --card: 0 0% 17%;
     --card-foreground: 0 0% 98%;
-    --popover: 215 25% 12%;
+    --popover: 0 0% 17%;
     --popover-foreground: 0 0% 98%;
-    --primary: 168 80% 38%;
+    --primary: 22 75% 45%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 215 25% 16%;
+    --secondary: 0 0% 20%;
     --secondary-foreground: 0 0% 98%;
-    --muted: 215 15% 18%;
-    --muted-foreground: 210 10% 60%;
-    --accent: 145 70% 42%;
+    --muted: 0 0% 18%;
+    --muted-foreground: 0 0% 60%;
+    --accent: 22 75% 45%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 215 15% 20%;
-    --input: 215 15% 20%;
-    --ring: 168 80% 38%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 22 75% 45%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;

@@ -8,7 +8,7 @@ import gallery5m from "@/assets/gallery-5m.jpg";
 import gallery3m from "@/assets/gallery-3m.jpg";
 
 const items = [
-  { src: galleryEntulho, label: "Coleta de Entulho" },
+  { src: galleryEntulho, label: "Remoção de Entulho" },
   { src: galleryComercial, label: "Obra Comercial" },
   { src: galleryResidencial, label: "Entrega Residencial" },
   { src: gallery7m, label: "Caçamba 7 m³" },
@@ -21,7 +21,7 @@ const GallerySection = () => {
     <section className="bg-background py-14 md:py-20">
       <div className="container px-4 text-center">
         <h2 className="mb-10 text-2xl font-extrabold text-foreground md:text-3xl">
-          Conheça Nossos Serviços
+          Veja Nosso Trabalho
         </h2>
 
         <div className="mx-auto mb-10 grid max-w-4xl grid-cols-2 gap-4 md:grid-cols-3">
@@ -51,7 +51,7 @@ const GallerySection = () => {
           className="inline-flex items-center gap-2 rounded-xl bg-whatsapp px-8 py-4 text-base font-extrabold uppercase text-whatsapp-foreground shadow-lg transition-all hover:scale-105 hover:bg-whatsapp-hover"
         >
           <MessageCircle className="h-5 w-5 fill-current" />
-          Solicitar Orçamento
+          Peça Sua Caçamba
         </a>
       </div>
     </section>

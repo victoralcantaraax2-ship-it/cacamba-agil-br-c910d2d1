@@ -4,10 +4,10 @@ import phoneIcon from "@/assets/phone-icon.png";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
 
 const navLinks = [
-  { label: "Opções", href: "#tamanhos" },
-  { label: "Passo a passo", href: "#como-funciona" },
+  { label: "Tamanhos", href: "#tamanhos" },
+  { label: "Como funciona", href: "#como-funciona" },
   { label: "Avaliações", href: "#depoimentos" },
-  { label: "Quem somos", href: "#sobre-nos" },
+  { label: "Sobre nós", href: "#sobre-nos" },
   { label: "Dúvidas", href: "#faq" },
   { label: "Contato", href: "#contato" },
 ];
@@ -40,7 +40,7 @@ const Header = memo(() => {
             onClick={() => handleClick("#tamanhos")}
             className="rounded-lg bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground transition-all hover:scale-105 hover:bg-primary/90"
           >
-            Solicitar agora
+            Peça agora
           </button>
         </nav>
 
@@ -77,7 +77,7 @@ const Header = memo(() => {
             onClick={() => handleClick("#tamanhos")}
             className="mt-2 w-full rounded-lg bg-primary py-3 text-center text-base font-bold text-primary-foreground"
           >
-            Solicitar agora
+            Peça agora
           </button>
         </nav>
       )}

@@ -99,7 +99,7 @@ export default {
         },
         "glow-breathe": {
           "0%, 100%": { opacity: "0.7" },
-          "50%": { opacity: "1", textShadow: "0 0 8px hsl(168 80% 38% / 0.4)" },
+          "50%": { opacity: "1", textShadow: "0 0 8px hsl(22 75% 45% / 0.4)" },
         },
         "border-glow": {
           "0%, 100%": { boxShadow: "0 0 8px 0 hsl(var(--primary) / 0.15)" },
