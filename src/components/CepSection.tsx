@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { MapPin, CheckCircle, XCircle, Search, Loader2, Zap } from "lucide-react";
-import phoneIcon from "@/assets/phone-icon.png";
+import phoneIcon from "@/assets/phone-icon.webp";
 import { Button } from "@/components/ui/button";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
 

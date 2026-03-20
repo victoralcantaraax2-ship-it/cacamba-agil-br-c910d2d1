@@ -1,4 +1,4 @@
-import whatsappIcon from "@/assets/whatsapp-icon.png";
+import whatsappIcon from "@/assets/whatsapp-icon.webp";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
 import { memo } from "react";
 
