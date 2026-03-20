@@ -15,22 +15,22 @@ const Footer = memo(() => {
             </p>
             <div className="flex flex-col gap-2 text-sm text-secondary-foreground/70">
               <a
-                href="tel:4720850440"
+                href="tel:1120852442"
                 className="flex items-center justify-center gap-2 transition-colors hover:text-primary md:justify-start"
               >
-                <Phone className="h-4 w-4" /> Fixo: (47) 2085-0440
+                <Phone className="h-4 w-4" /> Fixo: (11) 2085-2442
               </a>
               <button
                 onClick={() => handleWhatsAppClick()}
                 className="flex items-center justify-center gap-2 transition-colors hover:text-primary md:justify-start"
               >
-                <Phone className="h-4 w-4" /> WhatsApp: (47) 99903-3028
+                <Phone className="h-4 w-4" /> WhatsApp: (11) 96835-9162
               </button>
               <a
-                href="mailto:contato@ambalocacao.com"
+                href="mailto:atendimento@ambalocacao.com"
                 className="flex items-center justify-center gap-2 transition-colors hover:text-primary md:justify-start"
               >
-                <Mail className="h-4 w-4" /> contato@ambalocacao.com
+                <Mail className="h-4 w-4" /> atendimento@ambalocacao.com
               </a>
               <span className="flex items-center justify-center gap-2 md:justify-start">
                 <Clock className="h-4 w-4" /> Seg–Sáb 06h às 19h | Dom 07h às 18h
