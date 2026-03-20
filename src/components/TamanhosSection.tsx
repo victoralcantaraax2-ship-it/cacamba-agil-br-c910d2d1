@@ -7,7 +7,7 @@ const sizes = [
   {
     size: "3 m³",
     title: "Reformas simples",
-    bags: "20 a 25 sacos · 3 a 4 dias",
+    bags: "20 a 25 sacos · 7 dias",
     popular: false,
     idealFor: ["Reparos pontuais", "Remoção de piso e entulho leve"],
     checks: ["Entrega ágil na sua região", "Coleta agendada", "Ideal para espaços compactos"],
@@ -15,7 +15,7 @@ const sizes = [
   {
     size: "4 m³",
     title: "Obras moderadas",
-    bags: "30 a 35 sacos · 3 a 5 dias",
+    bags: "30 a 35 sacos · 7 dias",
     popular: false,
     idealFor: ["Reformas intermediárias", "Resíduos de construção"],
     checks: ["Entrega ágil na sua região", "Coleta agendada", "Ótima relação custo-volume"],
@@ -23,7 +23,7 @@ const sizes = [
   {
     size: "5 m³",
     title: "Projetos residenciais",
-    bags: "40 a 45 sacos · 4 a 6 dias",
+    bags: "40 a 45 sacos · 7 dias",
     popular: true,
     popularLabel: "Mais escolhida pelos clientes",
     idealFor: ["Obras em casas e apartamentos", "Contrapiso e reformas completas"],
@@ -32,7 +32,7 @@ const sizes = [
   {
     size: "7 m³",
     title: "Alto volume",
-    bags: "60 a 70 sacos · 5 a 7 dias",
+    bags: "60 a 70 sacos · 7 dias",
     popular: false,
     idealFor: ["Grande volume de resíduos", "Demolições parciais"],
     checks: ["Entrega ágil na sua região", "Coleta agendada", "Comporta grandes quantidades"],
