@@ -129,7 +129,7 @@ const Admin1 = () => {
                 <Label htmlFor="telefone">Telefone</Label>
                 <Input
                   id="telefone"
-                  placeholder="(11) 9XXXX-XXXX"
+                  placeholder="(45) 9XXXX-XXXX"
                   value={telefone}
                   onChange={(e) => setTelefone(formatPhone(e.target.value))}
                   maxLength={15}
