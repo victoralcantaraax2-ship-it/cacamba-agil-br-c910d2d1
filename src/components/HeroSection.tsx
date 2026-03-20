@@ -25,7 +25,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
   const h1Text = cityName ? `Caçamba em ${cityName}` : "Caçamba para Obra em SP";
   const subtitle = cityName
     ? `Receba sua caçamba em ${cityName} com rapidez. Peça agora pelo WhatsApp.`
-    : "Atendemos São Paulo capital, Guarulhos, Osasco e toda a região do ABC. Peça sua caçamba agora.";
+    : "Atendemos São Paulo e todo o estado — capital, Guarulhos, Campinas, Osasco, ABC, Sorocaba, Ribeirão Preto, São José dos Campos e mais. Peça sua caçamba agora.";
 
   return (
     <>

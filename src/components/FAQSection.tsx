@@ -13,11 +13,11 @@ const faqs = [
   },
   {
     q: "Em quanto tempo a caçamba chega no meu endereço?",
-    a: "Após a confirmação, a entrega acontece em até 2 horas para São Paulo capital, Guarulhos, Osasco e ABC, podendo variar conforme a localização.",
+    a: "Após a confirmação, a entrega acontece de forma rápida na capital, Guarulhos, Campinas, Osasco, ABC e demais regiões atendidas, podendo variar conforme a localização.",
   },
   {
     q: "Quais regiões de SP vocês cobrem?",
-    a: "Atendemos São Paulo capital, Guarulhos, Osasco, Santo André, São Bernardo, São Caetano e diversas cidades da Grande São Paulo.",
+    a: "Atendemos São Paulo capital, Guarulhos, Campinas, Osasco, ABC (Santo André, São Bernardo, São Caetano), Sorocaba, Ribeirão Preto, São José dos Campos, São José do Rio Preto, Jandira e diversas outras cidades do estado.",
   },
   {
     q: "Por quanto tempo posso ficar com a caçamba?",

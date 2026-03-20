@@ -11,7 +11,7 @@ const Footer = memo(() => {
           <div>
             <img src={logoAmba} alt="AMBA Caçambas" className="mx-auto mb-3 h-12 w-auto md:mx-0" width={160} height={48} loading="lazy" />
             <p className="mb-4 max-w-sm text-sm text-secondary-foreground/60">
-              Aluguel de caçambas em São Paulo e região metropolitana. Logística ágil e descarte regularizado.
+              Aluguel de caçambas em todo o estado de São Paulo. Logística ágil e descarte regularizado.
             </p>
             <div className="flex flex-col gap-2 text-sm text-secondary-foreground/70">
               <a
