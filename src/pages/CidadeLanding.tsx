@@ -1,5 +1,5 @@
 import { useParams, Navigate } from "react-router-dom";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import TamanhosSection from "@/components/TamanhosSection";
