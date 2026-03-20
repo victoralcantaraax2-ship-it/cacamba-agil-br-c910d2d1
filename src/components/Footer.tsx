@@ -24,7 +24,7 @@ const Footer = memo(() => {
                 onClick={() => handleWhatsAppClick()}
                 className="flex items-center justify-center gap-2 transition-colors hover:text-primary md:justify-start"
               >
-                <Phone className="h-4 w-4" /> WhatsApp: (45) 98684-7737
+                <Phone className="h-4 w-4" /> WhatsApp: (47) 99903-3028
               </button>
               <a
                 href="mailto:contato@ambalocacao.com"
