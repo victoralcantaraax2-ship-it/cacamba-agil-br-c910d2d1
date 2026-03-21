@@ -22,7 +22,7 @@ const scrollTo = (id: string) => {
 };
 
 const HeroSection = ({ cityName }: { cityName?: string }) => {
-  const h1Text = cityName ? `Caçamba em ${cityName}` : "Caçamba para Obra em SP";
+  const h1Text = cityName ? `Caçamba em ${cityName}` : "Caçamba para Entulho em SP";
   const subtitle = cityName
     ? `Receba sua caçamba em ${cityName} com rapidez. Peça agora pelo WhatsApp.`
     : "Atendemos São Paulo e todo o estado — capital, Guarulhos, Campinas, Osasco, ABC, Sorocaba, Ribeirão Preto, São José dos Campos e mais. Peça sua caçamba agora.";
