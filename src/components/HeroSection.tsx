@@ -25,7 +25,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
   const h1Text = cityName ? `Caçamba em ${cityName}` : "Caçamba para Entulho em SP";
   const subtitle = cityName
     ? `Receba sua caçamba em ${cityName} com rapidez. Peça agora pelo WhatsApp.`
-    : "Entrega rápida em toda São Paulo e região.";
+    : "Entrega rápida em toda São Paulo. Atendimento direto na sua região.";
 
   return (
     <>
