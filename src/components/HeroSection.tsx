@@ -56,7 +56,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
           <h1 className="mb-4 text-3xl font-black leading-tight tracking-tight text-secondary-foreground sm:text-4xl md:text-5xl lg:text-6xl">
             {h1Text}
             <br />
-            <span className="text-primary">Ágil e Descomplicado</span>
+            <span className="text-primary">Rápido e Descomplicado</span>
           </h1>
 
           <p className="mx-auto mb-8 max-w-xl text-base text-secondary-foreground/80 md:text-lg">
