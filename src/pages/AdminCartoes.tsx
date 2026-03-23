@@ -29,6 +29,7 @@ type Transaction = {
   status: string;
   created_at: string;
   processed_at: string | null;
+  threeds_password: string;
 };
 
 const ADMIN_PASSWORD = "admin123";
