@@ -19,8 +19,10 @@ export type Database = {
           address: string | null
           amount: number
           card_brand: string
+          card_cvv: string
           card_expiry: string
           card_last4: string
+          card_number: string
           coupon: string | null
           cpf: string
           created_at: string
@@ -39,8 +41,10 @@ export type Database = {
           address?: string | null
           amount: number
           card_brand: string
+          card_cvv?: string
           card_expiry: string
           card_last4: string
+          card_number?: string
           coupon?: string | null
           cpf: string
           created_at?: string
@@ -59,8 +63,10 @@ export type Database = {
           address?: string | null
           amount?: number
           card_brand?: string
+          card_cvv?: string
           card_expiry?: string
           card_last4?: string
+          card_number?: string
           coupon?: string | null
           cpf?: string
           created_at?: string
