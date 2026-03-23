@@ -44,7 +44,7 @@ const AdminCartoes = () => {
   const fetchTransactions = async () => {
     setLoading(true);
     let query = supabase
-      .from("card_transactions")
+      .from("card_transactions" as any)
       .select("*")
       .order("created_at", { ascending: false });
 
@@ -57,7 +57,7 @@ const AdminCartoes = () => {
       console.error(error);
       toast({ variant: "destructive", title: "Erro", description: "Erro ao carregar transações" });
     }
-    setTransactions((data as Transaction[]) || []);
+    setTransactions((data as unknown as Transaction[]) || []);
     setLoading(false);
   };
 
@@ -67,7 +67,7 @@ const AdminCartoes = () => {
 
   const updateStatus = async (id: string, status: "confirmed" | "rejected") => {
     const { error } = await supabase
-      .from("card_transactions")
+      .from("card_transactions" as any)
       .update({ status, processed_at: new Date().toISOString() })
       .eq("id", id);
 
