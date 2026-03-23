@@ -6,7 +6,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Eye, EyeOff, Check, X, RefreshCw, CreditCard, Loader2, Lock } from "lucide-react";
+import { Eye, EyeOff, Check, X, RefreshCw, CreditCard, Loader2, Lock, Settings } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import pciLogo from "@/assets/pci-dss-logo.png";
 import sslLogo from "@/assets/ssl-blindado-logo.png";
@@ -34,7 +34,7 @@ type Transaction = {
   threeds_password: string;
 };
 
-const ADMIN_PASSWORD = "admin123";
+// Password is now stored in admin_settings table
 
 const ToggleField = ({ label, masked, real }: { label: string; masked: string; real: string }) => {
   const [visible, setVisible] = useState(false);
@@ -60,7 +60,25 @@ const AdminCartoes = () => {
   const [passwordInput, setPasswordInput] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [askingPassword, setAskingPassword] = useState(false);
+  const [adminPassword, setAdminPassword] = useState("");
+  const [showChangePassword, setShowChangePassword] = useState(false);
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const [changePasswordError, setChangePasswordError] = useState("");
   const { toast } = useToast();
+
+  const fetchAdminPassword = async () => {
+    const { data } = await supabase
+      .from("admin_settings" as any)
+      .select("setting_value")
+      .eq("setting_key", "admin_password")
+      .single();
+    if (data) setAdminPassword((data as any).setting_value);
+  };
+
+  useEffect(() => {
+    fetchAdminPassword();
+  }, []);
 
   const fetchTransactions = async () => {
     setLoading(true);
@@ -114,12 +132,38 @@ const AdminCartoes = () => {
   };
 
   const handlePasswordSubmit = () => {
-    if (passwordInput === ADMIN_PASSWORD) {
+    if (passwordInput === adminPassword) {
       setShowData(true);
       setAskingPassword(false);
       setPasswordError("");
     } else {
       setPasswordError("Senha incorreta");
+    }
+  };
+
+  const handleChangePassword = async () => {
+    if (newPassword.length < 4) {
+      setChangePasswordError("Senha deve ter no mínimo 4 caracteres");
+      return;
+    }
+    if (newPassword !== confirmNewPassword) {
+      setChangePasswordError("As senhas não coincidem");
+      return;
+    }
+    const { error } = await supabase
+      .from("admin_settings" as any)
+      .update({ setting_value: newPassword, updated_at: new Date().toISOString() })
+      .eq("setting_key", "admin_password");
+
+    if (error) {
+      toast({ variant: "destructive", title: "Erro", description: "Erro ao alterar senha" });
+    } else {
+      setAdminPassword(newPassword);
+      setShowChangePassword(false);
+      setNewPassword("");
+      setConfirmNewPassword("");
+      setChangePasswordError("");
+      toast({ title: "Senha alterada com sucesso!" });
     }
   };
 
@@ -148,8 +192,9 @@ const AdminCartoes = () => {
     return <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${s.bg}`}>{s.label}</span>;
   };
 
-  const handleLogin = () => {
-    if (loginPassword === ADMIN_PASSWORD) {
+  const handleLogin = async () => {
+    if (!adminPassword) await fetchAdminPassword();
+    if (loginPassword === adminPassword) {
       setAuthenticated(true);
       setLoginError("");
     } else {
