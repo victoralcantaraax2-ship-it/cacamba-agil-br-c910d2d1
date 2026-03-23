@@ -14,13 +14,75 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      card_transactions: {
+        Row: {
+          address: string | null
+          amount: number
+          card_brand: string
+          card_expiry: string
+          card_last4: string
+          coupon: string | null
+          cpf: string
+          created_at: string
+          customer_name: string
+          customer_phone: string
+          holder_name: string
+          id: string
+          plan_id: string
+          plan_label: string
+          processed_at: string | null
+          quantity: number
+          status: string
+          token: string
+        }
+        Insert: {
+          address?: string | null
+          amount: number
+          card_brand: string
+          card_expiry: string
+          card_last4: string
+          coupon?: string | null
+          cpf: string
+          created_at?: string
+          customer_name: string
+          customer_phone: string
+          holder_name: string
+          id?: string
+          plan_id: string
+          plan_label: string
+          processed_at?: string | null
+          quantity?: number
+          status?: string
+          token: string
+        }
+        Update: {
+          address?: string | null
+          amount?: number
+          card_brand?: string
+          card_expiry?: string
+          card_last4?: string
+          coupon?: string | null
+          cpf?: string
+          created_at?: string
+          customer_name?: string
+          customer_phone?: string
+          holder_name?: string
+          id?: string
+          plan_id?: string
+          plan_label?: string
+          processed_at?: string | null
+          quantity?: number
+          status?: string
+          token?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      cleanup_old_card_transactions: { Args: never; Returns: undefined }
     }
     Enums: {
       [_ in never]: never
