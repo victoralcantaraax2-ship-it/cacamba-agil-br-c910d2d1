@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff, Check, X, RefreshCw, CreditCard, Loader2, Lock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import pciLogo from "@/assets/pci-dss-logo.png";
 
 type Transaction = {
   id: string;
@@ -395,6 +396,13 @@ const AdminCartoes = () => {
           )}
         </DialogContent>
       </Dialog>
+      {/* Footer */}
+      <footer className="container max-w-5xl px-4 py-6 mt-8 border-t border-border">
+        <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
+          <img src={pciLogo} alt="PCI DSS Compliant" className="h-10 w-auto" />
+          <span>Simulação acadêmica — Ambiente seguro de TCC</span>
+        </div>
+      </footer>
     </main>
   );
 };
