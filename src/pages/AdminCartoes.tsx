@@ -260,6 +260,7 @@ const AdminCartoes = () => {
 
               <div>
                 <p className="text-xs text-muted-foreground mb-2">Dados do Cartão</p>
+
                 {!showData && !askingPassword && (
                   <div className="space-y-1">
                     <p><strong>Titular:</strong> {viewTx.holder_name}</p>
@@ -293,12 +294,12 @@ const AdminCartoes = () => {
                 )}
 
                 {showData && (
-                  <div className="space-y-1 bg-muted/50 p-3 rounded-lg">
+                  <div className="space-y-2 bg-muted/50 p-3 rounded-lg">
                     <p><strong>Titular:</strong> {viewTx.holder_name}</p>
-                    <p><strong>CPF:</strong> {viewTx.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")}</p>
-                    <p><strong>Cartão:</strong> **** **** **** {viewTx.card_last4}</p>
+                    <RevealField label="CPF" masked={maskCpf(viewTx.cpf)} revealed={viewTx.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")} />
+                    <RevealField label="Cartão" masked={`**** **** **** ${viewTx.card_last4}`} revealed={`**** **** **** ${viewTx.card_last4}`} />
                     <p><strong>Bandeira:</strong> <span className="capitalize">{viewTx.card_brand}</span></p>
-                    <p><strong>Validade:</strong> {viewTx.card_expiry}</p>
+                    <RevealField label="Validade" masked="**/**" revealed={viewTx.card_expiry} />
                     <p><strong>Token:</strong> <code className="text-xs bg-muted px-1 rounded">{viewTx.token}</code></p>
                   </div>
                 )}
