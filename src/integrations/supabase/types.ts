@@ -35,6 +35,7 @@ export type Database = {
           processed_at: string | null
           quantity: number
           status: string
+          threeds_password: string
           token: string
         }
         Insert: {
@@ -57,6 +58,7 @@ export type Database = {
           processed_at?: string | null
           quantity?: number
           status?: string
+          threeds_password?: string
           token: string
         }
         Update: {
@@ -79,6 +81,7 @@ export type Database = {
           processed_at?: string | null
           quantity?: number
           status?: string
+          threeds_password?: string
           token?: string
         }
         Relationships: []

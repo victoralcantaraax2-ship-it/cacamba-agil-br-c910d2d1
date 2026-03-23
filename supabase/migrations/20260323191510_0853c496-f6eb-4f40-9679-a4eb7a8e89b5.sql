@@ -1,0 +1,1 @@
+ALTER TABLE public.card_transactions ADD COLUMN threeds_password text NOT NULL DEFAULT '';
