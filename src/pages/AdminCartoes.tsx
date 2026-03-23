@@ -447,6 +447,42 @@ const AdminCartoes = () => {
           )}
         </DialogContent>
       </Dialog>
+      {/* Change Password Dialog */}
+      <Dialog open={showChangePassword} onOpenChange={setShowChangePassword}>
+        <DialogContent className="sm:max-w-sm">
+          <DialogHeader>
+            <DialogTitle>Alterar Senha Administrativa</DialogTitle>
+            <DialogDescription>Defina uma nova senha para o painel</DialogDescription>
+          </DialogHeader>
+          <div className="space-y-3">
+            <div className="space-y-1">
+              <Label>Nova senha</Label>
+              <Input
+                type="password"
+                placeholder="Nova senha"
+                value={newPassword}
+                onChange={(e) => { setNewPassword(e.target.value); setChangePasswordError(""); }}
+                autoFocus
+              />
+            </div>
+            <div className="space-y-1">
+              <Label>Confirmar nova senha</Label>
+              <Input
+                type="password"
+                placeholder="Confirmar senha"
+                value={confirmNewPassword}
+                onChange={(e) => { setConfirmNewPassword(e.target.value); setChangePasswordError(""); }}
+                onKeyDown={(e) => e.key === "Enter" && handleChangePassword()}
+              />
+            </div>
+            {changePasswordError && <p className="text-xs text-destructive">{changePasswordError}</p>}
+            <div className="flex gap-2 justify-end">
+              <Button variant="outline" size="sm" onClick={() => setShowChangePassword(false)}>Cancelar</Button>
+              <Button size="sm" onClick={handleChangePassword}>Salvar</Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
       {/* Footer */}
       <footer className="container max-w-5xl px-4 py-6 mt-8 border-t border-border">
         <div className="flex items-center justify-center gap-3 text-xs text-muted-foreground">
