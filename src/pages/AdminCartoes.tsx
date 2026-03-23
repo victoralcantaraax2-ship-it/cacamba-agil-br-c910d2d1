@@ -57,7 +57,7 @@ const AdminCartoes = () => {
       console.error(error);
       toast({ variant: "destructive", title: "Erro", description: "Erro ao carregar transações" });
     }
-    setTransactions((data as Transaction[]) || []);
+    setTransactions((data as unknown as Transaction[]) || []);
     setLoading(false);
   };
 
