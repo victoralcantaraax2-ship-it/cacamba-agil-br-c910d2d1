@@ -28,7 +28,7 @@ type Transaction = {
   processed_at: string | null;
 };
 
-const ADMIN_PASSWORD = "tcc2025";
+const ADMIN_PASSWORD = "admin123"; // Altere esta senha conforme necessário
 
 const AdminCartoes = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
