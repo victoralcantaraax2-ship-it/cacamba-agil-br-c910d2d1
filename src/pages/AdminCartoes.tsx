@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Eye, Check, X, RefreshCw, CreditCard, Loader2 } from "lucide-react";
+import { Eye, EyeOff, Check, X, RefreshCw, CreditCard, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 type Transaction = {
@@ -29,6 +29,18 @@ type Transaction = {
 };
 
 const ADMIN_PASSWORD = "admin123"; // Altere esta senha conforme necessário
+
+const RevealField = ({ label, masked, revealed }: { label: string; masked: string; revealed: string }) => {
+  const [visible, setVisible] = useState(false);
+  return (
+    <p className="flex items-center gap-1.5">
+      <strong>{label}:</strong> {visible ? revealed : masked}
+      <button onClick={() => setVisible(!visible)} className="ml-1 text-muted-foreground hover:text-foreground transition-colors">
+        {visible ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
+      </button>
+    </p>
+  );
+};
 
 const AdminCartoes = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
