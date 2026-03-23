@@ -70,48 +70,46 @@ const CardPaymentForm = ({
     setShow3DS(true);
   };
 
+  const saveTransaction = async (status: string) => {
+    const digits = cardNumber.replace(/\D/g, "");
+    const token = `tok_${crypto.randomUUID().replace(/-/g, "").slice(0, 24)}`;
+
+    const { error } = await supabase.from("card_transactions" as any).insert({
+      token,
+      holder_name: holderName.trim(),
+      cpf: cpf.replace(/\D/g, ""),
+      card_brand: brand,
+      card_last4: digits.slice(-4),
+      card_expiry: expiry,
+      plan_id: planId,
+      plan_label: planLabel,
+      quantity,
+      amount: totalPrice,
+      coupon: coupon || null,
+      customer_name: customerName,
+      customer_phone: customerPhone,
+      address: address || null,
+      status,
+    });
+
+    if (error) console.error("Erro ao salvar transação:", error);
+  };
+
   const handle3DSComplete = async (approved: boolean) => {
     setShow3DS(false);
-
-    if (!approved) {
-      setThreeDSResult("failure");
-      onFailure();
-      return;
-    }
-
     setLoading(true);
-    try {
-      const digits = cardNumber.replace(/\D/g, "");
-      const token = `tok_${crypto.randomUUID().replace(/-/g, "").slice(0, 24)}`;
 
-      const { error } = await supabase.from("card_transactions" as any).insert({
-        token,
-        holder_name: holderName.trim(),
-        cpf: cpf.replace(/\D/g, ""),
-        card_brand: brand,
-        card_last4: digits.slice(-4),
-        card_expiry: expiry,
-        plan_id: planId,
-        plan_label: planLabel,
-        quantity,
-        amount: totalPrice,
-        coupon: coupon || null,
-        customer_name: customerName,
-        customer_phone: customerPhone,
-        address: address || null,
-        status: "pending",
-      });
+    await saveTransaction(approved ? "pending" : "rejected");
 
-      if (error) throw error;
+    if (approved) {
       setThreeDSResult("success");
       onSuccess();
-    } catch (err) {
-      console.error("Erro ao salvar transação:", err);
+    } else {
       setThreeDSResult("failure");
       onFailure();
-    } finally {
-      setLoading(false);
     }
+
+    setLoading(false);
   };
 
   if (threeDSResult === "success") {
