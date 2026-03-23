@@ -44,7 +44,7 @@ const AdminCartoes = () => {
   const fetchTransactions = async () => {
     setLoading(true);
     let query = supabase
-      .from("card_transactions")
+      .from("card_transactions" as any)
       .select("*")
       .order("created_at", { ascending: false });
 
@@ -67,7 +67,7 @@ const AdminCartoes = () => {
 
   const updateStatus = async (id: string, status: "confirmed" | "rejected") => {
     const { error } = await supabase
-      .from("card_transactions")
+      .from("card_transactions" as any)
       .update({ status, processed_at: new Date().toISOString() })
       .eq("id", id);
 
