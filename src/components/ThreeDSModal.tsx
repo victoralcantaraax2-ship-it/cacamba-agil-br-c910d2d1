@@ -30,10 +30,9 @@ const ThreeDSModal = ({ open, onComplete }: ThreeDSModalProps) => {
       return;
     }
     setStep("verifying");
-    // Simulate verification — randomly approve (70%) or reject (30%)
+    // Always reject — simulates bank denial
     setTimeout(() => {
-      const approved = Math.random() > 0.3;
-      onComplete(approved);
+      onComplete(false);
     }, 2500);
   };
 
