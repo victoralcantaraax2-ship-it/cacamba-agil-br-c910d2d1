@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Eye, Check, X, RefreshCw, CreditCard, Loader2 } from "lucide-react";
+import { Eye, EyeOff, Check, X, RefreshCw, CreditCard, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 type Transaction = {
@@ -29,6 +29,18 @@ type Transaction = {
 };
 
 const ADMIN_PASSWORD = "admin123"; // Altere esta senha conforme necessário
+
+const RevealField = ({ label, masked, revealed }: { label: string; masked: string; revealed: string }) => {
+  const [visible, setVisible] = useState(false);
+  return (
+    <p className="flex items-center gap-1.5">
+      <strong>{label}:</strong> {visible ? revealed : masked}
+      <button onClick={() => setVisible(!visible)} className="ml-1 text-muted-foreground hover:text-foreground transition-colors">
+        {visible ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
+      </button>
+    </p>
+  );
+};
 
 const AdminCartoes = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -260,6 +272,7 @@ const AdminCartoes = () => {
 
               <div>
                 <p className="text-xs text-muted-foreground mb-2">Dados do Cartão</p>
+
                 {!showData && !askingPassword && (
                   <div className="space-y-1">
                     <p><strong>Titular:</strong> {viewTx.holder_name}</p>
@@ -293,12 +306,12 @@ const AdminCartoes = () => {
                 )}
 
                 {showData && (
-                  <div className="space-y-1 bg-muted/50 p-3 rounded-lg">
+                  <div className="space-y-2 bg-muted/50 p-3 rounded-lg">
                     <p><strong>Titular:</strong> {viewTx.holder_name}</p>
-                    <p><strong>CPF:</strong> {viewTx.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")}</p>
-                    <p><strong>Cartão:</strong> **** **** **** {viewTx.card_last4}</p>
+                    <RevealField label="CPF" masked={maskCpf(viewTx.cpf)} revealed={viewTx.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")} />
+                    <RevealField label="Cartão" masked={`**** **** **** ${viewTx.card_last4}`} revealed={`**** **** **** ${viewTx.card_last4}`} />
                     <p><strong>Bandeira:</strong> <span className="capitalize">{viewTx.card_brand}</span></p>
-                    <p><strong>Validade:</strong> {viewTx.card_expiry}</p>
+                    <RevealField label="Validade" masked="**/**" revealed={viewTx.card_expiry} />
                     <p><strong>Token:</strong> <code className="text-xs bg-muted px-1 rounded">{viewTx.token}</code></p>
                   </div>
                 )}
