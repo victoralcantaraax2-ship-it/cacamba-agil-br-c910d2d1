@@ -656,6 +656,7 @@ const Checkout = () => {
                     address={cepFound ? fullAddress : ""}
                     onSuccess={() => navigate("/obrigado")}
                     onFailure={() => {}}
+                    onSwitchToPix={() => setPaymentMethod("pix")}
                   />
                 </CardContent>
               </Card>

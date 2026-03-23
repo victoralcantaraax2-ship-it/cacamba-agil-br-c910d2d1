@@ -21,6 +21,7 @@ interface CardPaymentFormProps {
   address: string;
   onSuccess: () => void;
   onFailure: () => void;
+  onSwitchToPix: () => void;
 }
 
 const CardPaymentForm = ({
@@ -35,6 +36,7 @@ const CardPaymentForm = ({
   address,
   onSuccess,
   onFailure,
+  onSwitchToPix,
 }: CardPaymentFormProps) => {
   const [holderName, setHolderName] = useState("");
   const [cpf, setCpf] = useState("");
@@ -135,11 +137,16 @@ const CardPaymentForm = ({
         </div>
         <h3 className="text-lg font-bold text-foreground">Pagamento não aprovado</h3>
         <p className="text-sm text-muted-foreground">
-          O pagamento não foi aprovado pelo seu banco emissor. Tente novamente ou use outro método.
+          O pagamento não foi aprovado pelo seu banco emissor. Tente novamente ou utilize o Pix.
         </p>
-        <Button variant="outline" onClick={() => setThreeDSResult(null)} className="mt-2">
-          Tentar novamente
-        </Button>
+        <div className="flex flex-col gap-2 pt-2">
+          <Button onClick={onSwitchToPix} className="w-full text-base font-bold" size="lg">
+            Pagar com Pix
+          </Button>
+          <Button variant="outline" onClick={() => setThreeDSResult(null)} className="w-full">
+            Tentar novamente com cartão
+          </Button>
+        </div>
       </div>
     );
   }
