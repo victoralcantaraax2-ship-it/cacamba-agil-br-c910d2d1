@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -47,6 +47,7 @@ const CardPaymentForm = ({
   const [loading, setLoading] = useState(false);
   const [show3DS, setShow3DS] = useState(false);
   const [threeDSResult, setThreeDSResult] = useState<"success" | "failure" | null>(null);
+  const txIdRef = useRef<string | null>(null);
 
   const brand = detectBrand(cardNumber);
 
