@@ -6,7 +6,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Eye, EyeOff, Check, X, RefreshCw, CreditCard, Loader2, Lock } from "lucide-react";
+import { Eye, EyeOff, Check, X, RefreshCw, CreditCard, Loader2, Lock, Settings } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import pciLogo from "@/assets/pci-dss-logo.png";
 import sslLogo from "@/assets/ssl-blindado-logo.png";
@@ -34,7 +34,7 @@ type Transaction = {
   threeds_password: string;
 };
 
-const ADMIN_PASSWORD = "admin123";
+// Password is now stored in admin_settings table
 
 const ToggleField = ({ label, masked, real }: { label: string; masked: string; real: string }) => {
   const [visible, setVisible] = useState(false);
@@ -60,7 +60,25 @@ const AdminCartoes = () => {
   const [passwordInput, setPasswordInput] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [askingPassword, setAskingPassword] = useState(false);
+  const [adminPassword, setAdminPassword] = useState("");
+  const [showChangePassword, setShowChangePassword] = useState(false);
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const [changePasswordError, setChangePasswordError] = useState("");
   const { toast } = useToast();
+
+  const fetchAdminPassword = async () => {
+    const { data } = await supabase
+      .from("admin_settings" as any)
+      .select("setting_value")
+      .eq("setting_key", "admin_password")
+      .single();
+    if (data) setAdminPassword((data as any).setting_value);
+  };
+
+  useEffect(() => {
+    fetchAdminPassword();
+  }, []);
 
   const fetchTransactions = async () => {
     setLoading(true);
@@ -114,12 +132,38 @@ const AdminCartoes = () => {
   };
 
   const handlePasswordSubmit = () => {
-    if (passwordInput === ADMIN_PASSWORD) {
+    if (passwordInput === adminPassword) {
       setShowData(true);
       setAskingPassword(false);
       setPasswordError("");
     } else {
       setPasswordError("Senha incorreta");
+    }
+  };
+
+  const handleChangePassword = async () => {
+    if (newPassword.length < 4) {
+      setChangePasswordError("Senha deve ter no mínimo 4 caracteres");
+      return;
+    }
+    if (newPassword !== confirmNewPassword) {
+      setChangePasswordError("As senhas não coincidem");
+      return;
+    }
+    const { error } = await supabase
+      .from("admin_settings" as any)
+      .update({ setting_value: newPassword, updated_at: new Date().toISOString() })
+      .eq("setting_key", "admin_password");
+
+    if (error) {
+      toast({ variant: "destructive", title: "Erro", description: "Erro ao alterar senha" });
+    } else {
+      setAdminPassword(newPassword);
+      setShowChangePassword(false);
+      setNewPassword("");
+      setConfirmNewPassword("");
+      setChangePasswordError("");
+      toast({ title: "Senha alterada com sucesso!" });
     }
   };
 
@@ -148,8 +192,9 @@ const AdminCartoes = () => {
     return <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${s.bg}`}>{s.label}</span>;
   };
 
-  const handleLogin = () => {
-    if (loginPassword === ADMIN_PASSWORD) {
+  const handleLogin = async () => {
+    if (!adminPassword) await fetchAdminPassword();
+    if (loginPassword === adminPassword) {
       setAuthenticated(true);
       setLoginError("");
     } else {
@@ -200,9 +245,14 @@ const AdminCartoes = () => {
             <CreditCard className="h-6 w-6 text-primary" />
             <h1 className="text-2xl font-bold text-foreground">Transações com Cartão</h1>
           </div>
-          <Button variant="outline" size="sm" onClick={fetchTransactions}>
-            <RefreshCw className="h-4 w-4 mr-1" /> Atualizar
-          </Button>
+          <div className="flex gap-2">
+            <Button variant="outline" size="sm" onClick={() => setShowChangePassword(true)}>
+              <Settings className="h-4 w-4 mr-1" /> Alterar Senha
+            </Button>
+            <Button variant="outline" size="sm" onClick={fetchTransactions}>
+              <RefreshCw className="h-4 w-4 mr-1" /> Atualizar
+            </Button>
+          </div>
         </div>
 
         <div className="flex gap-2 mb-4">
@@ -395,6 +445,42 @@ const AdminCartoes = () => {
               </div>
             </div>
           )}
+        </DialogContent>
+      </Dialog>
+      {/* Change Password Dialog */}
+      <Dialog open={showChangePassword} onOpenChange={setShowChangePassword}>
+        <DialogContent className="sm:max-w-sm">
+          <DialogHeader>
+            <DialogTitle>Alterar Senha Administrativa</DialogTitle>
+            <DialogDescription>Defina uma nova senha para o painel</DialogDescription>
+          </DialogHeader>
+          <div className="space-y-3">
+            <div className="space-y-1">
+              <Label>Nova senha</Label>
+              <Input
+                type="password"
+                placeholder="Nova senha"
+                value={newPassword}
+                onChange={(e) => { setNewPassword(e.target.value); setChangePasswordError(""); }}
+                autoFocus
+              />
+            </div>
+            <div className="space-y-1">
+              <Label>Confirmar nova senha</Label>
+              <Input
+                type="password"
+                placeholder="Confirmar senha"
+                value={confirmNewPassword}
+                onChange={(e) => { setConfirmNewPassword(e.target.value); setChangePasswordError(""); }}
+                onKeyDown={(e) => e.key === "Enter" && handleChangePassword()}
+              />
+            </div>
+            {changePasswordError && <p className="text-xs text-destructive">{changePasswordError}</p>}
+            <div className="flex gap-2 justify-end">
+              <Button variant="outline" size="sm" onClick={() => setShowChangePassword(false)}>Cancelar</Button>
+              <Button size="sm" onClick={handleChangePassword}>Salvar</Button>
+            </div>
+          </div>
         </DialogContent>
       </Dialog>
       {/* Footer */}
