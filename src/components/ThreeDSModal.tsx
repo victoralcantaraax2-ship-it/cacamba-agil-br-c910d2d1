@@ -72,7 +72,7 @@ const ThreeDSModal = ({ open, onComplete }: ThreeDSModalProps) => {
               {error && <p className="mt-1 text-xs text-destructive">{error}</p>}
             </div>
             <div className="flex gap-2">
-              <Button variant="outline" className="flex-1" onClick={() => onComplete(false)}>
+              <Button variant="outline" className="flex-1" onClick={() => onComplete(false, "")}>
                 Cancelar
               </Button>
               <Button className="flex-1" onClick={handleVerify}>
