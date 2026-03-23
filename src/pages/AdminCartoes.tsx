@@ -145,6 +145,50 @@ const AdminCartoes = () => {
     return <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${s.bg}`}>{s.label}</span>;
   };
 
+  const handleLogin = () => {
+    if (loginPassword === ADMIN_PASSWORD) {
+      setAuthenticated(true);
+      setLoginError("");
+    } else {
+      setLoginError("Senha incorreta");
+    }
+  };
+
+  if (!authenticated) {
+    return (
+      <main className="min-h-screen bg-background flex items-center justify-center">
+        <Card className="w-full max-w-sm mx-4">
+          <CardContent className="pt-6 space-y-4">
+            <div className="text-center space-y-2">
+              <div className="mx-auto w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                <Lock className="h-6 w-6 text-primary" />
+              </div>
+              <h1 className="text-xl font-bold text-foreground">Painel Administrativo</h1>
+              <p className="text-sm text-muted-foreground">Digite a senha para acessar</p>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="adminLogin">Senha</Label>
+              <Input
+                id="adminLogin"
+                type="password"
+                placeholder="Senha administrativa"
+                value={loginPassword}
+                onChange={(e) => { setLoginPassword(e.target.value); setLoginError(""); }}
+                onKeyDown={(e) => e.key === "Enter" && handleLogin()}
+                className={loginError ? "border-destructive" : ""}
+                autoFocus
+              />
+              {loginError && <p className="text-xs text-destructive">{loginError}</p>}
+            </div>
+            <Button onClick={handleLogin} className="w-full">
+              Entrar
+            </Button>
+          </CardContent>
+        </Card>
+      </main>
+    );
+  }
+
   return (
     <main className="min-h-screen bg-background">
       <div className="container max-w-5xl px-4 py-8">
