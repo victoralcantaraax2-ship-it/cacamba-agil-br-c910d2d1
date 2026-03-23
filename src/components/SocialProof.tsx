@@ -30,6 +30,62 @@ const reviews = [
   { name: "Roberto Almeida", role: "Mestre de Obras – Santo André/SP", stars: 5, text: "Empresa séria. Entregaram dentro do prazo no ABC." },
   { name: "Cláudia Ribeiro", role: "Proprietária – São Paulo/SP", stars: 5, text: "Reformei meu apartamento e a AMBA cuidou de todo o descarte. Nota 10!" },
   { name: "André Machado", role: "Empreiteiro – Guarulhos/SP", stars: 5, text: "Caçamba bem conservada e entrega ágil. Já estou na segunda locação." },
+  // Jandira
+  { name: "Paulo Henrique", role: "Proprietário – Jandira/SP", stars: 5, text: "Reformei minha casa em Jandira e a AMBA entregou no dia seguinte. Muito satisfeito!" },
+  { name: "Construtora JR", role: "Construtora – Jandira/SP", stars: 5, text: "Atendemos obras em Jandira e região. AMBA é parceira fixa, nunca falham." },
+  { name: "Sandra Oliveira", role: "Síndica – Jandira/SP", stars: 5, text: "Contratei para descarte no condomínio. Rápido e dentro do combinado." },
+  // Campinas
+  { name: "Construtora Horizonte", role: "Construtora – Campinas/SP", stars: 5, text: "Mesmo em Campinas, a AMBA entregou no prazo. Logística impressionante!" },
+  { name: "Ricardo Bastos", role: "Engenheiro – Campinas/SP", stars: 5, text: "Obra grande em Campinas e precisei de várias caçambas. Serviço impecável." },
+  { name: "Fernanda Lopes", role: "Arquiteta – Campinas/SP", stars: 5, text: "Indiquei para clientes de Campinas. Todos elogiaram o atendimento." },
+  // São José dos Campos
+  { name: "Construtora Vale", role: "Construtora – São José dos Campos/SP", stars: 5, text: "Atendimento excelente aqui no Vale do Paraíba. Caçamba chegou certinho." },
+  { name: "Leandro Costa", role: "Mestre de Obras – São José dos Campos/SP", stars: 5, text: "Obra em SJC e precisei com urgência. Entregaram no mesmo dia!" },
+  { name: "Vanessa Martins", role: "Proprietária – São José dos Campos/SP", stars: 5, text: "Reformei minha casa e contratei a AMBA. Super recomendo!" },
+  // Ribeirão Preto
+  { name: "Construtora Ribeirão", role: "Construtora – Ribeirão Preto/SP", stars: 5, text: "Logística perfeita até Ribeirão Preto. Caçamba chegou no prazo." },
+  { name: "Gustavo Nogueira", role: "Engenheiro – Ribeirão Preto/SP", stars: 5, text: "Surpreendente a qualidade do serviço mesmo à distância. Nota 10!" },
+  { name: "Mariana Duarte", role: "Decoradora – Ribeirão Preto/SP", stars: 5, text: "Precisei descartar entulho de reforma. Rápido e sem complicação." },
+  // Santos
+  { name: "Construtora Litoral", role: "Construtora – Santos/SP", stars: 5, text: "Obra na Baixada Santista e a AMBA entregou sem atraso. Excelente!" },
+  { name: "Rafael Moreira", role: "Proprietário – Santos/SP", stars: 5, text: "Reforma em Santos, caçamba chegou no horário. Pessoal muito profissional." },
+  { name: "Juliana Prado", role: "Arquiteta – Santos/SP", stars: 5, text: "Atendimento rápido pelo WhatsApp. Entregaram na Baixada sem problema." },
+  // Americana
+  { name: "Construtora Americana", role: "Construtora – Americana/SP", stars: 5, text: "Serviço impecável em Americana. Logística rápida e eficiente." },
+  { name: "Carlos Eduardo", role: "Empreiteiro – Americana/SP", stars: 5, text: "Contratei várias vezes. Sempre pontuais e com caçambas em bom estado." },
+  { name: "Tatiane Ramos", role: "Proprietária – Americana/SP", stars: 5, text: "Reformei a cozinha e precisei de caçamba. Chegou no dia seguinte!" },
+  // Riviera de São Lourenço
+  { name: "Construtora Premium", role: "Construtora – Riviera de São Lourenço/SP", stars: 5, text: "Obra de alto padrão na Riviera. AMBA entregou com pontualidade e cuidado." },
+  { name: "Henrique Barros", role: "Engenheiro – Riviera de São Lourenço/SP", stars: 5, text: "Serviço diferenciado na Riviera. Caçamba limpa e entrega pontual." },
+  { name: "Isabela Fonseca", role: "Arquiteta – Riviera de São Lourenço/SP", stars: 5, text: "Clientes da Riviera aprovaram. Descarte organizado e profissional." },
+  // Sorocaba
+  { name: "Construtora Sorocabana", role: "Construtora – Sorocaba/SP", stars: 5, text: "Obras em Sorocaba com caçamba da AMBA. Sempre no prazo!" },
+  { name: "Bruno Santana", role: "Mestre de Obras – Sorocaba/SP", stars: 5, text: "Entrega rápida e preço justo. Melhor opção em Sorocaba." },
+  // São José do Rio Preto
+  { name: "Construtora Rio Preto", role: "Construtora – São José do Rio Preto/SP", stars: 5, text: "Atendimento chegou até Rio Preto sem problema. Muito bom!" },
+  { name: "Diego Ferreira", role: "Engenheiro – São José do Rio Preto/SP", stars: 5, text: "Precisei com urgência e a AMBA resolveu rapidamente. Recomendo!" },
+  // Barueri
+  { name: "Ana Paula Santos", role: "Proprietária – Barueri/SP", stars: 5, text: "Reforma em Alphaville e a caçamba chegou certinha. Atendimento nota 10." },
+  { name: "Construtora Alpha", role: "Construtora – Barueri/SP", stars: 5, text: "Parceiro de obras em Barueri. Sempre confiável e pontual." },
+  // Mogi das Cruzes
+  { name: "Fábio Mendonça", role: "Construtor – Mogi das Cruzes/SP", stars: 5, text: "Obra em Mogi e a AMBA entregou sem atraso. Serviço sério!" },
+  // Diadema
+  { name: "Marcos Teixeira", role: "Empreiteiro – Diadema/SP", stars: 5, text: "Várias obras em Diadema. AMBA é minha primeira opção sempre." },
+  // Cotia
+  { name: "Simone Alves", role: "Proprietária – Cotia/SP", stars: 5, text: "Pedi pelo WhatsApp de manhã, à tarde já estava na porta. Excelente!" },
+  // Taboão da Serra
+  { name: "Rodrigo Pinto", role: "Mestre de Obras – Taboão da Serra/SP", stars: 5, text: "Caçamba chegou no horário combinado. Equipe muito educada." },
+  // Itapevi
+  { name: "Construtora Itapevi", role: "Construtora – Itapevi/SP", stars: 5, text: "Entrega rápida aqui na região. Melhor custo-benefício com certeza." },
+  // Carapicuíba
+  { name: "José Carlos", role: "Pedreiro – Carapicuíba/SP", stars: 5, text: "Trabalho com reformas e sempre chamo a AMBA. Nunca tive problema." },
+  // Praia Grande
+  { name: "Construtora Praia", role: "Construtora – Praia Grande/SP", stars: 5, text: "Obra na Praia Grande e a logística foi perfeita. Super recomendo!" },
+  // Piracicaba
+  { name: "Luís Fernando", role: "Engenheiro – Piracicaba/SP", stars: 5, text: "Mesmo no interior, a AMBA entregou com qualidade. Impressionante!" },
+  // Jundiaí
+  { name: "Construtora Serra", role: "Construtora – Jundiaí/SP", stars: 5, text: "Obras em Jundiaí atendidas com rapidez. AMBA é referência!" },
+  { name: "Camila Rodrigues", role: "Arquiteta – Jundiaí/SP", stars: 5, text: "Indiquei para três clientes em Jundiaí. Todos satisfeitos!" },
 ];
 
 const scrollTo = (id: string) => {
