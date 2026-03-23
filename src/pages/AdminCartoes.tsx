@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Eye, EyeOff, Check, X, RefreshCw, CreditCard, Loader2, Lock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import pciLogo from "@/assets/pci-dss-logo.png";
-import sslLogo from "@/assets/ssl-secure-logo.png";
+import sslLogo from "@/assets/ssl-blindado-logo.png";
 
 type Transaction = {
   id: string;

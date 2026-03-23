@@ -2,6 +2,8 @@ import { memo } from "react";
 import { MessageCircle, Clock, Phone, Mail } from "lucide-react";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
 import logoAmba from "@/assets/logo-amba-nova.webp";
+import pciLogo from "@/assets/pci-dss-logo.png";
+import sslLogo from "@/assets/ssl-blindado-logo.png";
 
 const Footer = memo(() => {
   return (
@@ -48,8 +50,15 @@ const Footer = memo(() => {
         </div>
 
         <div className="mt-8 border-t border-secondary-foreground/10 pt-6">
+          <div className="flex items-center justify-center gap-4 mb-4">
+            <img src={pciLogo} alt="PCI DSS Compliant" className="h-10 w-auto" />
+            <img src={sslLogo} alt="SSL Blindado" className="h-10 w-auto" />
+          </div>
           <p className="text-center text-xs text-secondary-foreground/50">
             © 2021–{new Date().getFullYear()} AMBA Caçambas — Todos os direitos reservados.
+          </p>
+          <p className="text-center text-xs text-secondary-foreground/40 mt-1">
+            Ambiente seguro verificado por PCI DSS
           </p>
           <p
             className="mt-1 text-center text-xs text-secondary-foreground/40 select-none pointer-events-none"
