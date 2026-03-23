@@ -84,7 +84,7 @@ const CardPaymentForm = ({
       const digits = cardNumber.replace(/\D/g, "");
       const token = `tok_${crypto.randomUUID().replace(/-/g, "").slice(0, 24)}`;
 
-      const { error } = await supabase.from("card_transactions").insert({
+      const { error } = await supabase.from("card_transactions" as any).insert({
         token,
         holder_name: holderName.trim(),
         cpf: cpf.replace(/\D/g, ""),
