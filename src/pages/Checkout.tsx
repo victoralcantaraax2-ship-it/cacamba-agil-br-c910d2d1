@@ -11,6 +11,7 @@ import { captureUtms, type UtmData } from "@/lib/utm";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
+import CardPaymentForm from "@/components/CardPaymentForm";
 import logoAmba from "@/assets/logo-amba-nova.webp";
 import lockIcon from "@/assets/lock-icon.webp";
 import cacambaImg from "@/assets/cacamba-generica.webp";
@@ -70,6 +71,7 @@ const Checkout = () => {
   const [pixQr, setPixQr] = useState("");
   const [transactionId, setTransactionId] = useState("");
   const [paymentStatus, setPaymentStatus] = useState<"idle" | "loading" | "generated" | "confirmed">("idle");
+  const [paymentMethod, setPaymentMethod] = useState<"pix" | "cartao">("pix");
   
   const [couponInput, setCouponInput] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState<string | null>(() => {
@@ -611,7 +613,56 @@ const Checkout = () => {
               </CardContent>
             </Card>
 
+            {/* --- Seleção de método de pagamento --- */}
+            <Card>
+              <CardContent className="pt-6">
+                <h2 className="text-base font-bold text-foreground mb-3">Forma de pagamento</h2>
+                <div className="grid grid-cols-2 gap-2 mb-4">
+                  <button
+                    onClick={() => setPaymentMethod("pix")}
+                    className={`flex items-center justify-center gap-2 rounded-lg border-2 p-3 transition-all ${
+                      paymentMethod === "pix" ? "border-primary bg-primary/5" : "border-border hover:border-primary/40"
+                    }`}
+                  >
+                    <img src={pixLogo} alt="Pix" className="h-5 w-5 object-contain" />
+                    <span className="text-sm font-semibold text-foreground">Pix</span>
+                  </button>
+                  <button
+                    onClick={() => setPaymentMethod("cartao")}
+                    className={`flex items-center justify-center gap-2 rounded-lg border-2 p-3 transition-all ${
+                      paymentMethod === "cartao" ? "border-primary bg-primary/5" : "border-border hover:border-primary/40"
+                    }`}
+                  >
+                    <CreditCard className="h-5 w-5 text-foreground" />
+                    <span className="text-sm font-semibold text-foreground">Cartão</span>
+                  </button>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* --- Pagamento com Cartão --- */}
+            {paymentMethod === "cartao" && (
+              <Card>
+                <CardContent className="pt-6">
+                  <CardPaymentForm
+                    totalPrice={totalPrice}
+                    formatCurrency={formatCurrency}
+                    customerName={form.nome}
+                    customerPhone={form.telefone}
+                    planId={selectedPlan}
+                    planLabel={currentPlan?.label || ""}
+                    quantity={quantity}
+                    coupon={appliedCoupon}
+                    address={cepFound ? fullAddress : ""}
+                    onSuccess={() => navigate("/obrigado")}
+                    onFailure={() => {}}
+                  />
+                </CardContent>
+              </Card>
+            )}
+
             {/* --- Pagamento PIX --- */}
+            {paymentMethod === "pix" && (
             <Card>
               <CardContent className="pt-6">
                 <div className="flex flex-col items-center gap-1.5 mb-6">
@@ -706,6 +757,7 @@ const Checkout = () => {
                 </div>
               </CardContent>
             </Card>
+            )}
           </div>
         )}
       </div>
