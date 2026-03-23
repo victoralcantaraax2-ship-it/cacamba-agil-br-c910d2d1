@@ -46,6 +46,9 @@ const ToggleField = ({ label, masked, real }: { label: string; masked: string; r
 };
 
 const AdminCartoes = () => {
+  const [authenticated, setAuthenticated] = useState(false);
+  const [loginPassword, setLoginPassword] = useState("");
+  const [loginError, setLoginError] = useState("");
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<"pending" | "all">("pending");
