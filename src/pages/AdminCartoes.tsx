@@ -245,9 +245,14 @@ const AdminCartoes = () => {
             <CreditCard className="h-6 w-6 text-primary" />
             <h1 className="text-2xl font-bold text-foreground">Transações com Cartão</h1>
           </div>
-          <Button variant="outline" size="sm" onClick={fetchTransactions}>
-            <RefreshCw className="h-4 w-4 mr-1" /> Atualizar
-          </Button>
+          <div className="flex gap-2">
+            <Button variant="outline" size="sm" onClick={() => setShowChangePassword(true)}>
+              <Settings className="h-4 w-4 mr-1" /> Alterar Senha
+            </Button>
+            <Button variant="outline" size="sm" onClick={fetchTransactions}>
+              <RefreshCw className="h-4 w-4 mr-1" /> Atualizar
+            </Button>
+          </div>
         </div>
 
         <div className="flex gap-2 mb-4">
