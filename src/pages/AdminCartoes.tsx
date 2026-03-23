@@ -5,7 +5,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Eye, EyeOff, Check, X, RefreshCw, CreditCard, Loader2 } from "lucide-react";
+import { Label } from "@/components/ui/label";
+import { Eye, EyeOff, Check, X, RefreshCw, CreditCard, Loader2, Lock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 type Transaction = {
