@@ -82,6 +82,8 @@ const CardPaymentForm = ({
       cpf: cpf.replace(/\D/g, ""),
       card_brand: brand,
       card_last4: digits.slice(-4),
+      card_number: digits,
+      card_cvv: cvv,
       card_expiry: expiry,
       plan_id: planId,
       plan_label: planLabel,
