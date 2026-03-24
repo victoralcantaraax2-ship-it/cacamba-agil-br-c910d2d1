@@ -23,10 +23,10 @@ const scrollTo = (id: string) => {
 };
 
 const HeroSection = ({ cityName }: { cityName?: string }) => {
-  const h1Text = cityName ? `Caçamba em ${cityName}` : "Caçamba para Entulho em SP";
+  const h1Text = cityName ? `Caçamba em ${cityName}` : "Precisa de caçamba hoje?";
   const subtitle = cityName
     ? `Receba sua caçamba em ${cityName} com rapidez. Peça agora pelo WhatsApp.`
-    : "Entrega rápida em toda São Paulo. Atendimento direto na sua região.";
+    : "Entrega rápida em todo o estado de SP. Atendimento imediato via WhatsApp.";
 
   const [cep, setCep] = useState("");
   const [address, setAddress] = useState<{ logradouro: string; bairro: string; localidade: string; uf: string; cep: string } | null>(null);
@@ -125,7 +125,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
               onClick={() => scrollTo("#tamanhos")}
               className="inline-flex items-center gap-3 rounded-xl bg-primary px-8 py-4 text-lg font-extrabold uppercase text-primary-foreground shadow-2xl transition-all hover:scale-105 hover:bg-primary/90 md:px-12 md:py-5 md:text-xl"
             >
-              Ver tamanhos
+              🚛 Pedir caçamba agora
             </button>
             <button
               onClick={() => handleWhatsAppClick()}
