@@ -30,7 +30,6 @@ const AboutSection = memo(() => {
           <p className="mb-4 text-muted-foreground leading-relaxed">
             De pequenas reformas a grandes obras, de residências a condomínios e empresas — nossa missão é facilitar o descarte de entulho com rapidez e transparência.
           </p>
-          </p>
           <p className="mb-10 text-muted-foreground leading-relaxed">
             Nosso foco é resolver o seu problema de descarte de forma rápida, segura e com o melhor custo-benefício da região.
           </p>
