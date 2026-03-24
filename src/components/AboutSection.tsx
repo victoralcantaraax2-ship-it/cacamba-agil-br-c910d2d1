@@ -28,7 +28,7 @@ const AboutSection = memo(() => {
             Atendemos <span className="font-bold text-foreground">todo o estado de São Paulo</span> com aluguel de caçambas, entrega rápida e atendimento direto pelo WhatsApp. Trabalhamos de forma simples, sem burocracia e com total transparência nos valores.
           </p>
           <p className="mb-4 text-muted-foreground leading-relaxed">
-            De pequenas reformas a grandes obras, de residências a condomínios e empresas — atendemos com agilidade e compromisso com o prazo. Cobrimos a capital, Guarulhos, Campinas, Osasco, ABC, Sorocaba, Ribeirão Preto, São José dos Campos e diversas outras cidades.
+            De pequenas reformas a grandes obras, de residências a condomínios e empresas — nossa missão é facilitar o descarte de entulho com rapidez e transparência.
           </p>
           <p className="mb-10 text-muted-foreground leading-relaxed">
             Nosso foco é resolver o seu problema de descarte de forma rápida, segura e com o melhor custo-benefício da região.
