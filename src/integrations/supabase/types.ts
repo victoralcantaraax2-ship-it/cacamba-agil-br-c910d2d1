@@ -107,6 +107,39 @@ export type Database = {
         }
         Relationships: []
       }
+      complaints: {
+        Row: {
+          admin_notes: string | null
+          attachment_url: string | null
+          created_at: string
+          description: string
+          email: string
+          full_name: string
+          id: string
+          status: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          attachment_url?: string | null
+          created_at?: string
+          description: string
+          email: string
+          full_name: string
+          id?: string
+          status?: string
+        }
+        Update: {
+          admin_notes?: string | null
+          attachment_url?: string | null
+          created_at?: string
+          description?: string
+          email?: string
+          full_name?: string
+          id?: string
+          status?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
