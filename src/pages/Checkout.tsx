@@ -315,22 +315,22 @@ const Checkout = () => {
       </div>
 
       {/* Progress */}
-      <div className="container max-w-lg px-4 pt-6">
-        <div className="mb-2 flex justify-between text-xs font-medium text-muted-foreground">
+      <div className="container max-w-lg px-4 sm:px-6 pt-5 sm:pt-6">
+        <div className="mb-2 flex justify-between text-sm sm:text-xs font-medium text-muted-foreground">
           <span className={step >= 1 ? "text-primary font-bold" : ""}>1. Caçamba</span>
           <span className={step >= 2 ? "text-primary font-bold" : ""}>2. Identificação</span>
           <span className={step >= 3 ? "text-primary font-bold" : ""}>3. Pagamento</span>
         </div>
-        <Progress value={progressValue} className="h-2" />
+        <Progress value={progressValue} className="h-2.5 sm:h-2" />
       </div>
 
-      <div className="container max-w-lg px-4 py-8">
+      <div className="container max-w-lg px-4 sm:px-6 py-6 sm:py-8">
 
         {/* ========== STEP 1 — CAÇAMBA ========== */}
         {step === 1 && (
-          <div className="animate-in fade-in slide-in-from-right-4 duration-300 space-y-4">
-            <h2 className="text-xl font-bold text-foreground">Escolha sua caçamba</h2>
-            {errors.plan && <p className="text-sm text-destructive">{errors.plan}</p>}
+          <div className="animate-in fade-in slide-in-from-right-4 duration-300 space-y-5">
+            <h2 className="text-2xl sm:text-xl font-bold text-foreground">Escolha sua caçamba</h2>
+            {errors.plan && <p className="text-base sm:text-sm text-destructive">{errors.plan}</p>}
 
             <div className="space-y-3">
               {plans.map((plan) => {
@@ -345,12 +345,12 @@ const Checkout = () => {
                     }`}
                     onClick={() => setSelectedPlan(plan.id)}
                   >
-                    <CardContent className="flex items-center justify-between p-4">
-                      <div className="flex items-center gap-3">
-                        <img src={cacambaImg} alt={plan.label} className="h-12 w-16 object-contain shrink-0" />
+                    <CardContent className="flex items-center justify-between p-4 sm:p-4 min-h-[72px]">
+                      <div className="flex items-center gap-3 sm:gap-3">
+                        <img src={cacambaImg} alt={plan.label} className="h-14 w-18 sm:h-12 sm:w-16 object-contain shrink-0" />
                         <div>
-                          <p className="font-bold text-foreground">{plan.label}</p>
-                          <p className="text-sm text-muted-foreground">
+                          <p className="text-base sm:text-base font-bold text-foreground">{plan.label}</p>
+                          <p className="text-base sm:text-sm text-muted-foreground">
                             {formatCurrency(plan.price)} / unidade
                           </p>
                         </div>
@@ -361,34 +361,34 @@ const Checkout = () => {
                             <Button
                               variant="outline"
                               size="icon"
-                              className="h-8 w-8"
+                              className="h-10 w-10 sm:h-8 sm:w-8"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 setQuantity((q) => Math.max(1, q - 1));
                               }}
                             >
-                              <Minus className="h-4 w-4" />
+                              <Minus className="h-5 w-5 sm:h-4 sm:w-4" />
                             </Button>
-                            <span className="w-6 text-center font-bold text-foreground">
+                            <span className="w-8 text-center text-lg font-bold text-foreground">
                               {quantity}
                             </span>
                             <Button
                               variant="outline"
                               size="icon"
-                              className="h-8 w-8"
+                              className="h-10 w-10 sm:h-8 sm:w-8"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 setQuantity((q) => Math.min(10, q + 1));
                               }}
                             >
-                              <Plus className="h-4 w-4" />
+                              <Plus className="h-5 w-5 sm:h-4 sm:w-4" />
                             </Button>
                           </div>
                         )}
                         {isSelected ? (
-                          <CheckCircle className="h-6 w-6 text-primary" />
+                          <CheckCircle className="h-7 w-7 sm:h-6 sm:w-6 text-primary" />
                         ) : (
-                          <div className="h-6 w-6 rounded-full border-2 border-muted-foreground/30" />
+                          <div className="h-7 w-7 sm:h-6 sm:w-6 rounded-full border-2 border-muted-foreground/30" />
                         )}
                       </div>
                     </CardContent>
@@ -398,16 +398,16 @@ const Checkout = () => {
             </div>
 
             {selectedPlan && (
-              <div className="rounded-lg bg-muted p-4 text-center">
-                <p className="text-sm text-muted-foreground">Total estimado</p>
-                <p className="text-2xl font-bold text-primary">{formatCurrency(totalPrice)}</p>
-                <p className="text-xs text-muted-foreground">
+              <div className="rounded-lg bg-muted p-5 sm:p-4 text-center">
+                <p className="text-base sm:text-sm text-muted-foreground">Total estimado</p>
+                <p className="text-3xl sm:text-2xl font-bold text-primary">{formatCurrency(totalPrice)}</p>
+                <p className="text-sm sm:text-xs text-muted-foreground">
                   {quantity}x {currentPlan?.label}
                 </p>
               </div>
             )}
 
-            <Button onClick={validateStep1} className="w-full text-base font-bold" size="lg">
+            <Button onClick={validateStep1} className="w-full text-lg sm:text-base font-bold h-14 sm:h-11" size="lg">
               Continuar
             </Button>
           </div>
