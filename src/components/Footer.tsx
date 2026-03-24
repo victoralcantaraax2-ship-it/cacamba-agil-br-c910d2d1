@@ -2,7 +2,6 @@ import { memo } from "react";
 import { MessageCircle, Clock, Phone, Mail } from "lucide-react";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
 import logoAmba from "@/assets/logo-amba-nova.webp";
-import pciLogo from "@/assets/pci-dss-logo.png";
 import sslLogo from "@/assets/ssl-blindado-logo.png";
 
 const Footer = memo(() => {
