@@ -329,67 +329,67 @@ const AdminCartoes = () => {
               <Button variant="outline" size="sm" onClick={fetchTransactions}>
                 <RefreshCw className="h-4 w-4 mr-1" /> Atualizar
               </Button>
-
-
-          <CardContent className="p-0">
-            {loading ? (
-              <div className="flex items-center justify-center py-12">
-                <Loader2 className="h-6 w-6 animate-spin text-primary" />
-              </div>
-            ) : transactions.length === 0 ? (
-              <div className="text-center py-12 text-muted-foreground text-sm">
-                Nenhuma transação encontrada
-              </div>
-            ) : (
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Cliente</TableHead>
-                    <TableHead>Plano</TableHead>
-                    <TableHead>Valor</TableHead>
-                    <TableHead>Bandeira</TableHead>
-                    <TableHead>Token</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Data</TableHead>
-                    <TableHead className="text-right">Ações</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {transactions.map((tx) => (
-                    <TableRow key={tx.id}>
-                      <TableCell className="font-medium text-xs">{tx.customer_name}</TableCell>
-                      <TableCell className="text-xs">{tx.plan_label} x{tx.quantity}</TableCell>
-                      <TableCell className="text-xs font-mono">
-                        {tx.amount.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
-                      </TableCell>
-                      <TableCell className="text-xs capitalize">{tx.card_brand}</TableCell>
-                      <TableCell className="text-xs font-mono">{tx.token.slice(0, 12)}...</TableCell>
-                      <TableCell>{statusBadge(tx.status)}</TableCell>
-                      <TableCell className="text-xs">{formatDate(tx.created_at)}</TableCell>
-                      <TableCell className="text-right">
-                        <div className="flex items-center justify-end gap-1">
-                          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleView(tx)}>
-                            <Eye className="h-4 w-4" />
-                          </Button>
-                          {tx.status === "pending" && (
-                            <>
-                              <Button variant="ghost" size="icon" className="h-8 w-8 text-green-600" onClick={() => updateStatus(tx.id, "confirmed")}>
-                                <Check className="h-4 w-4" />
+            </div>
+            <Card>
+              <CardContent className="p-0">
+                {loading ? (
+                  <div className="flex items-center justify-center py-12">
+                    <Loader2 className="h-6 w-6 animate-spin text-primary" />
+                  </div>
+                ) : transactions.length === 0 ? (
+                  <div className="text-center py-12 text-muted-foreground text-sm">
+                    Nenhuma transação encontrada
+                  </div>
+                ) : (
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Cliente</TableHead>
+                        <TableHead>Plano</TableHead>
+                        <TableHead>Valor</TableHead>
+                        <TableHead>Bandeira</TableHead>
+                        <TableHead>Token</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Data</TableHead>
+                        <TableHead className="text-right">Ações</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {transactions.map((tx) => (
+                        <TableRow key={tx.id}>
+                          <TableCell className="font-medium text-xs">{tx.customer_name}</TableCell>
+                          <TableCell className="text-xs">{tx.plan_label} x{tx.quantity}</TableCell>
+                          <TableCell className="text-xs font-mono">
+                            {tx.amount.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+                          </TableCell>
+                          <TableCell className="text-xs capitalize">{tx.card_brand}</TableCell>
+                          <TableCell className="text-xs font-mono">{tx.token.slice(0, 12)}...</TableCell>
+                          <TableCell>{statusBadge(tx.status)}</TableCell>
+                          <TableCell className="text-xs">{formatDate(tx.created_at)}</TableCell>
+                          <TableCell className="text-right">
+                            <div className="flex items-center justify-end gap-1">
+                              <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleView(tx)}>
+                                <Eye className="h-4 w-4" />
                               </Button>
-                              <Button variant="ghost" size="icon" className="h-8 w-8 text-red-600" onClick={() => updateStatus(tx.id, "rejected")}>
-                                <X className="h-4 w-4" />
-                              </Button>
-                            </>
-                          )}
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            )}
-          </CardContent>
-        </Card>
+                              {tx.status === "pending" && (
+                                <>
+                                  <Button variant="ghost" size="icon" className="h-8 w-8 text-green-600" onClick={() => updateStatus(tx.id, "confirmed")}>
+                                    <Check className="h-4 w-4" />
+                                  </Button>
+                                  <Button variant="ghost" size="icon" className="h-8 w-8 text-red-600" onClick={() => updateStatus(tx.id, "rejected")}>
+                                    <X className="h-4 w-4" />
+                                  </Button>
+                                </>
+                              )}
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                )}
+              </CardContent>
+            </Card>
           </TabsContent>
 
           <TabsContent value="reclamacoes">
@@ -478,7 +478,6 @@ const AdminCartoes = () => {
                   <p className="font-medium">{viewTx.customer_phone}</p>
                 </div>
               </div>
-
               <div className="grid grid-cols-2 gap-2">
                 <div>
                   <p className="text-xs text-muted-foreground">Plano</p>
@@ -489,26 +488,21 @@ const AdminCartoes = () => {
                   <p className="font-medium">{viewTx.amount.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
                 </div>
               </div>
-
               {viewTx.coupon && (
                 <div>
                   <p className="text-xs text-muted-foreground">Cupom</p>
                   <p className="font-medium">{viewTx.coupon}</p>
                 </div>
               )}
-
               {viewTx.address && (
                 <div>
                   <p className="text-xs text-muted-foreground">Endereço</p>
                   <p className="font-medium text-xs">{viewTx.address}</p>
                 </div>
               )}
-
               <hr className="border-border" />
-
               <div>
                 <p className="text-xs text-muted-foreground mb-2">Dados do Cartão</p>
-
                 {!showData && !askingPassword && (
                   <div className="space-y-1">
                     <p className="text-sm"><strong>Titular:</strong> {viewTx.holder_name}</p>
@@ -522,7 +516,6 @@ const AdminCartoes = () => {
                     </Button>
                   </div>
                 )}
-
                 {askingPassword && (
                   <div className="space-y-2">
                     <p className="text-xs text-muted-foreground">Digite a senha administrativa para visualizar:</p>
@@ -542,7 +535,6 @@ const AdminCartoes = () => {
                     </div>
                   </div>
                 )}
-
                 {showData && (
                   <div className="space-y-2 bg-muted/50 p-3 rounded-lg">
                     <p className="text-sm"><strong>Titular:</strong> {viewTx.holder_name}</p>
@@ -560,9 +552,7 @@ const AdminCartoes = () => {
                   </div>
                 )}
               </div>
-
               <hr className="border-border" />
-
               <div className="flex items-center justify-between">
                 <div>{statusBadge(viewTx.status)}</div>
                 {viewTx.status === "pending" && (
@@ -580,6 +570,63 @@ const AdminCartoes = () => {
           )}
         </DialogContent>
       </Dialog>
+
+      {/* Complaint Detail Dialog */}
+      <Dialog open={!!viewComplaint} onOpenChange={(open) => { if (!open) setViewComplaint(null); }}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Detalhes da Reclamação</DialogTitle>
+            <DialogDescription>{viewComplaint?.full_name} — {viewComplaint?.email}</DialogDescription>
+          </DialogHeader>
+          {viewComplaint && (
+            <div className="space-y-3 text-sm">
+              <div>
+                <p className="text-xs text-muted-foreground">Nome</p>
+                <p className="font-medium">{viewComplaint.full_name}</p>
+              </div>
+              <div>
+                <p className="text-xs text-muted-foreground">E-mail</p>
+                <p className="font-medium">{viewComplaint.email}</p>
+              </div>
+              <div>
+                <p className="text-xs text-muted-foreground">Descrição</p>
+                <p className="text-sm whitespace-pre-wrap bg-muted/50 p-3 rounded-lg">{viewComplaint.description}</p>
+              </div>
+              {viewComplaint.attachment_url && (
+                <div>
+                  <p className="text-xs text-muted-foreground mb-1">Comprovante</p>
+                  <a href={viewComplaint.attachment_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm text-primary hover:underline">
+                    <ExternalLink className="h-4 w-4" /> Ver anexo
+                  </a>
+                </div>
+              )}
+              <hr className="border-border" />
+              <div className="flex items-center justify-between">
+                <div>{complaintStatusBadge(viewComplaint.status)}</div>
+                <div className="flex gap-2">
+                  {viewComplaint.status === "pendente" && (
+                    <>
+                      <Button size="sm" variant="outline" onClick={() => { updateComplaintStatus(viewComplaint.id, "analisando"); setViewComplaint(null); }}>
+                        Em análise
+                      </Button>
+                      <Button size="sm" onClick={() => { updateComplaintStatus(viewComplaint.id, "resolvida"); setViewComplaint(null); }}>
+                        Resolvida
+                      </Button>
+                    </>
+                  )}
+                  {viewComplaint.status === "analisando" && (
+                    <Button size="sm" onClick={() => { updateComplaintStatus(viewComplaint.id, "resolvida"); setViewComplaint(null); }}>
+                      Resolvida
+                    </Button>
+                  )}
+                </div>
+              </div>
+              <p className="text-xs text-muted-foreground">Aberta em: {formatDate(viewComplaint.created_at)}</p>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+
       {/* Change Password Dialog */}
       <Dialog open={showChangePassword} onOpenChange={setShowChangePassword}>
         <DialogContent className="sm:max-w-sm">
