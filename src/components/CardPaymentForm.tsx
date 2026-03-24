@@ -43,6 +43,7 @@ const CardPaymentForm = ({
   const [cardNumber, setCardNumber] = useState("");
   const [expiry, setExpiry] = useState("");
   const [cvv, setCvv] = useState("");
+  const [installments, setInstallments] = useState<1 | 2 | 3>(1);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [show3DS, setShow3DS] = useState(false);
