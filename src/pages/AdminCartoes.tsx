@@ -334,15 +334,6 @@ const AdminCartoes = () => {
           </div>
         </div>
 
-        <div className="flex gap-2 mb-4">
-          <Button variant={filter === "pending" ? "default" : "outline"} size="sm" onClick={() => setFilter("pending")}>
-            Pendentes
-          </Button>
-          <Button variant={filter === "all" ? "default" : "outline"} size="sm" onClick={() => setFilter("all")}>
-            Todas
-          </Button>
-        </div>
-
         <Card>
           <CardContent className="p-0">
             {loading ? (
@@ -403,6 +394,73 @@ const AdminCartoes = () => {
             )}
           </CardContent>
         </Card>
+          </TabsContent>
+
+          <TabsContent value="reclamacoes">
+            <div className="flex items-center justify-end mb-4">
+              <Button variant="outline" size="sm" onClick={fetchComplaints}>
+                <RefreshCw className="h-4 w-4 mr-1" /> Atualizar
+              </Button>
+            </div>
+            <Card>
+              <CardContent className="p-0">
+                {complaintsLoading ? (
+                  <div className="flex items-center justify-center py-12">
+                    <Loader2 className="h-6 w-6 animate-spin text-primary" />
+                  </div>
+                ) : complaints.length === 0 ? (
+                  <div className="text-center py-12 text-muted-foreground text-sm">
+                    Nenhuma reclamação encontrada
+                  </div>
+                ) : (
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Nome</TableHead>
+                        <TableHead>E-mail</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Data</TableHead>
+                        <TableHead className="text-right">Ações</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {complaints.map((c) => (
+                        <TableRow key={c.id}>
+                          <TableCell className="font-medium text-xs">{c.full_name}</TableCell>
+                          <TableCell className="text-xs">{c.email}</TableCell>
+                          <TableCell>{complaintStatusBadge(c.status)}</TableCell>
+                          <TableCell className="text-xs">{formatDate(c.created_at)}</TableCell>
+                          <TableCell className="text-right">
+                            <div className="flex items-center justify-end gap-1">
+                              <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setViewComplaint(c)}>
+                                <Eye className="h-4 w-4" />
+                              </Button>
+                              {c.status === "pendente" && (
+                                <>
+                                  <Button variant="ghost" size="icon" className="h-8 w-8 text-blue-600" title="Em análise" onClick={() => updateComplaintStatus(c.id, "analisando")}>
+                                    <AlertTriangle className="h-4 w-4" />
+                                  </Button>
+                                  <Button variant="ghost" size="icon" className="h-8 w-8 text-green-600" title="Resolvida" onClick={() => updateComplaintStatus(c.id, "resolvida")}>
+                                    <Check className="h-4 w-4" />
+                                  </Button>
+                                </>
+                              )}
+                              {c.status === "analisando" && (
+                                <Button variant="ghost" size="icon" className="h-8 w-8 text-green-600" title="Resolvida" onClick={() => updateComplaintStatus(c.id, "resolvida")}>
+                                  <Check className="h-4 w-4" />
+                                </Button>
+                              )}
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </div>
 
       {/* Detail Dialog */}
