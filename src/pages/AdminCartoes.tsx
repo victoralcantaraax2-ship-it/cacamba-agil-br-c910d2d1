@@ -77,6 +77,10 @@ const AdminCartoes = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [changePasswordError, setChangePasswordError] = useState("");
+  const [complaints, setComplaints] = useState<Complaint[]>([]);
+  const [complaintsLoading, setComplaintsLoading] = useState(false);
+  const [viewComplaint, setViewComplaint] = useState<Complaint | null>(null);
+  const [adminTab, setAdminTab] = useState("cartoes");
   const { toast } = useToast();
 
   const fetchAdminPassword = async () => {
