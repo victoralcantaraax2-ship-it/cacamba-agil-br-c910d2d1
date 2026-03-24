@@ -96,7 +96,48 @@ const AdminCartoes = () => {
     fetchAdminPassword();
   }, []);
 
-  const fetchTransactions = async () => {
+  const fetchComplaints = async () => {
+    setComplaintsLoading(true);
+    const { data, error } = await supabase
+      .from("complaints" as any)
+      .select("*")
+      .order("created_at", { ascending: false });
+    if (error) {
+      toast({ variant: "destructive", title: "Erro", description: "Erro ao carregar reclamações" });
+    }
+    setComplaints((data as unknown as Complaint[]) || []);
+    setComplaintsLoading(false);
+  };
+
+  useEffect(() => {
+    if (adminTab === "reclamacoes" && complaints.length === 0) fetchComplaints();
+  }, [adminTab]);
+
+  const updateComplaintStatus = async (id: string, status: string) => {
+    const { error } = await supabase
+      .from("complaints" as any)
+      .update({ status })
+      .eq("id", id);
+    if (error) {
+      toast({ variant: "destructive", title: "Erro", description: "Erro ao atualizar" });
+    } else {
+      toast({ title: `Reclamação marcada como ${status}` });
+      fetchComplaints();
+    }
+  };
+
+  const complaintStatusBadge = (status: string) => {
+    const map: Record<string, { bg: string; label: string }> = {
+      pendente: { bg: "bg-yellow-100 text-yellow-800", label: "Pendente" },
+      analisando: { bg: "bg-blue-100 text-blue-800", label: "Em análise" },
+      resolvida: { bg: "bg-green-100 text-green-800", label: "Resolvida" },
+      recusada: { bg: "bg-red-100 text-red-800", label: "Recusada" },
+    };
+    const s = map[status] || { bg: "bg-muted", label: status };
+    return <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${s.bg}`}>{s.label}</span>;
+  };
+
+
     setLoading(true);
     let query = supabase
       .from("card_transactions" as any)
