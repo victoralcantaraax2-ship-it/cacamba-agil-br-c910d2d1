@@ -329,12 +329,8 @@ const AdminCartoes = () => {
               <Button variant="outline" size="sm" onClick={fetchTransactions}>
                 <RefreshCw className="h-4 w-4 mr-1" /> Atualizar
               </Button>
-            </div>
-            </Button>
-          </div>
-        </div>
 
-        <Card>
+
           <CardContent className="p-0">
             {loading ? (
               <div className="flex items-center justify-center py-12">
