@@ -37,6 +37,7 @@ const Index = () => {
         <Footer />
       </Suspense>
       <WhatsAppFloat />
+      <ExitIntentPopup />
     </main>
   );
 };
