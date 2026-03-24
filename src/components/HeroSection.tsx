@@ -27,7 +27,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
   const h1Text = cityName ? `Caçamba em ${cityName}` : "Precisa de caçamba hoje?";
   const subtitle = cityName
     ? `Receba sua caçamba em ${cityName} com rapidez. Peça agora pelo WhatsApp.`
-    : "Entrega rápida em todo o estado de SP. Atendimento imediato via WhatsApp.";
+    : "Entrega rápida em todo o estado de São Paulo e Região. Solicite agora pelo WhatsApp e receba no seu local.";
 
   const [cep, setCep] = useState("");
   const [address, setAddress] = useState<{ logradouro: string; bairro: string; localidade: string; uf: string; cep: string } | null>(null);
