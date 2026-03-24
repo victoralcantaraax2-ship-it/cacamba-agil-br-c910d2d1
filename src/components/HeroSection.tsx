@@ -4,6 +4,7 @@ import { handleWhatsAppClick } from "@/lib/whatsapp";
 import heroBg from "@/assets/hero-bg.webp";
 import whatsappIcon from "@/assets/whatsapp-icon.webp";
 import logoAmba from "@/assets/logo-amba-nova.webp";
+import handIcon from "@/assets/hand-icon.png";
 
 const badges = [
   { icon: ShieldCheck, label: "Compromisso garantido" },
