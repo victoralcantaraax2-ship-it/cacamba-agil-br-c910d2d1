@@ -165,7 +165,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
             </div>
 
             {cepError && (
-              <div className="mt-3 flex items-center justify-center gap-2 text-sm text-red-400 animate-fade-in">
+              <div className="mt-3 flex items-center justify-center gap-2 text-sm text-destructive animate-fade-in">
                 <XCircle className="h-4 w-4" />
                 CEP não localizado. Confira e tente novamente.
               </div>
@@ -174,8 +174,8 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
             {address && (
               <div className={`mt-4 rounded-xl border border-primary/30 bg-secondary-foreground/10 p-4 backdrop-blur-sm transition-all duration-500 ${cepVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"}`}>
                 <div className="flex items-center justify-center gap-2 mb-2">
-                  <CheckCircle className="h-5 w-5 text-green-400" />
-                  <span className="text-sm font-black uppercase tracking-wide text-green-400">Área atendida!</span>
+                  <CheckCircle className="h-5 w-5 text-accent" />
+                  <span className="text-sm font-black uppercase tracking-wide text-accent">Área atendida!</span>
                 </div>
                 <p className="text-sm text-secondary-foreground/80">
                   {address.logradouro && `${address.logradouro}, `}{address.bairro && `${address.bairro} – `}{address.localidade}/{address.uf}
