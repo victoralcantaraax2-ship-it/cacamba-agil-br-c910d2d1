@@ -11,6 +11,7 @@ const Obrigado = lazy(() => import("./pages/Obrigado"));
 const CidadeLanding = lazy(() => import("./pages/CidadeLanding"));
 const Admin1 = lazy(() => import("./pages/Admin1"));
 const AdminCartoes = lazy(() => import("./pages/AdminCartoes"));
+const Reclamacoes = lazy(() => import("./pages/Reclamacoes"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -34,6 +35,7 @@ const App = () => (
             <Route path="/obrigado" element={<Obrigado />} />
             <Route path="/admin1" element={<Admin1 />} />
             <Route path="/administrativo" element={<AdminCartoes />} />
+            <Route path="/reclamacoes" element={<Reclamacoes />} />
             <Route path="/:cidade" element={<CidadeLanding />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

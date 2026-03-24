@@ -1,5 +1,6 @@
 import { useState, memo } from "react";
 import { Menu, X } from "lucide-react";
+import { Link } from "react-router-dom";
 import phoneIcon from "@/assets/phone-icon.webp";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
 
@@ -36,6 +37,12 @@ const Header = memo(() => {
               {link.label}
             </button>
           ))}
+          <Link
+            to="/reclamacoes"
+            className="text-sm font-medium text-secondary-foreground/70 transition-colors hover:text-secondary-foreground"
+          >
+            Reclamações
+          </Link>
           <button
             onClick={() => handleClick("#tamanhos")}
             className="rounded-lg bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground transition-all hover:scale-105 hover:bg-primary/90"
@@ -73,6 +80,13 @@ const Header = memo(() => {
               {link.label}
             </button>
           ))}
+          <Link
+            to="/reclamacoes"
+            onClick={() => setOpen(false)}
+            className="block w-full py-3 text-left text-base font-medium text-secondary-foreground/80 transition-colors hover:text-secondary-foreground"
+          >
+            Reclamações
+          </Link>
           <button
             onClick={() => handleClick("#tamanhos")}
             className="mt-2 w-full rounded-lg bg-primary py-3 text-center text-base font-bold text-primary-foreground"

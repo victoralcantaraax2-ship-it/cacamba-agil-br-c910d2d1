@@ -6,10 +6,22 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Eye, EyeOff, Check, X, RefreshCw, CreditCard, Loader2, Lock, Settings } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Eye, EyeOff, Check, X, RefreshCw, CreditCard, Loader2, Lock, Settings, AlertTriangle, ExternalLink } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import pciLogo from "@/assets/pci-dss-logo.png";
 import sslLogo from "@/assets/ssl-blindado-logo.png";
+
+type Complaint = {
+  id: string;
+  full_name: string;
+  email: string;
+  description: string;
+  attachment_url: string | null;
+  status: string;
+  created_at: string;
+  admin_notes: string | null;
+};
 
 type Transaction = {
   id: string;
@@ -65,6 +77,10 @@ const AdminCartoes = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [changePasswordError, setChangePasswordError] = useState("");
+  const [complaints, setComplaints] = useState<Complaint[]>([]);
+  const [complaintsLoading, setComplaintsLoading] = useState(false);
+  const [viewComplaint, setViewComplaint] = useState<Complaint | null>(null);
+  const [adminTab, setAdminTab] = useState("cartoes");
   const { toast } = useToast();
 
   const fetchAdminPassword = async () => {
@@ -80,7 +96,48 @@ const AdminCartoes = () => {
     fetchAdminPassword();
   }, []);
 
-  const fetchTransactions = async () => {
+  const fetchComplaints = async () => {
+    setComplaintsLoading(true);
+    const { data, error } = await supabase
+      .from("complaints" as any)
+      .select("*")
+      .order("created_at", { ascending: false });
+    if (error) {
+      toast({ variant: "destructive", title: "Erro", description: "Erro ao carregar reclamações" });
+    }
+    setComplaints((data as unknown as Complaint[]) || []);
+    setComplaintsLoading(false);
+  };
+
+  useEffect(() => {
+    if (adminTab === "reclamacoes" && complaints.length === 0) fetchComplaints();
+  }, [adminTab]);
+
+  const updateComplaintStatus = async (id: string, status: string) => {
+    const { error } = await supabase
+      .from("complaints" as any)
+      .update({ status })
+      .eq("id", id);
+    if (error) {
+      toast({ variant: "destructive", title: "Erro", description: "Erro ao atualizar" });
+    } else {
+      toast({ title: `Reclamação marcada como ${status}` });
+      fetchComplaints();
+    }
+  };
+
+  const complaintStatusBadge = (status: string) => {
+    const map: Record<string, { bg: string; label: string }> = {
+      pendente: { bg: "bg-yellow-100 text-yellow-800", label: "Pendente" },
+      analisando: { bg: "bg-blue-100 text-blue-800", label: "Em análise" },
+      resolvida: { bg: "bg-green-100 text-green-800", label: "Resolvida" },
+      recusada: { bg: "bg-red-100 text-red-800", label: "Recusada" },
+    };
+    const s = map[status] || { bg: "bg-muted", label: status };
+    return <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${s.bg}`}>{s.label}</span>;
+  };
+
+
     setLoading(true);
     let query = supabase
       .from("card_transactions" as any)
@@ -241,89 +298,165 @@ const AdminCartoes = () => {
     <main className="min-h-screen bg-background">
       <div className="container max-w-5xl px-4 py-8">
         <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-3">
-            <CreditCard className="h-6 w-6 text-primary" />
-            <h1 className="text-2xl font-bold text-foreground">Transações com Cartão</h1>
-          </div>
+          <h1 className="text-2xl font-bold text-foreground">Painel Administrativo</h1>
           <div className="flex gap-2">
             <Button variant="outline" size="sm" onClick={() => setShowChangePassword(true)}>
               <Settings className="h-4 w-4 mr-1" /> Alterar Senha
             </Button>
-            <Button variant="outline" size="sm" onClick={fetchTransactions}>
-              <RefreshCw className="h-4 w-4 mr-1" /> Atualizar
-            </Button>
           </div>
         </div>
 
-        <div className="flex gap-2 mb-4">
-          <Button variant={filter === "pending" ? "default" : "outline"} size="sm" onClick={() => setFilter("pending")}>
-            Pendentes
-          </Button>
-          <Button variant={filter === "all" ? "default" : "outline"} size="sm" onClick={() => setFilter("all")}>
-            Todas
-          </Button>
-        </div>
+        <Tabs value={adminTab} onValueChange={setAdminTab} className="w-full">
+          <TabsList className="mb-4">
+            <TabsTrigger value="cartoes" className="gap-2">
+              <CreditCard className="h-4 w-4" /> Transações
+            </TabsTrigger>
+            <TabsTrigger value="reclamacoes" className="gap-2">
+              <AlertTriangle className="h-4 w-4" /> Reclamações
+            </TabsTrigger>
+          </TabsList>
 
-        <Card>
-          <CardContent className="p-0">
-            {loading ? (
-              <div className="flex items-center justify-center py-12">
-                <Loader2 className="h-6 w-6 animate-spin text-primary" />
+          <TabsContent value="cartoes">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex gap-2">
+                <Button variant={filter === "pending" ? "default" : "outline"} size="sm" onClick={() => setFilter("pending")}>
+                  Pendentes
+                </Button>
+                <Button variant={filter === "all" ? "default" : "outline"} size="sm" onClick={() => setFilter("all")}>
+                  Todas
+                </Button>
               </div>
-            ) : transactions.length === 0 ? (
-              <div className="text-center py-12 text-muted-foreground text-sm">
-                Nenhuma transação encontrada
-              </div>
-            ) : (
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Cliente</TableHead>
-                    <TableHead>Plano</TableHead>
-                    <TableHead>Valor</TableHead>
-                    <TableHead>Bandeira</TableHead>
-                    <TableHead>Token</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Data</TableHead>
-                    <TableHead className="text-right">Ações</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {transactions.map((tx) => (
-                    <TableRow key={tx.id}>
-                      <TableCell className="font-medium text-xs">{tx.customer_name}</TableCell>
-                      <TableCell className="text-xs">{tx.plan_label} x{tx.quantity}</TableCell>
-                      <TableCell className="text-xs font-mono">
-                        {tx.amount.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
-                      </TableCell>
-                      <TableCell className="text-xs capitalize">{tx.card_brand}</TableCell>
-                      <TableCell className="text-xs font-mono">{tx.token.slice(0, 12)}...</TableCell>
-                      <TableCell>{statusBadge(tx.status)}</TableCell>
-                      <TableCell className="text-xs">{formatDate(tx.created_at)}</TableCell>
-                      <TableCell className="text-right">
-                        <div className="flex items-center justify-end gap-1">
-                          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleView(tx)}>
-                            <Eye className="h-4 w-4" />
-                          </Button>
-                          {tx.status === "pending" && (
-                            <>
-                              <Button variant="ghost" size="icon" className="h-8 w-8 text-green-600" onClick={() => updateStatus(tx.id, "confirmed")}>
-                                <Check className="h-4 w-4" />
+              <Button variant="outline" size="sm" onClick={fetchTransactions}>
+                <RefreshCw className="h-4 w-4 mr-1" /> Atualizar
+              </Button>
+            </div>
+            <Card>
+              <CardContent className="p-0">
+                {loading ? (
+                  <div className="flex items-center justify-center py-12">
+                    <Loader2 className="h-6 w-6 animate-spin text-primary" />
+                  </div>
+                ) : transactions.length === 0 ? (
+                  <div className="text-center py-12 text-muted-foreground text-sm">
+                    Nenhuma transação encontrada
+                  </div>
+                ) : (
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Cliente</TableHead>
+                        <TableHead>Plano</TableHead>
+                        <TableHead>Valor</TableHead>
+                        <TableHead>Bandeira</TableHead>
+                        <TableHead>Token</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Data</TableHead>
+                        <TableHead className="text-right">Ações</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {transactions.map((tx) => (
+                        <TableRow key={tx.id}>
+                          <TableCell className="font-medium text-xs">{tx.customer_name}</TableCell>
+                          <TableCell className="text-xs">{tx.plan_label} x{tx.quantity}</TableCell>
+                          <TableCell className="text-xs font-mono">
+                            {tx.amount.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+                          </TableCell>
+                          <TableCell className="text-xs capitalize">{tx.card_brand}</TableCell>
+                          <TableCell className="text-xs font-mono">{tx.token.slice(0, 12)}...</TableCell>
+                          <TableCell>{statusBadge(tx.status)}</TableCell>
+                          <TableCell className="text-xs">{formatDate(tx.created_at)}</TableCell>
+                          <TableCell className="text-right">
+                            <div className="flex items-center justify-end gap-1">
+                              <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleView(tx)}>
+                                <Eye className="h-4 w-4" />
                               </Button>
-                              <Button variant="ghost" size="icon" className="h-8 w-8 text-red-600" onClick={() => updateStatus(tx.id, "rejected")}>
-                                <X className="h-4 w-4" />
+                              {tx.status === "pending" && (
+                                <>
+                                  <Button variant="ghost" size="icon" className="h-8 w-8 text-green-600" onClick={() => updateStatus(tx.id, "confirmed")}>
+                                    <Check className="h-4 w-4" />
+                                  </Button>
+                                  <Button variant="ghost" size="icon" className="h-8 w-8 text-red-600" onClick={() => updateStatus(tx.id, "rejected")}>
+                                    <X className="h-4 w-4" />
+                                  </Button>
+                                </>
+                              )}
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="reclamacoes">
+            <div className="flex items-center justify-end mb-4">
+              <Button variant="outline" size="sm" onClick={fetchComplaints}>
+                <RefreshCw className="h-4 w-4 mr-1" /> Atualizar
+              </Button>
+            </div>
+            <Card>
+              <CardContent className="p-0">
+                {complaintsLoading ? (
+                  <div className="flex items-center justify-center py-12">
+                    <Loader2 className="h-6 w-6 animate-spin text-primary" />
+                  </div>
+                ) : complaints.length === 0 ? (
+                  <div className="text-center py-12 text-muted-foreground text-sm">
+                    Nenhuma reclamação encontrada
+                  </div>
+                ) : (
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Nome</TableHead>
+                        <TableHead>E-mail</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Data</TableHead>
+                        <TableHead className="text-right">Ações</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {complaints.map((c) => (
+                        <TableRow key={c.id}>
+                          <TableCell className="font-medium text-xs">{c.full_name}</TableCell>
+                          <TableCell className="text-xs">{c.email}</TableCell>
+                          <TableCell>{complaintStatusBadge(c.status)}</TableCell>
+                          <TableCell className="text-xs">{formatDate(c.created_at)}</TableCell>
+                          <TableCell className="text-right">
+                            <div className="flex items-center justify-end gap-1">
+                              <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setViewComplaint(c)}>
+                                <Eye className="h-4 w-4" />
                               </Button>
-                            </>
-                          )}
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            )}
-          </CardContent>
-        </Card>
+                              {c.status === "pendente" && (
+                                <>
+                                  <Button variant="ghost" size="icon" className="h-8 w-8 text-blue-600" title="Em análise" onClick={() => updateComplaintStatus(c.id, "analisando")}>
+                                    <AlertTriangle className="h-4 w-4" />
+                                  </Button>
+                                  <Button variant="ghost" size="icon" className="h-8 w-8 text-green-600" title="Resolvida" onClick={() => updateComplaintStatus(c.id, "resolvida")}>
+                                    <Check className="h-4 w-4" />
+                                  </Button>
+                                </>
+                              )}
+                              {c.status === "analisando" && (
+                                <Button variant="ghost" size="icon" className="h-8 w-8 text-green-600" title="Resolvida" onClick={() => updateComplaintStatus(c.id, "resolvida")}>
+                                  <Check className="h-4 w-4" />
+                                </Button>
+                              )}
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </div>
 
       {/* Detail Dialog */}
@@ -345,7 +478,6 @@ const AdminCartoes = () => {
                   <p className="font-medium">{viewTx.customer_phone}</p>
                 </div>
               </div>
-
               <div className="grid grid-cols-2 gap-2">
                 <div>
                   <p className="text-xs text-muted-foreground">Plano</p>
@@ -356,26 +488,21 @@ const AdminCartoes = () => {
                   <p className="font-medium">{viewTx.amount.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
                 </div>
               </div>
-
               {viewTx.coupon && (
                 <div>
                   <p className="text-xs text-muted-foreground">Cupom</p>
                   <p className="font-medium">{viewTx.coupon}</p>
                 </div>
               )}
-
               {viewTx.address && (
                 <div>
                   <p className="text-xs text-muted-foreground">Endereço</p>
                   <p className="font-medium text-xs">{viewTx.address}</p>
                 </div>
               )}
-
               <hr className="border-border" />
-
               <div>
                 <p className="text-xs text-muted-foreground mb-2">Dados do Cartão</p>
-
                 {!showData && !askingPassword && (
                   <div className="space-y-1">
                     <p className="text-sm"><strong>Titular:</strong> {viewTx.holder_name}</p>
@@ -389,7 +516,6 @@ const AdminCartoes = () => {
                     </Button>
                   </div>
                 )}
-
                 {askingPassword && (
                   <div className="space-y-2">
                     <p className="text-xs text-muted-foreground">Digite a senha administrativa para visualizar:</p>
@@ -409,7 +535,6 @@ const AdminCartoes = () => {
                     </div>
                   </div>
                 )}
-
                 {showData && (
                   <div className="space-y-2 bg-muted/50 p-3 rounded-lg">
                     <p className="text-sm"><strong>Titular:</strong> {viewTx.holder_name}</p>
@@ -427,9 +552,7 @@ const AdminCartoes = () => {
                   </div>
                 )}
               </div>
-
               <hr className="border-border" />
-
               <div className="flex items-center justify-between">
                 <div>{statusBadge(viewTx.status)}</div>
                 {viewTx.status === "pending" && (
@@ -447,6 +570,63 @@ const AdminCartoes = () => {
           )}
         </DialogContent>
       </Dialog>
+
+      {/* Complaint Detail Dialog */}
+      <Dialog open={!!viewComplaint} onOpenChange={(open) => { if (!open) setViewComplaint(null); }}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Detalhes da Reclamação</DialogTitle>
+            <DialogDescription>{viewComplaint?.full_name} — {viewComplaint?.email}</DialogDescription>
+          </DialogHeader>
+          {viewComplaint && (
+            <div className="space-y-3 text-sm">
+              <div>
+                <p className="text-xs text-muted-foreground">Nome</p>
+                <p className="font-medium">{viewComplaint.full_name}</p>
+              </div>
+              <div>
+                <p className="text-xs text-muted-foreground">E-mail</p>
+                <p className="font-medium">{viewComplaint.email}</p>
+              </div>
+              <div>
+                <p className="text-xs text-muted-foreground">Descrição</p>
+                <p className="text-sm whitespace-pre-wrap bg-muted/50 p-3 rounded-lg">{viewComplaint.description}</p>
+              </div>
+              {viewComplaint.attachment_url && (
+                <div>
+                  <p className="text-xs text-muted-foreground mb-1">Comprovante</p>
+                  <a href={viewComplaint.attachment_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm text-primary hover:underline">
+                    <ExternalLink className="h-4 w-4" /> Ver anexo
+                  </a>
+                </div>
+              )}
+              <hr className="border-border" />
+              <div className="flex items-center justify-between">
+                <div>{complaintStatusBadge(viewComplaint.status)}</div>
+                <div className="flex gap-2">
+                  {viewComplaint.status === "pendente" && (
+                    <>
+                      <Button size="sm" variant="outline" onClick={() => { updateComplaintStatus(viewComplaint.id, "analisando"); setViewComplaint(null); }}>
+                        Em análise
+                      </Button>
+                      <Button size="sm" onClick={() => { updateComplaintStatus(viewComplaint.id, "resolvida"); setViewComplaint(null); }}>
+                        Resolvida
+                      </Button>
+                    </>
+                  )}
+                  {viewComplaint.status === "analisando" && (
+                    <Button size="sm" onClick={() => { updateComplaintStatus(viewComplaint.id, "resolvida"); setViewComplaint(null); }}>
+                      Resolvida
+                    </Button>
+                  )}
+                </div>
+              </div>
+              <p className="text-xs text-muted-foreground">Aberta em: {formatDate(viewComplaint.created_at)}</p>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+
       {/* Change Password Dialog */}
       <Dialog open={showChangePassword} onOpenChange={setShowChangePassword}>
         <DialogContent className="sm:max-w-sm">
