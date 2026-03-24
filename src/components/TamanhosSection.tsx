@@ -62,18 +62,8 @@ const sizes = [
 
 const SizeCard = memo(({ item, onSelect }: { item: typeof sizes[0]; onSelect: (size: string) => void }) => (
   <div
-    className={`relative flex flex-col rounded-2xl border-2 bg-card p-5 md:p-6 transition-all hover:shadow-xl ${
-      item.popular
-        ? "border-primary shadow-lg scale-[1.02] animate-border-glow"
-        : "border-border hover:border-primary/40"
-    }`}
+    className="relative flex flex-col rounded-2xl border-2 bg-card p-5 md:p-6 transition-all hover:shadow-xl border-border hover:border-primary/40"
   >
-    {item.popular && (
-      <span className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-primary px-3 py-1 text-[10px] md:text-xs font-bold uppercase text-primary-foreground flex items-center gap-1 animate-badge-shimmer">
-        <Star className="h-3 w-3 fill-current" />
-        {item.popularLabel}
-      </span>
-    )}
 
     <div className="mb-3 text-center">
       <span className="text-3xl md:text-4xl font-black text-foreground">{item.size}</span>
