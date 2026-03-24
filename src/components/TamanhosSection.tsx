@@ -79,7 +79,8 @@ const SizeCard = memo(({ item, onSelect }: { item: typeof sizes[0]; onSelect: (s
     <div className="mb-3 text-center">
       <span className="text-3xl md:text-4xl font-black text-foreground">{item.size}</span>
       <span className="ml-1 text-sm font-medium text-muted-foreground">— {item.title}</span>
-      <p className="mt-1 text-xs text-muted-foreground/70">{item.bags}</p>
+      <p className="mt-2 text-2xl font-black text-primary">{item.price}</p>
+      <p className="mt-0.5 text-xs text-muted-foreground/70">{item.bags}</p>
     </div>
 
     <div className="mb-3">
