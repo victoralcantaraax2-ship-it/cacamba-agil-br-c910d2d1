@@ -2,7 +2,7 @@ import { lazy, Suspense } from "react";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import TamanhosSection from "@/components/TamanhosSection";
-import CepSection from "@/components/CepSection";
+
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import ExitIntentPopup from "@/components/ExitIntentPopup";
 
@@ -20,7 +20,7 @@ const Index = () => {
       <Header />
       <HeroSection />
       <TamanhosSection />
-      <CepSection />
+      <TamanhosSection />
       <Suspense fallback={<SectionFallback />}>
         <SocialProof />
       </Suspense>
