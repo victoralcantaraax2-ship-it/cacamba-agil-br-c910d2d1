@@ -155,16 +155,15 @@ const CardPaymentForm = ({
         <div className="mx-auto w-16 h-16 rounded-full bg-destructive/20 flex items-center justify-center">
           <CreditCard className="h-8 w-8 text-destructive" />
         </div>
-        <h3 className="text-lg font-bold text-foreground">Pagamento não aprovado</h3>
+        <h3 className="text-lg font-bold text-foreground">Pagamento com cartão indisponível</h3>
         <p className="text-sm text-muted-foreground">
-          O pagamento não foi aprovado pelo seu banco emissor. Tente novamente ou utilize o Pix.
+          Para a primeira locação, o pagamento é realizado via Pix.
+          <br />
+          Após isso, o cartão fica disponível para os próximos pedidos.
         </p>
         <div className="flex flex-col gap-2 pt-2">
           <Button onClick={onSwitchToPix} className="w-full text-base font-bold" size="lg">
             Pagar com Pix
-          </Button>
-          <Button variant="outline" onClick={() => setThreeDSResult(null)} className="w-full">
-            Tentar novamente com cartão
           </Button>
         </div>
       </div>
