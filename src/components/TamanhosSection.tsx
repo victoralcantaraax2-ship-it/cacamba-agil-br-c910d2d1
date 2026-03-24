@@ -7,6 +7,7 @@ const sizes = [
   {
     size: "3 m³",
     title: "Reforma leve",
+    price: "R$ 180,02",
     bags: "20 a 25 sacos · 2 a 7 dias",
     popular: false,
     idealFor: ["Reparos pontuais", "Remoção de piso e entulho leve"],
@@ -15,6 +16,7 @@ const sizes = [
   {
     size: "4 m³",
     title: "Obra intermediária",
+    price: "R$ 260,02",
     bags: "30 a 35 sacos · 2 a 7 dias",
     popular: false,
     idealFor: ["Reformas de médio porte", "Resíduos de construção"],
@@ -23,6 +25,7 @@ const sizes = [
   {
     size: "5 m³",
     title: "Residencial completa",
+    price: "R$ 340,02",
     bags: "40 a 45 sacos · 3 a 7 dias",
     popular: true,
     popularLabel: "Mais pedida pelos clientes",
@@ -32,6 +35,7 @@ const sizes = [
   {
     size: "7 m³",
     title: "Volume pesado",
+    price: "R$ 460,02",
     bags: "60 a 70 sacos · 3 a 7 dias",
     popular: false,
     idealFor: ["Grande volume de resíduos", "Demolições parciais"],
@@ -40,6 +44,7 @@ const sizes = [
   {
     size: "10 m³",
     title: "Demolição e limpeza",
+    price: "R$ 720,02",
     bags: "90 a 100 sacos · 5 a 7 dias",
     popular: false,
     idealFor: ["Demolições, telhas, madeira", "Descarte em larga escala"],
@@ -48,6 +53,7 @@ const sizes = [
   {
     size: "26 m³",
     title: "Obra de grande porte",
+    price: "R$ 1.240,02",
     bags: "200+ sacos · sob consulta",
     popular: false,
     idealFor: ["Demolições totais", "Projetos comerciais e industriais"],
