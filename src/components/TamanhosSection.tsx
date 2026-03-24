@@ -92,13 +92,9 @@ const SizeCard = memo(({ item, onSelect }: { item: typeof sizes[0]; onSelect: (s
 
     <button
       onClick={() => onSelect(item.size)}
-      className={`block w-full rounded-lg py-3 text-center text-sm font-bold uppercase transition-all active:scale-95 hover:scale-105 ${
-        item.popular
-          ? "bg-primary text-primary-foreground shadow-lg animate-btn-breathe"
-          : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
-      }`}
+      className="block w-full rounded-lg py-3 text-center text-sm font-bold uppercase transition-all active:scale-95 hover:scale-105 bg-secondary text-secondary-foreground hover:bg-secondary/80"
     >
-      {item.popular ? "Peça agora" : "Pedir cotação"}
+      Pedir cotação
     </button>
   </div>
 ));
