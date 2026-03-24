@@ -11,8 +11,11 @@ const Footer = memo(() => {
         <div className="flex flex-col items-center gap-8 text-center md:flex-row md:justify-between md:text-left">
           <div>
             <img src={logoAmba} alt="AMBA Caçambas" className="mx-auto mb-3 h-12 w-auto md:mx-0" width={160} height={48} loading="lazy" />
+            <p className="mb-2 max-w-sm text-sm text-secondary-foreground/60">
+              Atendemos todo o estado de São Paulo e região: capital, Guarulhos, Campinas, Osasco, ABC (Santo André, São Bernardo, São Caetano), Sorocaba, Ribeirão Preto, São José dos Campos, São José do Rio Preto, Jandira e diversas outras cidades.
+            </p>
             <p className="mb-4 max-w-sm text-sm text-secondary-foreground/60">
-              Aluguel de caçambas em todo o estado de São Paulo. Logística ágil e descarte regularizado.
+              Logística ágil e descarte regularizado.
             </p>
             <div className="flex flex-col gap-2 text-sm text-secondary-foreground/70">
               <a
