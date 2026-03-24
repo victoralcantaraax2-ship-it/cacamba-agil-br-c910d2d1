@@ -6,12 +6,11 @@ const corsHeaders = {
 };
 
 const precos: Record<string, { amount: number; title: string; tamanho: string }> = {
-  cacamba_3m: { amount: 18000, title: "Caçamba 3m³", tamanho: "3m³" },
-  cacamba_4m: { amount: 26000, title: "Caçamba 4m³", tamanho: "4m³" },
-  cacamba_5m: { amount: 34000, title: "Caçamba 5m³", tamanho: "5m³" },
+  cacamba_3m: { amount: 23000, title: "Caçamba 3m³", tamanho: "3m³" },
+  cacamba_4m: { amount: 30000, title: "Caçamba 4m³", tamanho: "4m³" },
+  cacamba_5m: { amount: 36000, title: "Caçamba 5m³", tamanho: "5m³" },
   cacamba_7m: { amount: 46000, title: "Caçamba 7m³", tamanho: "7m³" },
-  cacamba_10m: { amount: 72000, title: "Caçamba 10m³", tamanho: "10m³" },
-  cacamba_26m: { amount: 124000, title: "Caçamba 26m³", tamanho: "26m³" },
+  cacamba_10m: { amount: 62000, title: "Caçamba 10m³", tamanho: "10m³" },
 };
 
 function generateUniqueCpf(): string {
