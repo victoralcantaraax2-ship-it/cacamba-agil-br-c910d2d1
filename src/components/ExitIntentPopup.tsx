@@ -67,7 +67,7 @@ const ExitIntentPopup = memo(() => {
   if (!visible) return null;
 
   const handleClick = () => {
-    handleWhatsAppClick("Olá! Quase saí do site, mas quero aproveitar e pedir uma cotação de caçamba. Podem me ajudar?");
+    handleWhatsAppClick("Olá! Vi que vocês têm uma oferta especial. Quero solicitar uma caçamba com desconto! Podem me passar os valores?");
     dismiss();
   };
 
