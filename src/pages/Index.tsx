@@ -20,7 +20,7 @@ const Index = () => {
       <Header />
       <HeroSection />
       <TamanhosSection />
-      <CepSection />
+      <TamanhosSection />
       <Suspense fallback={<SectionFallback />}>
         <SocialProof />
       </Suspense>
