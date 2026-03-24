@@ -4,6 +4,7 @@ import { handleWhatsAppClick } from "@/lib/whatsapp";
 import heroBg from "@/assets/hero-bg.webp";
 import whatsappIcon from "@/assets/whatsapp-icon.webp";
 import logoAmba from "@/assets/logo-amba-nova.webp";
+import handIcon from "@/assets/hand-icon.png";
 
 const badges = [
   { icon: ShieldCheck, label: "Compromisso garantido" },
@@ -125,7 +126,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
               onClick={() => scrollTo("#tamanhos")}
               className="inline-flex items-center gap-3 rounded-xl bg-primary px-8 py-4 text-lg font-extrabold uppercase text-primary-foreground shadow-2xl transition-all hover:scale-105 hover:bg-primary/90 md:px-12 md:py-5 md:text-xl"
             >
-              🚛 Pedir caçamba agora
+              <img src={handIcon} alt="" className="h-5 w-5" width={20} height={20} /> Pedir caçamba agora
             </button>
             <button
               onClick={() => handleWhatsAppClick()}
