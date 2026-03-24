@@ -80,6 +80,13 @@ const Header = memo(() => {
               {link.label}
             </button>
           ))}
+          <Link
+            to="/reclamacoes"
+            onClick={() => setOpen(false)}
+            className="block w-full py-3 text-left text-base font-medium text-secondary-foreground/80 transition-colors hover:text-secondary-foreground"
+          >
+            Reclamações
+          </Link>
           <button
             onClick={() => handleClick("#tamanhos")}
             className="mt-2 w-full rounded-lg bg-primary py-3 text-center text-base font-bold text-primary-foreground"
