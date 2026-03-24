@@ -37,6 +37,12 @@ const Header = memo(() => {
               {link.label}
             </button>
           ))}
+          <Link
+            to="/reclamacoes"
+            className="text-sm font-medium text-secondary-foreground/70 transition-colors hover:text-secondary-foreground"
+          >
+            Reclamações
+          </Link>
           <button
             onClick={() => handleClick("#tamanhos")}
             className="rounded-lg bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground transition-all hover:scale-105 hover:bg-primary/90"
