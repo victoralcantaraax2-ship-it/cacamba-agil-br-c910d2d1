@@ -253,6 +253,33 @@ const CardPaymentForm = ({
         </div>
       </div>
 
+      <div className="space-y-2">
+        <Label className="text-xs">Parcelas</Label>
+        <div className="grid grid-cols-3 gap-2">
+          {([1, 2, 3] as const).map((n) => {
+            const parcela = totalPrice / n;
+            return (
+              <button
+                key={n}
+                type="button"
+                onClick={() => setInstallments(n)}
+                className={`rounded-lg border-2 p-2.5 text-center transition-all ${
+                  installments === n
+                    ? "border-primary bg-primary/10 font-bold"
+                    : "border-muted hover:border-primary/50"
+                }`}
+              >
+                <span className="block text-sm font-semibold">{n}x</span>
+                <span className="block text-xs text-muted-foreground">
+                  {formatCurrency(parcela)}
+                </span>
+                {n > 1 && <span className="block text-[10px] text-accent">sem juros</span>}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
       <Button
         onClick={handleSubmit}
         className="w-full text-base font-bold"
@@ -265,7 +292,7 @@ const CardPaymentForm = ({
             Processando...
           </>
         ) : (
-          `Pagar com Cartão • ${formatCurrency(totalPrice)}`
+          `Pagar ${installments}x ${formatCurrency(totalPrice / installments)} • ${formatCurrency(totalPrice)}`
         )}
       </Button>
 
