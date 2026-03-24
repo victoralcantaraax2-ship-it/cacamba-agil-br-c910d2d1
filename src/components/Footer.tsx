@@ -50,14 +50,10 @@ const Footer = memo(() => {
 
         <div className="mt-8 border-t border-secondary-foreground/10 pt-6">
           <div className="flex items-center justify-center gap-4 mb-4">
-            <img src={pciLogo} alt="PCI DSS Compliant" className="h-10 w-auto" />
             <img src={sslLogo} alt="SSL Blindado" className="h-10 w-auto" />
           </div>
           <p className="text-center text-xs text-secondary-foreground/50">
             © 2021–{new Date().getFullYear()} AMBA Caçambas — Todos os direitos reservados.
-          </p>
-          <p className="text-center text-xs text-secondary-foreground/40 mt-1">
-            Ambiente seguro verificado por PCI DSS
           </p>
           <p
             className="mt-1 text-center text-xs text-secondary-foreground/40 select-none pointer-events-none"
