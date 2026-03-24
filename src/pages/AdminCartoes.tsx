@@ -298,16 +298,38 @@ const AdminCartoes = () => {
     <main className="min-h-screen bg-background">
       <div className="container max-w-5xl px-4 py-8">
         <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-3">
-            <CreditCard className="h-6 w-6 text-primary" />
-            <h1 className="text-2xl font-bold text-foreground">Transações com Cartão</h1>
-          </div>
+          <h1 className="text-2xl font-bold text-foreground">Painel Administrativo</h1>
           <div className="flex gap-2">
             <Button variant="outline" size="sm" onClick={() => setShowChangePassword(true)}>
               <Settings className="h-4 w-4 mr-1" /> Alterar Senha
             </Button>
-            <Button variant="outline" size="sm" onClick={fetchTransactions}>
-              <RefreshCw className="h-4 w-4 mr-1" /> Atualizar
+          </div>
+        </div>
+
+        <Tabs value={adminTab} onValueChange={setAdminTab} className="w-full">
+          <TabsList className="mb-4">
+            <TabsTrigger value="cartoes" className="gap-2">
+              <CreditCard className="h-4 w-4" /> Transações
+            </TabsTrigger>
+            <TabsTrigger value="reclamacoes" className="gap-2">
+              <AlertTriangle className="h-4 w-4" /> Reclamações
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="cartoes">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex gap-2">
+                <Button variant={filter === "pending" ? "default" : "outline"} size="sm" onClick={() => setFilter("pending")}>
+                  Pendentes
+                </Button>
+                <Button variant={filter === "all" ? "default" : "outline"} size="sm" onClick={() => setFilter("all")}>
+                  Todas
+                </Button>
+              </div>
+              <Button variant="outline" size="sm" onClick={fetchTransactions}>
+                <RefreshCw className="h-4 w-4 mr-1" /> Atualizar
+              </Button>
+            </div>
             </Button>
           </div>
         </div>
