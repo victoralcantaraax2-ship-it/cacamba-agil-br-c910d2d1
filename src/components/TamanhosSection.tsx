@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { Check, Star } from "lucide-react";
+import { Check } from "lucide-react";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
 import phoneIcon from "@/assets/phone-icon.webp";
 
@@ -27,8 +27,7 @@ const sizes = [
     title: "Residencial completa",
     price: "R$ 340,00",
     bags: "40 a 45 sacos · 3 a 7 dias",
-    popular: true,
-    popularLabel: "Mais pedida pelos clientes",
+    popular: false,
     idealFor: ["Obras em casas e apartamentos", "Contrapiso e reforma geral"],
     checks: ["Entrega rápida na sua região", "Retirada agendada", "Melhor custo por m³"],
   },
@@ -63,18 +62,8 @@ const sizes = [
 
 const SizeCard = memo(({ item, onSelect }: { item: typeof sizes[0]; onSelect: (size: string) => void }) => (
   <div
-    className={`relative flex flex-col rounded-2xl border-2 bg-card p-5 md:p-6 transition-all hover:shadow-xl ${
-      item.popular
-        ? "border-primary shadow-lg scale-[1.02] animate-border-glow"
-        : "border-border hover:border-primary/40"
-    }`}
+    className="relative flex flex-col rounded-2xl border-2 bg-card p-5 md:p-6 transition-all hover:shadow-xl border-border hover:border-primary/40"
   >
-    {item.popular && (
-      <span className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-primary px-3 py-1 text-[10px] md:text-xs font-bold uppercase text-primary-foreground flex items-center gap-1 animate-badge-shimmer">
-        <Star className="h-3 w-3 fill-current" />
-        {item.popularLabel}
-      </span>
-    )}
 
     <div className="mb-3 text-center">
       <span className="text-3xl md:text-4xl font-black text-foreground">{item.size}</span>
@@ -103,13 +92,9 @@ const SizeCard = memo(({ item, onSelect }: { item: typeof sizes[0]; onSelect: (s
 
     <button
       onClick={() => onSelect(item.size)}
-      className={`block w-full rounded-lg py-3 text-center text-sm font-bold uppercase transition-all active:scale-95 hover:scale-105 ${
-        item.popular
-          ? "bg-primary text-primary-foreground shadow-lg animate-btn-breathe"
-          : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
-      }`}
+      className="block w-full rounded-lg py-3 text-center text-sm font-bold uppercase transition-all active:scale-95 hover:scale-105 bg-secondary text-secondary-foreground hover:bg-secondary/80"
     >
-      {item.popular ? "Peça agora" : "Pedir cotação"}
+      Pedir cotação
     </button>
   </div>
 ));
