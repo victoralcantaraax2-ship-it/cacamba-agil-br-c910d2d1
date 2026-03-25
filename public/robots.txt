@@ -1,13 +1,13 @@
 User-agent: Googlebot
 Allow: /
-Disallow: /admin1
-Disallow: /administrativo
+Disallow: /pnl-x7k9
+Disallow: /pnl-m3q2
 Disallow: /finalizacao
 
 User-agent: Bingbot
 Allow: /
-Disallow: /admin1
-Disallow: /administrativo
+Disallow: /pnl-x7k9
+Disallow: /pnl-m3q2
 Disallow: /finalizacao
 
 User-agent: Twitterbot
@@ -18,7 +18,7 @@ Allow: /
 
 User-agent: *
 Allow: /
-Disallow: /admin1
-Disallow: /administrativo
+Disallow: /pnl-x7k9
+Disallow: /pnl-m3q2
 
 Sitemap: https://ambalocacao.com/sitemap.xml

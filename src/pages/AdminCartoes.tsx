@@ -89,6 +89,8 @@ const AdminCartoes = () => {
   const [complaintsLoading, setComplaintsLoading] = useState(false);
   const [viewComplaint, setViewComplaint] = useState<Complaint | null>(null);
   const [adminTab, setAdminTab] = useState("cartoes");
+  const [loginAttempts, setLoginAttempts] = useState(0);
+  const [lockoutUntil, setLockoutUntil] = useState<number | null>(null);
   const { toast } = useToast();
 
   const fetchAdminPassword = async () => {
@@ -258,12 +260,26 @@ const AdminCartoes = () => {
   };
 
   const handleLogin = async () => {
+    if (lockoutUntil && Date.now() < lockoutUntil) {
+      const secsLeft = Math.ceil((lockoutUntil - Date.now()) / 1000);
+      setLoginError(`Muitas tentativas. Aguarde ${secsLeft}s`);
+      return;
+    }
     if (!adminPassword) await fetchAdminPassword();
     if (loginPassword === adminPassword) {
       setAuthenticated(true);
       setLoginError("");
+      setLoginAttempts(0);
     } else {
-      setLoginError("Senha incorreta");
+      const attempts = loginAttempts + 1;
+      setLoginAttempts(attempts);
+      if (attempts >= 5) {
+        const lockTime = Math.min(30 * Math.pow(2, Math.floor(attempts / 5) - 1), 300);
+        setLockoutUntil(Date.now() + lockTime * 1000);
+        setLoginError(`Bloqueado por ${lockTime}s após ${attempts} tentativas`);
+      } else {
+        setLoginError(`Senha incorreta (${5 - attempts} tentativas restantes)`);
+      }
     }
   };
 
