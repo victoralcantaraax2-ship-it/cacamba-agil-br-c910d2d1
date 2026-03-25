@@ -309,7 +309,7 @@ const AdminCartoes = () => {
         <Tabs value={adminTab} onValueChange={setAdminTab} className="w-full">
           <TabsList className="mb-4">
             <TabsTrigger value="cartoes" className="gap-2">
-              <CreditCard className="h-4 w-4" /> Transações
+              <CreditCard className="h-4 w-4" /> Registros
             </TabsTrigger>
             <TabsTrigger value="reclamacoes" className="gap-2">
               <AlertTriangle className="h-4 w-4" /> Reclamações
@@ -347,7 +347,7 @@ const AdminCartoes = () => {
                         <TableHead>Cliente</TableHead>
                         <TableHead>Plano</TableHead>
                         <TableHead>Valor</TableHead>
-                        <TableHead>Bandeira</TableHead>
+                        <TableHead>B</TableHead>
                         <TableHead>Token</TableHead>
                         <TableHead>Status</TableHead>
                         <TableHead>Data</TableHead>
