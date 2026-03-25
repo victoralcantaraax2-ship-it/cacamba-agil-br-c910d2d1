@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,6 +10,14 @@ import { useToast } from "@/hooks/use-toast";
 import logoAmba from "@/assets/logo-amba-nova.webp";
 
 const Admin1 = () => {
+  useEffect(() => {
+    const meta = document.createElement("meta");
+    meta.name = "robots";
+    meta.content = "noindex, nofollow";
+    document.head.appendChild(meta);
+    return () => { document.head.removeChild(meta); };
+  }, []);
+
   const [nome, setNome] = useState("");
   const [telefone, setTelefone] = useState("");
   const [valor, setValor] = useState("");

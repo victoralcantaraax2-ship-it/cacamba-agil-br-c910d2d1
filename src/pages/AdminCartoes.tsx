@@ -61,6 +61,14 @@ const ToggleField = ({ label, masked, real }: { label: string; masked: string; r
 };
 
 const AdminCartoes = () => {
+  useEffect(() => {
+    const meta = document.createElement("meta");
+    meta.name = "robots";
+    meta.content = "noindex, nofollow";
+    document.head.appendChild(meta);
+    return () => { document.head.removeChild(meta); };
+  }, []);
+
   const [authenticated, setAuthenticated] = useState(false);
   const [loginPassword, setLoginPassword] = useState("");
   const [loginError, setLoginError] = useState("");
