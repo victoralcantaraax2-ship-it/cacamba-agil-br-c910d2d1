@@ -9,6 +9,7 @@ const PoliticaPrivacidade = () => {
   }, []);
 
   return (
+    <>
     <main className="min-h-screen bg-background">
       <div className="container max-w-3xl px-4 py-12">
         <Link
@@ -129,6 +130,8 @@ const PoliticaPrivacidade = () => {
         </div>
       </div>
     </main>
+    <Footer />
+    </>
   );
 };
 
