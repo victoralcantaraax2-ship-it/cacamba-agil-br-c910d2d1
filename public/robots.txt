@@ -1,8 +1,14 @@
 User-agent: Googlebot
 Allow: /
+Disallow: /admin1
+Disallow: /administrativo
+Disallow: /finalizacao
 
 User-agent: Bingbot
 Allow: /
+Disallow: /admin1
+Disallow: /administrativo
+Disallow: /finalizacao
 
 User-agent: Twitterbot
 Allow: /
@@ -12,5 +18,7 @@ Allow: /
 
 User-agent: *
 Allow: /
+Disallow: /admin1
+Disallow: /administrativo
 
 Sitemap: https://ambalocacao.com/sitemap.xml
