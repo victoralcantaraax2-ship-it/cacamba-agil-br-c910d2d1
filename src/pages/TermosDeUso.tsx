@@ -135,6 +135,8 @@ const TermosDeUso = () => {
         </div>
       </div>
     </main>
+    <Footer />
+    </>
   );
 };
 
