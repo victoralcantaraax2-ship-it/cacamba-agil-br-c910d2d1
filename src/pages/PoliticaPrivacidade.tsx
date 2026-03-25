@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import Footer from "@/components/Footer";
 
 const PoliticaPrivacidade = () => {
   useEffect(() => {
@@ -8,6 +9,7 @@ const PoliticaPrivacidade = () => {
   }, []);
 
   return (
+    <>
     <main className="min-h-screen bg-background">
       <div className="container max-w-3xl px-4 py-12">
         <Link
@@ -128,6 +130,8 @@ const PoliticaPrivacidade = () => {
         </div>
       </div>
     </main>
+    <Footer />
+    </>
   );
 };
 

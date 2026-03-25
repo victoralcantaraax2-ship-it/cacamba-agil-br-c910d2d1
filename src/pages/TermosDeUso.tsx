@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import Footer from "@/components/Footer";
 
 const TermosDeUso = () => {
   useEffect(() => {
@@ -8,6 +9,7 @@ const TermosDeUso = () => {
   }, []);
 
   return (
+    <>
     <main className="min-h-screen bg-background">
       <div className="container max-w-3xl px-4 py-12">
         <Link
@@ -134,6 +136,8 @@ const TermosDeUso = () => {
         </div>
       </div>
     </main>
+    <Footer />
+    </>
   );
 };
 
