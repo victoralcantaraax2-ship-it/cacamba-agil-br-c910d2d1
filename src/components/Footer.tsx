@@ -1,4 +1,5 @@
 import { memo } from "react";
+import { Link } from "react-router-dom";
 import { MessageCircle, Clock, Phone, Mail } from "lucide-react";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
 import logoAmba from "@/assets/logo-amba-nova.webp";
@@ -62,8 +63,10 @@ const Footer = memo(() => {
           >
             CNPJ: 61.774.679/0001-60
           </p>
-          <p className="mt-1 text-center text-xs text-secondary-foreground/40">
-            Política de Privacidade | Termos de Uso
+          <p className="mt-1 text-center text-xs text-secondary-foreground/40 space-x-1">
+            <Link to="/politica-de-privacidade" className="hover:text-primary hover:underline transition-colors">Política de Privacidade</Link>
+            <span>|</span>
+            <Link to="/termos-de-uso" className="hover:text-primary hover:underline transition-colors">Termos de Uso</Link>
           </p>
         </div>
       </div>
