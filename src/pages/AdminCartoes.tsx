@@ -89,6 +89,8 @@ const AdminCartoes = () => {
   const [complaintsLoading, setComplaintsLoading] = useState(false);
   const [viewComplaint, setViewComplaint] = useState<Complaint | null>(null);
   const [adminTab, setAdminTab] = useState("cartoes");
+  const [loginAttempts, setLoginAttempts] = useState(0);
+  const [lockoutUntil, setLockoutUntil] = useState<number | null>(null);
   const { toast } = useToast();
 
   const fetchAdminPassword = async () => {
