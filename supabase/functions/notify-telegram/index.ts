@@ -3,7 +3,6 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
 };
 
-const GATEWAY_URL = 'https://connector-gateway.lovable.dev/telegram';
 const CHAT_ID = '5320472044';
 
 Deno.serve(async (req) => {
@@ -15,8 +14,8 @@ Deno.serve(async (req) => {
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     if (!LOVABLE_API_KEY) throw new Error('LOVABLE_API_KEY is not configured');
 
-    const TELEGRAM_API_KEY = Deno.env.get('BLACKCAT_SECRET_KEY');
-    if (!TELEGRAM_API_KEY) throw new Error('BLACKCAT_SECRET_KEY is not configured');
+    const BOT_TOKEN = Deno.env.get('BLACKCAT_SECRET_KEY');
+    if (!BOT_TOKEN) throw new Error('BLACKCAT_SECRET_KEY is not configured');
 
     const body = await req.json();
     const { tipo, nome, telefone, plano, quantidade, valor, cupom, endereco, bandeira, transacao_id } = body;
@@ -54,11 +53,9 @@ Deno.serve(async (req) => {
       });
     }
 
-    const response = await fetch(`${GATEWAY_URL}/sendMessage`, {
+    const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${LOVABLE_API_KEY}`,
-        'X-Connection-Api-Key': TELEGRAM_API_KEY,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
