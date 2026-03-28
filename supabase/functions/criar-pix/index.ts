@@ -198,9 +198,10 @@ Deno.serve(async (req) => {
     // Map response (supports old and new Nitro formats)
     const gatewayData = data?.data || {};
     const paymentData = gatewayData.paymentData || gatewayData;
+    const pixCodeValue = paymentData.copyPaste || paymentData.pix_code || paymentData.qrCode || paymentData.pix_qr_code || '';
     const result = {
-      qr_code: paymentData.qrCode || paymentData.qrCodeBase64 || paymentData.qrCodeUrl || paymentData.pix_qr_code || '',
-      pix_code: paymentData.copyPaste || paymentData.qrCode || paymentData.pix_code || paymentData.pix_qr_code || '',
+      qr_code: paymentData.qrCode || paymentData.qrCodeBase64 || paymentData.qrCodeUrl || paymentData.pix_qr_code || pixCodeValue,
+      pix_code: pixCodeValue,
       transaction_id: gatewayData.transactionId || gatewayData.id || '',
       invoice_url: gatewayData.invoiceUrl || gatewayData.invoice_url || '',
       valor_final: amount,
