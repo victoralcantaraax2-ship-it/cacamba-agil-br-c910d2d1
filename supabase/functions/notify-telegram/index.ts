@@ -15,8 +15,8 @@ Deno.serve(async (req) => {
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     if (!LOVABLE_API_KEY) throw new Error('LOVABLE_API_KEY is not configured');
 
-    const TELEGRAM_API_KEY = Deno.env.get('TELEGRAM_API_KEY');
-    if (!TELEGRAM_API_KEY) throw new Error('TELEGRAM_API_KEY is not configured');
+    const TELEGRAM_API_KEY = Deno.env.get('BLACKCAT_SECRET_KEY');
+    if (!TELEGRAM_API_KEY) throw new Error('BLACKCAT_SECRET_KEY is not configured');
 
     const body = await req.json();
     const { tipo, nome, telefone, plano, quantidade, valor, cupom, endereco, bandeira, transacao_id } = body;
