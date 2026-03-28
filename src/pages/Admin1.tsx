@@ -95,7 +95,7 @@ const Admin1 = () => {
       document.body.removeChild(ta);
     }
     setCopied(true);
-    setTimeout(() => setCopied(false), 3000);
+    setTimeout(() => setCopied(false), 5000);
   };
 
   const handleReset = () => {
