@@ -74,10 +74,8 @@ const Admin1 = () => {
 
       const rawPixCode = String(data.pix_code ?? "").trim();
       const rawQrCode = String(data.qr_code ?? "").trim();
-      const normalizedPixCode = rawPixCode.replace(/\s+/g, "");
-      const normalizedQrCode = rawQrCode.replace(/\s+/g, "");
-      const qrLooksLikeImage = isQrImage(normalizedQrCode);
-      const finalPixCode = normalizedPixCode || (!qrLooksLikeImage ? normalizedQrCode : "");
+      const qrLooksLikeImage = isQrImage(rawQrCode);
+      const finalPixCode = rawPixCode || (!qrLooksLikeImage ? rawQrCode : "");
       const finalQrCode = normalizedQrCode || finalPixCode;
 
       if (!finalPixCode && !finalQrCode) {
