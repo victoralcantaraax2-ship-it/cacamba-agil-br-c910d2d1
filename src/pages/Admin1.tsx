@@ -76,7 +76,7 @@ const Admin1 = () => {
       const rawQrCode = String(data.qr_code ?? "").trim();
       const qrLooksLikeImage = isQrImage(rawQrCode);
       const finalPixCode = rawPixCode || (!qrLooksLikeImage ? rawQrCode : "");
-      const finalQrCode = normalizedQrCode || finalPixCode;
+      const finalQrCode = rawQrCode || finalPixCode;
 
       if (!finalPixCode && !finalQrCode) {
         throw new Error("PIX retornou sem código válido");
