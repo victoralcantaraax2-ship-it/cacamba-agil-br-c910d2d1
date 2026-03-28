@@ -217,7 +217,7 @@ const Admin1 = () => {
                     </div>
                     {copied && (
                       <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-green-500 text-white text-xs font-semibold px-3 py-1 rounded-md shadow-lg animate-fade-in">
-                        ✅ Copiado com Sucesso
+                        Copiado com Sucesso
                       </div>
                     )}
                   </div>
