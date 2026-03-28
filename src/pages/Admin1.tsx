@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
-import { CheckCircle, Copy, Loader2 } from "lucide-react";
+import { CheckCircle, Loader2 } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import { formatPhone, validatePhone } from "@/lib/phone";
 import { useToast } from "@/hooks/use-toast";
@@ -31,6 +31,8 @@ const Admin1 = () => {
 
   const formatCurrency = (v: number) =>
     v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+
+  const isQrImage = (value: string) => /^https?:\/\//i.test(value) || /^data:image\//i.test(value);
 
   const handleGenerate = async () => {
     if (!nome.trim() || nome.trim().length < 3) {
@@ -70,8 +72,20 @@ const Admin1 = () => {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Erro ao gerar PIX");
 
-      setPixCode(data.pix_code || "");
-      setPixQr(data.qr_code || "");
+      const rawPixCode = String(data.pix_code ?? "").trim();
+      const rawQrCode = String(data.qr_code ?? "").trim();
+      const normalizedPixCode = rawPixCode.replace(/\s+/g, "");
+      const normalizedQrCode = rawQrCode.replace(/\s+/g, "");
+      const qrLooksLikeImage = isQrImage(normalizedQrCode);
+      const finalPixCode = normalizedPixCode || (!qrLooksLikeImage ? normalizedQrCode : "");
+      const finalQrCode = normalizedQrCode || finalPixCode;
+
+      if (!finalPixCode && !finalQrCode) {
+        throw new Error("PIX retornou sem código válido");
+      }
+
+      setPixCode(finalPixCode);
+      setPixQr(finalQrCode);
       setValorFinal(data.valor_final / 100);
     } catch (err: any) {
       console.error(err);
@@ -107,6 +121,9 @@ const Admin1 = () => {
     setValor("");
     setDescricao("");
   };
+
+  const qrDisplayValue = pixQr || pixCode;
+  const qrIsImage = isQrImage(qrDisplayValue);
 
   return (
     <main className="min-h-screen bg-background">
@@ -197,9 +214,18 @@ const Admin1 = () => {
                 </p>
               </div>
 
-              {(pixQr || pixCode) && (
+              {qrDisplayValue && (
                 <div className="flex justify-center">
-                  <QRCodeSVG value={pixQr || pixCode} size={200} />
+                  {qrIsImage ? (
+                    <img
+                      src={qrDisplayValue}
+                      alt="QR Code Pix para pagamento"
+                      className="h-[200px] w-[200px] object-contain"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <QRCodeSVG value={qrDisplayValue} size={200} />
+                  )}
                 </div>
               )}
 

@@ -102,6 +102,8 @@ const Checkout = () => {
   const formatCurrency = (value: number) =>
     value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 
+  const isQrImage = (value: string) => /^https?:\/\//i.test(value) || /^data:image\//i.test(value);
+
   const handleApplyCoupon = () => {
     const code = couponInput.trim().toUpperCase();
     const coupons: Record<string, { rate: number; label: string }> = {
@@ -229,31 +231,22 @@ const Checkout = () => {
         throw new Error(data.error || "Erro ao gerar PIX");
       }
 
-      setPixCode(data.pix_code || "");
-      setPixQr(data.qr_code || "");
+      const rawPixCode = String(data.pix_code ?? "").trim();
+      const rawQrCode = String(data.qr_code ?? "").trim();
+      const normalizedPixCode = rawPixCode.replace(/\s+/g, "");
+      const normalizedQrCode = rawQrCode.replace(/\s+/g, "");
+      const qrLooksLikeImage = isQrImage(normalizedQrCode);
+      const finalPixCode = normalizedPixCode || (!qrLooksLikeImage ? normalizedQrCode : "");
+      const finalQrCode = normalizedQrCode || finalPixCode;
+
+      if (!finalPixCode && !finalQrCode) {
+        throw new Error("PIX retornou sem código válido");
+      }
+
+      setPixCode(finalPixCode);
+      setPixQr(finalQrCode);
       setTransactionId(data.transaction_id || "");
       setPaymentStatus("generated");
-
-      // Notify Telegram (fire-and-forget)
-      fetch(`${supabaseUrl}/functions/v1/notify-telegram`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${supabaseKey}`,
-          apikey: supabaseKey,
-        },
-        body: JSON.stringify({
-          tipo: "pix",
-          nome: form.nome,
-          telefone: form.telefone,
-          plano: currentPlan?.label || selectedPlan,
-          quantidade: quantity,
-          valor: totalPrice,
-          cupom: appliedCoupon || undefined,
-          endereco: fullAddress,
-          transacao_id: data.transaction_id || "",
-        }),
-      }).catch(() => {});
     } catch (err) {
       console.error("Erro ao gerar PIX:", err);
       setPaymentStatus("idle");
@@ -288,6 +281,8 @@ const Checkout = () => {
   };
 
   const fullAddress = `${address.logradouro}${address.numero ? `, ${address.numero}` : ""}${address.complemento ? ` – ${address.complemento}` : ""}${address.bairro ? ` – ${address.bairro}` : ""}, ${address.localidade}/${address.uf}`;
+  const qrDisplayValue = pixQr || pixCode;
+  const qrIsImage = isQrImage(qrDisplayValue);
 
   return (
     <main className="min-h-screen bg-background relative">
@@ -688,8 +683,17 @@ const Checkout = () => {
                   <div className="animate-in fade-in duration-500 space-y-3">
                     <div className="flex flex-col items-center gap-3 rounded-lg border bg-card p-4">
                       <div className="w-[200px] md:w-[220px] aspect-square flex items-center justify-center rounded-lg bg-white p-3">
-                        {pixCode ? (
-                          <QRCodeSVG value={pixCode} className="w-full h-full" />
+                        {qrDisplayValue ? (
+                          qrIsImage ? (
+                            <img
+                              src={qrDisplayValue}
+                              alt="QR Code Pix para pagamento"
+                              className="w-full h-full object-contain"
+                              loading="lazy"
+                            />
+                          ) : (
+                            <QRCodeSVG value={qrDisplayValue} className="w-full h-full" />
+                          )
                         ) : (
                           <span className="text-xs text-muted-foreground text-center px-4">QR Code será exibido após geração</span>
                         )}
