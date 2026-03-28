@@ -206,15 +206,21 @@ const Admin1 = () => {
               {pixCode && (
                 <div className="space-y-2">
                   <p className="text-xs text-muted-foreground font-medium text-center">
-                    Código PIX copia e cola
+                    Código PIX copia e cola — clique para copiar
                   </p>
-                  <div className="bg-muted rounded-lg p-3 text-xs break-all font-mono text-foreground max-h-24 overflow-y-auto">
-                    {pixCode}
+                  <div className="relative">
+                    <div
+                      onClick={handleCopy}
+                      className="bg-muted rounded-lg p-3 text-xs break-all font-mono text-foreground max-h-24 overflow-y-auto cursor-pointer hover:bg-muted/80 transition-colors"
+                    >
+                      {pixCode}
+                    </div>
+                    {copied && (
+                      <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-green-500 text-white text-xs font-semibold px-3 py-1 rounded-md shadow-lg animate-fade-in">
+                        ✅ Copiado com Sucesso
+                      </div>
+                    )}
                   </div>
-                  <Button onClick={handleCopy} variant="outline" className="w-full gap-2">
-                    <Copy className="h-4 w-4" />
-                    {copied ? "Copiado!" : "Copiar código"}
-                  </Button>
                 </div>
               )}
 
