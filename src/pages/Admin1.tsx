@@ -197,9 +197,9 @@ const Admin1 = () => {
                 </p>
               </div>
 
-              {pixQr && (
+              {(pixQr || pixCode) && (
                 <div className="flex justify-center">
-                  <QRCodeSVG value={pixQr} size={200} />
+                  <QRCodeSVG value={pixQr || pixCode} size={200} />
                 </div>
               )}
 
