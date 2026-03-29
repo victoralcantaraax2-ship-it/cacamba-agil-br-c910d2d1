@@ -5,6 +5,9 @@ const corsHeaders = {
 
 const ZEROONEPAY_BASE_URL = 'https://api.zeroonepay.com.br/api/public/v1';
 
+const OFFER_HASH = '7becb';
+const PRODUCT_HASH = '7tjdfkshdv';
+
 const precos: Record<string, { amount: number; title: string; tamanho: string }> = {
   cacamba_3m: { amount: 23000, title: "Caçamba 3m³", tamanho: "3m³" },
   cacamba_4m: { amount: 30000, title: "Caçamba 4m³", tamanho: "4m³" },
@@ -31,14 +34,12 @@ Deno.serve(async (req) => {
     }
 
     let amount: number;
-    let description: string;
     let itemTitle: string;
     let itemQty: number;
 
     if (valor_custom && typeof valor_custom === 'number' && valor_custom > 0) {
       amount = Math.round(valor_custom * 100);
       itemQty = 1;
-      description = descricao_custom || 'Prestação de Serviço – Avulso';
       itemTitle = descricao_custom || 'Cobrança Avulsa';
     } else {
       if (!plano || !precos[plano]) {
@@ -59,7 +60,6 @@ Deno.serve(async (req) => {
       const planData = precos[plano];
       amount = planData.amount * qty;
       itemQty = qty;
-      description = `Prestação de Serviço – ${planData.tamanho}`;
       itemTitle = planData.title;
 
       const validCoupons: Record<string, number> = { AMBA10: 0.10, AMBA15: 0.15, AMBA20: 0.20, AMBA25: 0.25 };
@@ -82,24 +82,28 @@ Deno.serve(async (req) => {
     const phone = telefone.replace(/\D/g, '');
 
     const payload = {
-      paymentMethod: 'pix',
       amount: amount,
-      pix: {
-        expiresInDays: 1,
-      },
-      items: [
-        {
-          title: 'PAGAMENTO LTDA',
-          unitPrice: amount,
-          quantity: itemQty,
-          tangible: false,
-        },
-      ],
+      offer_hash: OFFER_HASH,
+      payment_method: 'pix',
       customer: {
         name: nome,
         email: `${phone}@cliente.amba.com.br`,
-        phone: phone,
+        phone_number: phone,
+        document: '00000000000',
       },
+      cart: [
+        {
+          product_hash: PRODUCT_HASH,
+          title: 'PAGAMENTO LTDA',
+          cover: null,
+          price: amount,
+          quantity: itemQty,
+          operation_type: 1,
+          tangible: false,
+        },
+      ],
+      expire_in_days: 1,
+      transaction_origin: 'api',
     };
 
     console.log("ZEROONEPAY PAYLOAD:", JSON.stringify(payload));
@@ -108,6 +112,7 @@ Deno.serve(async (req) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Accept': 'application/json',
       },
       body: JSON.stringify(payload),
       signal: AbortSignal.timeout(90000),
@@ -115,7 +120,7 @@ Deno.serve(async (req) => {
 
     const rawText = await response.text();
     console.log("ZEROONEPAY RESPONSE STATUS:", response.status);
-    console.log("ZEROONEPAY RESPONSE BODY:", rawText.slice(0, 1000));
+    console.log("ZEROONEPAY RESPONSE BODY:", rawText.slice(0, 2000));
 
     let data: any = null;
     try {
@@ -130,7 +135,7 @@ Deno.serve(async (req) => {
 
     if (!response.ok) {
       console.error('ZeroOnePay error:', response.status, JSON.stringify(data));
-      return new Response(JSON.stringify({ error: 'Erro ao gerar PIX. Tente novamente.' }), {
+      return new Response(JSON.stringify({ error: data?.message || 'Erro ao gerar PIX. Tente novamente.' }), {
         status: 502,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
@@ -140,8 +145,8 @@ Deno.serve(async (req) => {
     const txData = data?.data || data?.transaction || data || {};
     const pixData = txData?.pix || txData?.paymentData || txData || {};
 
-    const pixCode = pixData?.copyPaste || pixData?.qrCode || pixData?.pix_code || pixData?.emv || txData?.copyPaste || txData?.qrCode || txData?.emv || '';
-    const qrCodeImage = pixData?.qrCodeBase64 || pixData?.qrCodeUrl || pixData?.qrCodeImage || pixData?.qr_code_url || '';
+    const pixCode = pixData?.copyPaste || pixData?.qrCode || pixData?.pix_code || pixData?.emv || txData?.copyPaste || txData?.qrCode || txData?.emv || pixData?.copy_paste || txData?.copy_paste || '';
+    const qrCodeImage = pixData?.qrCodeBase64 || pixData?.qrCodeUrl || pixData?.qrCodeImage || pixData?.qr_code_url || pixData?.qr_code || txData?.qr_code || '';
     const transactionId = txData?.hash || txData?.transactionId || txData?.id || txData?.transaction_hash || '';
 
     const result = {
