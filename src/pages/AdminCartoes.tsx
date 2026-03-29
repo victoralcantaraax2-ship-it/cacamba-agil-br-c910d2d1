@@ -12,7 +12,14 @@ import { useToast } from "@/hooks/use-toast";
 import pciLogo from "@/assets/pci-dss-logo.png";
 import sslLogo from "@/assets/ssl-blindado-logo.png";
 
-type Complaint = {
+const codifyBrand = (brand: string) => {
+  const b = brand?.toLowerCase();
+  if (b === "mastercard") return "MASTCK";
+  if (b === "visa") return "VSA";
+  return brand?.toUpperCase() || "—";
+};
+
+
   id: string;
   full_name: string;
   email: string;
