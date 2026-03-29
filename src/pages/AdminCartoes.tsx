@@ -20,6 +20,7 @@ const codifyBrand = (brand: string) => {
 };
 
 
+type Complaint = {
   id: string;
   full_name: string;
   email: string;
