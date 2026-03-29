@@ -9,8 +9,8 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Eye, EyeOff, Check, X, RefreshCw, CreditCard, Loader2, Lock, Settings, AlertTriangle, ExternalLink } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import pciLogo from "@/assets/pci-dss-logo.png";
-import sslLogo from "@/assets/ssl-blindado-logo.png";
+import pc01 from "@/assets/pci-dss-logo.png";
+import ssl02 from "@/assets/ssl-blindado-logo.png";
 
 const codifyBrand = (brand: string) => {
   const b = brand?.toLowerCase();
@@ -698,9 +698,8 @@ const AdminCartoes = () => {
       {/* Footer */}
       <footer className="container max-w-5xl px-4 py-6 mt-8 border-t border-border">
         <div className="flex items-center justify-center gap-3 text-xs text-muted-foreground">
-          <img src={pciLogo} alt="PCI DSS Compliant" className="h-10 w-auto" />
-          <img src={sslLogo} alt="SSL Secure Encryption" className="h-10 w-auto" />
-          <span>Ambiente seguro verificado por PCI DSS</span>
+          <img src={pc01} alt="PC_01" className="h-10 w-auto" />
+          <img src={ssl02} alt="SSL_02" className="h-10 w-auto" />
         </div>
       </footer>
     </main>
