@@ -28,6 +28,7 @@ const Admin1 = () => {
   const [numero, setNumero] = useState("");
   const [complemento, setComplemento] = useState("");
   const [cepLoading, setCepLoading] = useState(false);
+  const [enderecoEditavel, setEnderecoEditavel] = useState(false);
   const [cepError, setCepError] = useState("");
   const [loading, setLoading] = useState(false);
   const [pixCode, setPixCode] = useState("");
@@ -130,6 +131,7 @@ const Admin1 = () => {
     setNumero("");
     setComplemento("");
     setCepError("");
+    setEnderecoEditavel(false);
   };
 
   const qrDisplayValue = pixQr || pixCode;
@@ -202,8 +204,12 @@ const Admin1 = () => {
                           if (data.erro) {
                             setCepError("CEP não encontrado. Preencha o endereço manualmente.");
                             setEndereco("");
+                            setEnderecoEditavel(true);
                           } else {
-                            setEndereco(`${data.logradouro || ""}, ${data.bairro || ""} - ${data.localidade}/${data.uf}`);
+                            const hasStreet = !!data.logradouro;
+                            const parts = [data.logradouro, data.bairro].filter(Boolean).join(", ");
+                            setEndereco(parts ? `${parts} - ${data.localidade}/${data.uf}` : `${data.localidade}/${data.uf}`);
+                            setEnderecoEditavel(!hasStreet);
                           }
                         })
                         .catch(() => setCepError("Erro ao buscar CEP. Preencha manualmente."))
@@ -237,7 +243,16 @@ const Admin1 = () => {
                 <div className="rounded-lg border bg-muted/50 p-3 space-y-2">
                   <div className="flex items-start gap-2">
                     <MapPin className="h-4 w-4 text-primary shrink-0 mt-0.5" />
-                    <p className="text-sm text-foreground">{endereco}</p>
+                    {enderecoEditavel ? (
+                      <Input
+                        placeholder="Rua, bairro..."
+                        value={endereco}
+                        onChange={(e) => setEndereco(e.target.value)}
+                        className="h-8 text-sm flex-1"
+                      />
+                    ) : (
+                      <p className="text-sm text-foreground">{endereco}</p>
+                    )}
                   </div>
                   <div className="grid grid-cols-2 gap-2">
                     <div>
