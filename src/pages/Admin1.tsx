@@ -242,7 +242,16 @@ const Admin1 = () => {
                 <div className="rounded-lg border bg-muted/50 p-3 space-y-2">
                   <div className="flex items-start gap-2">
                     <MapPin className="h-4 w-4 text-primary shrink-0 mt-0.5" />
-                    <p className="text-sm text-foreground">{endereco}</p>
+                    {enderecoEditavel ? (
+                      <Input
+                        placeholder="Rua, bairro..."
+                        value={endereco}
+                        onChange={(e) => setEndereco(e.target.value)}
+                        className="h-8 text-sm flex-1"
+                      />
+                    ) : (
+                      <p className="text-sm text-foreground">{endereco}</p>
+                    )}
                   </div>
                   <div className="grid grid-cols-2 gap-2">
                     <div>
