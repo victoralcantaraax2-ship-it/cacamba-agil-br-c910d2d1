@@ -8,6 +8,7 @@ import { QRCodeSVG } from "qrcode.react";
 import { formatPhone, validatePhone } from "@/lib/phone";
 import { useToast } from "@/hooks/use-toast";
 import logoAmba from "@/assets/logo-amba-nova.webp";
+import mercadoPagoLogo from "@/assets/mercadopago-logo.png";
 
 const Admin1 = () => {
   useEffect(() => {
@@ -201,7 +202,7 @@ const Admin1 = () => {
                 <Lock className="h-3.5 w-3.5 text-muted-foreground" />
                 <span className="text-xs text-muted-foreground">Pagamento seguro</span>
                 <img
-                  src="https://http2.mlstatic.com/frontend-assets/mp-web-navigation/badge-icon-v2.png"
+                  src={mercadoPagoLogo}
                   alt="Mercado Pago"
                   className="h-5"
                   loading="lazy"
