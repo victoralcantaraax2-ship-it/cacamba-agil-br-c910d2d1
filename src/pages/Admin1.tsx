@@ -23,6 +23,7 @@ const Admin1 = () => {
   const [telefone, setTelefone] = useState("");
   const [valor, setValor] = useState("");
   const [descricao, setDescricao] = useState("");
+  const [endereco, setEndereco] = useState("");
   const [loading, setLoading] = useState(false);
   const [pixCode, setPixCode] = useState("");
   const [pixQr, setPixQr] = useState("");
@@ -119,6 +120,7 @@ const Admin1 = () => {
     setTelefone("");
     setValor("");
     setDescricao("");
+    setEndereco("");
   };
 
   const qrDisplayValue = pixQr || pixCode;
@@ -173,6 +175,16 @@ const Admin1 = () => {
               </div>
 
               <div>
+                <Label htmlFor="endereco">Endereço de entrega</Label>
+                <Input
+                  id="endereco"
+                  placeholder="Rua, número, bairro, cidade"
+                  value={endereco}
+                  onChange={(e) => setEndereco(e.target.value)}
+                />
+              </div>
+
+              <div>
                 <Label htmlFor="descricao">Descrição (opcional)</Label>
                 <Input
                   id="descricao"
@@ -222,6 +234,11 @@ const Admin1 = () => {
                 <p className="text-sm text-muted-foreground mt-1">
                   Cliente: {nome}
                 </p>
+                {endereco && (
+                  <p className="text-sm text-muted-foreground mt-0.5">
+                    Entrega: {endereco}
+                  </p>
+                )}
               </div>
 
               {qrDisplayValue && (
