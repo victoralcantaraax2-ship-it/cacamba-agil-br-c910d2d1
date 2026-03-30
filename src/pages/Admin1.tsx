@@ -196,6 +196,17 @@ const Admin1 = () => {
                   "Gerar PIX"
                 )}
               </Button>
+
+              <div className="flex items-center justify-center gap-2 pt-1">
+                <Lock className="h-3.5 w-3.5 text-muted-foreground" />
+                <span className="text-xs text-muted-foreground">Pagamento seguro</span>
+                <img
+                  src="https://http2.mlstatic.com/frontend-assets/mp-web-navigation/badge-icon-v2.png"
+                  alt="Mercado Pago"
+                  className="h-5"
+                  loading="lazy"
+                />
+              </div>
             </CardContent>
           </Card>
         ) : (
