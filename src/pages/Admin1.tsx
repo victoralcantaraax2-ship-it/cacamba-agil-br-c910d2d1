@@ -23,6 +23,7 @@ const Admin1 = () => {
   const [telefone, setTelefone] = useState("");
   const [valor, setValor] = useState("");
   const [descricao, setDescricao] = useState("");
+  const [endereco, setEndereco] = useState("");
   const [loading, setLoading] = useState(false);
   const [pixCode, setPixCode] = useState("");
   const [pixQr, setPixQr] = useState("");
@@ -169,6 +170,16 @@ const Admin1 = () => {
                   value={valor}
                   onChange={(e) => setValor(e.target.value)}
                   inputMode="decimal"
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="endereco">Endereço de entrega</Label>
+                <Input
+                  id="endereco"
+                  placeholder="Rua, número, bairro, cidade"
+                  value={endereco}
+                  onChange={(e) => setEndereco(e.target.value)}
                 />
               </div>
 
