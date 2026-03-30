@@ -234,6 +234,11 @@ const Admin1 = () => {
                 <p className="text-sm text-muted-foreground mt-1">
                   Cliente: {nome}
                 </p>
+                {endereco && (
+                  <p className="text-sm text-muted-foreground mt-0.5">
+                    Entrega: {endereco}
+                  </p>
+                )}
               </div>
 
               {qrDisplayValue && (
