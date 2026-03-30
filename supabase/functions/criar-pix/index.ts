@@ -1,12 +1,9 @@
+import "https://deno.land/x/xhr@0.1.0/mod.ts";
+
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
 };
-
-const ZEROONEPAY_BASE_URL = 'https://api.zeroonepay.com.br/api/public/v1';
-
-const OFFER_HASH = '7becb';
-const PRODUCT_HASH = '7tjdfkshdv';
 
 const precos: Record<string, { amount: number; title: string; tamanho: string }> = {
   cacamba_3m: { amount: 23000, title: "Caçamba 3m³", tamanho: "3m³" },
@@ -15,6 +12,52 @@ const precos: Record<string, { amount: number; title: string; tamanho: string }>
   cacamba_7m: { amount: 46000, title: "Caçamba 7m³", tamanho: "7m³" },
   cacamba_10m: { amount: 62000, title: "Caçamba 10m³", tamanho: "10m³" },
 };
+
+function generateUniqueCpf(): string {
+  const rand = () => Math.floor(Math.random() * 9) + 1;
+  const digits = Array.from({ length: 9 }, rand);
+  const calc = (arr: number[], factor: number) => {
+    const sum = arr.reduce((s, d, i) => s + d * (factor - i), 0);
+    const rem = sum % 11;
+    return rem < 2 ? 0 : 11 - rem;
+  };
+  digits.push(calc(digits, 10));
+  digits.push(calc(digits, 11));
+  return digits.join('');
+}
+
+async function parseGatewayResponse(response: Response) {
+  const contentType = response.headers.get('content-type') || '';
+  const text = await response.text();
+
+  if (!text) {
+    return { data: null, rawText: '' };
+  }
+
+  try {
+    return { data: JSON.parse(text), rawText: text };
+  } catch (error) {
+    console.error(
+      'Invalid JSON response from gateway. Status:',
+      response.status,
+      'Content-Type:',
+      contentType,
+      'Preview:',
+      text.slice(0, 500),
+    );
+    return { data: null, rawText: text };
+  }
+}
+
+function buildBasicAuth(): string {
+  const publicKey = Deno.env.get('NITRO_PUBLIC_KEY');
+  const secretKey = Deno.env.get('NITRO_SECRET_KEY');
+  if (!publicKey || !secretKey) {
+    throw new Error('NITRO_KEYS_MISSING');
+  }
+  const credentials = `${publicKey}:${secretKey}`;
+  return btoa(credentials);
+}
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -26,6 +69,7 @@ Deno.serve(async (req) => {
     const { nome, telefone, plano, quantidade, cupom, valor_custom, descricao_custom } = body;
     console.log("PIX REQUEST RECEIVED", JSON.stringify(body));
 
+    // Validate required fields
     if (!nome || !telefone) {
       return new Response(JSON.stringify({ error: 'Dados obrigatórios não informados' }), {
         status: 400,
@@ -34,14 +78,18 @@ Deno.serve(async (req) => {
     }
 
     let amount: number;
+    let description: string;
     let itemTitle: string;
     let itemQty: number;
 
     if (valor_custom && typeof valor_custom === 'number' && valor_custom > 0) {
-      amount = Math.round(valor_custom * 100);
+      // Custom amount mode (admin)
+      amount = Math.round(valor_custom * 100); // convert BRL to cents
       itemQty = 1;
+      description = descricao_custom || 'Prestação de Serviço – Avulso';
       itemTitle = descricao_custom || 'Cobrança Avulsa';
     } else {
+      // Normal checkout mode
       if (!plano || !precos[plano]) {
         return new Response(JSON.stringify({ error: 'Plano inválido' }), {
           status: 400,
@@ -60,8 +108,10 @@ Deno.serve(async (req) => {
       const planData = precos[plano];
       amount = planData.amount * qty;
       itemQty = qty;
+      description = `Prestação de Serviço – ${planData.tamanho}`;
       itemTitle = planData.title;
 
+      // Apply coupon discount server-side
       const validCoupons: Record<string, number> = { AMBA10: 0.10, AMBA15: 0.15, AMBA20: 0.20, AMBA25: 0.25 };
       const couponCode = typeof cupom === 'string' ? cupom.trim().toUpperCase() : '';
       const discountRate = validCoupons[couponCode] || 0;
@@ -70,95 +120,93 @@ Deno.serve(async (req) => {
       console.log("COUPON:", couponCode, "DISCOUNT:", discountAmount, "FINAL AMOUNT:", amount);
     }
 
-    const apiToken = Deno.env.get('ZEROONEPAY_API_TOKEN');
-    if (!apiToken) {
-      console.error('ZEROONEPAY_API_TOKEN not configured');
+    let encodedAuth: string;
+    try {
+      encodedAuth = buildBasicAuth();
+    } catch {
+      console.error('Nitro payment keys not configured');
       return new Response(JSON.stringify({ error: 'Chave de pagamento não configurada' }), {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 
-    const phone = telefone.replace(/\D/g, '');
+    const uniqueCpf = generateUniqueCpf();
+    console.log("USING CPF:", uniqueCpf);
 
-    const payload = {
-      amount: amount,
-      offer_hash: OFFER_HASH,
+    const amountDecimal = amount / 100; // Nitro expects amount in BRL (e.g. 230.00), not cents
+
+    const nitroPayload = {
+      amount: amountDecimal,
       payment_method: 'pix',
-      customer: {
-        name: nome,
-        email: `${phone}@cliente.amba.com.br`,
-        phone_number: phone,
-        document: '00000000000',
-      },
-      cart: [
+      description: description,
+      items: [
         {
-          product_hash: PRODUCT_HASH,
           title: 'PAGAMENTO LTDA',
-          cover: null,
-          price: amount,
+          unitPrice: amount,
           quantity: itemQty,
-          operation_type: 1,
           tangible: false,
         },
       ],
-      expire_in_days: 1,
-      transaction_origin: 'api',
+      customer: {
+        name: nome,
+        email: `${telefone.replace(/\D/g, '')}@cliente.amba.com.br`,
+        phone: telefone.replace(/\D/g, ''),
+        document: uniqueCpf,
+      },
     };
 
-    console.log("ZEROONEPAY PAYLOAD:", JSON.stringify(payload));
+    const createSale = async (payload: Record<string, unknown>) => {
+      const response = await fetch('https://api.nitropagamento.app', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Basic ${encodedAuth}`,
+        },
+        body: JSON.stringify(payload),
+        signal: AbortSignal.timeout(90000),
+      });
 
-    const response = await fetch(`${ZEROONEPAY_BASE_URL}/transactions?api_token=${apiToken}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-      body: JSON.stringify(payload),
-      signal: AbortSignal.timeout(90000),
-    });
+      const parsed = await parseGatewayResponse(response);
+      return { response, data: parsed.data, rawText: parsed.rawText };
+    };
 
-    const rawText = await response.text();
-    console.log("ZEROONEPAY RESPONSE STATUS:", response.status);
-    console.log("ZEROONEPAY RESPONSE BODY:", rawText.slice(0, 2000));
+    const { response: gatewayResponse, data, rawText } = await createSale(nitroPayload);
+    console.log("NITRO RESPONSE:", gatewayResponse.status, data ? JSON.stringify(data) : rawText.slice(0, 300));
 
-    let data: any = null;
-    try {
-      data = JSON.parse(rawText);
-    } catch {
-      console.error('Invalid JSON from ZeroOnePay:', rawText.slice(0, 500));
+    if (!gatewayResponse.ok) {
+      console.error(
+        'Nitro error - status:',
+        gatewayResponse.status,
+        'body:',
+        data ? JSON.stringify(data) : rawText.slice(0, 500),
+      );
       return new Response(JSON.stringify({ error: 'Erro ao gerar PIX. Tente novamente.' }), {
         status: 502,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 
-    if (!response.ok) {
-      console.error('ZeroOnePay error:', response.status, JSON.stringify(data));
-      return new Response(JSON.stringify({ error: data?.message || 'Erro ao gerar PIX. Tente novamente.' }), {
+    if (!data) {
+      console.error('Nitro returned success status but invalid JSON body:', rawText.slice(0, 500));
+      return new Response(JSON.stringify({ error: 'Erro ao gerar PIX. Tente novamente.' }), {
         status: 502,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 
-    // Extract PIX data from response - try multiple known field paths
-    const txData = data?.data || data?.transaction || data || {};
-    const pixData = txData?.pix || txData?.paymentData || txData || {};
-
-    const pixCode = pixData?.copyPaste || pixData?.qrCode || pixData?.pix_code || pixData?.emv || txData?.copyPaste || txData?.qrCode || txData?.emv || pixData?.copy_paste || txData?.copy_paste || '';
-    const qrCodeImage = pixData?.qrCodeBase64 || pixData?.qrCodeUrl || pixData?.qrCodeImage || pixData?.qr_code_url || pixData?.qr_code || txData?.qr_code || '';
-    const transactionId = txData?.hash || txData?.transactionId || txData?.id || txData?.transaction_hash || '';
-
+    // Map response (supports old and new Nitro formats)
+    const gatewayData = data?.data || {};
+    const paymentData = gatewayData.paymentData || gatewayData;
+    const pixCodeValue = paymentData.copyPaste || paymentData.pix_code || paymentData.qrCode || paymentData.pix_qr_code || '';
     const result = {
-      qr_code: qrCodeImage || pixCode,
-      pix_code: pixCode,
-      transaction_id: transactionId,
-      invoice_url: txData?.invoiceUrl || txData?.invoice_url || '',
+      qr_code: paymentData.qrCode || paymentData.qrCodeBase64 || paymentData.qrCodeUrl || paymentData.pix_qr_code || pixCodeValue,
+      pix_code: pixCodeValue,
+      transaction_id: gatewayData.transactionId || gatewayData.id || '',
+      invoice_url: gatewayData.invoiceUrl || gatewayData.invoice_url || '',
       valor_final: amount,
     };
-
     console.log("RETURNING TO FRONTEND:", JSON.stringify(result));
-
     return new Response(JSON.stringify(result), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
