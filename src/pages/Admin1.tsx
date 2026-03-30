@@ -234,9 +234,10 @@ const Admin1 = () => {
                 <p className="text-sm text-muted-foreground mt-1">
                   Cliente: {nome}
                 </p>
-                {endereco && (
+                {address && (
                   <p className="text-sm text-muted-foreground mt-0.5">
-                    Entrega: {endereco}{numero ? `, nº ${numero}` : ""}{complemento ? ` - ${complemento}` : ""}
+                    Entrega: {[address.logradouro, address.bairro].filter(Boolean).join(", ")} - {address.localidade}/{address.uf}
+                    {address.numero ? `, nº ${address.numero}` : ""}{address.complemento ? ` - ${address.complemento}` : ""}
                   </p>
                 )}
               </div>
