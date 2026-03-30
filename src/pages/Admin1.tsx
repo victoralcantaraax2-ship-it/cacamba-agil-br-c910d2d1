@@ -120,6 +120,7 @@ const Admin1 = () => {
     setTelefone("");
     setValor("");
     setDescricao("");
+    setEndereco("");
   };
 
   const qrDisplayValue = pixQr || pixCode;
