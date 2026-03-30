@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
-import { CheckCircle, Loader2, Lock } from "lucide-react";
+import { CheckCircle, Loader2, Lock, MapPin } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import { formatPhone, validatePhone } from "@/lib/phone";
 import { useToast } from "@/hooks/use-toast";
@@ -23,7 +23,11 @@ const Admin1 = () => {
   const [telefone, setTelefone] = useState("");
   const [valor, setValor] = useState("");
   const [descricao, setDescricao] = useState("");
+  const [cep, setCep] = useState("");
   const [endereco, setEndereco] = useState("");
+  const [numero, setNumero] = useState("");
+  const [cepLoading, setCepLoading] = useState(false);
+  const [cepError, setCepError] = useState("");
   const [loading, setLoading] = useState(false);
   const [pixCode, setPixCode] = useState("");
   const [pixQr, setPixQr] = useState("");
@@ -121,6 +125,9 @@ const Admin1 = () => {
     setValor("");
     setDescricao("");
     setEndereco("");
+    setCep("");
+    setNumero("");
+    setCepError("");
   };
 
   const qrDisplayValue = pixQr || pixCode;
@@ -175,14 +182,59 @@ const Admin1 = () => {
               </div>
 
               <div>
-                <Label htmlFor="endereco">Endereço de entrega</Label>
+                <Label htmlFor="cep">CEP</Label>
                 <Input
-                  id="endereco"
-                  placeholder="Rua, número, bairro, cidade"
-                  value={endereco}
-                  onChange={(e) => setEndereco(e.target.value)}
+                  id="cep"
+                  placeholder="00000-000"
+                  value={cep}
+                  onChange={(e) => {
+                    const digits = e.target.value.replace(/\D/g, "").slice(0, 8);
+                    const formatted = digits.length > 5 ? `${digits.slice(0, 5)}-${digits.slice(5)}` : digits;
+                    setCep(formatted);
+                    setCepError("");
+                    if (digits.length === 8) {
+                      setCepLoading(true);
+                      fetch(`https://viacep.com.br/ws/${digits}/json/`, { signal: AbortSignal.timeout(5000) })
+                        .then(r => r.json())
+                        .then(data => {
+                          if (data.erro) {
+                            setCepError("CEP não encontrado");
+                            setEndereco("");
+                          } else {
+                            setEndereco(`${data.logradouro || ""}, ${data.bairro || ""} - ${data.localidade}/${data.uf}`);
+                          }
+                        })
+                        .catch(() => setCepError("Erro ao buscar CEP"))
+                        .finally(() => setCepLoading(false));
+                    } else {
+                      setEndereco("");
+                    }
+                  }}
+                  maxLength={9}
+                  inputMode="numeric"
                 />
+                {cepLoading && <p className="text-xs text-muted-foreground animate-pulse mt-1">Buscando...</p>}
+                {cepError && <p className="text-xs text-destructive mt-1">{cepError}</p>}
               </div>
+
+              {endereco && (
+                <div className="rounded-lg border bg-muted/50 p-3 space-y-2">
+                  <div className="flex items-start gap-2">
+                    <MapPin className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                    <p className="text-sm text-foreground">{endereco}</p>
+                  </div>
+                  <div>
+                    <Label htmlFor="numero" className="text-xs">Número</Label>
+                    <Input
+                      id="numero"
+                      placeholder="Nº"
+                      value={numero}
+                      onChange={(e) => setNumero(e.target.value)}
+                      className="h-8 text-sm"
+                    />
+                  </div>
+                </div>
+              )}
 
               <div>
                 <Label htmlFor="descricao">Descrição (opcional)</Label>
@@ -236,7 +288,7 @@ const Admin1 = () => {
                 </p>
                 {endereco && (
                   <p className="text-sm text-muted-foreground mt-0.5">
-                    Entrega: {endereco}
+                    Entrega: {endereco}{numero ? `, nº ${numero}` : ""}
                   </p>
                 )}
               </div>
