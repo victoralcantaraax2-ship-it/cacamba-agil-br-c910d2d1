@@ -121,12 +121,7 @@ const Admin1 = () => {
     setTelefone("");
     setValor("");
     setDescricao("");
-    setEndereco("");
-    setCep("");
-    setNumero("");
-    setComplemento("");
-    setCepError("");
-    setEnderecoEditavel(false);
+    setAddress(null);
   };
 
   const qrDisplayValue = pixQr || pixCode;
