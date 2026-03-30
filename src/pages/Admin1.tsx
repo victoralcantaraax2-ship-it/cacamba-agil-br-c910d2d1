@@ -208,7 +208,7 @@ const Admin1 = () => {
                           } else {
                             const hasStreet = !!data.logradouro;
                             const parts = [data.logradouro, data.bairro].filter(Boolean).join(", ");
-                            setEndereco(parts ? `${parts} - ${data.localidade}/${data.uf}` : `${data.localidade}/${data.uf}`);
+                            setEndereco(hasStreet ? `${parts} - ${data.localidade}/${data.uf}` : "");
                             setEnderecoEditavel(!hasStreet);
                           }
                         })
