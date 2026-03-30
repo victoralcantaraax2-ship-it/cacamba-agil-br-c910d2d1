@@ -125,6 +125,9 @@ const Admin1 = () => {
     setValor("");
     setDescricao("");
     setEndereco("");
+    setCep("");
+    setNumero("");
+    setCepError("");
   };
 
   const qrDisplayValue = pixQr || pixCode;
