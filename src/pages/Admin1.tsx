@@ -8,6 +8,7 @@ import { QRCodeSVG } from "qrcode.react";
 import { formatPhone, validatePhone } from "@/lib/phone";
 import { useToast } from "@/hooks/use-toast";
 import logoAmba from "@/assets/logo-amba-nova.webp";
+import mercadoPagoLogo from "@/assets/mercadopago-logo.png";
 
 const Admin1 = () => {
   useEffect(() => {
