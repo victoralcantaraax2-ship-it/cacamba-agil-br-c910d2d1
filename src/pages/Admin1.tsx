@@ -128,6 +128,7 @@ const Admin1 = () => {
     setEndereco("");
     setCep("");
     setNumero("");
+    setComplemento("");
     setCepError("");
   };
 
