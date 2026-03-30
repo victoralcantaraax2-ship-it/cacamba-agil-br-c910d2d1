@@ -739,9 +739,29 @@ const Checkout = () => {
                     </div>
 
                     {paymentStatus === "generated" && (
-                      <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-                        <Loader2 className="h-4 w-4 animate-spin text-primary" />
-                        <span>Processando confirmação automática do pagamento via Pix…</span>
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+                          <Loader2 className="h-4 w-4 animate-spin text-primary" />
+                          <span>Aguardando pagamento via Pix…</span>
+                        </div>
+                        <Button
+                          onClick={() => {
+                            setPaymentStatus("confirmed");
+                            if (typeof window !== "undefined" && (window as any).gtag) {
+                              (window as any).gtag("event", "conversion", {
+                                send_to: "AW-18041138999/d5JbCIXc75EcELfe15pD",
+                                value: totalPrice,
+                                currency: "BRL",
+                              });
+                            }
+                            setTimeout(() => navigate("/obrigado"), 1500);
+                          }}
+                          className="w-full text-base font-bold bg-accent hover:bg-accent/90"
+                          size="lg"
+                        >
+                          <CheckCircle className="mr-2 h-5 w-5" />
+                          Já realizei o pagamento
+                        </Button>
                       </div>
                     )}
 
