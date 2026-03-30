@@ -24,13 +24,7 @@ const Admin1 = () => {
   const [telefone, setTelefone] = useState("");
   const [valor, setValor] = useState("");
   const [descricao, setDescricao] = useState("");
-  const [cep, setCep] = useState("");
-  const [endereco, setEndereco] = useState("");
-  const [numero, setNumero] = useState("");
-  const [complemento, setComplemento] = useState("");
-  const [cepLoading, setCepLoading] = useState(false);
-  const [enderecoEditavel, setEnderecoEditavel] = useState(false);
-  const [cepError, setCepError] = useState("");
+  const [address, setAddress] = useState<CepAddress | null>(null);
   const [loading, setLoading] = useState(false);
   const [pixCode, setPixCode] = useState("");
   const [pixQr, setPixQr] = useState("");
