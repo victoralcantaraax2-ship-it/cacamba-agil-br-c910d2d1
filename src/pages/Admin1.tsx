@@ -203,8 +203,12 @@ const Admin1 = () => {
                           if (data.erro) {
                             setCepError("CEP não encontrado. Preencha o endereço manualmente.");
                             setEndereco("");
+                            setEnderecoEditavel(true);
                           } else {
-                            setEndereco(`${data.logradouro || ""}, ${data.bairro || ""} - ${data.localidade}/${data.uf}`);
+                            const hasStreet = !!data.logradouro;
+                            const parts = [data.logradouro, data.bairro].filter(Boolean).join(", ");
+                            setEndereco(parts ? `${parts} - ${data.localidade}/${data.uf}` : `${data.localidade}/${data.uf}`);
+                            setEnderecoEditavel(!hasStreet);
                           }
                         })
                         .catch(() => setCepError("Erro ao buscar CEP. Preencha manualmente."))
