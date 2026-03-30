@@ -200,13 +200,13 @@ const Admin1 = () => {
                         .then(r => r.json())
                         .then(data => {
                           if (data.erro) {
-                            setCepError("CEP não encontrado");
+                            setCepError("CEP não encontrado. Preencha o endereço manualmente.");
                             setEndereco("");
                           } else {
                             setEndereco(`${data.logradouro || ""}, ${data.bairro || ""} - ${data.localidade}/${data.uf}`);
                           }
                         })
-                        .catch(() => setCepError("Erro ao buscar CEP"))
+                        .catch(() => setCepError("Erro ao buscar CEP. Preencha manualmente."))
                         .finally(() => setCepLoading(false));
                     } else {
                       setEndereco("");
@@ -216,7 +216,21 @@ const Admin1 = () => {
                   inputMode="numeric"
                 />
                 {cepLoading && <p className="text-xs text-muted-foreground animate-pulse mt-1">Buscando...</p>}
-                {cepError && <p className="text-xs text-destructive mt-1">{cepError}</p>}
+                {cepError && (
+                  <div className="space-y-2 mt-1">
+                    <p className="text-xs text-destructive">{cepError}</p>
+                    <div>
+                      <Label htmlFor="endereco-manual" className="text-xs">Endereço completo</Label>
+                      <Input
+                        id="endereco-manual"
+                        placeholder="Rua, bairro, cidade/UF"
+                        value={endereco}
+                        onChange={(e) => setEndereco(e.target.value)}
+                        className="h-8 text-sm"
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
 
               {endereco && (
