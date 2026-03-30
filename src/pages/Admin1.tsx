@@ -288,7 +288,7 @@ const Admin1 = () => {
                 </p>
                 {endereco && (
                   <p className="text-sm text-muted-foreground mt-0.5">
-                    Entrega: {endereco}
+                    Entrega: {endereco}{numero ? `, nº ${numero}` : ""}
                   </p>
                 )}
               </div>
