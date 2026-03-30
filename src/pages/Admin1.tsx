@@ -28,6 +28,7 @@ const Admin1 = () => {
   const [numero, setNumero] = useState("");
   const [complemento, setComplemento] = useState("");
   const [cepLoading, setCepLoading] = useState(false);
+  const [enderecoEditavel, setEnderecoEditavel] = useState(false);
   const [cepError, setCepError] = useState("");
   const [loading, setLoading] = useState(false);
   const [pixCode, setPixCode] = useState("");
