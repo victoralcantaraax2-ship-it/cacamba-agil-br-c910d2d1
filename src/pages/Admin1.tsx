@@ -26,6 +26,7 @@ const Admin1 = () => {
   const [cep, setCep] = useState("");
   const [endereco, setEndereco] = useState("");
   const [numero, setNumero] = useState("");
+  const [complemento, setComplemento] = useState("");
   const [cepLoading, setCepLoading] = useState(false);
   const [cepError, setCepError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -127,6 +128,7 @@ const Admin1 = () => {
     setEndereco("");
     setCep("");
     setNumero("");
+    setComplemento("");
     setCepError("");
   };
 
@@ -198,13 +200,13 @@ const Admin1 = () => {
                         .then(r => r.json())
                         .then(data => {
                           if (data.erro) {
-                            setCepError("CEP não encontrado");
+                            setCepError("CEP não encontrado. Preencha o endereço manualmente.");
                             setEndereco("");
                           } else {
                             setEndereco(`${data.logradouro || ""}, ${data.bairro || ""} - ${data.localidade}/${data.uf}`);
                           }
                         })
-                        .catch(() => setCepError("Erro ao buscar CEP"))
+                        .catch(() => setCepError("Erro ao buscar CEP. Preencha manualmente."))
                         .finally(() => setCepLoading(false));
                     } else {
                       setEndereco("");
@@ -214,7 +216,21 @@ const Admin1 = () => {
                   inputMode="numeric"
                 />
                 {cepLoading && <p className="text-xs text-muted-foreground animate-pulse mt-1">Buscando...</p>}
-                {cepError && <p className="text-xs text-destructive mt-1">{cepError}</p>}
+                {cepError && (
+                  <div className="space-y-2 mt-1">
+                    <p className="text-xs text-destructive">{cepError}</p>
+                    <div>
+                      <Label htmlFor="endereco-manual" className="text-xs">Endereço completo</Label>
+                      <Input
+                        id="endereco-manual"
+                        placeholder="Rua, bairro, cidade/UF"
+                        value={endereco}
+                        onChange={(e) => setEndereco(e.target.value)}
+                        className="h-8 text-sm"
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
 
               {endereco && (
@@ -223,15 +239,27 @@ const Admin1 = () => {
                     <MapPin className="h-4 w-4 text-primary shrink-0 mt-0.5" />
                     <p className="text-sm text-foreground">{endereco}</p>
                   </div>
-                  <div>
-                    <Label htmlFor="numero" className="text-xs">Número</Label>
-                    <Input
-                      id="numero"
-                      placeholder="Nº"
-                      value={numero}
-                      onChange={(e) => setNumero(e.target.value)}
-                      className="h-8 text-sm"
-                    />
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <Label htmlFor="numero" className="text-xs">Número</Label>
+                      <Input
+                        id="numero"
+                        placeholder="Nº"
+                        value={numero}
+                        onChange={(e) => setNumero(e.target.value)}
+                        className="h-8 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="complemento" className="text-xs">Complemento</Label>
+                      <Input
+                        id="complemento"
+                        placeholder="Apto, bloco..."
+                        value={complemento}
+                        onChange={(e) => setComplemento(e.target.value)}
+                        className="h-8 text-sm"
+                      />
+                    </div>
                   </div>
                 </div>
               )}
@@ -288,7 +316,7 @@ const Admin1 = () => {
                 </p>
                 {endereco && (
                   <p className="text-sm text-muted-foreground mt-0.5">
-                    Entrega: {endereco}{numero ? `, nº ${numero}` : ""}
+                    Entrega: {endereco}{numero ? `, nº ${numero}` : ""}{complemento ? ` - ${complemento}` : ""}
                   </p>
                 )}
               </div>
