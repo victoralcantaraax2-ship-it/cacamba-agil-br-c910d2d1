@@ -239,15 +239,27 @@ const Admin1 = () => {
                     <MapPin className="h-4 w-4 text-primary shrink-0 mt-0.5" />
                     <p className="text-sm text-foreground">{endereco}</p>
                   </div>
-                  <div>
-                    <Label htmlFor="numero" className="text-xs">Número</Label>
-                    <Input
-                      id="numero"
-                      placeholder="Nº"
-                      value={numero}
-                      onChange={(e) => setNumero(e.target.value)}
-                      className="h-8 text-sm"
-                    />
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <Label htmlFor="numero" className="text-xs">Número</Label>
+                      <Input
+                        id="numero"
+                        placeholder="Nº"
+                        value={numero}
+                        onChange={(e) => setNumero(e.target.value)}
+                        className="h-8 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="complemento" className="text-xs">Complemento</Label>
+                      <Input
+                        id="complemento"
+                        placeholder="Apto, bloco..."
+                        value={complemento}
+                        onChange={(e) => setComplemento(e.target.value)}
+                        className="h-8 text-sm"
+                      />
+                    </div>
                   </div>
                 </div>
               )}
