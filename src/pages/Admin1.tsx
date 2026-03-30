@@ -136,7 +136,7 @@ const Admin1 = () => {
         {!pixCode ? (
           <Card>
             <CardContent className="pt-6 space-y-4">
-              <h2 className="text-lg font-bold text-foreground">Gerar cobrança PIX avulsa</h2>
+              <h2 className="text-lg font-bold text-foreground">Gerar cobrança PIX</h2>
 
               <div>
                 <Label htmlFor="nome">Nome do cliente</Label>
