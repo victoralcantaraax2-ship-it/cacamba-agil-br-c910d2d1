@@ -131,6 +131,7 @@ const Admin1 = () => {
     setNumero("");
     setComplemento("");
     setCepError("");
+    setEnderecoEditavel(false);
   };
 
   const qrDisplayValue = pixQr || pixCode;
