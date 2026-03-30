@@ -175,99 +175,14 @@ const Admin1 = () => {
                 />
               </div>
 
-              <div>
-                <Label htmlFor="cep">CEP</Label>
-                <Input
-                  id="cep"
-                  placeholder="00000-000"
-                  value={cep}
-                  onChange={(e) => {
-                    const digits = e.target.value.replace(/\D/g, "").slice(0, 8);
-                    const formatted = digits.length > 5 ? `${digits.slice(0, 5)}-${digits.slice(5)}` : digits;
-                    setCep(formatted);
-                    setCepError("");
-                    if (digits.length === 8) {
-                      setCepLoading(true);
-                      fetch(`https://viacep.com.br/ws/${digits}/json/`, { signal: AbortSignal.timeout(5000) })
-                        .then(r => r.json())
-                        .then(data => {
-                          if (data.erro) {
-                            setCepError("CEP não encontrado. Preencha o endereço manualmente.");
-                            setEndereco("");
-                            setEnderecoEditavel(true);
-                          } else {
-                            const hasStreet = !!data.logradouro;
-                            const parts = [data.logradouro, data.bairro].filter(Boolean).join(", ");
-                            setEndereco(hasStreet ? `${parts} - ${data.localidade}/${data.uf}` : "");
-                            setEnderecoEditavel(!hasStreet);
-                          }
-                        })
-                        .catch(() => setCepError("Erro ao buscar CEP. Preencha manualmente."))
-                        .finally(() => setCepLoading(false));
-                    } else {
-                      setEndereco("");
-                    }
-                  }}
-                  maxLength={9}
-                  inputMode="numeric"
-                />
-                {cepLoading && <p className="text-xs text-muted-foreground animate-pulse mt-1">Buscando...</p>}
-                {cepError && (
-                  <div className="space-y-2 mt-1">
-                    <p className="text-xs text-destructive">{cepError}</p>
-                    <div>
-                      <Label htmlFor="endereco-manual" className="text-xs">Endereço completo</Label>
-                      <Input
-                        id="endereco-manual"
-                        placeholder="Rua, bairro, cidade/UF"
-                        value={endereco}
-                        onChange={(e) => setEndereco(e.target.value)}
-                        className="h-8 text-sm"
-                      />
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {endereco && (
-                <div className="rounded-lg border bg-muted/50 p-3 space-y-2">
-                  <div className="flex items-start gap-2">
-                    <MapPin className="h-4 w-4 text-primary shrink-0 mt-0.5" />
-                    {enderecoEditavel ? (
-                      <Input
-                        placeholder="Rua, bairro..."
-                        value={endereco}
-                        onChange={(e) => setEndereco(e.target.value)}
-                        className="h-8 text-sm flex-1"
-                      />
-                    ) : (
-                      <p className="text-sm text-foreground">{endereco}</p>
-                    )}
-                  </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    <div>
-                      <Label htmlFor="numero" className="text-xs">Número</Label>
-                      <Input
-                        id="numero"
-                        placeholder="Nº"
-                        value={numero}
-                        onChange={(e) => setNumero(e.target.value)}
-                        className="h-8 text-sm"
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="complemento" className="text-xs">Complemento</Label>
-                      <Input
-                        id="complemento"
-                        placeholder="Apto, bloco..."
-                        value={complemento}
-                        onChange={(e) => setComplemento(e.target.value)}
-                        className="h-8 text-sm"
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
+              <CepLookup
+                address={address}
+                onAddressFound={(addr) => setAddress(addr)}
+                onClear={() => setAddress(null)}
+                onFieldChange={(field, value) =>
+                  setAddress((prev) => prev ? { ...prev, [field]: value } : prev)
+                }
+              />
 
               <div>
                 <Label htmlFor="descricao">Descrição (opcional)</Label>
