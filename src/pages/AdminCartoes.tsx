@@ -391,9 +391,13 @@ const AdminCartoes = () => {
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl font-bold text-foreground">Painel Administrativo</h1>
           <div className="flex gap-2">
+            <Button variant="outline" size="sm" onClick={generatePDF} disabled={transactions.length === 0 && complaints.length === 0}>
+              <Download className="h-4 w-4 mr-1" /> Baixar Relatório
+            </Button>
             <Button variant="outline" size="sm" onClick={() => setShowChangePassword(true)}>
               <Settings className="h-4 w-4 mr-1" /> Alterar Senha
             </Button>
+          </div>
           </div>
         </div>
 
