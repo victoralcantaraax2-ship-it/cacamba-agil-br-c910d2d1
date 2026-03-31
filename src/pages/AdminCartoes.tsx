@@ -398,7 +398,6 @@ const AdminCartoes = () => {
               <Settings className="h-4 w-4 mr-1" /> Alterar Senha
             </Button>
           </div>
-          </div>
         </div>
 
         <Tabs value={adminTab} onValueChange={setAdminTab} className="w-full">
