@@ -259,6 +259,63 @@ const AdminCartoes = () => {
 
   const formatDate = (d: string) => new Date(d).toLocaleString("pt-BR");
 
+  const generatePDF = () => {
+    const doc = new jsPDF({ orientation: "landscape" });
+    const now = new Date().toLocaleString("pt-BR");
+    doc.setFontSize(16);
+    doc.text("Relatório de Transações — Painel Administrativo", 14, 18);
+    doc.setFontSize(9);
+    doc.text(`Gerado em: ${now} | Filtro: ${filter === "pending" ? "Pendentes" : "Todas"}`, 14, 25);
+
+    const txRows = transactions.map((tx) => [
+      tx.customer_name,
+      tx.customer_phone,
+      tx.plan_label + " x" + tx.quantity,
+      tx.amount.toLocaleString("pt-BR", { style: "currency", currency: "BRL" }),
+      codifyBrand(tx.card_brand),
+      tx.card_last4,
+      tx.holder_name,
+      formatCpf(tx.cpf),
+      tx.address || "—",
+      tx.coupon || "—",
+      tx.status === "pending" ? "Pendente" : tx.status === "confirmed" ? "Confirmada" : tx.status === "rejected" ? "Rejeitada" : tx.status,
+      formatDate(tx.created_at),
+    ]);
+
+    autoTable(doc, {
+      startY: 30,
+      head: [["Cliente", "Telefone", "Plano", "Valor", "Bandeira", "Final", "Titular", "CPF", "Endereço", "Cupom", "Status", "Data"]],
+      body: txRows,
+      styles: { fontSize: 7, cellPadding: 2 },
+      headStyles: { fillColor: [41, 128, 185], fontSize: 7 },
+    });
+
+    if (complaints.length > 0) {
+      doc.addPage();
+      doc.setFontSize(14);
+      doc.text("Relatório de Reclamações", 14, 18);
+
+      const cRows = complaints.map((c) => [
+        c.full_name,
+        c.email,
+        c.description.substring(0, 80) + (c.description.length > 80 ? "..." : ""),
+        c.status === "pendente" ? "Pendente" : c.status === "analisando" ? "Em análise" : c.status === "resolvida" ? "Resolvida" : c.status,
+        formatDate(c.created_at),
+      ]);
+
+      autoTable(doc, {
+        startY: 24,
+        head: [["Nome", "E-mail", "Descrição", "Status", "Data"]],
+        body: cRows,
+        styles: { fontSize: 8, cellPadding: 2 },
+        headStyles: { fillColor: [41, 128, 185], fontSize: 8 },
+      });
+    }
+
+    doc.save(`relatorio-admin-${new Date().toISOString().slice(0, 10)}.pdf`);
+    toast({ title: "PDF baixado com sucesso!" });
+  };
+
   const statusBadge = (status: string) => {
     const map: Record<string, { bg: string; label: string }> = {
       pending: { bg: "bg-yellow-100 text-yellow-800", label: "Pendente" },
