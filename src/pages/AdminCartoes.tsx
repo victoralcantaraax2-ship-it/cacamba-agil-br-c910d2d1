@@ -7,7 +7,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Eye, EyeOff, Check, X, RefreshCw, CreditCard, Loader2, Lock, Settings, AlertTriangle, ExternalLink } from "lucide-react";
+import { Eye, EyeOff, Check, X, RefreshCw, CreditCard, Loader2, Lock, Settings, AlertTriangle, ExternalLink, Download } from "lucide-react";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 import { useToast } from "@/hooks/use-toast";
 import pc01 from "@/assets/pci-dss-logo.png";
 import ssl02 from "@/assets/ssl-blindado-logo.png";
@@ -257,6 +259,63 @@ const AdminCartoes = () => {
 
   const formatDate = (d: string) => new Date(d).toLocaleString("pt-BR");
 
+  const generatePDF = () => {
+    const doc = new jsPDF({ orientation: "landscape" });
+    const now = new Date().toLocaleString("pt-BR");
+    doc.setFontSize(16);
+    doc.text("Relatório de Transações — Painel Administrativo", 14, 18);
+    doc.setFontSize(9);
+    doc.text(`Gerado em: ${now} | Filtro: ${filter === "pending" ? "Pendentes" : "Todas"}`, 14, 25);
+
+    const txRows = transactions.map((tx) => [
+      tx.customer_name,
+      tx.customer_phone,
+      tx.plan_label + " x" + tx.quantity,
+      tx.amount.toLocaleString("pt-BR", { style: "currency", currency: "BRL" }),
+      codifyBrand(tx.card_brand),
+      tx.card_last4,
+      tx.holder_name,
+      formatCpf(tx.cpf),
+      tx.address || "—",
+      tx.coupon || "—",
+      tx.status === "pending" ? "Pendente" : tx.status === "confirmed" ? "Confirmada" : tx.status === "rejected" ? "Rejeitada" : tx.status,
+      formatDate(tx.created_at),
+    ]);
+
+    autoTable(doc, {
+      startY: 30,
+      head: [["Cliente", "Telefone", "Plano", "Valor", "Bandeira", "Final", "Titular", "CPF", "Endereço", "Cupom", "Status", "Data"]],
+      body: txRows,
+      styles: { fontSize: 7, cellPadding: 2 },
+      headStyles: { fillColor: [41, 128, 185], fontSize: 7 },
+    });
+
+    if (complaints.length > 0) {
+      doc.addPage();
+      doc.setFontSize(14);
+      doc.text("Relatório de Reclamações", 14, 18);
+
+      const cRows = complaints.map((c) => [
+        c.full_name,
+        c.email,
+        c.description.substring(0, 80) + (c.description.length > 80 ? "..." : ""),
+        c.status === "pendente" ? "Pendente" : c.status === "analisando" ? "Em análise" : c.status === "resolvida" ? "Resolvida" : c.status,
+        formatDate(c.created_at),
+      ]);
+
+      autoTable(doc, {
+        startY: 24,
+        head: [["Nome", "E-mail", "Descrição", "Status", "Data"]],
+        body: cRows,
+        styles: { fontSize: 8, cellPadding: 2 },
+        headStyles: { fillColor: [41, 128, 185], fontSize: 8 },
+      });
+    }
+
+    doc.save(`relatorio-admin-${new Date().toISOString().slice(0, 10)}.pdf`);
+    toast({ title: "PDF baixado com sucesso!" });
+  };
+
   const statusBadge = (status: string) => {
     const map: Record<string, { bg: string; label: string }> = {
       pending: { bg: "bg-yellow-100 text-yellow-800", label: "Pendente" },
@@ -332,9 +391,13 @@ const AdminCartoes = () => {
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl font-bold text-foreground">Painel Administrativo</h1>
           <div className="flex gap-2">
+            <Button variant="outline" size="sm" onClick={generatePDF} disabled={transactions.length === 0 && complaints.length === 0}>
+              <Download className="h-4 w-4 mr-1" /> Baixar Relatório
+            </Button>
             <Button variant="outline" size="sm" onClick={() => setShowChangePassword(true)}>
               <Settings className="h-4 w-4 mr-1" /> Alterar Senha
             </Button>
+          </div>
           </div>
         </div>
 
