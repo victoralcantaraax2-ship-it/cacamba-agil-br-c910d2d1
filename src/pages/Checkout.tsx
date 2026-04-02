@@ -99,7 +99,8 @@ const Checkout = () => {
   const validCoupons: Record<string, number> = { AMBA10: 0.10, AMBA15: 0.15, AMBA20: 0.20, AMBA25: 0.25 };
   const discountRate = appliedCoupon ? (validCoupons[appliedCoupon] || 0) : 0;
   const discountAmount = Math.round(subtotal * discountRate * 100) / 100;
-  const totalPrice = Math.round((subtotal - discountAmount) * 100) / 100;
+  const cacambaFinal = Math.round((subtotal - discountAmount) * 100) / 100;
+  const totalPrice = Math.round((cacambaFinal + donationAmount) * 100) / 100;
 
   const formatCurrency = (value: number) =>
     value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
