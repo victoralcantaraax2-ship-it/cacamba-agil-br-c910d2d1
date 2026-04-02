@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Heart, X } from "lucide-react";
-import ongDogImg from "@/assets/ong-dog.png";
+import ongDogImg from "@/assets/ong-dog.jpg";
 
 interface DonationSectionProps {
   donationAmount: number;
