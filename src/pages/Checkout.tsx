@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import CardPaymentForm from "@/components/CardPaymentForm";
+import DonationSection from "@/components/DonationSection";
 import logoAmba from "@/assets/logo-amba-nova.webp";
 import lockIcon from "@/assets/lock-icon.webp";
 import cacambaImg from "@/assets/cacamba-generica.webp";
@@ -71,6 +72,7 @@ const Checkout = () => {
   const [transactionId, setTransactionId] = useState("");
   const [paymentStatus, setPaymentStatus] = useState<"idle" | "loading" | "generated" | "confirmed">("idle");
   const [paymentMethod, setPaymentMethod] = useState<"pix" | "cartao">("pix");
+  const [donationAmount, setDonationAmount] = useState(0);
   
   const [couponInput, setCouponInput] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState<string | null>(() => {
@@ -97,7 +99,8 @@ const Checkout = () => {
   const validCoupons: Record<string, number> = { AMBA10: 0.10, AMBA15: 0.15, AMBA20: 0.20, AMBA25: 0.25 };
   const discountRate = appliedCoupon ? (validCoupons[appliedCoupon] || 0) : 0;
   const discountAmount = Math.round(subtotal * discountRate * 100) / 100;
-  const totalPrice = Math.round((subtotal - discountAmount) * 100) / 100;
+  const cacambaFinal = Math.round((subtotal - discountAmount) * 100) / 100;
+  const totalPrice = Math.round((cacambaFinal + donationAmount) * 100) / 100;
 
   const formatCurrency = (value: number) =>
     value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
@@ -568,6 +571,12 @@ const Checkout = () => {
               </CardContent>
             </Card>
 
+            {/* --- Doação ONG --- */}
+            <DonationSection
+              donationAmount={donationAmount}
+              onDonationChange={setDonationAmount}
+            />
+
             {/* --- Resumo do Pedido --- */}
             <Card>
               <CardContent className="pt-6">
@@ -587,7 +596,7 @@ const Checkout = () => {
                   <hr className="my-2 border-border" />
                   <div className="space-y-1">
                     <div className="flex justify-between">
-                      <span>Subtotal</span>
+                      <span>Caçamba</span>
                       <span>{formatCurrency(subtotal)}</span>
                     </div>
                     {appliedCoupon && (
@@ -596,8 +605,14 @@ const Checkout = () => {
                         <span>-{formatCurrency(discountAmount)}</span>
                       </div>
                     )}
+                    {donationAmount > 0 && (
+                      <div className="flex justify-between text-pink-600 dark:text-pink-400">
+                        <span>Doação para ONG</span>
+                        <span>+{formatCurrency(donationAmount)}</span>
+                      </div>
+                    )}
                     <div className="flex justify-between text-lg font-bold text-primary pt-1">
-                      <span>Total</span>
+                      <span>Total a pagar</span>
                       <span>{formatCurrency(totalPrice)}</span>
                     </div>
                   </div>
