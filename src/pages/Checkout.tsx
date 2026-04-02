@@ -571,6 +571,12 @@ const Checkout = () => {
               </CardContent>
             </Card>
 
+            {/* --- Doação ONG --- */}
+            <DonationSection
+              donationAmount={donationAmount}
+              onDonationChange={setDonationAmount}
+            />
+
             {/* --- Resumo do Pedido --- */}
             <Card>
               <CardContent className="pt-6">
@@ -590,7 +596,7 @@ const Checkout = () => {
                   <hr className="my-2 border-border" />
                   <div className="space-y-1">
                     <div className="flex justify-between">
-                      <span>Subtotal</span>
+                      <span>Caçamba</span>
                       <span>{formatCurrency(subtotal)}</span>
                     </div>
                     {appliedCoupon && (
@@ -599,8 +605,14 @@ const Checkout = () => {
                         <span>-{formatCurrency(discountAmount)}</span>
                       </div>
                     )}
+                    {donationAmount > 0 && (
+                      <div className="flex justify-between text-pink-600 dark:text-pink-400">
+                        <span>Doação para ONG</span>
+                        <span>+{formatCurrency(donationAmount)}</span>
+                      </div>
+                    )}
                     <div className="flex justify-between text-lg font-bold text-primary pt-1">
-                      <span>Total</span>
+                      <span>Total a pagar</span>
                       <span>{formatCurrency(totalPrice)}</span>
                     </div>
                   </div>
