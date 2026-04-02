@@ -72,6 +72,7 @@ const Checkout = () => {
   const [transactionId, setTransactionId] = useState("");
   const [paymentStatus, setPaymentStatus] = useState<"idle" | "loading" | "generated" | "confirmed">("idle");
   const [paymentMethod, setPaymentMethod] = useState<"pix" | "cartao">("pix");
+  const [donationAmount, setDonationAmount] = useState(0);
   
   const [couponInput, setCouponInput] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState<string | null>(() => {
