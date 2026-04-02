@@ -539,8 +539,8 @@ const Checkout = () => {
               </CardContent>
             </Card>
 
-            {/* --- Cupom de desconto --- */}
-            <Card>
+            {/* --- Cupom de desconto (TEMPORARIAMENTE DESATIVADO para teste de ROI) --- */}
+            {/* <Card>
               <CardContent className="pt-4 pb-4">
                 <h2 className="text-base font-bold text-foreground leading-tight mb-3">Cupom de desconto</h2>
                 {!appliedCoupon ? (
@@ -569,7 +569,7 @@ const Checkout = () => {
                   </p>
                 )}
               </CardContent>
-            </Card>
+            </Card> */}
 
             {/* --- Doação ONG --- */}
             <DonationSection
