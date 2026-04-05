@@ -93,7 +93,7 @@ const ExitIntentPopup = memo(() => {
         </button>
 
         <div className="p-6 pt-8 text-center">
-          <img src={logoAmba} alt="AMBA Caçambas" className="mx-auto mb-4 h-12 w-auto" width={160} height={48} />
+          <img src={logoAmba} alt="NORTEX Caçambas" className="mx-auto mb-4 h-12 w-auto" width={160} height={48} />
 
           <h3 className="mb-2 text-xl font-black text-foreground md:text-2xl">
             Espere! Não vá embora 👋

@@ -115,7 +115,7 @@ const Reclamacoes = () => {
       <div className="mx-auto max-w-lg">
         <div className="text-center mb-8">
           <Link to="/">
-            <img src={logoAmba} alt="AMBA Caçambas" className="mx-auto mb-4 h-14 w-auto" />
+            <img src={logoAmba} alt="NORTEX Caçambas" className="mx-auto mb-4 h-14 w-auto" />
           </Link>
           <div className="inline-flex items-center gap-2 rounded-full bg-destructive/10 px-4 py-2 mb-4">
             <AlertTriangle className="h-5 w-5 text-destructive" />

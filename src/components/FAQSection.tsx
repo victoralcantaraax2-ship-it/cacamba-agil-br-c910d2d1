@@ -8,7 +8,7 @@ import {
 
 const faqs = [
   {
-    q: "Quais tamanhos de caçamba a AMBA oferece?",
+    q: "Quais tamanhos de caçamba a NORTEX oferece?",
     a: "Temos caçambas de 3 m³, 4 m³, 5 m³, 7 m³, 10 m³ e 26 m³ — desde reformas simples até demolições completas.",
   },
   {
@@ -32,7 +32,7 @@ const faqs = [
     a: "Pix, cartão de crédito, débito e boleto bancário. Tudo feito de forma online, sem complicação.",
   },
   {
-    q: "A AMBA emite nota fiscal?",
+    q: "A NORTEX emite nota fiscal?",
     a: "Sim, emitimos nota fiscal para todos os serviços realizados.",
   },
   {
