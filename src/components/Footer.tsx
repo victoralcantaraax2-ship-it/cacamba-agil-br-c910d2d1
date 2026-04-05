@@ -29,10 +29,10 @@ const Footer = memo(() => {
                 <Phone className="h-4 w-4" /> WhatsApp: (11) 96835-9162
               </button>
               <a
-                href="mailto:atendimento@ambalocacao.com"
+                href="mailto:atendimento@nortexcacambas.com"
                 className="flex items-center justify-center gap-2 transition-colors hover:text-primary md:justify-start"
               >
-                <Mail className="h-4 w-4" /> atendimento@ambalocacao.com
+                <Mail className="h-4 w-4" /> atendimento@nortexcacambas.com
               </a>
               <span className="flex items-center justify-center gap-2 md:justify-start">
                 <Clock className="h-4 w-4" /> Seg–Sáb 06h às 19h | Dom 07h às 18h
