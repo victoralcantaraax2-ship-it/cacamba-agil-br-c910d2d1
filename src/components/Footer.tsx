@@ -11,7 +11,7 @@ const Footer = memo(() => {
       <div className="container px-4">
         <div className="flex flex-col items-center gap-8 text-center md:flex-row md:justify-between md:text-left">
           <div>
-            <img src={logoAmba} alt="AMBA Caçambas" className="mx-auto mb-3 h-12 w-auto md:mx-0" width={160} height={48} loading="lazy" />
+            <img src={logoAmba} alt="NORTEX Caçambas" className="mx-auto mb-3 h-12 w-auto md:mx-0" width={160} height={48} loading="lazy" />
             <p className="mb-4 max-w-sm text-sm text-secondary-foreground/60">
               Atendemos todo o estado de São Paulo e região. Logística ágil e descarte regularizado.
             </p>
