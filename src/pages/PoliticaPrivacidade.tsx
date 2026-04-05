@@ -107,8 +107,8 @@ const PoliticaPrivacidade = () => {
             </ul>
             <p>
               Para exercer seus direitos, entre em contato pelo e-mail{" "}
-              <a href="mailto:atendimento@ambalocacao.com" className="text-primary hover:underline">
-                atendimento@ambalocacao.com
+              <a href="mailto:atendimento@nortexcacambas.com" className="text-primary hover:underline">
+                atendimento@nortexcacambas.com
               </a>{" "}
               ou pelo telefone (11) 2085-4224.
             </p>
