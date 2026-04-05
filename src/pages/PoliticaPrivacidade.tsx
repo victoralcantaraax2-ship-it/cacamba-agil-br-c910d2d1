@@ -110,7 +110,7 @@ const PoliticaPrivacidade = () => {
               <a href="mailto:atendimento@nortexcacambas.com" className="text-primary hover:underline">
                 atendimento@nortexcacambas.com
               </a>{" "}
-              ou pelo telefone (11) 2085-4224.
+              ou pelo telefone (11) 2085-5225.
             </p>
           </section>
 
