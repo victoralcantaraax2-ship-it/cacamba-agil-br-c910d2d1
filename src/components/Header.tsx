@@ -3,6 +3,7 @@ import { Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import phoneIcon from "@/assets/phone-icon.webp";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
+import logoHorizontal from "@/assets/logo-nortex-horizontal.png";
 
 const navLinks = [
   { label: "Tamanhos", href: "#tamanhos" },
