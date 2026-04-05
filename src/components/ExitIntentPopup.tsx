@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, memo } from "react";
 import { X, MessageCircle, Clock } from "lucide-react";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
 import phoneIcon from "@/assets/phone-icon.webp";
-import logoAmba from "@/assets/logo-amba-nova.webp";
+import logoAmba from "@/assets/logo-nortex.png";
 
 const STORAGE_KEY = "exit_popup_dismissed";
 const COOLDOWN_MS = 3 * 60 * 60 * 1000; // 3 hours

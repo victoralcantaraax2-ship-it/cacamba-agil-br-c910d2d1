@@ -2,7 +2,7 @@ import { memo } from "react";
 import { Link } from "react-router-dom";
 import { MessageCircle, Clock, Phone, Mail } from "lucide-react";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
-import logoAmba from "@/assets/logo-amba-nova.webp";
+import logoAmba from "@/assets/logo-nortex.png";
 import sslLogo from "@/assets/ssl-blindado-logo.png";
 
 const Footer = memo(() => {

@@ -3,7 +3,7 @@ import { ShieldCheck, Headphones, Recycle, Star, Users, Zap, MapPin, Search, Loa
 import { handleWhatsAppClick } from "@/lib/whatsapp";
 import heroBg from "@/assets/hero-bg.webp";
 import whatsappIcon from "@/assets/whatsapp-icon.webp";
-import logoAmba from "@/assets/logo-amba-nova.webp";
+import logoAmba from "@/assets/logo-nortex.png";
 import handIcon from "@/assets/hand-icon.png";
 
 const badges = [
