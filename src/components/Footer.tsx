@@ -54,7 +54,7 @@ const Footer = memo(() => {
             <img src={sslLogo} alt="SSL Blindado" className="h-10 w-auto" />
           </div>
           <p className="text-center text-xs text-secondary-foreground/50">
-            © 2021–{new Date().getFullYear()} AMBA Caçambas — Todos os direitos reservados.
+            © 2021–{new Date().getFullYear()} NORTEX Caçambas — Todos os direitos reservados.
           </p>
           <p
             className="mt-1 text-center text-xs text-secondary-foreground/40 select-none pointer-events-none"

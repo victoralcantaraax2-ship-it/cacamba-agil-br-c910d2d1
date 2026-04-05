@@ -22,7 +22,7 @@ const AboutSection = memo(() => {
       <div className="container px-4">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="mb-4 text-2xl font-extrabold text-foreground md:text-3xl">
-            Sobre a AMBA Caçambas
+            Sobre a NORTEX Caçambas
           </h2>
           <p className="mb-4 text-muted-foreground leading-relaxed">
             Atendemos <span className="font-bold text-foreground">todo o estado de São Paulo</span> com aluguel de caçambas, entrega rápida e atendimento direto pelo WhatsApp. Trabalhamos de forma simples, sem burocracia e com total transparência nos valores.

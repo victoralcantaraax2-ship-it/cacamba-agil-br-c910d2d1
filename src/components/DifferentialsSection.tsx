@@ -24,7 +24,7 @@ const DifferentialsSection = () => {
     <section className="bg-card py-14 md:py-20">
       <div className="container px-4 text-center">
         <h2 className="mb-10 text-2xl font-extrabold text-card-foreground md:text-3xl">
-          Por que a AMBA é diferente
+          Por que a NORTEX é diferente
         </h2>
 
         <div className="mx-auto mb-10 grid max-w-4xl grid-cols-1 gap-6 md:grid-cols-3">

@@ -92,7 +92,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
         <div className="container relative z-10 px-4 py-16 text-center md:py-24">
           <img
             src={logoAmba}
-            alt="AMBA Caçambas"
+            alt="NORTEX Caçambas"
             className="mx-auto mb-8 h-28 w-auto md:h-36 lg:h-40"
             width={320}
             height={160}

@@ -99,7 +99,7 @@ const SocialProof = () => {
       <div className="container px-4">
         <div className="mb-6 md:mb-10 text-center">
           <h2 className="mb-2 text-xl font-extrabold text-secondary-foreground md:text-3xl">
-            Clientes que confiam na AMBA
+            Clientes que confiam na NORTEX
           </h2>
           <div className="flex items-center justify-center gap-6 flex-wrap">
             <div className="flex flex-col items-center gap-1">
