@@ -122,7 +122,7 @@ const PoliticaPrivacidade = () => {
             </p>
             <ul className="list-none space-y-1">
               <li><strong>NORTEX Caçambas</strong></li>
-              <li>CNPJ: 61.774.679/0001-60</li>
+              <li>CNPJ: 11.094.826/0003-45</li>
               <li>E-mail: atendimento@nortexcacambas.com</li>
               <li>Telefone: (11) 2085-4224</li>
             </ul>
