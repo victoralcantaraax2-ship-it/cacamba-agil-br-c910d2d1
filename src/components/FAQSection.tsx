@@ -70,4 +70,5 @@ const FAQSection = memo(() => {
 
 FAQSection.displayName = "FAQSection";
 
+
 export default FAQSection;
