@@ -13,7 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import CardPaymentForm from "@/components/CardPaymentForm";
 import DonationSection from "@/components/DonationSection";
-import logoAmba from "@/assets/logo-amba-nova.webp";
+import logoAmba from "@/assets/logo-nortex.png";
 import lockIcon from "@/assets/lock-icon.webp";
 import cacambaImg from "@/assets/cacamba-generica.webp";
 import pixLogo from "@/assets/pix-logo.webp";

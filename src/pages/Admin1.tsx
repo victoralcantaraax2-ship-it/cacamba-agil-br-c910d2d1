@@ -8,7 +8,7 @@ import { QRCodeSVG } from "qrcode.react";
 import { formatPhone, validatePhone } from "@/lib/phone";
 import { useToast } from "@/hooks/use-toast";
 import CepLookup, { type CepAddress } from "@/components/CepLookup";
-import logoAmba from "@/assets/logo-amba-nova.webp";
+import logoAmba from "@/assets/logo-nortex.png";
 import mercadoPagoLogo from "@/assets/mercadopago-logo.png";
 
 const Admin1 = () => {

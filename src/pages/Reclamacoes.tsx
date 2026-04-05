@@ -8,7 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { AlertTriangle, Upload, CheckCircle, Loader2, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
-import logoAmba from "@/assets/logo-amba-nova.webp";
+import logoAmba from "@/assets/logo-nortex.png";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
