@@ -31,7 +31,7 @@ const TermosDeUso = () => {
           <section>
             <h2 className="text-lg font-semibold text-foreground">1. Aceitação dos Termos</h2>
             <p>
-              Ao acessar e utilizar o site da NORTEX Caçambas (ambalocacao.com), você concorda com estes Termos de Uso.
+              Ao acessar e utilizar o site da NORTEX Caçambas (nortexcacambas.com), você concorda com estes Termos de Uso.
               Caso não concorde com alguma disposição, recomendamos que não utilize o site.
             </p>
           </section>
