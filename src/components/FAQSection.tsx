@@ -32,7 +32,7 @@ const faqs = [
     a: "Pix, cartão de crédito, débito e boleto bancário. Tudo feito de forma online, sem complicação.",
   },
   {
-    q: "A AMBA emite nota fiscal?",
+    q: "A NORTEX emite nota fiscal?",
     a: "Sim, emitimos nota fiscal para todos os serviços realizados.",
   },
   {

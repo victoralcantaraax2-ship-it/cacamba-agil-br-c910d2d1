@@ -31,7 +31,7 @@ const PoliticaPrivacidade = () => {
           <section>
             <h2 className="text-lg font-semibold text-foreground">1. Informações Gerais</h2>
             <p>
-              A AMBA Caçambas, inscrita no CNPJ 61.774.679/0001-60, é a responsável pelo tratamento dos dados pessoais
+              A NORTEX Caçambas, inscrita no CNPJ 61.774.679/0001-60, é a responsável pelo tratamento dos dados pessoais
               coletados neste site. Esta Política de Privacidade descreve como coletamos, utilizamos, armazenamos e
               protegemos suas informações pessoais, em conformidade com a Lei Geral de Proteção de Dados (LGPD — Lei nº 13.709/2018).
             </p>
@@ -121,7 +121,7 @@ const PoliticaPrivacidade = () => {
               entre em contato:
             </p>
             <ul className="list-none space-y-1">
-              <li><strong>AMBA Caçambas</strong></li>
+              <li><strong>NORTEX Caçambas</strong></li>
               <li>CNPJ: 61.774.679/0001-60</li>
               <li>E-mail: atendimento@ambalocacao.com</li>
               <li>Telefone: (11) 2085-4224</li>
