@@ -107,8 +107,8 @@ const PoliticaPrivacidade = () => {
             </ul>
             <p>
               Para exercer seus direitos, entre em contato pelo e-mail{" "}
-              <a href="mailto:atendimento@ambalocacao.com" className="text-primary hover:underline">
-                atendimento@ambalocacao.com
+              <a href="mailto:atendimento@nortexcacambas.com" className="text-primary hover:underline">
+                atendimento@nortexcacambas.com
               </a>{" "}
               ou pelo telefone (11) 2085-4224.
             </p>
@@ -123,7 +123,7 @@ const PoliticaPrivacidade = () => {
             <ul className="list-none space-y-1">
               <li><strong>NORTEX Caçambas</strong></li>
               <li>CNPJ: 61.774.679/0001-60</li>
-              <li>E-mail: atendimento@ambalocacao.com</li>
+              <li>E-mail: atendimento@nortexcacambas.com</li>
               <li>Telefone: (11) 2085-4224</li>
             </ul>
           </section>
