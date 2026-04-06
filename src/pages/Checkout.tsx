@@ -546,7 +546,7 @@ const Checkout = () => {
             />
             */}
 
-            {/* --- Cupom de desconto --- */}
+            {/* --- Cupom de desconto (oculto temporariamente) ---
             <Card>
               <CardContent className="pt-4 pb-4">
                 <h2 className="text-base font-bold text-foreground leading-tight mb-3">Cupom de desconto</h2>
@@ -577,6 +577,7 @@ const Checkout = () => {
                 )}
               </CardContent>
             </Card>
+            */}
 
 
             {/* --- Resumo do Pedido --- */}
