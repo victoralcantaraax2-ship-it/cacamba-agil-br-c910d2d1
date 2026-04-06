@@ -577,11 +577,6 @@ const Checkout = () => {
               </CardContent>
             </Card>
 
-            {/* --- Doação ONG --- */}
-            <DonationSection
-              donationAmount={donationAmount}
-              onDonationChange={setDonationAmount}
-            />
 
             {/* --- Resumo do Pedido --- */}
             <Card>
