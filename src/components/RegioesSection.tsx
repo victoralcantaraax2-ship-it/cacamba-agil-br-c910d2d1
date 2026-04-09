@@ -36,7 +36,7 @@ const RegioesSection = memo(() => {
                 <MapPin className="h-4 w-4 text-primary shrink-0" />
                 <h3 className="text-sm font-bold text-secondary-foreground md:text-base">{nome}</h3>
               </div>
-              <p className="text-xs text-secondary-foreground/50">{cidades}</p>
+              <p className="sr-only">{cidades}</p>
             </div>
           ))}
         </div>
