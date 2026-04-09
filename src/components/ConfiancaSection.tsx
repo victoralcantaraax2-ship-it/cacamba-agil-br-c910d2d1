@@ -34,11 +34,6 @@ const items = [
   },
 ];
 
-const depoimentos = [
-  { nome: "Carlos M.", local: "Zona Sul – SP", texto: "Atendimento rápido e sem complicação. Caçamba chegou em 1 hora." },
-  { nome: "Ana Paula S.", local: "Guarulhos – SP", texto: "Entrega dentro do prazo. Equipe educada e profissional." },
-  { nome: "Roberto F.", local: "ABC Paulista", texto: "Preço justo e processo transparente. Já indiquei para vários colegas." },
-];
 
 const ConfiancaSection = memo(() => {
   return (
