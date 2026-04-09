@@ -6,25 +6,25 @@
 
 @layer base {
   :root {
-    --background: 0 0% 96%;
-    --foreground: 0 0% 17%;
+    --background: 0 0% 97%;
+    --foreground: 0 0% 10%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 17%;
+    --card-foreground: 0 0% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 17%;
+    --popover-foreground: 0 0% 10%;
 
-    --primary: 22 75% 52%;
+    --primary: 0 78% 50%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 17%;
+    --secondary: 0 0% 8%;
     --secondary-foreground: 0 0% 98%;
 
     --muted: 0 0% 92%;
     --muted-foreground: 0 0% 40%;
 
-    --accent: 22 75% 52%;
+    --accent: 0 78% 50%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
@@ -32,7 +32,7 @@
 
     --border: 0 0% 88%;
     --input: 0 0% 88%;
-    --ring: 22 75% 52%;
+    --ring: 0 78% 50%;
 
     --radius: 0.75rem;
 
@@ -40,10 +40,10 @@
     --whatsapp-foreground: 0 0% 100%;
     --whatsapp-hover: 145 70% 36%;
 
-    --hero-overlay: 0 0% 10%;
-    --trust-bg: 0 0% 17%;
+    --hero-overlay: 0 0% 5%;
+    --trust-bg: 0 0% 8%;
     --trust-foreground: 0 0% 98%;
-    --urgency-bg: 22 75% 52%;
+    --urgency-bg: 0 78% 50%;
     --urgency-foreground: 0 0% 100%;
     --star: 45 100% 50%;
 
@@ -58,25 +58,25 @@
   }
 
   .dark {
-    --background: 0 0% 10%;
+    --background: 0 0% 5%;
     --foreground: 0 0% 98%;
-    --card: 0 0% 17%;
+    --card: 0 0% 10%;
     --card-foreground: 0 0% 98%;
-    --popover: 0 0% 17%;
+    --popover: 0 0% 10%;
     --popover-foreground: 0 0% 98%;
-    --primary: 22 75% 52%;
+    --primary: 0 78% 50%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 20%;
+    --secondary: 0 0% 12%;
     --secondary-foreground: 0 0% 98%;
     --muted: 0 0% 18%;
     --muted-foreground: 0 0% 60%;
-    --accent: 22 75% 52%;
+    --accent: 0 78% 50%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
     --border: 0 0% 20%;
     --input: 0 0% 20%;
-    --ring: 22 75% 52%;
+    --ring: 0 78% 50%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
