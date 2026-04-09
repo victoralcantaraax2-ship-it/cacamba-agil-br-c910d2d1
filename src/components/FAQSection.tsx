@@ -11,7 +11,7 @@ import whatsappIcon from "@/assets/whatsapp-icon.webp";
 const faqs = [
   {
     q: "Em quanto tempo a caçamba chega?",
-    a: "Após confirmação, entregamos em até 2 horas em São Paulo capital e região metropolitana.",
+    a: "Após confirmação, entregamos em até 2 horas na sua região.",
   },
   {
     q: "Quais tamanhos de caçamba estão disponíveis?",
@@ -19,7 +19,7 @@ const faqs = [
   },
   {
     q: "Quais regiões vocês atendem?",
-    a: "Atendemos toda São Paulo capital (Zona Leste, Sul, Norte e Oeste), Guarulhos, ABC Paulista, Osasco, Campinas, Sorocaba e demais cidades do estado.",
+    a: "Atendemos diversas regiões com entrega rápida. Consulte pelo WhatsApp se atendemos sua localidade.",
   },
   {
     q: "Como funciona o pagamento?",
