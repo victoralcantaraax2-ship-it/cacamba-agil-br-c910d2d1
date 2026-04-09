@@ -4,14 +4,15 @@ import { handleWhatsAppClick } from "@/lib/whatsapp";
 import whatsappIcon from "@/assets/whatsapp-icon.webp";
 
 const regioes = [
-  { nome: "Zona Leste", cidades: "Penha, Itaquera, São Mateus, Mooca, Ermelino Matarazzo, Guaianases" },
-  { nome: "Zona Sul", cidades: "Ipiranga, Santo Amaro, Jabaquara, Grajaú, Campo Limpo, Capela do Socorro" },
-  { nome: "Zona Norte", cidades: "Santana, Tucuruvi, Vila Maria, Tremembé, Casa Verde, Jaçanã" },
-  { nome: "Zona Oeste", cidades: "Pinheiros, Butantã, Lapa, Perdizes, Jaguaré, Rio Pequeno" },
-  { nome: "Centro de SP", cidades: "Sé, República, Bela Vista, Liberdade, Santa Cecília, Consolação" },
-  { nome: "Região Metropolitana", cidades: "Guarulhos, Osasco, Barueri, Cotia, Taboão da Serra, Carapicuíba" },
-  { nome: "ABC Paulista", cidades: "Santo André, São Bernardo, São Caetano, Diadema, Mauá, Ribeirão Pires" },
-  { nome: "Alto Tietê", cidades: "Mogi das Cruzes, Suzano, Itaquaquecetuba, Poá, Ferraz de Vasconcelos" },
+  { nome: "Capital Paulista", cidades: "São Paulo, Zona Leste, Zona Sul, Zona Norte, Zona Oeste, Centro, Penha, Itaquera, Mooca, Ipiranga, Santana, Pinheiros, Butantã, Lapa" },
+  { nome: "Grande São Paulo", cidades: "Guarulhos, Osasco, Barueri, Cotia, Taboão da Serra, Carapicuíba, Embu das Artes, Itapecerica da Serra, Jandira, Itapevi" },
+  { nome: "ABC Paulista", cidades: "Santo André, São Bernardo do Campo, São Caetano do Sul, Diadema, Mauá, Ribeirão Pires, Rio Grande da Serra" },
+  { nome: "Alto Tietê", cidades: "Mogi das Cruzes, Suzano, Itaquaquecetuba, Poá, Ferraz de Vasconcelos, Guararema, Biritiba Mirim" },
+  { nome: "Região de Campinas", cidades: "Campinas, Sumaré, Hortolândia, Indaiatuba, Valinhos, Vinhedo, Americana, Santa Bárbara d'Oeste, Paulínia" },
+  { nome: "Baixada Santista", cidades: "Santos, São Vicente, Praia Grande, Guarujá, Cubatão, Bertioga, Mongaguá, Itanhaém, Peruíbe" },
+  { nome: "Vale do Paraíba", cidades: "São José dos Campos, Taubaté, Jacareí, Pindamonhangaba, Caçapava, Lorena, Guaratinguetá, Aparecida" },
+  { nome: "Região de Sorocaba", cidades: "Sorocaba, Itu, Salto, Votorantim, Piedade, São Roque, Mairinque, Araçoiaba da Serra" },
+  { nome: "Interior Paulista", cidades: "Ribeirão Preto, São Carlos, Araraquara, Bauru, Marília, Presidente Prudente, Araçatuba, São José do Rio Preto, Franca, Piracicaba, Limeira, Jundiaí" },
 ];
 
 const RegioesSection = memo(() => {
@@ -20,15 +21,15 @@ const RegioesSection = memo(() => {
       <div className="container px-4">
         <div className="mb-10 text-center">
           <h2 className="mb-3 text-2xl font-extrabold text-secondary-foreground md:text-3xl">
-            Atendemos Sua Região
+            Atendemos Todo o Estado de São Paulo
           </h2>
           <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 border border-primary/20">
             <Zap className="h-4 w-4 text-primary" />
-            <span className="text-sm font-bold text-primary">Entrega rápida na sua região</span>
+            <span className="text-sm font-bold text-primary">Cobertura em todo o estado</span>
           </div>
         </div>
 
-        <div className="mx-auto grid max-w-4xl grid-cols-2 gap-3 md:grid-cols-3 md:gap-4">
+        <div className="mx-auto grid max-w-5xl grid-cols-2 gap-3 md:grid-cols-3 md:gap-4">
           {regioes.map(({ nome, cidades }) => (
             <div
               key={nome}
@@ -56,7 +57,3 @@ const RegioesSection = memo(() => {
     </section>
   );
 });
-
-RegioesSection.displayName = "RegioesSection";
-
-export default RegioesSection;
