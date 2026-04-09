@@ -62,54 +62,6 @@ const AboutSection = memo(() => {
           ))}
         </div>
 
-        {/* Company Info */}
-        <div className="mx-auto mt-12 max-w-2xl rounded-xl border border-border bg-card p-6 md:p-8">
-          <h3 className="mb-4 text-center text-lg font-bold text-card-foreground">Dados da Empresa</h3>
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 text-sm">
-            <div className="flex items-start gap-2">
-              <Building2 className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-              <div>
-                <span className="font-semibold text-card-foreground">Razão Social</span>
-                <p className="text-muted-foreground">FINYES GESTAO EMPRESARIAL & FINANCEIRA LTDA</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-2">
-              <ShieldCheck className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-              <div>
-                <span className="font-semibold text-card-foreground">CNPJ</span>
-                <p className="text-muted-foreground">11.094.826/0003-45</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-2">
-              <Phone className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-              <div>
-                <span className="font-semibold text-card-foreground">Telefone</span>
-                <p className="text-muted-foreground">(11) 2085-5225</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-2">
-              <Mail className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-              <div>
-                <span className="font-semibold text-card-foreground">E-mail</span>
-                <p className="text-muted-foreground">atendimento@nortexcacambas.com</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-2 sm:col-span-2">
-              <MapPin className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-              <div>
-                <span className="font-semibold text-card-foreground">Área de Atendimento</span>
-                <p className="text-muted-foreground">Todo o Estado de São Paulo</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-2 sm:col-span-2">
-              <Clock className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-              <div>
-                <span className="font-semibold text-card-foreground">Horário</span>
-                <p className="text-muted-foreground">Seg a Sáb: 06h às 19h · Dom: 07h às 18h</p>
-              </div>
-            </div>
-          </div>
-        </div>
 
         {/* CTA */}
         <div className="mx-auto mt-10 text-center">
