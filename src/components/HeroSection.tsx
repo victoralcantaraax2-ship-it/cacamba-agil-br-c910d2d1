@@ -92,16 +92,6 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
             fetchPriority="high"
           />
 
-          {/* Rating badge */}
-          <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 backdrop-blur-sm border border-white/10">
-            <div className="flex gap-0.5">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="h-4 w-4 fill-star text-star" />
-              ))}
-            </div>
-            <span className="text-sm font-bold text-white">4,8/5</span>
-            <span className="text-xs text-white/60">· +500 clientes</span>
-          </div>
 
           <h1 className="mb-4 text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">
             {h1Text}
