@@ -98,7 +98,7 @@ const TamanhosSection = () => {
   };
 
   return (
-    <section id="tamanhos" className="bg-background py-12 md:py-24">
+    <section id="tamanhos" className="bg-background py-10 md:py-16">
       <div className="container px-4">
         <div className="mb-8 md:mb-12 text-center">
           <h2 className="mb-2 text-2xl font-extrabold text-foreground md:text-3xl lg:text-4xl">
