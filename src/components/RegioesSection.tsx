@@ -4,12 +4,14 @@ import { handleWhatsAppClick } from "@/lib/whatsapp";
 import whatsappIcon from "@/assets/whatsapp-icon.webp";
 
 const regioes = [
-  { nome: "Zona Leste", cidades: "Penha, Itaquera, São Mateus, Mooca" },
-  { nome: "Zona Sul", cidades: "Ipiranga, Santo Amaro, Jabaquara, Grajaú" },
-  { nome: "Zona Norte", cidades: "Santana, Tucuruvi, Vila Maria, Tremembé" },
-  { nome: "Zona Oeste", cidades: "Pinheiros, Butantã, Lapa, Perdizes" },
-  { nome: "Região Metropolitana", cidades: "Guarulhos, Osasco, Barueri, Cotia" },
-  { nome: "ABC e Região", cidades: "Santo André, São Bernardo, São Caetano, Diadema" },
+  { nome: "Zona Leste", cidades: "Penha, Itaquera, São Mateus, Mooca, Ermelino Matarazzo, Guaianases" },
+  { nome: "Zona Sul", cidades: "Ipiranga, Santo Amaro, Jabaquara, Grajaú, Campo Limpo, Capela do Socorro" },
+  { nome: "Zona Norte", cidades: "Santana, Tucuruvi, Vila Maria, Tremembé, Casa Verde, Jaçanã" },
+  { nome: "Zona Oeste", cidades: "Pinheiros, Butantã, Lapa, Perdizes, Jaguaré, Rio Pequeno" },
+  { nome: "Centro de SP", cidades: "Sé, República, Bela Vista, Liberdade, Santa Cecília, Consolação" },
+  { nome: "Região Metropolitana", cidades: "Guarulhos, Osasco, Barueri, Cotia, Taboão da Serra, Carapicuíba" },
+  { nome: "ABC Paulista", cidades: "Santo André, São Bernardo, São Caetano, Diadema, Mauá, Ribeirão Pires" },
+  { nome: "Alto Tietê", cidades: "Mogi das Cruzes, Suzano, Itaquaquecetuba, Poá, Ferraz de Vasconcelos" },
 ];
 
 const RegioesSection = memo(() => {
