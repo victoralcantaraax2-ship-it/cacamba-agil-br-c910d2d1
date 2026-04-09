@@ -19,10 +19,10 @@ const scrollTo = (id: string) => {
 const HeroSection = ({ cityName }: { cityName?: string }) => {
   const h1Text = cityName
     ? `Aluguel de Caçamba em ${cityName}`
-    : "Aluguel de Caçamba com Entrega em Até 2 Horas em São Paulo";
+    : "Precisa de Caçamba Hoje?";
   const subtitle = cityName
     ? `Atendimento imediato via WhatsApp. Entregamos em ${cityName} com agilidade, segurança e preço justo.`
-    : "Atendimento imediato via WhatsApp. Entregamos em toda São Paulo e região com agilidade, segurança e preço justo.";
+    : "Atendimento imediato via WhatsApp. Entregamos com agilidade, segurança e preço justo.";
 
   const [cep, setCep] = useState("");
   const [address, setAddress] = useState<{ logradouro: string; bairro: string; localidade: string; uf: string; cep: string } | null>(null);
