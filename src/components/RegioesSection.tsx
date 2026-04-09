@@ -57,3 +57,7 @@ const RegioesSection = memo(() => {
     </section>
   );
 });
+
+RegioesSection.displayName = "RegioesSection";
+
+export default RegioesSection;
