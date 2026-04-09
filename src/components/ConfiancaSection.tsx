@@ -37,7 +37,7 @@ const items = [
 
 const ConfiancaSection = memo(() => {
   return (
-    <section id="confianca" className="bg-background py-16 md:py-24">
+    <section id="confianca" className="bg-background py-10 md:py-16">
       <div className="container px-4">
         <div className="mb-10 text-center">
           <h2 className="mb-3 text-2xl font-extrabold text-foreground md:text-3xl">
