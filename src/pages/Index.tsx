@@ -5,7 +5,7 @@ import TamanhosSection from "@/components/TamanhosSection";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import ExitIntentPopup from "@/components/ExitIntentPopup";
 
-const ConfiancaSection = lazy(() => import("@/components/ConfiancaSection"));
+
 const DiferenciaisSection = lazy(() => import("@/components/DiferenciaisSection"));
 const RegioesSection = lazy(() => import("@/components/RegioesSection"));
 const SocialProof = lazy(() => import("@/components/SocialProof"));
@@ -23,9 +23,6 @@ const Index = () => {
       <Header />
       <HeroSection />
       <TamanhosSection />
-      <Suspense fallback={<SectionFallback />}>
-        <ConfiancaSection />
-      </Suspense>
       <Suspense fallback={<SectionFallback />}>
         <UrgenciaSection />
       </Suspense>
