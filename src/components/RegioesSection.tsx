@@ -7,9 +7,9 @@ const regioes = [
   { nome: "Zona Leste", cidades: "Penha, Itaquera, São Mateus, Mooca" },
   { nome: "Zona Sul", cidades: "Ipiranga, Santo Amaro, Jabaquara, Grajaú" },
   { nome: "Zona Norte", cidades: "Santana, Tucuruvi, Vila Maria, Tremembé" },
-  { nome: "Zona Oeste", cidades: "Pinheiros, Butantã, Lapa, Osasco" },
-  { nome: "Guarulhos", cidades: "Centro, Cumbica, Bonsucesso, Taboão" },
-  { nome: "ABC Paulista", cidades: "Santo André, São Bernardo, São Caetano, Diadema" },
+  { nome: "Zona Oeste", cidades: "Pinheiros, Butantã, Lapa, Perdizes" },
+  { nome: "Região Metropolitana", cidades: "Guarulhos, Osasco, Barueri, Cotia" },
+  { nome: "ABC e Região", cidades: "Santo André, São Bernardo, São Caetano, Diadema" },
 ];
 
 const RegioesSection = memo(() => {
@@ -18,11 +18,11 @@ const RegioesSection = memo(() => {
       <div className="container px-4">
         <div className="mb-10 text-center">
           <h2 className="mb-3 text-2xl font-extrabold text-secondary-foreground md:text-3xl">
-            Atendemos Toda São Paulo e Região
+            Atendemos Sua Região
           </h2>
           <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 border border-primary/20">
             <Zap className="h-4 w-4 text-primary" />
-            <span className="text-sm font-bold text-primary">Entrega rápida em até 2 horas na sua região</span>
+            <span className="text-sm font-bold text-primary">Entrega rápida na sua região</span>
           </div>
         </div>
 
