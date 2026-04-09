@@ -5,39 +5,41 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { handleWhatsAppClick } from "@/lib/whatsapp";
+import whatsappIcon from "@/assets/whatsapp-icon.webp";
 
 const faqs = [
   {
-    q: "Quais tamanhos de caçamba a NORTEX oferece?",
-    a: "Temos caçambas de 3 m³, 4 m³, 5 m³, 7 m³, 10 m³ e 26 m³ — desde reformas simples até demolições completas.",
+    q: "Em quanto tempo a caçamba chega?",
+    a: "Após confirmação, entregamos em até 2 horas em São Paulo capital e região metropolitana.",
   },
   {
-    q: "Em quanto tempo a caçamba chega no meu endereço?",
-    a: "Após a confirmação, a entrega acontece de forma rápida na capital, Guarulhos, Campinas, Osasco, ABC e demais regiões atendidas, podendo variar conforme a localização.",
+    q: "Quais tamanhos de caçamba estão disponíveis?",
+    a: "Oferecemos caçambas de 3 m³, 4 m³, 5 m³, 7 m³, 10 m³ e 26 m³ — para reformas simples até demolições completas.",
   },
   {
-    q: "Quais regiões de SP vocês cobrem?",
-    a: "Atendemos São Paulo capital, Guarulhos, Campinas, Osasco, ABC (Santo André, São Bernardo, São Caetano), Sorocaba, Ribeirão Preto, São José dos Campos, São José do Rio Preto, Jandira e diversas outras cidades do estado.",
+    q: "Quais regiões vocês atendem?",
+    a: "Atendemos toda São Paulo capital (Zona Leste, Sul, Norte e Oeste), Guarulhos, ABC Paulista, Osasco, Campinas, Sorocaba e demais cidades do estado.",
+  },
+  {
+    q: "Como funciona o pagamento?",
+    a: "Aceitamos Pix, cartão de crédito, débito e boleto. Pagamento seguro, feito após a confirmação do pedido.",
   },
   {
     q: "Por quanto tempo posso ficar com a caçamba?",
-    a: "O período padrão vai de 3 a 7 dias, mas ajustamos conforme a sua demanda. É só combinar pelo WhatsApp.",
+    a: "O período padrão é de 3 a 7 dias, mas ajustamos conforme sua necessidade. Combine pelo WhatsApp.",
   },
   {
-    q: "O que posso colocar dentro da caçamba?",
-    a: "Entulho de obra, restos de construção, madeira, ferro, telhas e materiais semelhantes. Lixo orgânico e produtos perigosos não são permitidos.",
-  },
-  {
-    q: "Quais formas de pagamento vocês aceitam?",
-    a: "Pix, cartão de crédito, débito e boleto bancário. Tudo feito de forma online, sem complicação.",
+    q: "O que posso colocar na caçamba?",
+    a: "Entulho de obra, restos de construção, madeira, ferro, telhas e materiais similares. Lixo orgânico e produtos perigosos não são permitidos.",
   },
   {
     q: "A NORTEX emite nota fiscal?",
-    a: "Sim, emitimos nota fiscal para todos os serviços realizados.",
+    a: "Sim. Emitimos nota fiscal para todos os serviços realizados.",
   },
   {
-    q: "Como funciona para retirar a caçamba?",
-    a: "Você agenda a retirada pelo WhatsApp quando a caçamba estiver cheia ou no prazo combinado. Simples assim.",
+    q: "Como solicito a retirada da caçamba?",
+    a: "Basta enviar uma mensagem pelo WhatsApp quando a caçamba estiver cheia ou no prazo combinado.",
   },
 ];
 
@@ -47,9 +49,9 @@ const FAQSection = memo(() => {
       <div className="container px-4">
         <div className="mb-8 text-center">
           <h2 className="mb-3 text-2xl font-extrabold text-card-foreground md:text-3xl">
-            Dúvidas Frequentes
+            Perguntas Frequentes
           </h2>
-          <p className="text-muted-foreground">Tudo que você precisa saber antes de alugar.</p>
+          <p className="text-muted-foreground">Tudo que você precisa saber antes de contratar.</p>
         </div>
         <Accordion type="single" collapsible className="mx-auto max-w-2xl">
           {faqs.map((faq, idx) => (
@@ -63,12 +65,21 @@ const FAQSection = memo(() => {
             </AccordionItem>
           ))}
         </Accordion>
+
+        <div className="mt-8 text-center">
+          <button
+            onClick={() => handleWhatsAppClick("Olá! Tenho uma dúvida sobre o aluguel de caçamba.")}
+            className="inline-flex items-center gap-2 text-sm font-semibold text-whatsapp transition-colors hover:underline"
+          >
+            <img src={whatsappIcon} alt="WhatsApp" className="h-4 w-4" width={16} height={16} />
+            Ainda com dúvida? Fale no WhatsApp
+          </button>
+        </div>
       </div>
     </section>
   );
 });
 
 FAQSection.displayName = "FAQSection";
-
 
 export default FAQSection;

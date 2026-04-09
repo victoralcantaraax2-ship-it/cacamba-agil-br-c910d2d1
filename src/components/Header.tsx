@@ -1,15 +1,15 @@
 import { useState, memo } from "react";
 import { Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
-import phoneIcon from "@/assets/phone-icon.webp";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
 import logoHorizontal from "@/assets/logo-nortex-horizontal.png";
+import whatsappIcon from "@/assets/whatsapp-icon.webp";
 
 const navLinks = [
   { label: "Tamanhos", href: "#tamanhos" },
   { label: "Como funciona", href: "#como-funciona" },
+  { label: "Regiões", href: "#regioes" },
   { label: "Avaliações", href: "#depoimentos" },
-  { label: "Sobre nós", href: "#sobre-nos" },
   { label: "Dúvidas", href: "#faq" },
   { label: "Contato", href: "#contato" },
 ];
@@ -40,26 +40,20 @@ const Header = memo(() => {
               {link.label}
             </button>
           ))}
-          <Link
-            to="/reclamacoes"
-            className="text-sm font-medium text-secondary-foreground/70 transition-colors hover:text-secondary-foreground"
-          >
-            Reclamações
-          </Link>
           <button
             onClick={() => handleClick("#tamanhos")}
-            className="rounded-lg bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground transition-all hover:scale-105 hover:bg-primary/90"
+            className="rounded-lg bg-primary px-5 py-2.5 text-sm font-bold text-white transition-all hover:scale-105 hover:brightness-110"
           >
-            Peça agora
+            Solicitar Agora
           </button>
         </nav>
 
         <div className="flex items-center gap-2 lg:hidden">
           <button
             onClick={() => handleWhatsAppClick()}
-            className="flex items-center gap-1.5 rounded-lg bg-primary px-3 py-2 text-sm font-bold text-primary-foreground"
+            className="flex items-center gap-1.5 rounded-lg bg-primary px-3 py-2 text-sm font-bold text-white"
           >
-            <img src={phoneIcon} alt="Telefone" className="h-4 w-4" width={16} height={16} />
+            <img src={whatsappIcon} alt="WhatsApp" className="h-4 w-4" width={16} height={16} />
             Cotação
           </button>
           <button
@@ -83,18 +77,11 @@ const Header = memo(() => {
               {link.label}
             </button>
           ))}
-          <Link
-            to="/reclamacoes"
-            onClick={() => setOpen(false)}
-            className="block w-full py-3 text-left text-base font-medium text-secondary-foreground/80 transition-colors hover:text-secondary-foreground"
-          >
-            Reclamações
-          </Link>
           <button
             onClick={() => handleClick("#tamanhos")}
-            className="mt-2 w-full rounded-lg bg-primary py-3 text-center text-base font-bold text-primary-foreground"
+            className="mt-2 w-full rounded-lg bg-primary py-3 text-center text-base font-bold text-white"
           >
-            Peça agora
+            Solicitar Agora
           </button>
         </nav>
       )}
