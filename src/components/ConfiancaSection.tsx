@@ -61,22 +61,6 @@ const ConfiancaSection = memo(() => {
             </div>
           ))}
         </div>
-
-        {/* Mini depoimentos */}
-        <div className="mx-auto mt-10 grid max-w-3xl grid-cols-1 gap-4 md:grid-cols-3">
-          {depoimentos.map(({ nome, local, texto }) => (
-            <div key={nome} className="rounded-xl border border-border bg-card p-5 text-center">
-              <div className="mb-2 flex justify-center gap-0.5">
-                {[...Array(5)].map((_, i) => (
-                  <CheckCircle key={i} className="h-3.5 w-3.5 text-green-500" />
-                ))}
-              </div>
-              <p className="mb-3 text-sm text-card-foreground leading-relaxed">"{texto}"</p>
-              <p className="text-xs font-bold text-foreground">{nome}</p>
-              <p className="text-xs text-muted-foreground">{local}</p>
-            </div>
-          ))}
-        </div>
       </div>
     </section>
   );
