@@ -67,6 +67,8 @@ const Footer = memo(() => {
             <Link to="/politica-de-privacidade" className="hover:text-primary hover:underline transition-colors">Política de Privacidade</Link>
             <span>|</span>
             <Link to="/termos-de-uso" className="hover:text-primary hover:underline transition-colors">Termos de Uso</Link>
+            <span>|</span>
+            <Link to="/reclamacoes" className="hover:text-primary hover:underline transition-colors">Reclame Aqui</Link>
           </p>
         </div>
       </div>
