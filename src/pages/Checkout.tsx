@@ -757,9 +757,12 @@ const Checkout = () => {
                     </div>
 
                     {paymentStatus === "generated" && (
-                      <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-                        <Loader2 className="h-4 w-4 animate-spin text-primary" />
-                        <span>Aguardando pagamento via Pix…</span>
+                      <div className="flex flex-col items-center justify-center gap-3 py-4">
+                        <div className="relative flex h-10 w-10 items-center justify-center">
+                          <div className="absolute h-10 w-10 rounded-full border-4 border-primary/20" />
+                          <div className="absolute h-10 w-10 animate-spin rounded-full border-4 border-transparent border-t-primary" />
+                        </div>
+                        <span className="text-sm font-medium text-muted-foreground animate-pulse">Aguardando confirmação do pagamento…</span>
                       </div>
                     )}
                   </div>
