@@ -1011,6 +1011,7 @@ const Checkout = () => {
                 </CardContent>
               </Card>
             )}
+          </div>
         )}
       </div>
 
