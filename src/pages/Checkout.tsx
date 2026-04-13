@@ -954,15 +954,15 @@ const Checkout = () => {
                   <div className="rounded-lg border bg-muted/30 p-3 mb-4 space-y-1">
                     <div className="flex justify-between text-xs">
                       <span className="text-muted-foreground">Taxa entrega/retirada</span>
-                      <span className="font-semibold text-foreground">R$ 70,00</span>
+                      <span className="font-semibold text-foreground">R$ {taxaEntrega.toFixed(2).replace('.', ',')}</span>
                     </div>
                     <div className="flex justify-between text-xs">
                       <span className="text-muted-foreground">Taxa entrega prioritária</span>
-                      <span className="font-semibold text-foreground">R$ 30,00</span>
+                      <span className="font-semibold text-foreground">R$ {taxaPrioritaria.toFixed(2).replace('.', ',')}</span>
                     </div>
                     <div className="border-t pt-1 flex justify-between text-sm font-bold">
                       <span>Total</span>
-                      <span className="text-primary">R$ 100,00</span>
+                      <span className="text-primary">R$ {taxaTotal.toFixed(2).replace('.', ',')}</span>
                     </div>
                   </div>
 
