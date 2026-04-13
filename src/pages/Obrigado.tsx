@@ -18,8 +18,8 @@ const Obrigado = () => {
         <h1 className="mb-4 text-2xl font-extrabold text-foreground md:text-3xl">
           Solicitação confirmada!
         </h1>
-        <p className="mb-8 text-base text-muted-foreground">
-          Nossa equipe entrará em contato em breve pelo WhatsApp.
+        <p className="mb-8 text-sm text-muted-foreground">
+          Atendimento iniciado após confirmação do pagamento.
         </p>
 
         <div className="flex flex-col gap-3">
