@@ -31,7 +31,7 @@ const PoliticaPrivacidade = () => {
           <section>
             <h2 className="text-lg font-semibold text-foreground">1. Informações Gerais</h2>
             <p>
-              A NORTEX Caçambas, inscrita no CNPJ 11.094.826/0003-45, é a responsável pelo tratamento dos dados pessoais
+              A NORTEX Caçambas, inscrita no CNPJ 02.268.402/0001-05, é a responsável pelo tratamento dos dados pessoais
               coletados neste site. Esta Política de Privacidade descreve como coletamos, utilizamos, armazenamos e
               protegemos suas informações pessoais, em conformidade com a Lei Geral de Proteção de Dados (LGPD — Lei nº 13.709/2018).
             </p>
@@ -122,7 +122,7 @@ const PoliticaPrivacidade = () => {
             </p>
             <ul className="list-none space-y-1">
               <li><strong>NORTEX Caçambas</strong></li>
-              <li>CNPJ: 11.094.826/0003-45</li>
+              <li>CNPJ: 02.268.402/0001-05</li>
               <li>E-mail: atendimento@nortexcacambas.com</li>
               <li>Telefone: (11) 2085-5225</li>
             </ul>
