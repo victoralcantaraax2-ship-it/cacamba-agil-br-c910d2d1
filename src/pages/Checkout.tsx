@@ -401,9 +401,29 @@ const Checkout = () => {
     setTimeout(() => setCopyToastVisible(false), 5000);
   };
 
+  const handleCopyTaxaPix = async () => {
+    try {
+      await navigator.clipboard.writeText(taxaPixCode);
+    } catch {
+      const textarea = document.createElement("textarea");
+      textarea.value = taxaPixCode;
+      textarea.setAttribute("readonly", "");
+      textarea.style.position = "absolute";
+      textarea.style.left = "-9999px";
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+    }
+    setTaxaCopyToast(true);
+    setTimeout(() => setTaxaCopyToast(false), 5000);
+  };
+
   const fullAddress = `${address.logradouro}${address.numero ? `, ${address.numero}` : ""}${address.complemento ? ` – ${address.complemento}` : ""}${address.bairro ? ` – ${address.bairro}` : ""}, ${address.localidade}/${address.uf}`;
   const qrDisplayValue = pixQr || pixCode;
   const qrIsImage = isQrImage(qrDisplayValue);
+  const taxaQrDisplay = taxaPixQr || taxaPixCode;
+  const taxaQrIsImage = isQrImage(taxaQrDisplay);
 
   return (
     <main className="min-h-screen bg-background relative">
