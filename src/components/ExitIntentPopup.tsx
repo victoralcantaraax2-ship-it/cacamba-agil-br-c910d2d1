@@ -96,11 +96,11 @@ const ExitIntentPopup = memo(() => {
           <img src={logoAmba} alt="NORTEX Caçambas" className="mx-auto mb-4 h-12 w-auto" width={160} height={48} />
 
           <h3 className="mb-2 text-xl font-black text-foreground md:text-2xl">
-            Espere! Não vá embora 👋
+            Ei, não vai embora! 👋
           </h3>
 
           <p className="mb-1 text-sm text-muted-foreground">
-            Garanta sua caçamba com <span className="font-bold text-foreground">entrega em até 1 hora</span> e desconto exclusivo.
+            Garanta sua caçamba com <span className="font-bold text-foreground">entrega rápida</span> e preço especial.
           </p>
 
           <div className="my-4 flex items-center justify-center gap-2 rounded-lg bg-accent/10 px-3 py-2">

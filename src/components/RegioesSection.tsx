@@ -21,7 +21,7 @@ const RegioesSection = memo(() => {
       <div className="container px-4">
         <div className="mb-10 text-center">
           <h2 className="mb-3 text-2xl font-extrabold text-secondary-foreground md:text-3xl">
-            Atendemos Todo o Estado de São Paulo
+            Onde a gente atende
           </h2>
           <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 border border-primary/20">
             <Zap className="h-4 w-4 text-primary" />

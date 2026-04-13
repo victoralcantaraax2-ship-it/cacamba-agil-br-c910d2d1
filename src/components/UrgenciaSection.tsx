@@ -12,10 +12,10 @@ const UrgenciaSection = memo(() => {
           <span className="text-xs font-bold uppercase tracking-wider text-white">Agenda limitada</span>
         </div>
         <h2 className="mb-3 text-xl font-extrabold text-white md:text-2xl lg:text-3xl">
-          Solicite agora e garanta entrega rápida na sua região
+          Tá precisando pra hoje? Fala com a gente agora!
         </h2>
         <p className="mb-6 text-sm text-white/80 md:text-base">
-          Vagas limitadas para entrega hoje. Entre em contato agora e reserve sua caçamba.
+          Nossa agenda enche rápido. Garanta sua caçamba antes que acabe.
         </p>
         <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
           <button
