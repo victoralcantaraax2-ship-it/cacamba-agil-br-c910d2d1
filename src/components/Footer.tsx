@@ -26,7 +26,7 @@ const Footer = memo(() => {
                 onClick={() => handleWhatsAppClick()}
                 className="flex items-center justify-center gap-2 transition-colors hover:text-primary md:justify-start"
               >
-                <Phone className="h-4 w-4" /> WhatsApp: (11) 96835-9162
+                <Phone className="h-4 w-4" /> WhatsApp: (11) 96074-7359
               </button>
               <a
                 href="mailto:atendimento@nortexcacambas.com"
