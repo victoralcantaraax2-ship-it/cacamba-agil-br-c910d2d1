@@ -10,19 +10,19 @@ import iconAtendimento from "@/assets/icon-atendimento.png";
 import iconFrota from "@/assets/icon-frota.png";
 
 const pillars: { image: string; label: string; desc: string }[] = [
-  { image: iconHorario, label: "No horário certo", desc: "A gente chega na hora combinada. Pode confiar." },
-  { image: iconPreco, label: "Preço sem surpresa", desc: "Você sabe quanto vai pagar antes de fechar. Sem taxa escondida." },
-  { image: iconDescarte, label: "Descarte certinho", desc: "Levamos o entulho pra lugar certo, tudo dentro da lei." },
-  { image: badgeAward, label: "Anos de estrada", desc: "Não somos de ontem. Milhares de clientes já passaram por aqui." },
-  { image: iconAtendimento, label: "Atendimento de gente", desc: "Você fala direto com a gente. Sem robô, sem espera." },
-  { image: iconFrota, label: "Frota própria", desc: "Nossos caminhões, nossa equipe. Isso garante agilidade." },
+  { image: iconHorario, label: "Entrega no prazo", desc: "Cumprimos rigorosamente o horário agendado." },
+  { image: iconPreco, label: "Preço transparente", desc: "Sem taxas ocultas. Total clareza no valor." },
+  { image: iconDescarte, label: "Descarte regularizado", desc: "Destinação correta do entulho, conforme normas." },
+  { image: badgeAward, label: "Experiência no setor", desc: "Atendimento confiável e consolidado." },
+  { image: iconAtendimento, label: "Atendimento especializado", desc: "Equipe preparada para orientar sua necessidade." },
+  { image: iconFrota, label: "Frota própria", desc: "Mais agilidade e controle na operação." },
 ];
 
 const segments = [
   { icon: HardHat, label: "Construtoras" },
   { icon: Home, label: "Reformas" },
   { icon: Building2, label: "Condomínios" },
-  { icon: Warehouse, label: "Comércios" },
+  { icon: Warehouse, label: "Empresas" },
 ];
 
 const AboutSection = memo(() => {
@@ -31,16 +31,22 @@ const AboutSection = memo(() => {
       <div className="container px-4">
         <div className="mx-auto max-w-3xl text-center mb-12">
           <h2 className="mb-4 text-2xl font-extrabold text-foreground md:text-3xl">
-            Quem é a NORTEX?
+            Sobre a NORTEX Caçambas
           </h2>
           <p className="mb-4 text-muted-foreground leading-relaxed text-base md:text-lg">
-            A <span className="font-bold text-foreground">NORTEX Caçambas</span> tá no mercado há anos, alugando caçamba pra obra, reforma e demolição. A gente atende de ponta a ponta — do pedido até a retirada.
+            A <span className="font-bold text-foreground">NORTEX Caçambas</span> é especializada na locação de caçambas para obras, reformas e demolições em São Paulo e região.
           </p>
           <p className="mb-4 text-muted-foreground leading-relaxed">
-            Pode ser uma reforminha no banheiro ou uma obra grande de construtora: o atendimento é o mesmo. Rápido, direto e sem enrolação.
+            Atuamos com foco em agilidade, organização e responsabilidade no descarte de entulho, oferecendo soluções práticas para clientes residenciais, construtoras, condomínios e empresas.
           </p>
-          <p className="text-muted-foreground leading-relaxed">
-            Nosso foco é um só: <span className="font-bold text-foreground">resolver o seu problema de entulho rápido, com preço justo e sem dor de cabeça</span>. É por isso que o pessoal volta e indica.
+          <p className="mb-4 text-muted-foreground leading-relaxed">
+            Nosso compromisso é garantir um atendimento rápido, transparente e sem burocracia — desde a solicitação até a retirada da caçamba.
+          </p>
+          <p className="mb-4 text-muted-foreground leading-relaxed">
+            Com frota própria e equipe experiente, realizamos entregas rápidas e cumprimos prazos com responsabilidade.
+          </p>
+          <p className="text-muted-foreground leading-relaxed font-medium">
+            Independentemente do tamanho da sua obra, estamos preparados para atender com eficiência, segurança e o melhor custo-benefício da região.
           </p>
         </div>
 
@@ -63,14 +69,15 @@ const AboutSection = memo(() => {
           ))}
         </div>
 
-        <div className="mx-auto mt-10 text-center">
+        <div className="mt-10 flex flex-col items-center gap-2 text-center">
           <button
             onClick={() => handleWhatsAppClick()}
             className="inline-flex items-center gap-2 rounded-xl bg-whatsapp px-8 py-4 text-base font-extrabold uppercase text-white shadow-lg transition-all hover:scale-105 hover:bg-whatsapp-hover"
           >
             <img src={whatsappIcon} alt="WhatsApp" className="h-5 w-5" width={20} height={20} />
-            Pedir cotação grátis
+            SOLICITAR ORÇAMENTO NO WHATSAPP
           </button>
+          <span className="text-xs text-muted-foreground">Resposta rápida • Sem compromisso</span>
         </div>
       </div>
     </section>
