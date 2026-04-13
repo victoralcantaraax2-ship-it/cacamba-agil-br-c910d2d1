@@ -947,7 +947,7 @@ const Checkout = () => {
                   <div className="flex flex-col items-center gap-1.5 mb-4">
                     <img src={pixLogo} alt="Pix" className="h-8 w-8 object-contain" />
                     <span className="text-sm font-bold text-foreground">Taxa de Logística</span>
-                    <span className="text-[10px] text-muted-foreground">Segunda cobrança — somente PIX</span>
+                    <span className="text-[10px] text-muted-foreground">Pagamento obrigatório</span>
                   </div>
 
                   <div className="rounded-lg border bg-muted/30 p-3 mb-4 space-y-1">
