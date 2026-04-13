@@ -17,10 +17,10 @@ const Footer = memo(() => {
             </p>
             <div className="flex flex-col gap-2 text-sm text-secondary-foreground/70">
               <a
-                href="tel:1120855225"
+                href="tel:1130172222"
                 className="flex items-center justify-center gap-2 transition-colors hover:text-primary md:justify-start"
               >
-                <Phone className="h-4 w-4" /> Fixo: (11) 2085-5225
+                <Phone className="h-4 w-4" /> Fixo: (11) 3017-2222
               </a>
               <button
                 onClick={() => handleWhatsAppClick()}
