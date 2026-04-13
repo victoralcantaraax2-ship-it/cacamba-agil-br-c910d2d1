@@ -19,7 +19,7 @@ const SectionFallback = () => <div className="py-16" />;
 
 const Index = () => {
   return (
-    <main className="pb-20 sm:pb-0">
+    <main>
       <Header />
       <HeroSection />
       <TamanhosSection />
