@@ -86,6 +86,52 @@ const Checkout = () => {
     setUtms(captureUtms());
   }, []);
 
+  // Poll Nitro for PIX payment confirmation
+  useEffect(() => {
+    if (paymentStatus !== "generated" || !transactionId) return;
+
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+    const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+
+    let cancelled = false;
+    const poll = async () => {
+      try {
+        const res = await fetch(`${supabaseUrl}/functions/v1/verificar-pix`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            apikey: supabaseKey,
+          },
+          body: JSON.stringify({ transaction_id: transactionId }),
+        });
+        const data = await res.json();
+        if (!cancelled && data.status === "paid") {
+          setPaymentStatus("confirmed");
+          toast({ title: "Pagamento confirmado!", description: "Seu PIX foi aprovado com sucesso." });
+          setTimeout(() => navigate("/obrigado"), 2000);
+        }
+      } catch (err) {
+        console.error("Erro ao verificar status PIX:", err);
+      }
+    };
+
+    // Poll every 5 seconds
+    poll();
+    const interval = setInterval(poll, 5000);
+
+    // Stop after 15 minutes
+    const timeout = setTimeout(() => {
+      cancelled = true;
+      clearInterval(interval);
+    }, 15 * 60 * 1000);
+
+    return () => {
+      cancelled = true;
+      clearInterval(interval);
+      clearTimeout(timeout);
+    };
+  }, [paymentStatus, transactionId, navigate, toast]);
+
   const totalSteps = 3;
   const progressValue = (step / totalSteps) * 100;
 
@@ -763,6 +809,13 @@ const Checkout = () => {
                           <div className="absolute h-5 w-5 animate-spin rounded-full border-2 border-transparent border-t-primary" />
                         </div>
                         <span className="text-xs text-muted-foreground animate-pulse">Aguardando confirmação do pagamento…</span>
+                      </div>
+                    )}
+
+                    {paymentStatus === "confirmed" && (
+                      <div className="flex items-center justify-center gap-2 py-3">
+                        <CheckCircle className="h-5 w-5 text-accent" />
+                        <span className="text-sm font-bold text-accent">Pagamento confirmado!</span>
                       </div>
                     )}
                   </div>
