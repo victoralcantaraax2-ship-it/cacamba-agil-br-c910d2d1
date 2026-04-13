@@ -49,11 +49,15 @@ const AboutSection = memo(() => {
         </div>
 
         <div className="mx-auto grid max-w-4xl grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-          {pillars.map(({ icon: Icon, label, desc }) => (
+          {pillars.map(({ icon: Icon, image, label, desc }) => (
             <div key={label} className="flex flex-col items-center gap-3 rounded-xl border border-border bg-card p-6 text-center transition-all hover:border-primary/30 hover:shadow-md">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary">
-                <Icon className="h-6 w-6 text-white" />
-              </div>
+              {image ? (
+                <img src={image} alt={label} className="h-12 w-12 object-contain" width={48} height={48} />
+              ) : Icon ? (
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary">
+                  <Icon className="h-6 w-6 text-white" />
+                </div>
+              ) : null}
               <h3 className="text-base font-bold text-card-foreground">{label}</h3>
               <p className="text-sm text-muted-foreground">{desc}</p>
             </div>
