@@ -9,7 +9,7 @@ export const getWhatsAppUrl = (customMessage?: string) => {
 
 export const handleWhatsAppClick = (customMessage?: string) => {
   const url = getWhatsAppUrl(customMessage);
-  const isFinalizacao = typeof window !== "undefined" && window.location.pathname === "/finalizacao";
+  const isFinalizacao = typeof window !== "undefined" && window.location.pathname === "/garantir-cacamba";
 
   if (!isFinalizacao && typeof window !== "undefined" && typeof (window as any).gtag === "function") {
     const callback = function () {
