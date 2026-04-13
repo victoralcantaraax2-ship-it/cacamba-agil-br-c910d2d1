@@ -6,9 +6,9 @@ import whatsappIcon from "@/assets/whatsapp-icon.webp";
 import logoAmba from "@/assets/logo-nortex.png";
 
 const badges = [
-  { icon: ShieldCheck, label: "Processo seguro" },
-  { icon: Clock, label: "Entrega em até 2h" },
-  { icon: Phone, label: "Atendimento direto" },
+  { icon: Users, label: "+500 clientes atendidos" },
+  { icon: Star, label: "Nota 4.8 no Google" },
+  { icon: ShieldCheck, label: "Empresa regularizada" },
 ];
 
 const scrollTo = (id: string) => {
@@ -18,11 +18,11 @@ const scrollTo = (id: string) => {
 
 const HeroSection = ({ cityName }: { cityName?: string }) => {
   const h1Text = cityName
-    ? `Aluguel de Caçamba em ${cityName}`
-    : "Precisa de Caçamba Hoje?";
+    ? `Aluguel de Caçamba em ${cityName} com Entrega em Até 2 Horas`
+    : "ALUGUEL DE CAÇAMBA EM SÃO PAULO COM ENTREGA EM ATÉ 2 HORAS";
   const subtitle = cityName
-    ? `Entregamos rápido em ${cityName}. Fale no WhatsApp e receba sua caçamba.`
-    : "Entrega rápida, preço justo e atendimento direto pelo WhatsApp.";
+    ? `Atendimento imediato no WhatsApp. Sem burocracia. Melhor preço em ${cityName}.`
+    : "Atendimento imediato no WhatsApp. Sem burocracia. Melhor preço da região.";
 
   const [cep, setCep] = useState("");
   const [address, setAddress] = useState<{ logradouro: string; bairro: string; localidade: string; uf: string; cep: string } | null>(null);
@@ -112,17 +112,17 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
 
           <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center sm:gap-4">
             <button
-              onClick={() => scrollTo("#tamanhos")}
-              className="inline-flex items-center gap-3 rounded-xl bg-primary px-8 py-4 text-lg font-extrabold uppercase text-white shadow-2xl transition-all hover:scale-105 hover:brightness-110 md:px-12 md:py-5 md:text-xl"
+              onClick={() => handleWhatsAppClick()}
+              className="inline-flex items-center gap-3 rounded-xl bg-whatsapp px-8 py-4 text-lg font-extrabold uppercase text-white shadow-2xl transition-all hover:scale-105 hover:bg-whatsapp-hover md:px-12 md:py-5 md:text-xl animate-pulse-green"
             >
-              Pedir Caçamba Agora
+              <img src={whatsappIcon} alt="WhatsApp" className="h-6 w-6" width={24} height={24} />
+              CHAMAR NO WHATSAPP AGORA
             </button>
             <button
-              onClick={() => handleWhatsAppClick()}
-              className="inline-flex items-center gap-2 rounded-xl bg-whatsapp px-6 py-4 text-base font-bold text-white shadow-lg transition-all hover:scale-105 hover:bg-whatsapp-hover md:px-8 md:py-5 md:text-lg"
+              onClick={() => scrollTo("#tamanhos")}
+              className="inline-flex items-center gap-2 rounded-xl border-2 border-white/30 bg-white/10 px-6 py-4 text-base font-bold text-white shadow-lg transition-all hover:scale-105 hover:bg-white/20 md:px-8 md:py-5 md:text-lg"
             >
-              <img src={whatsappIcon} alt="WhatsApp" className="h-5 w-5" width={20} height={20} />
-              Falar no WhatsApp
+              Ver Tamanhos e Preços
             </button>
           </div>
 

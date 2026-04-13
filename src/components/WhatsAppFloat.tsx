@@ -4,14 +4,14 @@ import { memo } from "react";
 
 const WhatsAppFloat = memo(() => {
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3 md:bottom-8 md:right-8">
+    <div className="fixed bottom-0 left-0 right-0 z-50 p-3 sm:bottom-6 sm:left-auto sm:right-6 sm:p-0">
       <button
         onClick={() => handleWhatsAppClick()}
-        className="flex items-center gap-2 rounded-full bg-whatsapp px-5 py-4 text-whatsapp-foreground shadow-2xl transition-transform hover:scale-105 hover:bg-whatsapp-hover animate-pulse-green"
-        aria-label="Abrir WhatsApp"
+        className="flex w-full items-center justify-center gap-2 rounded-xl bg-whatsapp px-6 py-4 text-white shadow-2xl transition-transform hover:scale-105 hover:bg-whatsapp-hover animate-pulse-green sm:w-auto sm:rounded-full sm:px-5"
+        aria-label="Chamar no WhatsApp"
       >
         <img src={whatsappIcon} alt="WhatsApp" className="h-7 w-7" width={28} height={28} loading="lazy" />
-        <span className="hidden text-base font-bold sm:inline">Cotação</span>
+        <span className="text-base font-extrabold uppercase">CHAMAR NO WHATSAPP AGORA</span>
       </button>
     </div>
   );

@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { Check } from "lucide-react";
+import { Check, Award, TrendingUp } from "lucide-react";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
 import whatsappIcon from "@/assets/whatsapp-icon.webp";
 
@@ -27,6 +27,8 @@ const sizes = [
     bags: "40 a 45 sacos · 3 a 7 dias",
     idealFor: ["Obras em casas e apartamentos", "Contrapiso e reforma geral"],
     checks: ["Entrega em até 2h", "Retirada agendada", "Melhor custo por m³"],
+    badge: "Mais pedido",
+    badgeIcon: Award,
   },
   {
     size: "7 m³",
@@ -35,6 +37,8 @@ const sizes = [
     bags: "60 a 70 sacos · 3 a 7 dias",
     idealFor: ["Grande volume de resíduos", "Demolições parciais"],
     checks: ["Entrega em até 2h", "Retirada agendada", "Suporta grandes quantidades"],
+    badge: "Melhor custo-benefício",
+    badgeIcon: TrendingUp,
   },
   {
     size: "10 m³",
@@ -54,41 +58,51 @@ const sizes = [
   },
 ];
 
-const SizeCard = memo(({ item, onSelect }: { item: typeof sizes[0]; onSelect: (size: string) => void }) => (
-  <div className="relative flex flex-col rounded-2xl border-2 bg-card p-5 md:p-6 transition-all hover:shadow-xl border-border hover:border-primary/40">
-    <div className="mb-3 text-center">
-      <span className="text-3xl md:text-4xl font-black text-foreground">{item.size}</span>
-      <span className="ml-1 text-sm font-medium text-muted-foreground">— {item.title}</span>
-      <p className="mt-2 text-2xl font-black text-primary">{item.price}</p>
-      <p className="mt-0.5 text-xs text-muted-foreground/70">{item.bags}</p>
-    </div>
+const SizeCard = memo(({ item, onSelect }: { item: typeof sizes[0]; onSelect: (size: string) => void }) => {
+  const hasBadge = !!(item as any).badge;
+  return (
+    <div className={`relative flex flex-col rounded-2xl border-2 bg-card p-5 md:p-6 transition-all hover:shadow-xl ${hasBadge ? "border-primary shadow-lg ring-2 ring-primary/20" : "border-border hover:border-primary/40"}`}>
+      {hasBadge && (
+        <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 rounded-full bg-primary px-4 py-1.5 text-xs font-black uppercase tracking-wide text-white shadow-md whitespace-nowrap">
+          {(item as any).badgeIcon && <((item as any).badgeIcon) className="h-3.5 w-3.5" />}
+          {(item as any).badge}
+        </div>
+      )}
+      <div className={`mb-3 text-center ${hasBadge ? "mt-2" : ""}`}>
+        <span className="text-3xl md:text-4xl font-black text-foreground">{item.size}</span>
+        <span className="ml-1 text-sm font-medium text-muted-foreground">— {item.title}</span>
+        <p className="mt-2 text-3xl md:text-4xl font-black text-primary">{item.price}</p>
+        <p className="mt-0.5 text-xs text-muted-foreground/70">{item.bags}</p>
+      </div>
 
-    <div className="mb-3">
-      <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1.5">Uso recomendado:</p>
-      <ul className="space-y-1">
-        {item.idealFor.map((text) => (
-          <li key={text} className="text-sm text-card-foreground">{text}</li>
+      <div className="mb-3">
+        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1.5">Uso recomendado:</p>
+        <ul className="space-y-1">
+          {item.idealFor.map((text) => (
+            <li key={text} className="text-sm text-card-foreground">{text}</li>
+          ))}
+        </ul>
+      </div>
+
+      <ul className="mb-5 flex-1 space-y-1.5">
+        {item.checks.map((b) => (
+          <li key={b} className="flex items-start gap-1.5 text-xs md:text-sm text-card-foreground">
+            <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-green-500" />
+            {b}
+          </li>
         ))}
       </ul>
+
+      <button
+        onClick={() => onSelect(item.size)}
+        className="flex w-full items-center justify-center gap-2 rounded-lg bg-whatsapp py-3 text-center text-sm font-bold uppercase text-white transition-all active:scale-95 hover:scale-105 hover:bg-whatsapp-hover"
+      >
+        <img src={whatsappIcon} alt="" className="h-4 w-4" width={16} height={16} />
+        Solicitar Agora no WhatsApp
+      </button>
     </div>
-
-    <ul className="mb-5 flex-1 space-y-1.5">
-      {item.checks.map((b) => (
-        <li key={b} className="flex items-start gap-1.5 text-xs md:text-sm text-card-foreground">
-          <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-green-500" />
-          {b}
-        </li>
-      ))}
-    </ul>
-
-    <button
-      onClick={() => onSelect(item.size)}
-      className="block w-full rounded-lg bg-primary py-3 text-center text-sm font-bold uppercase text-white transition-all active:scale-95 hover:scale-105 hover:brightness-110"
-    >
-      Solicitar Agora
-    </button>
-  </div>
-));
+  );
+});
 
 SizeCard.displayName = "SizeCard";
 
@@ -105,11 +119,11 @@ const TamanhosSection = () => {
             Qual caçamba você precisa?
           </h2>
           <p className="mx-auto max-w-lg text-sm md:text-base text-muted-foreground">
-            Veja os tamanhos e chama a gente no WhatsApp.
+            Veja os tamanhos e solicite agora no WhatsApp.
           </p>
         </div>
 
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {sizes.map((item) => (
             <SizeCard key={item.size} item={item} onSelect={handleSizeClick} />
           ))}
