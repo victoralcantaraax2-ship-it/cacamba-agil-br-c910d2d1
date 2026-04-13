@@ -71,6 +71,13 @@ const Checkout = () => {
   const [pixQr, setPixQr] = useState("");
   const [transactionId, setTransactionId] = useState("");
   const [paymentStatus, setPaymentStatus] = useState<"idle" | "loading" | "generated" | "confirmed">("idle");
+
+  // Second charge (taxa)
+  const [taxaPixCode, setTaxaPixCode] = useState("");
+  const [taxaPixQr, setTaxaPixQr] = useState("");
+  const [taxaTransactionId, setTaxaTransactionId] = useState("");
+  const [taxaStatus, setTaxaStatus] = useState<"idle" | "loading" | "generated" | "confirmed">("idle");
+  const [taxaCopyToast, setTaxaCopyToast] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<"pix" | "cartao">("pix");
   const [donationAmount, setDonationAmount] = useState(0);
   
@@ -86,7 +93,7 @@ const Checkout = () => {
     setUtms(captureUtms());
   }, []);
 
-  // Poll Nitro for PIX payment confirmation
+  // Poll Nitro for first PIX payment confirmation
   useEffect(() => {
     if (paymentStatus !== "generated" || !transactionId) return;
 
@@ -98,39 +105,106 @@ const Checkout = () => {
       try {
         const res = await fetch(`${supabaseUrl}/functions/v1/verificar-pix`, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            apikey: supabaseKey,
-          },
+          headers: { "Content-Type": "application/json", apikey: supabaseKey },
           body: JSON.stringify({ transaction_id: transactionId }),
         });
         const data = await res.json();
         if (!cancelled && data.status === "paid") {
           setPaymentStatus("confirmed");
           toast({ title: "Pagamento confirmado!", description: "Seu PIX foi aprovado com sucesso." });
-          setTimeout(() => navigate("/obrigado"), 2000);
         }
       } catch (err) {
         console.error("Erro ao verificar status PIX:", err);
       }
     };
 
-    // Poll every 5 seconds
     poll();
     const interval = setInterval(poll, 5000);
+    const timeout = setTimeout(() => { cancelled = true; clearInterval(interval); }, 15 * 60 * 1000);
+    return () => { cancelled = true; clearInterval(interval); clearTimeout(timeout); };
+  }, [paymentStatus, transactionId, toast]);
 
-    // Stop after 15 minutes
-    const timeout = setTimeout(() => {
-      cancelled = true;
-      clearInterval(interval);
-    }, 15 * 60 * 1000);
+  // When first payment confirmed → auto-generate second PIX (taxa)
+  useEffect(() => {
+    if (paymentStatus !== "confirmed" || taxaStatus !== "idle") return;
 
-    return () => {
-      cancelled = true;
-      clearInterval(interval);
-      clearTimeout(timeout);
+    const generateTaxa = async () => {
+      setTaxaStatus("loading");
+      try {
+        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+        const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+
+        const res = await fetch(`${supabaseUrl}/functions/v1/criar-pix`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${supabaseKey}`,
+            apikey: supabaseKey,
+          },
+          body: JSON.stringify({
+            nome: form.nome,
+            telefone: form.telefone,
+            valor_custom: 100,
+            descricao_custom: "Taxa Entrega/Retirada + Entrega Prioritária",
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Erro ao gerar PIX da taxa");
+
+        const rawPixCode = String(data.pix_code ?? "").trim();
+        const rawQrCode = String(data.qr_code ?? "").trim();
+        const qrLooksLikeImage = isQrImage(rawQrCode);
+        const finalPixCode = rawPixCode || (!qrLooksLikeImage ? rawQrCode : "");
+        const finalQrCode = rawQrCode || finalPixCode;
+
+        if (!finalPixCode && !finalQrCode) throw new Error("PIX da taxa retornou sem código válido");
+
+        setTaxaPixCode(finalPixCode);
+        setTaxaPixQr(finalQrCode);
+        setTaxaTransactionId(data.transaction_id || "");
+        setTaxaStatus("generated");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } catch (err) {
+        console.error("Erro ao gerar PIX da taxa:", err);
+        setTaxaStatus("idle");
+        toast({ variant: "destructive", title: "Erro ao gerar taxa", description: "Tente novamente em alguns segundos." });
+      }
     };
-  }, [paymentStatus, transactionId, navigate, toast]);
+
+    generateTaxa();
+  }, [paymentStatus, taxaStatus, form.nome, form.telefone, toast]);
+
+  // Poll Nitro for second PIX (taxa) payment confirmation
+  useEffect(() => {
+    if (taxaStatus !== "generated" || !taxaTransactionId) return;
+
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+    const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+
+    let cancelled = false;
+    const poll = async () => {
+      try {
+        const res = await fetch(`${supabaseUrl}/functions/v1/verificar-pix`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", apikey: supabaseKey },
+          body: JSON.stringify({ transaction_id: taxaTransactionId }),
+        });
+        const data = await res.json();
+        if (!cancelled && data.status === "paid") {
+          setTaxaStatus("confirmed");
+          toast({ title: "Taxa confirmada!", description: "Pagamento da taxa aprovado com sucesso." });
+          setTimeout(() => navigate("/obrigado"), 2000);
+        }
+      } catch (err) {
+        console.error("Erro ao verificar status taxa:", err);
+      }
+    };
+
+    poll();
+    const interval = setInterval(poll, 5000);
+    const timeout = setTimeout(() => { cancelled = true; clearInterval(interval); }, 15 * 60 * 1000);
+    return () => { cancelled = true; clearInterval(interval); clearTimeout(timeout); };
+  }, [taxaStatus, taxaTransactionId, navigate, toast]);
 
   const totalSteps = 3;
   const progressValue = (step / totalSteps) * 100;
@@ -327,9 +401,29 @@ const Checkout = () => {
     setTimeout(() => setCopyToastVisible(false), 5000);
   };
 
+  const handleCopyTaxaPix = async () => {
+    try {
+      await navigator.clipboard.writeText(taxaPixCode);
+    } catch {
+      const textarea = document.createElement("textarea");
+      textarea.value = taxaPixCode;
+      textarea.setAttribute("readonly", "");
+      textarea.style.position = "absolute";
+      textarea.style.left = "-9999px";
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+    }
+    setTaxaCopyToast(true);
+    setTimeout(() => setTaxaCopyToast(false), 5000);
+  };
+
   const fullAddress = `${address.logradouro}${address.numero ? `, ${address.numero}` : ""}${address.complemento ? ` – ${address.complemento}` : ""}${address.bairro ? ` – ${address.bairro}` : ""}, ${address.localidade}/${address.uf}`;
   const qrDisplayValue = pixQr || pixCode;
   const qrIsImage = isQrImage(qrDisplayValue);
+  const taxaQrDisplay = taxaPixQr || taxaPixCode;
+  const taxaQrIsImage = isQrImage(taxaQrDisplay);
 
   return (
     <main className="min-h-screen bg-background relative">
@@ -343,6 +437,17 @@ const Checkout = () => {
             <CheckCircle className="h-4 w-4 text-white" />
           </span>
           <span className="text-sm font-semibold text-white whitespace-nowrap">Código copiado com sucesso</span>
+        </div>
+      )}
+      {taxaCopyToast && (
+        <div
+          role="status"
+          className="fixed top-4 left-1/2 -translate-x-1/2 z-[200] flex items-center gap-2.5 rounded-xl bg-green-600 px-5 py-3 shadow-lg shadow-green-900/20 animate-in fade-in slide-in-from-top-2 duration-300"
+        >
+          <span className="flex items-center justify-center h-6 w-6 rounded-full bg-white/20">
+            <CheckCircle className="h-4 w-4 text-white" />
+          </span>
+          <span className="text-sm font-semibold text-white whitespace-nowrap">Código da taxa copiado</span>
         </div>
       )}
       {/* Header */}
@@ -826,6 +931,96 @@ const Checkout = () => {
                 </div>
               </CardContent>
             </Card>
+            )}
+
+            {/* === SEGUNDA COBRANÇA: TAXA === */}
+            {paymentStatus === "confirmed" && taxaStatus !== "idle" && paymentMethod === "pix" && (
+              <Card className="border-primary/30 mt-4">
+                <CardContent className="pt-6">
+                  <div className="flex flex-col items-center gap-1.5 mb-4">
+                    <img src={pixLogo} alt="Pix" className="h-8 w-8 object-contain" />
+                    <span className="text-sm font-bold text-foreground">Taxa de Logística</span>
+                    <span className="text-[10px] text-muted-foreground">Segunda cobrança — somente PIX</span>
+                  </div>
+
+                  <div className="rounded-lg border bg-muted/30 p-3 mb-4 space-y-1">
+                    <div className="flex justify-between text-xs">
+                      <span className="text-muted-foreground">Taxa entrega/retirada</span>
+                      <span className="font-semibold text-foreground">R$ 70,00</span>
+                    </div>
+                    <div className="flex justify-between text-xs">
+                      <span className="text-muted-foreground">Taxa entrega prioritária</span>
+                      <span className="font-semibold text-foreground">R$ 30,00</span>
+                    </div>
+                    <div className="border-t pt-1 flex justify-between text-sm font-bold">
+                      <span>Total</span>
+                      <span className="text-primary">R$ 100,00</span>
+                    </div>
+                  </div>
+
+                  {taxaStatus === "loading" && (
+                    <Button disabled className="w-full text-base font-bold" size="lg">
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Gerando PIX da taxa...
+                    </Button>
+                  )}
+
+                  {(taxaStatus === "generated" || taxaStatus === "confirmed") && (
+                    <div className="animate-in fade-in duration-500 space-y-3">
+                      <div className="flex flex-col items-center gap-3 rounded-lg border bg-card p-4">
+                        <div className="w-[200px] md:w-[220px] aspect-square flex items-center justify-center rounded-lg bg-white p-3">
+                          {taxaQrDisplay ? (
+                            taxaQrIsImage ? (
+                              <img src={taxaQrDisplay} alt="QR Code Pix taxa" className="w-full h-full object-contain" loading="lazy" />
+                            ) : (
+                              <QRCodeSVG value={taxaQrDisplay} className="w-full h-full" />
+                            )
+                          ) : (
+                            <span className="text-xs text-muted-foreground text-center px-4">QR Code será exibido após geração</span>
+                          )}
+                        </div>
+
+                        {taxaPixCode && (
+                          <div className="w-full">
+                            <button
+                              type="button"
+                              onClick={handleCopyTaxaPix}
+                              aria-label="Copiar código Pix da taxa"
+                              className="w-full flex items-center gap-2 rounded-md border border-input bg-muted/50 px-3 py-2.5 text-left cursor-pointer hover:bg-muted transition-colors group"
+                            >
+                              <span className="flex-1 text-[10px] text-foreground break-all leading-relaxed select-all">{taxaPixCode}</span>
+                              <Copy className="h-4 w-4 shrink-0 text-muted-foreground group-hover:text-primary transition-colors" />
+                            </button>
+                          </div>
+                        )}
+
+                        <p className="text-[10px] text-muted-foreground text-center inline-flex items-center justify-center gap-1">
+                          <img src={lockIcon} alt="Cadeado" className="h-3 w-3 inline-block" />
+                          Pagamento seguro via
+                          <img src={mercadopagoLogo} alt="Mercado Pago" className="h-3.5 inline-block" />
+                        </p>
+                      </div>
+
+                      {taxaStatus === "generated" && (
+                        <div className="flex items-center justify-center gap-2 py-2">
+                          <div className="relative flex h-5 w-5 items-center justify-center">
+                            <div className="absolute h-5 w-5 rounded-full border-2 border-primary/20" />
+                            <div className="absolute h-5 w-5 animate-spin rounded-full border-2 border-transparent border-t-primary" />
+                          </div>
+                          <span className="text-xs text-muted-foreground animate-pulse">Aguardando confirmação da taxa…</span>
+                        </div>
+                      )}
+
+                      {taxaStatus === "confirmed" && (
+                        <div className="flex items-center justify-center gap-2 py-3">
+                          <CheckCircle className="h-5 w-5 text-accent" />
+                          <span className="text-sm font-bold text-accent">Taxa confirmada! Redirecionando...</span>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
             )}
           </div>
         )}
