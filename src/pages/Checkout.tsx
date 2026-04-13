@@ -811,6 +811,13 @@ const Checkout = () => {
                         <span className="text-xs text-muted-foreground animate-pulse">Aguardando confirmação do pagamento…</span>
                       </div>
                     )}
+
+                    {paymentStatus === "confirmed" && (
+                      <div className="flex items-center justify-center gap-2 py-3">
+                        <CheckCircle className="h-5 w-5 text-accent" />
+                        <span className="text-sm font-bold text-accent">Pagamento confirmado!</span>
+                      </div>
+                    )}
                   </div>
                 )}
                 <div className="mt-4 flex items-center gap-2 rounded-lg bg-accent/10 p-3 text-sm text-accent">
