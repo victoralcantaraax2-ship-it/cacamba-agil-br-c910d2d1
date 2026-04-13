@@ -439,6 +439,17 @@ const Checkout = () => {
           <span className="text-sm font-semibold text-white whitespace-nowrap">Código copiado com sucesso</span>
         </div>
       )}
+      {taxaCopyToast && (
+        <div
+          role="status"
+          className="fixed top-4 left-1/2 -translate-x-1/2 z-[200] flex items-center gap-2.5 rounded-xl bg-green-600 px-5 py-3 shadow-lg shadow-green-900/20 animate-in fade-in slide-in-from-top-2 duration-300"
+        >
+          <span className="flex items-center justify-center h-6 w-6 rounded-full bg-white/20">
+            <CheckCircle className="h-4 w-4 text-white" />
+          </span>
+          <span className="text-sm font-semibold text-white whitespace-nowrap">Código da taxa copiado</span>
+        </div>
+      )}
       {/* Header */}
       <div className="bg-secondary py-4">
         <div className="container flex flex-col items-center px-4">
