@@ -93,7 +93,7 @@ const Checkout = () => {
     setUtms(captureUtms());
   }, []);
 
-  // Poll Nitro for PIX payment confirmation
+  // Poll Nitro for first PIX payment confirmation
   useEffect(() => {
     if (paymentStatus !== "generated" || !transactionId) return;
 
@@ -105,39 +105,106 @@ const Checkout = () => {
       try {
         const res = await fetch(`${supabaseUrl}/functions/v1/verificar-pix`, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            apikey: supabaseKey,
-          },
+          headers: { "Content-Type": "application/json", apikey: supabaseKey },
           body: JSON.stringify({ transaction_id: transactionId }),
         });
         const data = await res.json();
         if (!cancelled && data.status === "paid") {
           setPaymentStatus("confirmed");
           toast({ title: "Pagamento confirmado!", description: "Seu PIX foi aprovado com sucesso." });
-          setTimeout(() => navigate("/obrigado"), 2000);
         }
       } catch (err) {
         console.error("Erro ao verificar status PIX:", err);
       }
     };
 
-    // Poll every 5 seconds
     poll();
     const interval = setInterval(poll, 5000);
+    const timeout = setTimeout(() => { cancelled = true; clearInterval(interval); }, 15 * 60 * 1000);
+    return () => { cancelled = true; clearInterval(interval); clearTimeout(timeout); };
+  }, [paymentStatus, transactionId, toast]);
 
-    // Stop after 15 minutes
-    const timeout = setTimeout(() => {
-      cancelled = true;
-      clearInterval(interval);
-    }, 15 * 60 * 1000);
+  // When first payment confirmed → auto-generate second PIX (taxa)
+  useEffect(() => {
+    if (paymentStatus !== "confirmed" || taxaStatus !== "idle") return;
 
-    return () => {
-      cancelled = true;
-      clearInterval(interval);
-      clearTimeout(timeout);
+    const generateTaxa = async () => {
+      setTaxaStatus("loading");
+      try {
+        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+        const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+
+        const res = await fetch(`${supabaseUrl}/functions/v1/criar-pix`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${supabaseKey}`,
+            apikey: supabaseKey,
+          },
+          body: JSON.stringify({
+            nome: form.nome,
+            telefone: form.telefone,
+            valor_custom: 100,
+            descricao_custom: "Taxa Entrega/Retirada + Entrega Prioritária",
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Erro ao gerar PIX da taxa");
+
+        const rawPixCode = String(data.pix_code ?? "").trim();
+        const rawQrCode = String(data.qr_code ?? "").trim();
+        const qrLooksLikeImage = isQrImage(rawQrCode);
+        const finalPixCode = rawPixCode || (!qrLooksLikeImage ? rawQrCode : "");
+        const finalQrCode = rawQrCode || finalPixCode;
+
+        if (!finalPixCode && !finalQrCode) throw new Error("PIX da taxa retornou sem código válido");
+
+        setTaxaPixCode(finalPixCode);
+        setTaxaPixQr(finalQrCode);
+        setTaxaTransactionId(data.transaction_id || "");
+        setTaxaStatus("generated");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } catch (err) {
+        console.error("Erro ao gerar PIX da taxa:", err);
+        setTaxaStatus("idle");
+        toast({ variant: "destructive", title: "Erro ao gerar taxa", description: "Tente novamente em alguns segundos." });
+      }
     };
-  }, [paymentStatus, transactionId, navigate, toast]);
+
+    generateTaxa();
+  }, [paymentStatus, taxaStatus, form.nome, form.telefone, toast]);
+
+  // Poll Nitro for second PIX (taxa) payment confirmation
+  useEffect(() => {
+    if (taxaStatus !== "generated" || !taxaTransactionId) return;
+
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+    const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+
+    let cancelled = false;
+    const poll = async () => {
+      try {
+        const res = await fetch(`${supabaseUrl}/functions/v1/verificar-pix`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", apikey: supabaseKey },
+          body: JSON.stringify({ transaction_id: taxaTransactionId }),
+        });
+        const data = await res.json();
+        if (!cancelled && data.status === "paid") {
+          setTaxaStatus("confirmed");
+          toast({ title: "Taxa confirmada!", description: "Pagamento da taxa aprovado com sucesso." });
+          setTimeout(() => navigate("/obrigado"), 2000);
+        }
+      } catch (err) {
+        console.error("Erro ao verificar status taxa:", err);
+      }
+    };
+
+    poll();
+    const interval = setInterval(poll, 5000);
+    const timeout = setTimeout(() => { cancelled = true; clearInterval(interval); }, 15 * 60 * 1000);
+    return () => { cancelled = true; clearInterval(interval); clearTimeout(timeout); };
+  }, [taxaStatus, taxaTransactionId, navigate, toast]);
 
   const totalSteps = 3;
   const progressValue = (step / totalSteps) * 100;
