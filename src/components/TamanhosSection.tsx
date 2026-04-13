@@ -59,13 +59,14 @@ const sizes = [
 ];
 
 const SizeCard = memo(({ item, onSelect }: { item: typeof sizes[0]; onSelect: (size: string) => void }) => {
-  const hasBadge = !!(item as any).badge;
+  const hasBadge = !!item.badge;
+  const BadgeIcon = item.badgeIcon;
   return (
     <div className={`relative flex flex-col rounded-2xl border-2 bg-card p-5 md:p-6 transition-all hover:shadow-xl ${hasBadge ? "border-primary shadow-lg ring-2 ring-primary/20" : "border-border hover:border-primary/40"}`}>
       {hasBadge && (
         <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 rounded-full bg-primary px-4 py-1.5 text-xs font-black uppercase tracking-wide text-white shadow-md whitespace-nowrap">
-          {(item as any).badgeIcon && <((item as any).badgeIcon) className="h-3.5 w-3.5" />}
-          {(item as any).badge}
+          {BadgeIcon && <BadgeIcon className="h-3.5 w-3.5" />}
+          {item.badge}
         </div>
       )}
       <div className={`mb-3 text-center ${hasBadge ? "mt-2" : ""}`}>
