@@ -1,17 +1,21 @@
 import { memo } from "react";
-import { Clock, ShieldCheck, Leaf, Users, Truck, HardHat, Home, Building2, Warehouse } from "lucide-react";
+import { HardHat, Home, Building2, Warehouse } from "lucide-react";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
 import whatsappIcon from "@/assets/whatsapp-icon.webp";
 import badgeAward from "@/assets/badge-award.png";
 import iconHorario from "@/assets/icon-horario.png";
+import iconDescarte from "@/assets/icon-descarte.png";
+import iconPreco from "@/assets/icon-preco.png";
+import iconAtendimento from "@/assets/icon-atendimento.png";
+import iconFrota from "@/assets/icon-frota.png";
 
-const pillars: { icon?: any; image?: string; label: string; desc: string }[] = [
+const pillars: { image: string; label: string; desc: string }[] = [
   { image: iconHorario, label: "No horário certo", desc: "A gente chega na hora combinada. Pode confiar." },
-  { icon: ShieldCheck, label: "Preço sem surpresa", desc: "Você sabe quanto vai pagar antes de fechar. Sem taxa escondida." },
-  { icon: Leaf, label: "Descarte certinho", desc: "Levamos o entulho pra lugar certo, tudo dentro da lei." },
+  { image: iconPreco, label: "Preço sem surpresa", desc: "Você sabe quanto vai pagar antes de fechar. Sem taxa escondida." },
+  { image: iconDescarte, label: "Descarte certinho", desc: "Levamos o entulho pra lugar certo, tudo dentro da lei." },
   { image: badgeAward, label: "Anos de estrada", desc: "Não somos de ontem. Milhares de clientes já passaram por aqui." },
-  { icon: Users, label: "Atendimento de gente", desc: "Você fala direto com a gente. Sem robô, sem espera." },
-  { icon: Truck, label: "Frota própria", desc: "Nossos caminhões, nossa equipe. Isso garante agilidade." },
+  { image: iconAtendimento, label: "Atendimento de gente", desc: "Você fala direto com a gente. Sem robô, sem espera." },
+  { image: iconFrota, label: "Frota própria", desc: "Nossos caminhões, nossa equipe. Isso garante agilidade." },
 ];
 
 const segments = [
@@ -50,15 +54,9 @@ const AboutSection = memo(() => {
         </div>
 
         <div className="mx-auto grid max-w-4xl grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-          {pillars.map(({ icon: Icon, image, label, desc }) => (
+          {pillars.map(({ image, label, desc }) => (
             <div key={label} className="flex flex-col items-center gap-3 rounded-xl border border-border bg-card p-6 text-center transition-all hover:border-primary/30 hover:shadow-md">
-              {image ? (
-                <img src={image} alt={label} className="h-12 w-12 object-contain" width={48} height={48} />
-              ) : Icon ? (
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary">
-                  <Icon className="h-6 w-6 text-white" />
-                </div>
-              ) : null}
+              <img src={image} alt={label} className="h-12 w-12 object-contain" width={48} height={48} />
               <h3 className="text-base font-bold text-card-foreground">{label}</h3>
               <p className="text-sm text-muted-foreground">{desc}</p>
             </div>
