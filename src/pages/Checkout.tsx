@@ -921,7 +921,96 @@ const Checkout = () => {
               </CardContent>
             </Card>
             )}
-          </div>
+
+            {/* === SEGUNDA COBRANÇA: TAXA === */}
+            {paymentStatus === "confirmed" && taxaStatus !== "idle" && paymentMethod === "pix" && (
+              <Card className="border-primary/30 mt-4">
+                <CardContent className="pt-6">
+                  <div className="flex flex-col items-center gap-1.5 mb-4">
+                    <img src={pixLogo} alt="Pix" className="h-8 w-8 object-contain" />
+                    <span className="text-sm font-bold text-foreground">Taxa de Logística</span>
+                    <span className="text-[10px] text-muted-foreground">Segunda cobrança — somente PIX</span>
+                  </div>
+
+                  <div className="rounded-lg border bg-muted/30 p-3 mb-4 space-y-1">
+                    <div className="flex justify-between text-xs">
+                      <span className="text-muted-foreground">Taxa entrega/retirada</span>
+                      <span className="font-semibold text-foreground">R$ 70,00</span>
+                    </div>
+                    <div className="flex justify-between text-xs">
+                      <span className="text-muted-foreground">Taxa entrega prioritária</span>
+                      <span className="font-semibold text-foreground">R$ 30,00</span>
+                    </div>
+                    <div className="border-t pt-1 flex justify-between text-sm font-bold">
+                      <span>Total</span>
+                      <span className="text-primary">R$ 100,00</span>
+                    </div>
+                  </div>
+
+                  {taxaStatus === "loading" && (
+                    <Button disabled className="w-full text-base font-bold" size="lg">
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Gerando PIX da taxa...
+                    </Button>
+                  )}
+
+                  {(taxaStatus === "generated" || taxaStatus === "confirmed") && (
+                    <div className="animate-in fade-in duration-500 space-y-3">
+                      <div className="flex flex-col items-center gap-3 rounded-lg border bg-card p-4">
+                        <div className="w-[200px] md:w-[220px] aspect-square flex items-center justify-center rounded-lg bg-white p-3">
+                          {taxaQrDisplay ? (
+                            taxaQrIsImage ? (
+                              <img src={taxaQrDisplay} alt="QR Code Pix taxa" className="w-full h-full object-contain" loading="lazy" />
+                            ) : (
+                              <QRCodeSVG value={taxaQrDisplay} className="w-full h-full" />
+                            )
+                          ) : (
+                            <span className="text-xs text-muted-foreground text-center px-4">QR Code será exibido após geração</span>
+                          )}
+                        </div>
+
+                        {taxaPixCode && (
+                          <div className="w-full">
+                            <button
+                              type="button"
+                              onClick={handleCopyTaxaPix}
+                              aria-label="Copiar código Pix da taxa"
+                              className="w-full flex items-center gap-2 rounded-md border border-input bg-muted/50 px-3 py-2.5 text-left cursor-pointer hover:bg-muted transition-colors group"
+                            >
+                              <span className="flex-1 text-[10px] text-foreground break-all leading-relaxed select-all">{taxaPixCode}</span>
+                              <Copy className="h-4 w-4 shrink-0 text-muted-foreground group-hover:text-primary transition-colors" />
+                            </button>
+                          </div>
+                        )}
+
+                        <p className="text-[10px] text-muted-foreground text-center inline-flex items-center justify-center gap-1">
+                          <img src={lockIcon} alt="Cadeado" className="h-3 w-3 inline-block" />
+                          Pagamento seguro via
+                          <img src={mercadopagoLogo} alt="Mercado Pago" className="h-3.5 inline-block" />
+                        </p>
+                      </div>
+
+                      {taxaStatus === "generated" && (
+                        <div className="flex items-center justify-center gap-2 py-2">
+                          <div className="relative flex h-5 w-5 items-center justify-center">
+                            <div className="absolute h-5 w-5 rounded-full border-2 border-primary/20" />
+                            <div className="absolute h-5 w-5 animate-spin rounded-full border-2 border-transparent border-t-primary" />
+                          </div>
+                          <span className="text-xs text-muted-foreground animate-pulse">Aguardando confirmação da taxa…</span>
+                        </div>
+                      )}
+
+                      {taxaStatus === "confirmed" && (
+                        <div className="flex items-center justify-center gap-2 py-3">
+                          <CheckCircle className="h-5 w-5 text-accent" />
+                          <span className="text-sm font-bold text-accent">Taxa confirmada! Redirecionando...</span>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            )}
         )}
       </div>
 
