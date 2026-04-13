@@ -1,5 +1,7 @@
 import { memo } from "react";
 import { Truck, Clock, MessageCircle, FileCheck, DollarSign, CalendarCheck } from "lucide-react";
+import { handleWhatsAppClick } from "@/lib/whatsapp";
+import whatsappIcon from "@/assets/whatsapp-icon.webp";
 
 const diferenciais = [
   { icon: Truck, title: "Entrega rápida", desc: "Levamos a caçamba até você em poucas horas." },
@@ -30,6 +32,16 @@ const DiferenciaisSection = memo(() => {
               <p className="mt-1 text-xs text-muted-foreground">{desc}</p>
             </div>
           ))}
+        </div>
+
+        <div className="mt-8 text-center">
+          <button
+            onClick={() => handleWhatsAppClick()}
+            className="inline-flex items-center gap-2 rounded-xl bg-whatsapp px-8 py-4 text-base font-extrabold uppercase text-white shadow-lg transition-all hover:scale-105 hover:bg-whatsapp-hover"
+          >
+            <img src={whatsappIcon} alt="WhatsApp" className="h-5 w-5" width={20} height={20} />
+            Solicitar agora no WhatsApp
+          </button>
         </div>
       </div>
     </section>
