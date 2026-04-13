@@ -61,7 +61,7 @@ const Footer = memo(() => {
             style={{ userSelect: "none", WebkitUserSelect: "none" }}
             aria-hidden="true"
           >
-            CNPJ: 11.094.826/0003-45
+            CNPJ: 02.268.402/0001-05
           </p>
           <p className="mt-1 text-center text-xs text-secondary-foreground/40 space-x-1">
             <Link to="/politica-de-privacidade" className="hover:text-primary hover:underline transition-colors">Política de Privacidade</Link>
