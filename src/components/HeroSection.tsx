@@ -21,8 +21,8 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
     ? `Aluguel de Caçamba em ${cityName}`
     : "Precisa de Caçamba Hoje?";
   const subtitle = cityName
-    ? `Atendimento imediato via WhatsApp. Entregamos em ${cityName} com agilidade, segurança e preço justo.`
-    : "Atendimento imediato via WhatsApp. Entregamos com agilidade, segurança e preço justo.";
+    ? `Entregamos rápido em ${cityName}. Fale no WhatsApp e receba sua caçamba.`
+    : "Entrega rápida, preço justo e atendimento direto pelo WhatsApp.";
 
   const [cep, setCep] = useState("");
   const [address, setAddress] = useState<{ logradouro: string; bairro: string; localidade: string; uf: string; cep: string } | null>(null);

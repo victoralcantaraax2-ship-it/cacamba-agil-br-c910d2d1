@@ -2,12 +2,12 @@ import { memo } from "react";
 import { Truck, Clock, MessageCircle, FileCheck, DollarSign, CalendarCheck } from "lucide-react";
 
 const diferenciais = [
-  { icon: Truck, title: "Entrega em até 2 horas", desc: "Agilidade na entrega em São Paulo e região." },
-  { icon: CalendarCheck, title: "Retirada programada", desc: "Você escolhe o dia e horário da retirada." },
-  { icon: MessageCircle, title: "Atendimento imediato", desc: "Resposta em minutos pelo WhatsApp." },
-  { icon: FileCheck, title: "Sem burocracia", desc: "Processo simples do pedido à entrega." },
-  { icon: DollarSign, title: "Melhor custo-benefício", desc: "Preço competitivo sem comprometer qualidade." },
-  { icon: Clock, title: "Prazo garantido", desc: "Cumprimos o horário combinado, sempre." },
+  { icon: Truck, title: "Entrega rápida", desc: "Levamos a caçamba até você em poucas horas." },
+  { icon: CalendarCheck, title: "Você escolhe o dia", desc: "A gente retira quando você quiser." },
+  { icon: MessageCircle, title: "Resposta na hora", desc: "Fale pelo WhatsApp e a gente responde rápido." },
+  { icon: FileCheck, title: "Sem enrolação", desc: "Pediu, confirmou, entregamos. Simples assim." },
+  { icon: DollarSign, title: "Preço justo", desc: "Sem taxa escondida, sem surpresa no final." },
+  { icon: Clock, title: "A gente cumpre", desc: "Horário combinado é horário cumprido." },
 ];
 
 const DiferenciaisSection = memo(() => {
@@ -16,7 +16,7 @@ const DiferenciaisSection = memo(() => {
       <div className="container px-4">
         <div className="mb-10 text-center">
           <h2 className="mb-3 text-2xl font-extrabold text-foreground md:text-3xl">
-            Por Que Escolher a NORTEX
+            Por que a galera escolhe a NORTEX?
           </h2>
         </div>
 

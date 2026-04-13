@@ -8,19 +8,19 @@ const steps = [
     icon: FileText,
     step: "1",
     title: "Escolha o tamanho",
-    desc: "Veja qual caçamba atende sua obra e solicite pelo WhatsApp.",
+    desc: "Veja qual caçamba cabe na sua obra e chama a gente no WhatsApp.",
   },
   {
     icon: MapPin,
     step: "2",
-    title: "Informe endereço e data",
-    desc: "Diga onde e quando precisa. Confirmamos em minutos.",
+    title: "Manda o endereço",
+    desc: "Diz onde e quando precisa. A gente confirma rapidinho.",
   },
   {
     icon: Truck,
     step: "3",
-    title: "Receba e devolvemos",
-    desc: "Entregamos em até 2h e retiramos no prazo combinado.",
+    title: "Recebe e devolve",
+    desc: "Levamos até você e buscamos no dia combinado.",
   },
 ];
 
@@ -35,10 +35,10 @@ const ComoFuncionaSection = memo(() => {
       <div className="container px-4">
         <div className="mb-12 text-center">
           <h2 className="mb-3 text-2xl font-extrabold text-foreground md:text-3xl">
-            Como Funciona
+            Como funciona?
           </h2>
           <p className="text-muted-foreground">
-            Três passos simples. Sem burocracia, sem complicação.
+            Três passos e pronto. Sem complicação.
           </p>
         </div>
 

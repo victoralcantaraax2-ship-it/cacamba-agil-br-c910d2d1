@@ -4,33 +4,33 @@ import { CheckCircle, ShieldCheck, Clock, MessageCircle, CreditCard, Truck } fro
 const items = [
   {
     icon: Clock,
-    title: "Atendimento rápido e confiável",
-    desc: "Respondemos em minutos pelo WhatsApp. Sem espera, sem complicação.",
+    title: "Resposta em minutos",
+    desc: "Mandou mensagem, a gente já responde. Nada de ficar esperando.",
   },
   {
     icon: Truck,
-    title: "Entrega no prazo combinado",
-    desc: "Caçamba no local dentro do horário acordado. Sua obra não para.",
+    title: "Entrega no horário",
+    desc: "Combinou? A caçamba chega na hora. Sua obra não para.",
   },
   {
     icon: ShieldCheck,
-    title: "Processo seguro e transparente",
-    desc: "Valores claros desde o primeiro contato. Sem taxas escondidas.",
+    title: "Sem taxa escondida",
+    desc: "O preço que a gente passa é o preço final. Ponto.",
   },
   {
     icon: MessageCircle,
-    title: "Atendimento direto via WhatsApp",
-    desc: "Fale diretamente com nossa equipe. Sem robôs, sem transferências.",
+    title: "Fala direto com a gente",
+    desc: "Atendimento real pelo WhatsApp. Sem robô, sem espera.",
   },
   {
     icon: CreditCard,
-    title: "Pagamento seguro",
-    desc: "Pagamento via Pix após confirmação do pedido. Atendimento direto com nossa equipe.",
+    title: "Pagamento fácil",
+    desc: "Pix, cartão, boleto... do jeito que for melhor pra você.",
   },
   {
     icon: CheckCircle,
-    title: "Descarte regularizado",
-    desc: "Resíduos destinados a locais licenciados, dentro das normas ambientais.",
+    title: "Tudo legalizado",
+    desc: "Entulho vai pra lugar certo, com descarte regularizado.",
   },
 ];
 
@@ -41,10 +41,10 @@ const ConfiancaSection = memo(() => {
       <div className="container px-4">
         <div className="mb-10 text-center">
           <h2 className="mb-3 text-2xl font-extrabold text-foreground md:text-3xl">
-            Por Que Mais de 500 Clientes Confiam na NORTEX
+            Por que o pessoal confia na NORTEX?
           </h2>
           <p className="text-muted-foreground">
-            Empresa séria, com atendimento direto e entrega garantida.
+            Empresa séria, atendimento direto e entrega garantida.
           </p>
         </div>
 

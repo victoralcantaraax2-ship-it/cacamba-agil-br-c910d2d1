@@ -102,10 +102,10 @@ const TamanhosSection = () => {
       <div className="container px-4">
         <div className="mb-8 md:mb-12 text-center">
           <h2 className="mb-2 text-2xl font-extrabold text-foreground md:text-3xl lg:text-4xl">
-            Escolha o Tamanho Ideal Para Sua Obra
+            Qual caçamba você precisa?
           </h2>
           <p className="mx-auto max-w-lg text-sm md:text-base text-muted-foreground">
-            Compare os tamanhos e solicite pelo WhatsApp. Atendimento imediato.
+            Veja os tamanhos e chama a gente no WhatsApp.
           </p>
         </div>
 
@@ -121,7 +121,7 @@ const TamanhosSection = () => {
             className="inline-flex items-center gap-2 text-sm font-semibold text-whatsapp transition-colors hover:underline"
           >
             <img src={whatsappIcon} alt="WhatsApp" className="h-4 w-4" width={16} height={16} loading="lazy" />
-            Dúvida sobre qual tamanho? Fale no WhatsApp
+            Não sabe qual escolher? Chama no WhatsApp
           </button>
         </div>
       </div>
