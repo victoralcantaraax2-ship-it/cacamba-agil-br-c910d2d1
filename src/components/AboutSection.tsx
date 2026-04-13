@@ -1,17 +1,21 @@
 import { memo } from "react";
-import { Clock, ShieldCheck, Leaf, Users, Truck, HardHat, Home, Building2, Warehouse } from "lucide-react";
+import { HardHat, Home, Building2, Warehouse } from "lucide-react";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
 import whatsappIcon from "@/assets/whatsapp-icon.webp";
 import badgeAward from "@/assets/badge-award.png";
 import iconHorario from "@/assets/icon-horario.png";
+import iconDescarte from "@/assets/icon-descarte.png";
+import iconPreco from "@/assets/icon-preco.png";
+import iconAtendimento from "@/assets/icon-atendimento.png";
+import iconFrota from "@/assets/icon-frota.png";
 
-const pillars: { icon?: any; image?: string; label: string; desc: string }[] = [
+const pillars: { image: string; label: string; desc: string }[] = [
   { image: iconHorario, label: "No horário certo", desc: "A gente chega na hora combinada. Pode confiar." },
-  { icon: ShieldCheck, label: "Preço sem surpresa", desc: "Você sabe quanto vai pagar antes de fechar. Sem taxa escondida." },
-  { icon: Leaf, label: "Descarte certinho", desc: "Levamos o entulho pra lugar certo, tudo dentro da lei." },
+  { image: iconPreco, label: "Preço sem surpresa", desc: "Você sabe quanto vai pagar antes de fechar. Sem taxa escondida." },
+  { image: iconDescarte, label: "Descarte certinho", desc: "Levamos o entulho pra lugar certo, tudo dentro da lei." },
   { image: badgeAward, label: "Anos de estrada", desc: "Não somos de ontem. Milhares de clientes já passaram por aqui." },
-  { icon: Users, label: "Atendimento de gente", desc: "Você fala direto com a gente. Sem robô, sem espera." },
-  { icon: Truck, label: "Frota própria", desc: "Nossos caminhões, nossa equipe. Isso garante agilidade." },
+  { image: iconAtendimento, label: "Atendimento de gente", desc: "Você fala direto com a gente. Sem robô, sem espera." },
+  { image: iconFrota, label: "Frota própria", desc: "Nossos caminhões, nossa equipe. Isso garante agilidade." },
 ];
 
 const segments = [
