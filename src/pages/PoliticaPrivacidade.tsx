@@ -110,7 +110,7 @@ const PoliticaPrivacidade = () => {
               <a href="mailto:atendimento@nortexcacambas.com" className="text-primary hover:underline">
                 atendimento@nortexcacambas.com
               </a>{" "}
-              ou pelo telefone (11) 2085-5225.
+              ou pelo telefone (11) 3017-2222.
             </p>
           </section>
 
@@ -124,7 +124,7 @@ const PoliticaPrivacidade = () => {
               <li><strong>NORTEX Caçambas</strong></li>
               <li>CNPJ: 02.268.402/0001-05</li>
               <li>E-mail: atendimento@nortexcacambas.com</li>
-              <li>Telefone: (11) 2085-5225</li>
+              <li>Telefone: (11) 3017-2222</li>
             </ul>
           </section>
         </div>
