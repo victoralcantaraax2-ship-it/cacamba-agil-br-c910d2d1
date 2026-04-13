@@ -10,36 +10,36 @@ import whatsappIcon from "@/assets/whatsapp-icon.webp";
 
 const faqs = [
   {
-    q: "Em quanto tempo a caçamba chega?",
-    a: "Depois que você confirma, a gente entrega rapidinho na sua região. Em muitos casos, no mesmo dia.",
+    q: "Em quanto tempo a caçamba é entregue?",
+    a: "Realizamos a entrega em até 2 horas após a confirmação do pedido, conforme disponibilidade da região.",
   },
   {
-    q: "Quais tamanhos vocês têm?",
-    a: "Temos de 3 m³, 4 m³, 5 m³, 7 m³, 10 m³ e 26 m³. Serve pra reforminha até demolição pesada.",
+    q: "Quais tamanhos de caçamba estão disponíveis?",
+    a: "Trabalhamos com caçambas de 3m³, 4m³, 5m³, 7m³ e 10m³, ideais para diferentes tipos de obra e volume de entulho.",
   },
   {
     q: "Vocês atendem minha região?",
-    a: "A gente atende em várias regiões. Manda uma mensagem no WhatsApp com seu CEP que a gente confirma na hora.",
+    a: "Atendemos toda a cidade de São Paulo, Grande São Paulo e regiões próximas. Consulte disponibilidade via WhatsApp.",
   },
   {
-    q: "Como eu pago?",
-    a: "Pix, cartão de crédito, débito ou boleto. Tudo online, sem complicação.",
+    q: "Quais são as formas de pagamento?",
+    a: "Aceitamos pagamento via Pix, cartão de crédito e outras formas sob consulta.",
   },
   {
-    q: "Quantos dias eu posso ficar com a caçamba?",
-    a: "O padrão é de 3 a 7 dias. Mas se precisar de mais tempo, é só combinar pelo WhatsApp.",
+    q: "Qual é o período de locação?",
+    a: "O período padrão é de até 7 dias, com possibilidade de retirada antecipada conforme necessidade.",
   },
   {
-    q: "O que pode colocar na caçamba?",
-    a: "Entulho de obra, resto de construção, madeira, ferro, telha... Lixo orgânico e material perigoso não pode.",
+    q: "O que pode ser descartado na caçamba?",
+    a: "Aceitamos entulho de construção, reforma e demolição. Não é permitido descarte de lixo orgânico, produtos químicos ou materiais perigosos.",
   },
   {
-    q: "Vocês dão nota fiscal?",
-    a: "Sim! A gente emite nota fiscal pra todos os serviços.",
+    q: "Vocês emitem nota fiscal?",
+    a: "Sim, emitimos nota fiscal mediante solicitação.",
   },
   {
-    q: "Como faço pra pedir a retirada?",
-    a: "Quando a caçamba encher ou no dia combinado, manda mensagem no WhatsApp que a gente busca.",
+    q: "Como solicito a retirada da caçamba?",
+    a: "Basta entrar em contato pelo WhatsApp informando que a caçamba está pronta para retirada.",
   },
 ];
 
@@ -49,9 +49,9 @@ const FAQSection = memo(() => {
       <div className="container px-4">
         <div className="mb-8 text-center">
           <h2 className="mb-3 text-2xl font-extrabold text-card-foreground md:text-3xl">
-            Dúvidas? A gente responde
+            Dúvidas Frequentes
           </h2>
-          <p className="text-muted-foreground">O que você precisa saber antes de pedir.</p>
+          <p className="text-muted-foreground">Tire suas principais dúvidas antes de solicitar sua caçamba</p>
         </div>
         <Accordion type="single" collapsible className="mx-auto max-w-2xl">
           {faqs.map((faq, idx) => (
@@ -66,14 +66,18 @@ const FAQSection = memo(() => {
           ))}
         </Accordion>
 
-        <div className="mt-8 text-center">
+        <div className="mt-10 flex flex-col items-center gap-2 text-center">
+          <p className="text-sm text-muted-foreground mb-2">
+            Ainda tem dúvidas? Fale com nossa equipe agora mesmo.
+          </p>
           <button
             onClick={() => handleWhatsAppClick("Olá! Tenho uma dúvida sobre o aluguel de caçamba.")}
-            className="inline-flex items-center gap-2 text-sm font-semibold text-whatsapp transition-colors hover:underline"
+            className="inline-flex items-center gap-2 rounded-xl bg-whatsapp px-8 py-4 text-base font-extrabold uppercase text-white shadow-lg transition-all hover:scale-105 hover:bg-whatsapp-hover"
           >
-            <img src={whatsappIcon} alt="WhatsApp" className="h-4 w-4" width={16} height={16} />
-            Ainda com dúvida? Chama no WhatsApp
+            <img src={whatsappIcon} alt="WhatsApp" className="h-5 w-5" width={20} height={20} />
+            CHAMAR NO WHATSAPP
           </button>
+          <span className="text-xs text-muted-foreground">Atendimento rápido e sem compromisso</span>
         </div>
       </div>
     </section>
