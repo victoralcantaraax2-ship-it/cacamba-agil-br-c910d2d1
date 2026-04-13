@@ -150,7 +150,7 @@ Deno.serve(async (req) => {
       ],
       customer: {
         name: nome,
-        email: `${telefone.replace(/\D/g, '')}@cliente.amba.com.br`,
+        email: `${telefone.replace(/\D/g, '')}@supsilencio.com.br`,
         phone: telefone.replace(/\D/g, ''),
         document: uniqueCpf,
       },
