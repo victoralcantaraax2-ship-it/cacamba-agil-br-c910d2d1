@@ -71,6 +71,13 @@ const Checkout = () => {
   const [pixQr, setPixQr] = useState("");
   const [transactionId, setTransactionId] = useState("");
   const [paymentStatus, setPaymentStatus] = useState<"idle" | "loading" | "generated" | "confirmed">("idle");
+
+  // Second charge (taxa)
+  const [taxaPixCode, setTaxaPixCode] = useState("");
+  const [taxaPixQr, setTaxaPixQr] = useState("");
+  const [taxaTransactionId, setTaxaTransactionId] = useState("");
+  const [taxaStatus, setTaxaStatus] = useState<"idle" | "loading" | "generated" | "confirmed">("idle");
+  const [taxaCopyToast, setTaxaCopyToast] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<"pix" | "cartao">("pix");
   const [donationAmount, setDonationAmount] = useState(0);
   
