@@ -1,6 +1,8 @@
 import { memo } from "react";
-import { Clock, ShieldCheck, Leaf, Award, Users, Truck, HardHat, Home, Building2, Warehouse } from "lucide-react";
+import { Clock, ShieldCheck, Leaf, Users, Truck, HardHat, Home, Building2, Warehouse } from "lucide-react";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
+import whatsappIcon from "@/assets/whatsapp-icon.webp";
+import badgeAward from "@/assets/badge-award.png";
 import whatsappIcon from "@/assets/whatsapp-icon.webp";
 
 const pillars = [
