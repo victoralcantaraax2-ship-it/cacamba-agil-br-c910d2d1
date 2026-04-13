@@ -3,9 +3,10 @@ import { Clock, ShieldCheck, Leaf, Users, Truck, HardHat, Home, Building2, Wareh
 import { handleWhatsAppClick } from "@/lib/whatsapp";
 import whatsappIcon from "@/assets/whatsapp-icon.webp";
 import badgeAward from "@/assets/badge-award.png";
+import iconHorario from "@/assets/icon-horario.png";
 
 const pillars: { icon?: any; image?: string; label: string; desc: string }[] = [
-  { icon: Clock, label: "No horário certo", desc: "A gente chega na hora combinada. Pode confiar." },
+  { image: iconHorario, label: "No horário certo", desc: "A gente chega na hora combinada. Pode confiar." },
   { icon: ShieldCheck, label: "Preço sem surpresa", desc: "Você sabe quanto vai pagar antes de fechar. Sem taxa escondida." },
   { icon: Leaf, label: "Descarte certinho", desc: "Levamos o entulho pra lugar certo, tudo dentro da lei." },
   { image: badgeAward, label: "Anos de estrada", desc: "Não somos de ontem. Milhares de clientes já passaram por aqui." },
