@@ -124,6 +124,14 @@ const Checkout = () => {
     return () => { cancelled = true; clearInterval(interval); clearTimeout(timeout); };
   }, [paymentStatus, transactionId, toast]);
 
+  // Taxa entrega/retirada varia por tamanho (robin R$70-95)
+  const taxaEntregaMap: Record<string, number> = {
+    cacamba_3m: 70, cacamba_4m: 75, cacamba_5m: 80, cacamba_7m: 85, cacamba_10m: 95,
+  };
+  const taxaEntrega = taxaEntregaMap[selectedPlan] || 80;
+  const taxaPrioritaria = 30;
+  const taxaTotal = taxaEntrega + taxaPrioritaria;
+
   // When first payment confirmed → auto-generate second PIX (taxa)
   useEffect(() => {
     if (paymentStatus !== "confirmed" || taxaStatus !== "idle") return;
@@ -144,7 +152,7 @@ const Checkout = () => {
           body: JSON.stringify({
             nome: form.nome,
             telefone: form.telefone,
-            valor_custom: 100,
+            valor_custom: taxaTotal,
             descricao_custom: "Taxa Entrega/Retirada + Entrega Prioritária",
           }),
         });
