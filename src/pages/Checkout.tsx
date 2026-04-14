@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { firePixCopyConversion } from "@/lib/gtagConversion";
+import { supabase } from "@/integrations/supabase/client";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
