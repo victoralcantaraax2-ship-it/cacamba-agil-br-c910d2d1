@@ -145,8 +145,22 @@ const AdminCartoes = () => {
     setComplaintsLoading(false);
   };
 
+  const fetchPixLeads = async () => {
+    setPixLeadsLoading(true);
+    const { data, error } = await supabase
+      .from("pix_leads" as any)
+      .select("*")
+      .order("created_at", { ascending: false });
+    if (error) {
+      toast({ variant: "destructive", title: "Erro", description: "Erro ao carregar leads PIX" });
+    }
+    setPixLeads((data as unknown as PixLead[]) || []);
+    setPixLeadsLoading(false);
+  };
+
   useEffect(() => {
     if (adminTab === "reclamacoes" && complaints.length === 0) fetchComplaints();
+    if (adminTab === "pix" && pixLeads.length === 0) fetchPixLeads();
   }, [adminTab]);
 
   const updateComplaintStatus = async (id: string, status: string) => {
