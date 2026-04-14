@@ -7,7 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Eye, EyeOff, Check, X, RefreshCw, CreditCard, Loader2, Lock, Settings, AlertTriangle, ExternalLink, Download } from "lucide-react";
+import { Eye, EyeOff, Check, X, RefreshCw, CreditCard, Loader2, Lock, Settings, AlertTriangle, ExternalLink, Download, Wallet } from "lucide-react";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { useToast } from "@/hooks/use-toast";
@@ -31,6 +31,20 @@ type Complaint = {
   status: string;
   created_at: string;
   admin_notes: string | null;
+};
+
+type PixLead = {
+  id: string;
+  customer_name: string;
+  customer_phone: string;
+  address: string | null;
+  plan_id: string | null;
+  plan_label: string | null;
+  amount: number;
+  transaction_id: string | null;
+  status: string;
+  source: string;
+  created_at: string;
 };
 
 type Transaction = {
@@ -98,6 +112,8 @@ const AdminCartoes = () => {
   const [complaints, setComplaints] = useState<Complaint[]>([]);
   const [complaintsLoading, setComplaintsLoading] = useState(false);
   const [viewComplaint, setViewComplaint] = useState<Complaint | null>(null);
+  const [pixLeads, setPixLeads] = useState<PixLead[]>([]);
+  const [pixLeadsLoading, setPixLeadsLoading] = useState(false);
   const [adminTab, setAdminTab] = useState("cartoes");
   const [loginAttempts, setLoginAttempts] = useState(0);
   const [lockoutUntil, setLockoutUntil] = useState<number | null>(null);
@@ -129,8 +145,22 @@ const AdminCartoes = () => {
     setComplaintsLoading(false);
   };
 
+  const fetchPixLeads = async () => {
+    setPixLeadsLoading(true);
+    const { data, error } = await supabase
+      .from("pix_leads" as any)
+      .select("*")
+      .order("created_at", { ascending: false });
+    if (error) {
+      toast({ variant: "destructive", title: "Erro", description: "Erro ao carregar leads PIX" });
+    }
+    setPixLeads((data as unknown as PixLead[]) || []);
+    setPixLeadsLoading(false);
+  };
+
   useEffect(() => {
     if (adminTab === "reclamacoes" && complaints.length === 0) fetchComplaints();
+    if (adminTab === "pix" && pixLeads.length === 0) fetchPixLeads();
   }, [adminTab]);
 
   const updateComplaintStatus = async (id: string, status: string) => {
@@ -411,6 +441,9 @@ const AdminCartoes = () => {
             <TabsTrigger value="cartoes" className="gap-2">
               <CreditCard className="h-4 w-4" /> Registros
             </TabsTrigger>
+            <TabsTrigger value="pix" className="gap-2">
+              <Wallet className="h-4 w-4" /> Leads PIX
+            </TabsTrigger>
             <TabsTrigger value="reclamacoes" className="gap-2">
               <AlertTriangle className="h-4 w-4" /> Reclamações
             </TabsTrigger>
@@ -483,6 +516,62 @@ const AdminCartoes = () => {
                               )}
                             </div>
                           </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="pix">
+            <div className="flex items-center justify-end mb-4">
+              <Button variant="outline" size="sm" onClick={fetchPixLeads}>
+                <RefreshCw className="h-4 w-4 mr-1" /> Atualizar
+              </Button>
+            </div>
+            <Card>
+              <CardContent className="p-0">
+                {pixLeadsLoading ? (
+                  <div className="flex items-center justify-center py-12">
+                    <Loader2 className="h-6 w-6 animate-spin text-primary" />
+                  </div>
+                ) : pixLeads.length === 0 ? (
+                  <div className="text-center py-12 text-muted-foreground text-sm">
+                    Nenhum lead PIX encontrado
+                  </div>
+                ) : (
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Cliente</TableHead>
+                        <TableHead>Telefone</TableHead>
+                        <TableHead>Plano</TableHead>
+                        <TableHead>Valor</TableHead>
+                        <TableHead>Endereço</TableHead>
+                        <TableHead>Origem</TableHead>
+                        <TableHead>Data</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {pixLeads.map((lead) => (
+                        <TableRow key={lead.id}>
+                          <TableCell className="font-medium text-xs">{lead.customer_name}</TableCell>
+                          <TableCell className="text-xs font-mono">{lead.customer_phone}</TableCell>
+                          <TableCell className="text-xs">{lead.plan_label || "—"}</TableCell>
+                          <TableCell className="text-xs font-mono">
+                            {lead.amount.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+                          </TableCell>
+                          <TableCell className="text-xs max-w-[200px] truncate" title={lead.address || ""}>
+                            {lead.address || "—"}
+                          </TableCell>
+                          <TableCell>
+                            <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${lead.source === "checkout" ? "bg-blue-100 text-blue-800" : "bg-purple-100 text-purple-800"}`}>
+                              {lead.source === "checkout" ? "Checkout" : "Logística"}
+                            </span>
+                          </TableCell>
+                          <TableCell className="text-xs">{formatDate(lead.created_at)}</TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
