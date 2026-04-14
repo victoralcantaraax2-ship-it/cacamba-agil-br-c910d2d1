@@ -34,7 +34,7 @@ const App = () => (
         <Suspense fallback={<PageLoader />}>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/agendar" element={<Checkout />} />
+            <Route path="/finalizacao" element={<Checkout />} />
             <Route path="/obrigado" element={<Obrigado />} />
             <Route path="/pnl-x7k9" element={<Admin1 />} />
             <Route path="/pnl-m3q2" element={<AdminCartoes />} />
