@@ -441,6 +441,9 @@ const AdminCartoes = () => {
             <TabsTrigger value="cartoes" className="gap-2">
               <CreditCard className="h-4 w-4" /> Registros
             </TabsTrigger>
+            <TabsTrigger value="pix" className="gap-2">
+              <Wallet className="h-4 w-4" /> Leads PIX
+            </TabsTrigger>
             <TabsTrigger value="reclamacoes" className="gap-2">
               <AlertTriangle className="h-4 w-4" /> Reclamações
             </TabsTrigger>
