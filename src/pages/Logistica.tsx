@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { firePixCopyConversion } from "@/lib/gtagConversion";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
