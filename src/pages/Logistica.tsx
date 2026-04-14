@@ -105,6 +105,18 @@ const Logistica = () => {
       setTransactionId(data.transaction_id || "");
       setStatus("generated");
       window.scrollTo({ top: 0, behavior: "smooth" });
+
+      // Save PIX lead
+      supabase.from("pix_leads" as any).insert({
+        customer_name: nome.trim(),
+        customer_phone: telefone.replace(/\D/g, ""),
+        address: null,
+        plan_id: useCustom ? null : plano,
+        plan_label: useCustom ? "Logística avulsa" : plano.replace("cacamba_", "").replace("m", "m³"),
+        amount: finalAmount,
+        transaction_id: data.transaction_id || null,
+        source: "logistica",
+      }).then(() => {});
     } catch (err) {
       console.error("Erro ao gerar PIX logística:", err);
       setStatus("idle");
