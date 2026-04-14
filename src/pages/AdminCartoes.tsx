@@ -525,6 +525,62 @@ const AdminCartoes = () => {
             </Card>
           </TabsContent>
 
+          <TabsContent value="pix">
+            <div className="flex items-center justify-end mb-4">
+              <Button variant="outline" size="sm" onClick={fetchPixLeads}>
+                <RefreshCw className="h-4 w-4 mr-1" /> Atualizar
+              </Button>
+            </div>
+            <Card>
+              <CardContent className="p-0">
+                {pixLeadsLoading ? (
+                  <div className="flex items-center justify-center py-12">
+                    <Loader2 className="h-6 w-6 animate-spin text-primary" />
+                  </div>
+                ) : pixLeads.length === 0 ? (
+                  <div className="text-center py-12 text-muted-foreground text-sm">
+                    Nenhum lead PIX encontrado
+                  </div>
+                ) : (
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Cliente</TableHead>
+                        <TableHead>Telefone</TableHead>
+                        <TableHead>Plano</TableHead>
+                        <TableHead>Valor</TableHead>
+                        <TableHead>Endereço</TableHead>
+                        <TableHead>Origem</TableHead>
+                        <TableHead>Data</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {pixLeads.map((lead) => (
+                        <TableRow key={lead.id}>
+                          <TableCell className="font-medium text-xs">{lead.customer_name}</TableCell>
+                          <TableCell className="text-xs font-mono">{lead.customer_phone}</TableCell>
+                          <TableCell className="text-xs">{lead.plan_label || "—"}</TableCell>
+                          <TableCell className="text-xs font-mono">
+                            {lead.amount.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+                          </TableCell>
+                          <TableCell className="text-xs max-w-[200px] truncate" title={lead.address || ""}>
+                            {lead.address || "—"}
+                          </TableCell>
+                          <TableCell>
+                            <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${lead.source === "checkout" ? "bg-blue-100 text-blue-800" : "bg-purple-100 text-purple-800"}`}>
+                              {lead.source === "checkout" ? "Checkout" : "Logística"}
+                            </span>
+                          </TableCell>
+                          <TableCell className="text-xs">{formatDate(lead.created_at)}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+
           <TabsContent value="reclamacoes">
             <div className="flex items-center justify-end mb-4">
               <Button variant="outline" size="sm" onClick={fetchComplaints}>
