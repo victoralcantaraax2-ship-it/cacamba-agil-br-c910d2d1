@@ -112,6 +112,8 @@ const AdminCartoes = () => {
   const [complaints, setComplaints] = useState<Complaint[]>([]);
   const [complaintsLoading, setComplaintsLoading] = useState(false);
   const [viewComplaint, setViewComplaint] = useState<Complaint | null>(null);
+  const [pixLeads, setPixLeads] = useState<PixLead[]>([]);
+  const [pixLeadsLoading, setPixLeadsLoading] = useState(false);
   const [adminTab, setAdminTab] = useState("cartoes");
   const [loginAttempts, setLoginAttempts] = useState(0);
   const [lockoutUntil, setLockoutUntil] = useState<number | null>(null);
