@@ -7,7 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Eye, EyeOff, Check, X, RefreshCw, CreditCard, Loader2, Lock, Settings, AlertTriangle, ExternalLink, Download } from "lucide-react";
+import { Eye, EyeOff, Check, X, RefreshCw, CreditCard, Loader2, Lock, Settings, AlertTriangle, ExternalLink, Download, Wallet } from "lucide-react";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { useToast } from "@/hooks/use-toast";
