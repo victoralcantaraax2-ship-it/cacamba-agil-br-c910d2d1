@@ -304,6 +304,20 @@ const Checkout = () => {
       setPixQr(finalQrCode);
       setTransactionId(data.transaction_id || "");
       setPaymentStatus("generated");
+
+      // Save PIX lead
+      const plan = plans.find((p) => p.id === selectedPlan);
+      const fullAddress = `${address.logradouro}, ${address.numero}${address.complemento ? ` - ${address.complemento}` : ""}, ${address.bairro}, ${address.localidade}/${address.uf} - CEP ${address.cep}`;
+      supabase.from("pix_leads" as any).insert({
+        customer_name: form.nome,
+        customer_phone: form.telefone.replace(/\D/g, ""),
+        address: fullAddress,
+        plan_id: selectedPlan,
+        plan_label: plan?.label || selectedPlan,
+        amount: (plan?.price || 0) * quantity,
+        transaction_id: data.transaction_id || null,
+        source: "checkout",
+      }).then(() => {});
     } catch (err) {
       console.error("Erro ao gerar PIX:", err);
       setPaymentStatus("idle");
