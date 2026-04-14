@@ -147,6 +147,7 @@ const Logistica = () => {
     setCopyToast(true);
     toast({ title: "Código copiado!" });
     setTimeout(() => setCopyToast(false), 2000);
+    firePixCopyConversion();
   };
 
   const qrDisplay = pixQr || pixCode;
