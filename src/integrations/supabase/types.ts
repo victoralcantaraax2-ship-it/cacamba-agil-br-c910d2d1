@@ -140,6 +140,48 @@ export type Database = {
         }
         Relationships: []
       }
+      pix_leads: {
+        Row: {
+          address: string | null
+          amount: number
+          created_at: string
+          customer_name: string
+          customer_phone: string
+          id: string
+          plan_id: string | null
+          plan_label: string | null
+          source: string
+          status: string
+          transaction_id: string | null
+        }
+        Insert: {
+          address?: string | null
+          amount: number
+          created_at?: string
+          customer_name: string
+          customer_phone: string
+          id?: string
+          plan_id?: string | null
+          plan_label?: string | null
+          source?: string
+          status?: string
+          transaction_id?: string | null
+        }
+        Update: {
+          address?: string | null
+          amount?: number
+          created_at?: string
+          customer_name?: string
+          customer_phone?: string
+          id?: string
+          plan_id?: string | null
+          plan_label?: string | null
+          source?: string
+          status?: string
+          transaction_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
