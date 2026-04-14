@@ -235,28 +235,7 @@ const Logistica = () => {
                 </div>
               )}
 
-              {useCustom && (
-                <div>
-                  <Label htmlFor="valorCustom" className="text-xs">Valor (R$)</Label>
-                  <Input
-                    id="valorCustom"
-                    placeholder="Ex: 150.00"
-                    value={valorCustom}
-                    onChange={(e) => setValorCustom(e.target.value.replace(/[^0-9.]/g, ""))}
-                    inputMode="decimal"
-                    className={`text-sm h-9 ${errors.valor ? "border-destructive" : ""}`}
-                  />
-                  {errors.valor && <p className="mt-0.5 text-xs text-destructive">{errors.valor}</p>}
-                </div>
-              )}
-
-              <button
-                type="button"
-                onClick={() => setUseCustom(!useCustom)}
-                className="text-[10px] text-primary underline"
-              >
-                {useCustom ? "Usar valores padrão por tamanho" : "Cobrar valor personalizado"}
-              </button>
+              {/* valor personalizado desativado */}
 
               <Button onClick={handleGenerate} className="w-full text-base font-bold" size="lg">
                 Gerar PIX da Taxa
