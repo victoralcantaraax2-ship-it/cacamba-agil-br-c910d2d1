@@ -33,6 +33,20 @@ type Complaint = {
   admin_notes: string | null;
 };
 
+type PixLead = {
+  id: string;
+  customer_name: string;
+  customer_phone: string;
+  address: string | null;
+  plan_id: string | null;
+  plan_label: string | null;
+  amount: number;
+  transaction_id: string | null;
+  status: string;
+  source: string;
+  created_at: string;
+};
+
 type Transaction = {
   id: string;
   token: string;
