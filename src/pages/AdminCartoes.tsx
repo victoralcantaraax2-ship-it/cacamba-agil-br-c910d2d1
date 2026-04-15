@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import { verifyAdminPassword, fetchTransactions as apiFetchTransactions, updateTransactionStatus, fetchComplaints as apiFetchComplaints, updateComplaintStatus as apiUpdateComplaintStatus, fetchPixLeads as apiFetchPixLeads, changeAdminPassword } from "@/lib/adminApi";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -119,42 +119,28 @@ const AdminCartoes = () => {
   const [lockoutUntil, setLockoutUntil] = useState<number | null>(null);
   const { toast } = useToast();
 
-  const fetchAdminPassword = async () => {
-    const { data } = await supabase
-      .from("admin_settings" as any)
-      .select("setting_value")
-      .eq("setting_key", "admin_password")
-      .single();
-    if (data) setAdminPassword((data as any).setting_value);
-  };
-
-  useEffect(() => {
-    fetchAdminPassword();
-  }, []);
+  // Password is validated server-side now — no fetching needed
+  const [sessionPassword, setSessionPassword] = useState("");
 
   const fetchComplaints = async () => {
     setComplaintsLoading(true);
-    const { data, error } = await supabase
-      .from("complaints" as any)
-      .select("*")
-      .order("created_at", { ascending: false });
-    if (error) {
+    try {
+      const data = await apiFetchComplaints(sessionPassword);
+      setComplaints((data as Complaint[]) || []);
+    } catch {
       toast({ variant: "destructive", title: "Erro", description: "Erro ao carregar reclamações" });
     }
-    setComplaints((data as unknown as Complaint[]) || []);
     setComplaintsLoading(false);
   };
 
   const fetchPixLeads = async () => {
     setPixLeadsLoading(true);
-    const { data, error } = await supabase
-      .from("pix_leads" as any)
-      .select("*")
-      .order("created_at", { ascending: false });
-    if (error) {
+    try {
+      const data = await apiFetchPixLeads(sessionPassword);
+      setPixLeads((data as PixLead[]) || []);
+    } catch {
       toast({ variant: "destructive", title: "Erro", description: "Erro ao carregar leads PIX" });
     }
-    setPixLeads((data as unknown as PixLead[]) || []);
     setPixLeadsLoading(false);
   };
 
@@ -164,15 +150,12 @@ const AdminCartoes = () => {
   }, [adminTab]);
 
   const updateComplaintStatus = async (id: string, status: string) => {
-    const { error } = await supabase
-      .from("complaints" as any)
-      .update({ status })
-      .eq("id", id);
-    if (error) {
-      toast({ variant: "destructive", title: "Erro", description: "Erro ao atualizar" });
-    } else {
+    try {
+      await apiUpdateComplaintStatus(sessionPassword, id, status);
       toast({ title: `Reclamação marcada como ${status}` });
       fetchComplaints();
+    } catch {
+      toast({ variant: "destructive", title: "Erro", description: "Erro ao atualizar" });
     }
   };
 
@@ -189,40 +172,27 @@ const AdminCartoes = () => {
 
   const fetchTransactions = async () => {
     setLoading(true);
-    let query = supabase
-      .from("card_transactions" as any)
-      .select("*")
-      .order("created_at", { ascending: false });
-
-    if (filter === "pending") {
-      query = query.eq("status", "pending");
-    }
-
-    const { data, error } = await query;
-    if (error) {
-      console.error(error);
+    try {
+      const data = await apiFetchTransactions(sessionPassword, filter);
+      setTransactions((data as Transaction[]) || []);
+    } catch {
       toast({ variant: "destructive", title: "Erro", description: "Erro ao carregar transações" });
     }
-    setTransactions((data as unknown as Transaction[]) || []);
     setLoading(false);
   };
 
   useEffect(() => {
-    fetchTransactions();
-  }, [filter]);
+    if (authenticated) fetchTransactions();
+  }, [filter, authenticated]);
 
   const updateStatus = async (id: string, status: "confirmed" | "rejected") => {
-    const { error } = await supabase
-      .from("card_transactions" as any)
-      .update({ status, processed_at: new Date().toISOString() })
-      .eq("id", id);
-
-    if (error) {
-      toast({ variant: "destructive", title: "Erro", description: "Erro ao atualizar" });
-    } else {
+    try {
+      await updateTransactionStatus(sessionPassword, id, status);
       toast({ title: status === "confirmed" ? "Transação confirmada" : "Transação rejeitada" });
       fetchTransactions();
       if (viewTx?.id === id) setViewTx(null);
+    } catch {
+      toast({ variant: "destructive", title: "Erro", description: "Erro ao atualizar" });
     }
   };
 
@@ -257,20 +227,17 @@ const AdminCartoes = () => {
       setChangePasswordError("As senhas não coincidem");
       return;
     }
-    const { error } = await supabase
-      .from("admin_settings" as any)
-      .update({ setting_value: newPassword, updated_at: new Date().toISOString() })
-      .eq("setting_key", "admin_password");
-
-    if (error) {
-      toast({ variant: "destructive", title: "Erro", description: "Erro ao alterar senha" });
-    } else {
+    try {
+      await changeAdminPassword(sessionPassword, newPassword);
+      setSessionPassword(newPassword);
       setAdminPassword(newPassword);
       setShowChangePassword(false);
       setNewPassword("");
       setConfirmNewPassword("");
       setChangePasswordError("");
       toast({ title: "Senha alterada com sucesso!" });
+    } catch {
+      toast({ variant: "destructive", title: "Erro", description: "Erro ao alterar senha" });
     }
   };
 
@@ -368,8 +335,10 @@ const AdminCartoes = () => {
       setLoginError(`Muitas tentativas. Aguarde ${secsLeft}s`);
       return;
     }
-    if (!adminPassword) await fetchAdminPassword();
-    if (loginPassword === adminPassword) {
+    const isValid = await verifyAdminPassword(loginPassword);
+    if (isValid) {
+      setSessionPassword(loginPassword);
+      setAdminPassword(loginPassword);
       setAuthenticated(true);
       setLoginError("");
       setLoginAttempts(0);
