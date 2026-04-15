@@ -195,7 +195,6 @@ const AdminCartoes = () => {
       toast({ variant: "destructive", title: "Erro", description: "Erro ao atualizar" });
     }
   };
-  };
 
   const handleView = (tx: Transaction) => {
     setViewTx(tx);
