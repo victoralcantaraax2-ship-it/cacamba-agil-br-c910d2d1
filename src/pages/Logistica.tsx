@@ -277,17 +277,18 @@ const Logistica = () => {
               {useCustom && (
                 <div>
                   <Label htmlFor="valorCustom" className="text-xs">Valor (R$)</Label>
-                  <Input
-                    id="valorCustom"
-                    type="number"
-                    placeholder="Ex: 150"
-                    value={valorCustom}
-                    onChange={(e) => setValorCustom(e.target.value)}
-                    min="1"
-                    step="0.01"
-                    inputMode="decimal"
-                    className={`text-sm h-9 ${errors.valor ? "border-destructive" : ""}`}
-                  />
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground font-medium">R$</span>
+                    <Input
+                      id="valorCustom"
+                      type="text"
+                      placeholder="0,00"
+                      value={valorCustom}
+                      onChange={(e) => setValorCustom(formatCurrency(e.target.value))}
+                      inputMode="numeric"
+                      className={`text-sm h-9 pl-10 ${errors.valor ? "border-destructive" : ""}`}
+                    />
+                  </div>
                   {errors.valor && <p className="mt-0.5 text-xs text-destructive">{errors.valor}</p>}
                 </div>
               )}
