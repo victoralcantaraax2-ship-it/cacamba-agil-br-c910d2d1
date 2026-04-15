@@ -23,6 +23,19 @@ const taxaPrioritaria = 30;
 
 const isQrImage = (v: string) => /^(data:image|https?:\/\/)/.test(v);
 
+const formatCurrency = (value: string): string => {
+  const digits = value.replace(/\D/g, "");
+  if (!digits) return "";
+  const cents = parseInt(digits, 10);
+  const reais = (cents / 100).toFixed(2);
+  return reais.replace(".", ",");
+};
+
+const parseCurrency = (formatted: string): number => {
+  if (!formatted) return 0;
+  return parseFloat(formatted.replace(",", ".")) || 0;
+};
+
 const Logistica = () => {
   const [params] = useSearchParams();
   const navigate = useNavigate();
