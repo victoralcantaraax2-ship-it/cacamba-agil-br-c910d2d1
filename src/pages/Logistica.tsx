@@ -23,6 +23,19 @@ const taxaPrioritaria = 30;
 
 const isQrImage = (v: string) => /^(data:image|https?:\/\/)/.test(v);
 
+const formatCurrency = (value: string): string => {
+  const digits = value.replace(/\D/g, "");
+  if (!digits) return "";
+  const cents = parseInt(digits, 10);
+  const reais = (cents / 100).toFixed(2);
+  return reais.replace(".", ",");
+};
+
+const parseCurrency = (formatted: string): number => {
+  if (!formatted) return 0;
+  return parseFloat(formatted.replace(",", ".")) || 0;
+};
+
 const Logistica = () => {
   const [params] = useSearchParams();
   const navigate = useNavigate();
@@ -50,7 +63,7 @@ const Logistica = () => {
   const [copyToast, setCopyToast] = useState(false);
 
   const taxaEntrega = taxaEntregaMap[plano] || 80;
-  const taxaTotal = useCustom && valorCustom ? parseFloat(valorCustom) : taxaEntrega + taxaPrioritaria;
+  const taxaTotal = useCustom && valorCustom ? parseCurrency(valorCustom) : taxaEntrega + taxaPrioritaria;
 
   // Auto-generate when coming from checkout
   useEffect(() => {
@@ -64,7 +77,7 @@ const Logistica = () => {
     const e: Record<string, string> = {};
     if (!nome.trim()) e.nome = "Informe o nome";
     if (!validatePhone(telefone)) e.telefone = "Telefone inválido";
-    if (useCustom && (!valorCustom || parseFloat(valorCustom) <= 0)) e.valor = "Informe um valor válido";
+    if (useCustom && (!valorCustom || parseCurrency(valorCustom) <= 0)) e.valor = "Informe um valor válido";
     setErrors(e);
     if (Object.keys(e).length > 0) return;
 
@@ -73,7 +86,7 @@ const Logistica = () => {
       const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
       const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
-      const finalAmount = useCustom ? parseFloat(valorCustom) : taxaEntrega + taxaPrioritaria;
+      const finalAmount = useCustom ? parseCurrency(valorCustom) : taxaEntrega + taxaPrioritaria;
 
       const res = await fetch(`${supabaseUrl}/functions/v1/criar-pix`, {
         method: "POST",
@@ -264,17 +277,18 @@ const Logistica = () => {
               {useCustom && (
                 <div>
                   <Label htmlFor="valorCustom" className="text-xs">Valor (R$)</Label>
-                  <Input
-                    id="valorCustom"
-                    type="number"
-                    placeholder="Ex: 150"
-                    value={valorCustom}
-                    onChange={(e) => setValorCustom(e.target.value)}
-                    min="1"
-                    step="0.01"
-                    inputMode="decimal"
-                    className={`text-sm h-9 ${errors.valor ? "border-destructive" : ""}`}
-                  />
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground font-medium">R$</span>
+                    <Input
+                      id="valorCustom"
+                      type="text"
+                      placeholder="0,00"
+                      value={valorCustom}
+                      onChange={(e) => setValorCustom(formatCurrency(e.target.value))}
+                      inputMode="numeric"
+                      className={`text-sm h-9 pl-10 ${errors.valor ? "border-destructive" : ""}`}
+                    />
+                  </div>
                   {errors.valor && <p className="mt-0.5 text-xs text-destructive">{errors.valor}</p>}
                 </div>
               )}
