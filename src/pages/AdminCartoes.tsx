@@ -150,15 +150,12 @@ const AdminCartoes = () => {
   }, [adminTab]);
 
   const updateComplaintStatus = async (id: string, status: string) => {
-    const { error } = await supabase
-      .from("complaints" as any)
-      .update({ status })
-      .eq("id", id);
-    if (error) {
-      toast({ variant: "destructive", title: "Erro", description: "Erro ao atualizar" });
-    } else {
+    try {
+      await apiUpdateComplaintStatus(sessionPassword, id, status);
       toast({ title: `Reclamação marcada como ${status}` });
       fetchComplaints();
+    } catch {
+      toast({ variant: "destructive", title: "Erro", description: "Erro ao atualizar" });
     }
   };
 
