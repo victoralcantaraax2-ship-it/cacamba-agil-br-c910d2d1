@@ -7,7 +7,7 @@ import logoAmba from "@/assets/logo-nortex.png";
 
 const badges = [
   { icon: Users, label: "+5.000 coletas realizadas" },
-  { icon: Star, label: "Nota 4.8 no Google" },
+  { icon: Star, label: "Avaliação 4.8 no Google" },
   { icon: ShieldCheck, label: "Empresa regularizada" },
 ];
 
@@ -18,11 +18,11 @@ const scrollTo = (id: string) => {
 
 const HeroSection = ({ cityName }: { cityName?: string }) => {
   const h1Text = cityName
-    ? `Aluguel de Caçamba em ${cityName} com Entrega em Até 2 Horas`
-    : "ALUGUEL DE CAÇAMBA EM SÃO PAULO COM ENTREGA EM ATÉ 2 HORAS";
+    ? `Locação de Caçamba em ${cityName} — Entrega em Até 2 Horas`
+    : "LOCAÇÃO DE CAÇAMBA EM SÃO PAULO — ENTREGA EM ATÉ 2 HORAS";
   const subtitle = cityName
-    ? `Atendimento imediato no WhatsApp. Sem burocracia. Melhor preço em ${cityName}.`
-    : "Atendimento imediato no WhatsApp. Sem burocracia. Melhor preço da região.";
+    ? `Atendimento ágil pelo WhatsApp. Processo simplificado. Melhor custo-benefício em ${cityName}.`
+    : "Atendimento ágil pelo WhatsApp. Processo simplificado. Melhor custo-benefício da região.";
 
   const [cep, setCep] = useState("");
   const [address, setAddress] = useState<{ logradouro: string; bairro: string; localidade: string; uf: string; cep: string } | null>(null);
@@ -62,7 +62,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
 
   const handleCepWhatsApp = () => {
     if (!address) return;
-    handleWhatsAppClick(`Olá! Tenho interesse em alugar uma caçamba. Meu CEP é ${address.cep}. Endereço: ${address.logradouro}, ${address.bairro} – ${address.localidade}/${address.uf}. Podem informar disponibilidade e valores?`);
+    handleWhatsAppClick(`Olá! Tenho interesse na locação de uma caçamba. Meu CEP é ${address.cep}. Endereço: ${address.logradouro}, ${address.bairro} – ${address.localidade}/${address.uf}. Poderiam informar disponibilidade e valores?`);
   };
 
   return (
@@ -71,7 +71,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
         <div className="absolute inset-0">
           <img
             src={heroBg}
-            alt="Caçamba posicionada em obra para descarte de entulho"
+            alt="Caçamba estacionária posicionada em obra para descarte de resíduos"
             className="h-full w-full object-cover"
             width={1920}
             height={1080}
@@ -91,7 +91,6 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
             loading="eager"
             fetchPriority="high"
           />
-
 
           <h1 className="mb-4 text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">
             {h1Text}
@@ -116,7 +115,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
               className="inline-flex items-center gap-3 rounded-xl bg-whatsapp px-8 py-4 text-lg font-extrabold uppercase text-white shadow-2xl transition-all hover:scale-105 hover:bg-whatsapp-hover md:px-12 md:py-5 md:text-xl animate-pulse-green"
             >
               <img src={whatsappIcon} alt="WhatsApp" className="h-6 w-6" width={24} height={24} />
-              CHAMAR NO WHATSAPP AGORA
+              SOLICITAR PELO WHATSAPP
             </button>
             <button
               onClick={() => scrollTo("#tamanhos")}
@@ -130,12 +129,12 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
           <div className="mx-auto mt-10 max-w-md">
             <p className="mb-3 text-sm font-bold uppercase tracking-wider text-white/50">
               <MapPin className="mr-1 inline h-4 w-4 text-primary" />
-              Verifique se atendemos sua região
+              Verifique a cobertura na sua região
             </p>
             <div className="flex gap-2 rounded-2xl bg-white/10 p-2 backdrop-blur-sm border border-white/10">
               <div className="relative flex-1">
                 <input
-                  placeholder="Digite seu CEP"
+                  placeholder="Informe seu CEP"
                   value={cep}
                   onChange={(e) => handleCepChange(e.target.value)}
                   maxLength={9}
@@ -150,14 +149,14 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
                 className="flex h-12 items-center gap-2 rounded-xl bg-primary px-5 text-sm font-bold text-white transition-all hover:brightness-110 disabled:opacity-50 shrink-0"
               >
                 {cepLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Search className="h-4 w-4" />}
-                Verificar
+                Consultar
               </button>
             </div>
 
             {cepError && (
               <div className="mt-3 flex items-center justify-center gap-2 text-sm text-red-400 animate-fade-in">
                 <XCircle className="h-4 w-4" />
-                CEP não localizado. Confira e tente novamente.
+                CEP não localizado. Verifique e tente novamente.
               </div>
             )}
 
@@ -165,14 +164,14 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
               <div className={`mt-4 rounded-xl border border-green-500/30 bg-green-500/10 p-4 backdrop-blur-sm transition-all duration-500 ${cepVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"}`}>
                 <div className="flex items-center justify-center gap-2 mb-2">
                   <CheckCircle className="h-5 w-5 text-green-400" />
-                  <span className="text-sm font-black uppercase tracking-wide text-green-400">Área atendida!</span>
+                  <span className="text-sm font-black uppercase tracking-wide text-green-400">Região atendida</span>
                 </div>
                 <p className="text-sm text-white/80">
                   {address.logradouro && `${address.logradouro}, `}{address.bairro && `${address.bairro} – `}{address.localidade}/{address.uf}
                 </p>
                 <div className="mt-2 flex items-center justify-center gap-1.5 text-xs font-bold text-primary uppercase tracking-wider">
                   <Zap className="h-3.5 w-3.5" />
-                  Entrega em até 2 horas
+                  Entrega disponível em até 2 horas
                 </div>
                 <button
                   onClick={handleCepWhatsApp}
@@ -193,7 +192,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-8">
             <div className="flex items-center gap-2">
               <Star className="h-5 w-5 text-star fill-star" />
-              <span className="text-sm font-semibold text-secondary-foreground">Nota 4,8★ no Google</span>
+              <span className="text-sm font-semibold text-secondary-foreground">Avaliação 4,8★ no Google</span>
             </div>
             <div className="flex items-center gap-2">
               <Users className="h-5 w-5 text-primary" />
@@ -201,7 +200,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
             </div>
             <div className="flex items-center gap-2">
               <Zap className="h-5 w-5 text-primary" />
-              <span className="text-sm font-semibold text-secondary-foreground">Resposta imediata</span>
+              <span className="text-sm font-semibold text-secondary-foreground">Atendimento imediato</span>
             </div>
           </div>
         </div>

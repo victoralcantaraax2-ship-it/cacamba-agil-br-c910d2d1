@@ -4,60 +4,60 @@ import googleLogo from "@/assets/google-logo.webp";
 
 const reviews = [
   // Condomínios
-  { name: "Cond. Parque dos Pássaros", role: "Condomínio", stars: 5, text: "Contratamos a NORTEX para descarte de entulho da reforma do salão de festas. Entrega pontual e equipe educada." },
-  { name: "Cond. Reserva da Serra", role: "Condomínio", stars: 5, text: "Precisamos descartar material de poda e reforma. NORTEX resolveu rápido e sem bagunça. Moradores aprovaram." },
-  { name: "Cond. Villa Lobos", role: "Condomínio", stars: 5, text: "Usamos a NORTEX para limpeza geral do condomínio. Caçamba chegou no horário combinado. Recomendo!" },
-  { name: "Cond. Jardim Europa", role: "Condomínio", stars: 5, text: "Reforma nos blocos e precisávamos de caçamba urgente. NORTEX entregou no mesmo dia!" },
-  { name: "Cond. Alto da Boa Vista", role: "Condomínio", stars: 5, text: "Já é a quarta vez que contratamos. Serviço impecável e preço justo para condomínios." },
+  { name: "Cond. Parque dos Pássaros", role: "Condomínio", stars: 5, text: "Contratamos a NORTEX para o descarte de entulho da reforma do salão de festas. Entrega pontual e equipe muito profissional." },
+  { name: "Cond. Reserva da Serra", role: "Condomínio", stars: 5, text: "Precisávamos descartar material de poda e reforma. A NORTEX resolveu com agilidade e organização. Moradores aprovaram." },
+  { name: "Cond. Villa Lobos", role: "Condomínio", stars: 5, text: "Utilizamos o serviço para limpeza geral do condomínio. Caçamba entregue no horário combinado. Recomendamos." },
+  { name: "Cond. Jardim Europa", role: "Condomínio", stars: 5, text: "Reforma nos blocos e precisávamos de caçamba com urgência. A NORTEX entregou no mesmo dia." },
+  { name: "Cond. Alto da Boa Vista", role: "Condomínio", stars: 5, text: "Quarta contratação consecutiva. Serviço impecável e valores justos para condomínios." },
 
   // Autopeças
-  { name: "Freios Master Autopeças", role: "Autopeças", stars: 5, text: "Descartamos peças e materiais da oficina. NORTEX veio rápido e resolveu nosso problema de espaço." },
-  { name: "Centro Automotivo Freio Seguro", role: "Oficina", stars: 5, text: "Precisávamos limpar o depósito da oficina. Caçamba chegou no dia seguinte, tudo certo!" },
-  { name: "Auto Freios Capital", role: "Autopeças", stars: 5, text: "Descarte de material antigo da loja. Rápido, prático e dentro das normas." },
+  { name: "Freios Master Autopeças", role: "Autopeças", stars: 5, text: "Descartamos peças e materiais da oficina. A NORTEX atendeu rapidamente e resolveu nosso problema de espaço." },
+  { name: "Centro Automotivo Freio Seguro", role: "Oficina", stars: 5, text: "Precisávamos limpar o depósito. Caçamba entregue no dia seguinte, tudo conforme o combinado." },
+  { name: "Auto Freios Capital", role: "Autopeças", stars: 5, text: "Descarte de material antigo da loja. Atendimento rápido, prático e dentro das normas." },
 
   // Construtoras
-  { name: "Construtora JR", role: "Construtora", stars: 5, text: "NORTEX é parceira fixa nas nossas obras, nunca falham." },
-  { name: "MF Engenharia", role: "Construtora", stars: 5, text: "Usamos a NORTEX em todas as nossas obras. Caçamba sempre no prazo e time competente." },
-  { name: "Construtora Horizonte", role: "Construtora", stars: 5, text: "NORTEX entregou no prazo. Logística impressionante!" },
-  { name: "Construtora Vila Verde", role: "Construtora", stars: 5, text: "Parceiro fixo das nossas obras. Pontualidade e qualidade impecáveis." },
-  { name: "Rocha & Filhos Construções", role: "Construtora", stars: 5, text: "Obra grande e a NORTEX atendeu todas as demandas. Empresa séria!" },
-  { name: "Construtora Planalto", role: "Construtora", stars: 5, text: "Logística perfeita. Já contratamos mais de 20 caçambas." },
+  { name: "Construtora JR", role: "Construtora", stars: 5, text: "A NORTEX é parceira fixa em nossas obras. Nunca apresentaram falhas." },
+  { name: "MF Engenharia", role: "Construtora", stars: 5, text: "Utilizamos a NORTEX em todas as nossas obras. Caçamba sempre no prazo e equipe competente." },
+  { name: "Construtora Horizonte", role: "Construtora", stars: 5, text: "Entrega dentro do prazo. Logística impecável." },
+  { name: "Construtora Vila Verde", role: "Construtora", stars: 5, text: "Parceiro fixo das nossas obras. Pontualidade e qualidade exemplares." },
+  { name: "Rocha & Filhos Construções", role: "Construtora", stars: 5, text: "Obra de grande porte e a NORTEX atendeu todas as demandas. Empresa séria e confiável." },
+  { name: "Construtora Planalto", role: "Construtora", stars: 5, text: "Logística perfeita. Já contratamos mais de 20 caçambas com a empresa." },
 
   // Escolas
-  { name: "Colégio Objetivo", role: "Escola", stars: 5, text: "Reforma na quadra e precisávamos de caçamba com urgência. NORTEX entregou no mesmo dia!" },
-  { name: "Escola Monteiro Lobato", role: "Escola", stars: 5, text: "Descarte de móveis antigos da escola. Serviço limpo e organizado. Recomendamos!" },
-  { name: "Creche Cantinho Feliz", role: "Creche", stars: 5, text: "Reformamos o parquinho e precisávamos de descarte. NORTEX foi super atenciosa e rápida." },
-  { name: "Colégio São José", role: "Escola", stars: 5, text: "Obra de ampliação e a NORTEX forneceu caçambas durante toda a reforma. Excelente parceria!" },
-  { name: "Escola Infantil Primeiros Passos", role: "Creche", stars: 5, text: "Precisamos descartar entulho da reforma do berçário. Atendimento gentil e caçamba no prazo." },
+  { name: "Colégio Objetivo", role: "Escola", stars: 5, text: "Reforma na quadra esportiva com necessidade urgente de caçamba. A NORTEX entregou no mesmo dia." },
+  { name: "Escola Monteiro Lobato", role: "Escola", stars: 5, text: "Descarte de mobiliário antigo. Serviço limpo e organizado. Recomendamos." },
+  { name: "Creche Cantinho Feliz", role: "Creche", stars: 5, text: "Reformamos o parquinho e precisávamos de descarte. A NORTEX foi atenciosa e extremamente ágil." },
+  { name: "Colégio São José", role: "Escola", stars: 5, text: "Obra de ampliação e a NORTEX forneceu caçambas durante toda a reforma. Excelente parceria." },
+  { name: "Escola Infantil Primeiros Passos", role: "Creche", stars: 5, text: "Descarte de entulho da reforma do berçário. Atendimento cordial e caçamba entregue no prazo." },
 
   // Gastrobares
-  { name: "Gastrobar 42", role: "Gastrobar", stars: 5, text: "Reformamos o salão inteiro. A NORTEX cuidou do descarte sem atrapalhar o funcionamento. Top!" },
-  { name: "Bar do Alemão", role: "Gastrobar", stars: 5, text: "Obra rápida no bar e a caçamba chegou certinha. Equipe respeitou o horário combinado." },
-  { name: "Empório & Bistrô Vila Real", role: "Restaurante", stars: 5, text: "Reforma na cozinha industrial. NORTEX entregou e retirou tudo no prazo. Recomendo demais!" },
+  { name: "Gastrobar 42", role: "Gastrobar", stars: 5, text: "Reformamos o salão inteiro. A NORTEX cuidou do descarte sem impactar o funcionamento do estabelecimento." },
+  { name: "Bar do Alemão", role: "Gastrobar", stars: 5, text: "Obra rápida no bar e a caçamba foi entregue conforme combinado. Equipe respeitou o horário." },
+  { name: "Empório & Bistrô Vila Real", role: "Restaurante", stars: 5, text: "Reforma na cozinha industrial. A NORTEX entregou e retirou tudo dentro do prazo. Altamente recomendado." },
 
   // Madeireiras
-  { name: "Madeireira São Jorge", role: "Madeireira", stars: 5, text: "Descartamos sobras de madeira e resíduos. NORTEX é rápida e o preço é justo. Cliente fixo!" },
-  { name: "Madeireira Pau Brasil", role: "Madeireira", stars: 5, text: "Usamos caçamba semanalmente para descartar retalhos. NORTEX nunca atrasou." },
-  { name: "Madeireira Central", role: "Madeireira", stars: 5, text: "Parceiro de anos. Caçamba sempre limpa e entrega pontual. Nota 10!" },
+  { name: "Madeireira São Jorge", role: "Madeireira", stars: 5, text: "Descartamos sobras de madeira e resíduos. A NORTEX é ágil e pratica preços justos. Somos clientes regulares." },
+  { name: "Madeireira Pau Brasil", role: "Madeireira", stars: 5, text: "Utilizamos caçamba semanalmente para descartar retalhos. A NORTEX nunca atrasou uma entrega." },
+  { name: "Madeireira Central", role: "Madeireira", stars: 5, text: "Parceria de anos. Caçamba sempre limpa e entrega pontual. Nota máxima." },
 
   // Marmorarias
-  { name: "Marmoraria Ipiranga", role: "Marmoraria", stars: 5, text: "Descartamos restos de mármore e granito. Ágil e dentro das normas ambientais." },
-  { name: "Marmoraria Pedra Bonita", role: "Marmoraria", stars: 5, text: "Material pesado e a NORTEX deu conta. Caçamba reforçada e entrega rápida." },
-  { name: "Marmoraria Elite", role: "Marmoraria", stars: 5, text: "Precisávamos de descarte urgente de sobras de granito. Resolveram no mesmo dia!" },
+  { name: "Marmoraria Ipiranga", role: "Marmoraria", stars: 5, text: "Descarte de restos de mármore e granito. Atendimento ágil e em conformidade com as normas ambientais." },
+  { name: "Marmoraria Pedra Bonita", role: "Marmoraria", stars: 5, text: "Material pesado e a NORTEX atendeu perfeitamente. Caçamba reforçada e entrega rápida." },
+  { name: "Marmoraria Elite", role: "Marmoraria", stars: 5, text: "Necessidade urgente de descarte de sobras de granito. Resolvido no mesmo dia." },
 
   // Reformas e profissionais
-  { name: "RC Reformas e Acabamentos", role: "Reformas", stars: 5, text: "Já alugamos mais de 15 caçambas com a NORTEX. Nunca tiveram atraso." },
-  { name: "Josy Araujo", role: "Arquiteta", stars: 5, text: "WhatsApp super ágil. Caçamba chegou no mesmo dia. Recomendo demais!" },
-  { name: "Paulo Henrique", role: "Proprietário", stars: 5, text: "Reformei minha casa e a NORTEX entregou no dia seguinte. Muito satisfeito!" },
-  { name: "Ana Paula Santos", role: "Proprietária", stars: 5, text: "Reforma e a caçamba chegou certinha. Atendimento nota 10." },
+  { name: "RC Reformas e Acabamentos", role: "Reformas", stars: 5, text: "Já locamos mais de 15 caçambas com a NORTEX. Nunca houve atraso." },
+  { name: "Josy Araujo", role: "Arquiteta", stars: 5, text: "Atendimento ágil pelo WhatsApp. Caçamba entregue no mesmo dia. Recomendo fortemente." },
+  { name: "Paulo Henrique", role: "Proprietário", stars: 5, text: "Reformei minha residência e a NORTEX entregou no dia seguinte. Muito satisfeito com o serviço." },
+  { name: "Ana Paula Santos", role: "Proprietária", stars: 5, text: "Reforma residencial e a caçamba foi entregue conforme o combinado. Atendimento nota máxima." },
   { name: "JL Materiais de Construção", role: "Comércio", stars: 5, text: "Indicamos a NORTEX para nossos clientes. Trabalho sério e confiável." },
-  { name: "Reciclagem Paulista", role: "Reciclagem", stars: 5, text: "Precisávamos de caçamba urgente para descarte. Resolveram no mesmo dia, excelente!" },
-  { name: "Simone Alves", role: "Proprietária", stars: 5, text: "Pedi pelo WhatsApp de manhã, à tarde já estava na porta. Excelente!" },
-  { name: "Dona Maria Aparecida", role: "Aposentada", stars: 5, text: "Meu filho indicou. Pedi pelo WhatsApp e no outro dia já estava na porta." },
-  { name: "Thiago Nascimento", role: "Pedreiro autônomo", stars: 5, text: "Trabalho com reforma e sempre preciso de caçamba. NORTEX nunca me deixou na mão." },
-  { name: "Fernanda Lopes", role: "Arquiteta", stars: 5, text: "Indiquei para clientes. Todos elogiaram o atendimento." },
-  { name: "Eduardo Takahashi", role: "Proprietário", stars: 5, text: "Contratei e entregaram sem problema. Suporte nota 10." },
-  { name: "Cláudia Ribeiro", role: "Proprietária", stars: 5, text: "Reformei meu apartamento e a NORTEX cuidou de todo o descarte. Nota 10!" },
+  { name: "Reciclagem Paulista", role: "Reciclagem", stars: 5, text: "Necessidade urgente de caçamba para descarte. Resolvido no mesmo dia. Excelente." },
+  { name: "Simone Alves", role: "Proprietária", stars: 5, text: "Solicitei pela manhã e no período da tarde a caçamba já estava no local. Excelente." },
+  { name: "Dona Maria Aparecida", role: "Aposentada", stars: 5, text: "Meu filho indicou o serviço. Solicitei pelo WhatsApp e no dia seguinte a caçamba já estava disponível." },
+  { name: "Thiago Nascimento", role: "Mestre de obras", stars: 5, text: "Trabalho com reformas e sempre necessito de caçamba. A NORTEX nunca deixou a desejar." },
+  { name: "Fernanda Lopes", role: "Arquiteta", stars: 5, text: "Indiquei para diversos clientes. Todos elogiaram o atendimento e a pontualidade." },
+  { name: "Eduardo Takahashi", role: "Proprietário", stars: 5, text: "Contratei o serviço e a entrega ocorreu sem intercorrências. Suporte nota máxima." },
+  { name: "Cláudia Ribeiro", role: "Proprietária", stars: 5, text: "Reformei meu apartamento e a NORTEX cuidou de todo o descarte. Serviço impecável." },
 ];
 
 const scrollTo = (id: string) => {
@@ -99,7 +99,7 @@ const SocialProof = () => {
       <div className="container px-4">
         <div className="mb-6 md:mb-10 text-center">
           <h2 className="mb-2 text-xl font-extrabold text-secondary-foreground md:text-3xl">
-            Clientes que confiam na NORTEX
+            O que nossos clientes dizem
           </h2>
           <div className="flex items-center justify-center gap-6 flex-wrap">
             <div className="flex flex-col items-center gap-1">
@@ -176,7 +176,7 @@ const SocialProof = () => {
             onClick={() => scrollTo("#tamanhos")}
             className="rounded-xl bg-primary px-6 md:px-8 py-3 md:py-4 text-sm md:text-base font-bold uppercase text-primary-foreground shadow-lg transition-all hover:scale-105 active:scale-95 hover:bg-primary/90"
           >
-            Peça sua caçamba agora
+            Solicitar sua caçamba
           </button>
         </div>
       </div>

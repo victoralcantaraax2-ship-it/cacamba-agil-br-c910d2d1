@@ -4,36 +4,35 @@ import { CheckCircle, ShieldCheck, Clock, MessageCircle, CreditCard, Truck } fro
 const items = [
   {
     icon: Clock,
-    title: "Resposta em minutos",
-    desc: "Mandou mensagem, a gente já responde. Nada de ficar esperando.",
+    title: "Resposta imediata",
+    desc: "Nossa equipe retorna seu contato em poucos minutos, sem demora.",
   },
   {
     icon: Truck,
-    title: "Entrega no horário",
-    desc: "Combinou? A caçamba chega na hora. Sua obra não para.",
+    title: "Entrega pontual",
+    desc: "Cumprimos o horário combinado. Sua obra não sofre atrasos.",
   },
   {
     icon: ShieldCheck,
-    title: "Sem taxa escondida",
-    desc: "O preço que a gente passa é o preço final. Ponto.",
+    title: "Sem taxas ocultas",
+    desc: "O valor informado é o valor final. Transparência total na negociação.",
   },
   {
     icon: MessageCircle,
-    title: "Fala direto com a gente",
-    desc: "Atendimento real pelo WhatsApp. Sem robô, sem espera.",
+    title: "Atendimento direto",
+    desc: "Comunicação humanizada pelo WhatsApp, sem intermediários.",
   },
   {
     icon: CreditCard,
-    title: "Pagamento fácil",
-    desc: "Pix, cartão, boleto... do jeito que for melhor pra você.",
+    title: "Pagamento facilitado",
+    desc: "Pix, cartão de crédito e outras modalidades sob consulta.",
   },
   {
     icon: CheckCircle,
-    title: "Tudo legalizado",
-    desc: "Entulho vai pra lugar certo, com descarte regularizado.",
+    title: "Descarte legalizado",
+    desc: "Destinação dos resíduos em conformidade com a legislação ambiental.",
   },
 ];
-
 
 const ConfiancaSection = memo(() => {
   return (
@@ -41,10 +40,10 @@ const ConfiancaSection = memo(() => {
       <div className="container px-4">
         <div className="mb-10 text-center">
           <h2 className="mb-3 text-2xl font-extrabold text-foreground md:text-3xl">
-            Por que o pessoal confia na NORTEX?
+            Por que confiar na NORTEX?
           </h2>
           <p className="text-muted-foreground">
-            Empresa séria, atendimento direto e entrega garantida.
+            Compromisso com qualidade, pontualidade e transparência em cada atendimento.
           </p>
         </div>
 

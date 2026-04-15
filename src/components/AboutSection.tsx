@@ -10,12 +10,12 @@ import iconAtendimento from "@/assets/icon-atendimento.png";
 import iconFrota from "@/assets/icon-frota.png";
 
 const pillars: { image: string; label: string; desc: string }[] = [
-  { image: iconHorario, label: "Entrega no prazo", desc: "Cumprimos rigorosamente o horário agendado." },
-  { image: iconPreco, label: "Preço transparente", desc: "Sem taxas ocultas. Total clareza no valor." },
-  { image: iconDescarte, label: "Descarte regularizado", desc: "Destinação correta do entulho, conforme normas." },
-  { image: badgeAward, label: "Experiência no setor", desc: "Atendimento confiável e consolidado." },
-  { image: iconAtendimento, label: "Atendimento especializado", desc: "Equipe preparada para orientar sua necessidade." },
-  { image: iconFrota, label: "Frota própria", desc: "Mais agilidade e controle na operação." },
+  { image: iconHorario, label: "Pontualidade garantida", desc: "Cumprimos rigorosamente os horários agendados para entrega e retirada." },
+  { image: iconPreco, label: "Preço transparente", desc: "Sem taxas ocultas. Valores claros desde o primeiro contato." },
+  { image: iconDescarte, label: "Descarte regularizado", desc: "Destinação ambientalmente correta, em conformidade com as normas vigentes." },
+  { image: badgeAward, label: "Experiência consolidada", desc: "Anos de atuação no mercado com milhares de atendimentos realizados." },
+  { image: iconAtendimento, label: "Atendimento especializado", desc: "Equipe qualificada para orientar a melhor solução para sua necessidade." },
+  { image: iconFrota, label: "Frota própria", desc: "Maior agilidade e controle total sobre toda a operação logística." },
 ];
 
 const segments = [
@@ -34,19 +34,19 @@ const AboutSection = memo(() => {
             Sobre a NORTEX Caçambas
           </h2>
           <p className="mb-4 text-muted-foreground leading-relaxed text-base md:text-lg">
-            A <span className="font-bold text-foreground">NORTEX Caçambas</span> é especializada na locação de caçambas para obras, reformas e demolições em São Paulo e região.
+            A <span className="font-bold text-foreground">NORTEX Caçambas</span> é referência na locação de caçambas estacionárias para obras, reformas e demolições em São Paulo e Grande São Paulo.
           </p>
           <p className="mb-4 text-muted-foreground leading-relaxed">
-            Atuamos com foco em agilidade, organização e responsabilidade no descarte de entulho, oferecendo soluções práticas para clientes residenciais, construtoras, condomínios e empresas.
+            Atuamos com foco em eficiência operacional, organização logística e responsabilidade ambiental, oferecendo soluções completas para clientes residenciais, construtoras, condomínios e empresas.
           </p>
           <p className="mb-4 text-muted-foreground leading-relaxed">
-            Nosso compromisso é garantir um atendimento rápido, transparente e sem burocracia — desde a solicitação até a retirada da caçamba.
+            Nosso compromisso é proporcionar um atendimento ágil, transparente e desburocratizado — desde a solicitação até a retirada da caçamba.
           </p>
           <p className="mb-4 text-muted-foreground leading-relaxed">
-            Com frota própria e equipe experiente, realizamos entregas rápidas e cumprimos prazos com responsabilidade.
+            Com frota própria e equipe experiente, garantimos entregas dentro do prazo e cumprimento rigoroso dos horários combinados.
           </p>
           <p className="text-muted-foreground leading-relaxed font-medium">
-            Independentemente do tamanho da sua obra, estamos preparados para atender com eficiência, segurança e o melhor custo-benefício da região.
+            Independentemente da dimensão do seu projeto, estamos preparados para atendê-lo com excelência, segurança e o melhor custo-benefício do mercado.
           </p>
         </div>
 
@@ -75,9 +75,9 @@ const AboutSection = memo(() => {
             className="inline-flex items-center gap-2 rounded-xl bg-whatsapp px-8 py-4 text-base font-extrabold uppercase text-white shadow-lg transition-all hover:scale-105 hover:bg-whatsapp-hover"
           >
             <img src={whatsappIcon} alt="WhatsApp" className="h-5 w-5" width={20} height={20} />
-            SOLICITAR ORÇAMENTO NO WHATSAPP
+            SOLICITAR ORÇAMENTO
           </button>
-          <span className="text-xs text-muted-foreground">Resposta rápida • Sem compromisso</span>
+          <span className="text-xs text-muted-foreground">Atendimento imediato • Sem compromisso</span>
         </div>
       </div>
     </section>

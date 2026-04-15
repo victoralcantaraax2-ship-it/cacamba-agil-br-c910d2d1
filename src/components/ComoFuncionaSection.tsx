@@ -7,20 +7,20 @@ const steps = [
   {
     icon: FileText,
     step: "1",
-    title: "Escolha o tamanho",
-    desc: "Veja qual caçamba cabe na sua obra e chama a gente no WhatsApp.",
+    title: "Escolha o tamanho ideal",
+    desc: "Selecione a caçamba adequada para o volume da sua obra e entre em contato pelo WhatsApp.",
   },
   {
     icon: MapPin,
     step: "2",
-    title: "Manda o endereço",
-    desc: "Diz onde e quando precisa. A gente confirma rapidinho.",
+    title: "Informe o endereço",
+    desc: "Envie a localização e a data desejada. Confirmamos a disponibilidade em poucos minutos.",
   },
   {
     icon: Truck,
     step: "3",
-    title: "Recebe e devolve",
-    desc: "Levamos até você e buscamos no dia combinado.",
+    title: "Entrega e retirada",
+    desc: "Realizamos a entrega no prazo combinado e efetuamos a coleta na data agendada.",
   },
 ];
 
@@ -35,10 +35,10 @@ const ComoFuncionaSection = memo(() => {
       <div className="container px-4">
         <div className="mb-12 text-center">
           <h2 className="mb-3 text-2xl font-extrabold text-foreground md:text-3xl">
-            Como funciona?
+            Como funciona a locação
           </h2>
           <p className="text-muted-foreground">
-            Três passos e pronto. Sem complicação.
+            Processo simples, rápido e transparente em três etapas.
           </p>
         </div>
 
@@ -69,7 +69,7 @@ const ComoFuncionaSection = memo(() => {
             className="inline-flex items-center gap-2 rounded-xl bg-whatsapp px-6 py-4 text-base font-bold text-white shadow-lg transition-all hover:scale-105 hover:bg-whatsapp-hover"
           >
             <img src={whatsappIcon} alt="WhatsApp" className="h-5 w-5" width={20} height={20} />
-            Falar no WhatsApp
+            Falar pelo WhatsApp
           </button>
         </div>
       </div>
