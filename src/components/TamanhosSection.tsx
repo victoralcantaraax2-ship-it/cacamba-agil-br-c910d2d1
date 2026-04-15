@@ -156,15 +156,28 @@ const TamanhosSection = () => {
           </p>
         </div>
 
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {orderedSizes.map((item) => (
-            <SizeCard
-              key={item.size}
-              item={item}
-              selected={selected === item.size}
-              onSelect={() => setSelected(item.size)}
-            />
-          ))}
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 justify-items-center">
+          {orderedSizes.map((item, idx) => {
+            const total = orderedSizes.length;
+            const cols = 3;
+            const lastRowCount = total % cols || cols;
+            const isLastRow = idx >= total - lastRowCount;
+            return (
+              <div
+                key={item.size}
+                className={`w-full ${isLastRow && lastRowCount < cols ? "lg:max-w-[calc((100%-2.5rem)/3)]" : ""}`}
+                style={isLastRow && lastRowCount < cols ? {
+                  gridColumn: undefined
+                } : undefined}
+              >
+                <SizeCard
+                  item={item}
+                  selected={selected === item.size}
+                  onSelect={() => setSelected(item.size)}
+                />
+              </div>
+            );
+          })}
         </div>
 
         {/* Single CTA */}
