@@ -583,15 +583,15 @@ const Checkout = () => {
 
         {/* ========== STEP 3 — PAGAMENTO ========== */}
         {step === 3 && (
-          <div className="animate-in fade-in slide-in-from-right-4 duration-300 space-y-6">
-            <button onClick={() => goToStep(2)} className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
-              <ArrowLeft className="h-4 w-4" /> Voltar
+          <div className="animate-in fade-in slide-in-from-right-4 duration-300 space-y-5">
+            <button onClick={() => goToStep(2)} className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors">
+              <ArrowLeft className="h-3.5 w-3.5" /> Voltar
             </button>
 
             {/* --- Endereço de entrega --- */}
-            <Card>
-              <CardContent className="pt-4 pb-4">
-                <h2 className="text-base font-bold text-foreground leading-tight">Onde vamos entregar a caçamba</h2>
+            <Card className="shadow-sm border-border/50">
+              <CardContent className="pt-5 pb-5">
+                <h2 className="text-base font-extrabold text-foreground leading-tight">Onde vamos entregar a caçamba</h2>
                 <p className="mb-3 text-xs text-muted-foreground">
                   Endereço usado exclusivamente para a entrega da caçamba.
                 </p>
