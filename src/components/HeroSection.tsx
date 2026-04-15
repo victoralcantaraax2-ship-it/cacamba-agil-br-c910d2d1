@@ -21,8 +21,8 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
     ? `Locação de Caçamba em ${cityName} — Rápida, Segura e sem Burocracia`
     : "LOCAÇÃO DE CAÇAMBA EM SÃO PAULO";
   const subtitle = cityName
-    ? `Caçambas de 3m³ a 10m³ com entrega ágil em ${cityName}. Solicite pelo WhatsApp e receba em poucas horas.`
-    : "Caçambas de 3m³ a 10m³ para obras, reformas e demolições. Solicite pelo WhatsApp e receba em poucas horas.";
+    ? `Entrega em até 2h em ${cityName}. Caçambas para obras, reformas, entulhos e demolições. Solicite agora pelo WhatsApp.`
+    : "Entrega em até 2h. Caçambas para obras, reformas, entulhos e demolições. Solicite agora pelo WhatsApp.";
 
   const [cep, setCep] = useState("");
   const [address, setAddress] = useState<{ logradouro: string; bairro: string; localidade: string; uf: string; cep: string } | null>(null);
