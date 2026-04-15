@@ -130,6 +130,7 @@ const SizeCard = memo(({ item, selected, onSelect }: { item: typeof sizes[0]; se
 
 SizeCard.displayName = "SizeCard";
 
+const TamanhosSection = () => {
   const isMobile = useIsMobile();
   const [selected, setSelected] = useState("5 m³");
 
