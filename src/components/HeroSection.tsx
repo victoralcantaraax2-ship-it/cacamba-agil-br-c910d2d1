@@ -6,7 +6,7 @@ import whatsappIcon from "@/assets/whatsapp-icon.webp";
 import logoAmba from "@/assets/logo-nortex.png";
 
 const badges = [
-  { icon: Users, label: "+500 clientes atendidos" },
+  { icon: Users, label: "+5.000 coletas realizadas" },
   { icon: Star, label: "Nota 4.8 no Google" },
   { icon: ShieldCheck, label: "Empresa regularizada" },
 ];
@@ -197,7 +197,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
             </div>
             <div className="flex items-center gap-2">
               <Users className="h-5 w-5 text-primary" />
-              <span className="text-sm font-semibold text-secondary-foreground">+500 clientes atendidos</span>
+              <span className="text-sm font-semibold text-secondary-foreground">+5.000 coletas realizadas</span>
             </div>
             <div className="flex items-center gap-2">
               <Zap className="h-5 w-5 text-primary" />
