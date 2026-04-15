@@ -27,7 +27,7 @@ const useAddressAutocomplete = () => {
       setLoading(true);
       try {
         const res = await fetch(
-          `https://photon.komoot.io/api/?q=${encodeURIComponent(value)}&limit=5&lang=pt&lat=-23.55&lon=-46.63&location_bias_scale=5`
+          `https://photon.komoot.io/api/?q=${encodeURIComponent(value)}&limit=5&lat=-23.55&lon=-46.63&location_bias_scale=5`
         );
         const data = await res.json();
         const mapped = (data.features || [])
