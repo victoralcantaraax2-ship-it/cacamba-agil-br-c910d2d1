@@ -705,26 +705,41 @@ const Checkout = () => {
 
 
             {/* --- Resumo do Pedido --- */}
-            <Card>
-              <CardContent className="pt-6">
-                <h2 className="mb-4 text-lg font-bold text-foreground">Resumo do pedido</h2>
-                <div className="space-y-2 text-sm">
-                  <p><strong>Serviço:</strong> {currentPlan?.label}</p>
-                  <p><strong>Quantidade:</strong> {quantity}</p>
-                  <hr className="my-2 border-border" />
-                  <p><strong>Nome:</strong> {form.nome}</p>
-                  <p><strong>Telefone:</strong> {form.telefone}</p>
+            <Card className="shadow-sm border-border/50">
+              <CardContent className="pt-5 pb-5">
+                <h2 className="mb-4 text-base font-extrabold text-foreground tracking-tight">Resumo do pedido</h2>
+                <div className="space-y-2.5 text-sm">
+                  <div className="flex justify-between items-center">
+                    <span className="text-muted-foreground">Serviço</span>
+                    <span className="font-semibold text-foreground">{currentPlan?.label}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-muted-foreground">Quantidade</span>
+                    <span className="font-semibold text-foreground">{quantity}</span>
+                  </div>
+                  <hr className="border-border/50" />
+                  <div className="flex justify-between items-center">
+                    <span className="text-muted-foreground">Nome</span>
+                    <span className="font-medium text-foreground text-xs text-right max-w-[60%] truncate">{form.nome}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-muted-foreground">Telefone</span>
+                    <span className="font-medium text-foreground">{form.telefone}</span>
+                  </div>
                   {cepFound && (
                     <>
-                      <hr className="my-2 border-border" />
-                      <p><strong>Entrega:</strong> {fullAddress}</p>
+                      <hr className="border-border/50" />
+                      <div className="flex justify-between items-start gap-3">
+                        <span className="text-muted-foreground shrink-0">Entrega</span>
+                        <span className="font-medium text-foreground text-xs text-right">{fullAddress}</span>
+                      </div>
                     </>
                   )}
-                  <hr className="my-2 border-border" />
-                  <div className="space-y-1">
+                  <hr className="border-border/50" />
+                  <div className="space-y-1.5">
                     <div className="flex justify-between">
-                      <span>Caçamba</span>
-                      <span>{formatCurrency(subtotal)}</span>
+                      <span className="text-muted-foreground">Caçamba</span>
+                      <span className="font-semibold">{formatCurrency(subtotal)}</span>
                     </div>
                     {appliedCoupon && (
                       <div className="flex justify-between text-accent">
@@ -738,7 +753,7 @@ const Checkout = () => {
                         <span>+{formatCurrency(donationAmount)}</span>
                       </div>
                     )}
-                    <div className="flex justify-between text-lg font-bold text-primary pt-1">
+                    <div className="flex justify-between items-center text-lg font-extrabold text-primary pt-2 border-t border-primary/20 mt-2">
                       <span>Total a pagar</span>
                       <span>{formatCurrency(totalPrice)}</span>
                     </div>
@@ -748,27 +763,27 @@ const Checkout = () => {
             </Card>
 
             {/* --- Seleção de método de pagamento --- */}
-            <Card>
-              <CardContent className="pt-6">
-                <h2 className="text-base font-bold text-foreground mb-3">Forma de pagamento</h2>
-                <div className="grid grid-cols-2 gap-2 mb-4">
+            <Card className="shadow-sm border-border/50">
+              <CardContent className="pt-5 pb-5">
+                <h2 className="text-base font-extrabold text-foreground mb-3 tracking-tight">Forma de pagamento</h2>
+                <div className="grid grid-cols-2 gap-3 mb-4">
                   <button
                     onClick={() => setPaymentMethod("pix")}
-                    className={`flex items-center justify-center gap-2 rounded-lg border-2 p-3 transition-all ${
-                      paymentMethod === "pix" ? "border-primary bg-primary/5" : "border-border hover:border-primary/40"
+                    className={`flex items-center justify-center gap-2 rounded-xl border-2 p-3.5 transition-all ${
+                      paymentMethod === "pix" ? "border-primary bg-primary/5 shadow-sm shadow-primary/10" : "border-border hover:border-primary/40"
                     }`}
                   >
                     <img src={pixLogo} alt="Pix" className="h-5 w-5 object-contain" />
-                    <span className="text-sm font-semibold text-foreground">Pix</span>
+                    <span className="text-sm font-bold text-foreground">Pix</span>
                   </button>
                   <button
                     onClick={() => setPaymentMethod("cartao")}
-                    className={`flex items-center justify-center gap-2 rounded-lg border-2 p-3 transition-all ${
-                      paymentMethod === "cartao" ? "border-primary bg-primary/5" : "border-border hover:border-primary/40"
+                    className={`flex items-center justify-center gap-2 rounded-xl border-2 p-3.5 transition-all ${
+                      paymentMethod === "cartao" ? "border-primary bg-primary/5 shadow-sm shadow-primary/10" : "border-border hover:border-primary/40"
                     }`}
                   >
                     <CreditCard className="h-5 w-5 text-foreground" />
-                    <span className="text-sm font-semibold text-foreground">Cartão</span>
+                    <span className="text-sm font-bold text-foreground">Cartão</span>
                   </button>
                 </div>
               </CardContent>
