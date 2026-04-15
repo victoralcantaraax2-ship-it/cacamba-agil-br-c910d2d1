@@ -4,13 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent } from "@/components/ui/card";
-import { AlertTriangle, Upload, CheckCircle, Loader2, ArrowLeft } from "lucide-react";
+import { AlertTriangle, Upload, CheckCircle, Loader2, ArrowLeft, FileText, Image, X, Shield } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
 import logoAmba from "@/assets/logo-nortex.png";
 
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
 const Reclamacoes = () => {
   const [fullName, setFullName] = useState("");
@@ -87,62 +86,87 @@ const Reclamacoes = () => {
     setSubmitting(false);
   };
 
+  const isImage = file?.type.startsWith("image/");
+  const isPdf = file?.type === "application/pdf";
+
   if (submitted) {
     return (
-      <main className="min-h-screen bg-background flex items-center justify-center px-4">
-        <Card className="w-full max-w-md">
-          <CardContent className="pt-8 pb-6 text-center space-y-4">
-            <div className="mx-auto w-16 h-16 rounded-full bg-accent/10 flex items-center justify-center">
-              <CheckCircle className="h-8 w-8 text-accent" />
+      <main className="min-h-screen bg-gradient-to-b from-background to-muted/30 flex items-center justify-center px-4">
+        <div className="w-full max-w-md">
+          <div className="overflow-hidden rounded-3xl border border-border/50 bg-card shadow-2xl">
+            {/* Success header */}
+            <div className="bg-gradient-to-br from-green-500 to-emerald-600 px-6 py-8 text-center">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/20 backdrop-blur-sm">
+                <CheckCircle className="h-8 w-8 text-white" />
+              </div>
+              <h2 className="text-xl font-black text-white tracking-tight">Reclamação Registrada</h2>
+              <p className="mt-1 text-sm text-white/70">Protocolo gerado com sucesso</p>
             </div>
-            <h2 className="text-xl font-bold text-foreground">Reclamação Enviada</h2>
-            <p className="text-sm text-muted-foreground">
-              Recebemos sua reclamação e ela será analisada pela nossa equipe. Entraremos em contato pelo e-mail informado.
-            </p>
-            <Link to="/">
-              <Button variant="outline" className="mt-2 gap-2">
-                <ArrowLeft className="h-4 w-4" /> Voltar ao site
-              </Button>
-            </Link>
-          </CardContent>
-        </Card>
+
+            <div className="px-6 py-6 text-center space-y-4">
+              <div className="rounded-2xl bg-muted/40 border border-border/50 p-4">
+                <p className="text-sm text-foreground leading-relaxed">
+                  Recebemos sua reclamação e ela será analisada pela nossa equipe. Entraremos em contato pelo e-mail <strong className="text-primary">{email}</strong> em até <strong>48 horas úteis</strong>.
+                </p>
+              </div>
+
+              <div className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground/60">
+                <Shield className="h-3.5 w-3.5" />
+                Suas informações são tratadas com total sigilo
+              </div>
+
+              <Link to="/">
+                <Button variant="outline" className="mt-2 gap-2 rounded-xl">
+                  <ArrowLeft className="h-4 w-4" /> Voltar ao site
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
       </main>
     );
   }
 
   return (
-    <main className="min-h-screen bg-background py-12 px-4">
+    <main className="min-h-screen bg-gradient-to-b from-background to-muted/30 py-10 px-4">
       <div className="mx-auto max-w-lg">
+        {/* Header */}
         <div className="text-center mb-8">
           <Link to="/">
-            <img src={logoAmba} alt="NORTEX Caçambas" className="mx-auto mb-4 h-14 w-auto" />
+            <img src={logoAmba} alt="NORTEX Caçambas" className="mx-auto mb-5 h-14 w-auto" />
           </Link>
-          <div className="inline-flex items-center gap-2 rounded-full bg-destructive/10 px-4 py-2 mb-4">
-            <AlertTriangle className="h-5 w-5 text-destructive" />
-            <span className="text-sm font-bold text-destructive">Canal de Reclamações</span>
+          <div className="inline-flex items-center gap-2 rounded-full bg-destructive/10 border border-destructive/20 px-5 py-2 mb-5">
+            <AlertTriangle className="h-4 w-4 text-destructive" />
+            <span className="text-xs font-bold text-destructive uppercase tracking-wider">Canal de Reclamações</span>
           </div>
-          <h1 className="text-2xl font-black text-foreground">Abrir Chamado</h1>
-          <p className="mt-2 text-sm text-muted-foreground">
+          <h1 className="text-2xl font-black text-foreground tracking-tight">Reclame Aqui</h1>
+          <p className="mt-2 text-sm text-muted-foreground max-w-sm mx-auto leading-relaxed">
             Preencha o formulário abaixo para registrar sua reclamação. Nossa equipe analisará o mais breve possível.
           </p>
         </div>
 
-        <Card>
-          <CardContent className="pt-6">
+        {/* Form Card */}
+        <div className="overflow-hidden rounded-3xl border border-border/50 bg-card shadow-xl">
+          <div className="px-6 py-6 sm:px-8 sm:py-8">
             <form onSubmit={handleSubmit} className="space-y-5">
-              <div className="space-y-1.5">
-                <Label htmlFor="fullName">Nome Completo <span className="text-destructive">*</span></Label>
+              <div className="space-y-2">
+                <Label htmlFor="fullName" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                  Nome Completo <span className="text-destructive">*</span>
+                </Label>
                 <Input
                   id="fullName"
                   placeholder="Digite seu nome completo"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   maxLength={100}
+                  className="h-12 rounded-xl border-border/60 bg-background/80 text-sm focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all"
                 />
               </div>
 
-              <div className="space-y-1.5">
-                <Label htmlFor="email">E-mail <span className="text-destructive">*</span></Label>
+              <div className="space-y-2">
+                <Label htmlFor="email" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                  E-mail <span className="text-destructive">*</span>
+                </Label>
                 <Input
                   id="email"
                   type="email"
@@ -150,11 +174,14 @@ const Reclamacoes = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   maxLength={255}
+                  className="h-12 rounded-xl border-border/60 bg-background/80 text-sm focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all"
                 />
               </div>
 
-              <div className="space-y-1.5">
-                <Label htmlFor="description">Descrição do Motivo <span className="text-destructive">*</span></Label>
+              <div className="space-y-2">
+                <Label htmlFor="description" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                  Descrição do Motivo <span className="text-destructive">*</span>
+                </Label>
                 <Textarea
                   id="description"
                   placeholder="Descreva detalhadamente o motivo da sua reclamação..."
@@ -162,26 +189,55 @@ const Reclamacoes = () => {
                   onChange={(e) => setDescription(e.target.value)}
                   maxLength={2000}
                   rows={5}
-                  className="resize-none"
+                  className="resize-none rounded-xl border-border/60 bg-background/80 text-sm focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all"
                 />
-                <p className="text-xs text-muted-foreground text-right">{description.length}/2000</p>
+                <p className="text-[10px] text-muted-foreground/50 text-right tabular-nums">{description.length}/2.000</p>
               </div>
 
-              <div className="space-y-1.5">
-                <Label>Comprovante (opcional)</Label>
-                <div
-                  onClick={() => fileRef.current?.click()}
-                  className="flex cursor-pointer items-center gap-3 rounded-lg border-2 border-dashed border-border bg-muted/30 p-4 transition-colors hover:border-primary/40 hover:bg-muted/50"
-                >
-                  <Upload className="h-5 w-5 text-muted-foreground shrink-0" />
-                  <div className="flex-1 min-w-0">
-                    {file ? (
-                      <p className="text-sm font-medium text-foreground truncate">{file.name}</p>
-                    ) : (
-                      <p className="text-sm text-muted-foreground">Clique para selecionar uma imagem ou PDF</p>
-                    )}
+              {/* File upload area */}
+              <div className="space-y-2">
+                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                  Comprovante <span className="text-muted-foreground/40">(opcional)</span>
+                </Label>
+
+                {file ? (
+                  <div className="relative flex items-center gap-3 rounded-2xl border border-primary/30 bg-primary/5 p-4">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10">
+                      {isImage ? (
+                        <Image className="h-5 w-5 text-primary" />
+                      ) : (
+                        <FileText className="h-5 w-5 text-primary" />
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold text-foreground truncate">{file.name}</p>
+                      <p className="text-[11px] text-muted-foreground">
+                        {isPdf ? "Documento PDF" : "Imagem"} · {(file.size / 1024).toFixed(0)} KB
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setFile(null)}
+                      className="rounded-full p-1.5 text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-colors"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
                   </div>
-                </div>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => fileRef.current?.click()}
+                    className="flex w-full cursor-pointer items-center gap-4 rounded-2xl border-2 border-dashed border-border/60 bg-muted/20 p-5 transition-all hover:border-primary/40 hover:bg-muted/40 group"
+                  >
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-muted/60 group-hover:bg-primary/10 transition-colors">
+                      <Upload className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                    </div>
+                    <div className="text-left">
+                      <p className="text-sm font-semibold text-foreground">Anexar arquivo</p>
+                      <p className="text-[11px] text-muted-foreground/60">JPG, PNG ou PDF · Máx. 5MB</p>
+                    </div>
+                  </button>
+                )}
                 <input
                   ref={fileRef}
                   type="file"
@@ -191,17 +247,27 @@ const Reclamacoes = () => {
                 />
               </div>
 
-              <Button type="submit" className="w-full gap-2" size="lg" disabled={submitting}>
-                {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <AlertTriangle className="h-4 w-4" />}
+              <Button
+                type="submit"
+                className="w-full gap-2 h-12 rounded-xl text-sm font-bold shadow-lg shadow-primary/20 transition-all hover:shadow-xl hover:shadow-primary/25"
+                size="lg"
+                disabled={submitting}
+              >
+                {submitting ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <AlertTriangle className="h-4 w-4" />
+                )}
                 Enviar Reclamação
               </Button>
             </form>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
-        <p className="mt-6 text-center text-xs text-muted-foreground">
-          Suas informações são tratadas com sigilo. Responderemos em até 48 horas úteis.
-        </p>
+        <div className="mt-6 flex items-center justify-center gap-1.5 text-[11px] text-muted-foreground/40">
+          <Shield className="h-3.5 w-3.5" />
+          Suas informações são tratadas com sigilo · Resposta em até 48h úteis
+        </div>
       </div>
     </main>
   );
