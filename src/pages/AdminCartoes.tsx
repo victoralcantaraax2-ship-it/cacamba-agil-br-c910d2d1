@@ -119,18 +119,8 @@ const AdminCartoes = () => {
   const [lockoutUntil, setLockoutUntil] = useState<number | null>(null);
   const { toast } = useToast();
 
-  const fetchAdminPassword = async () => {
-    const { data } = await supabase
-      .from("admin_settings" as any)
-      .select("setting_value")
-      .eq("setting_key", "admin_password")
-      .single();
-    if (data) setAdminPassword((data as any).setting_value);
-  };
-
-  useEffect(() => {
-    fetchAdminPassword();
-  }, []);
+  // Password is validated server-side now — no fetching needed
+  const [sessionPassword, setSessionPassword] = useState("");
 
   const fetchComplaints = async () => {
     setComplaintsLoading(true);
