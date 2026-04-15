@@ -1,56 +1,77 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useRef } from "react";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import TamanhosSection from "@/components/TamanhosSection";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import ExitIntentPopup from "@/components/ExitIntentPopup";
 
-
-const DiferenciaisSection = lazy(() => import("@/components/DiferenciaisSection"));
 const RegioesSection = lazy(() => import("@/components/RegioesSection"));
 const SocialProof = lazy(() => import("@/components/SocialProof"));
 const ComoFuncionaSection = lazy(() => import("@/components/ComoFuncionaSection"));
-const UrgenciaSection = lazy(() => import("@/components/UrgenciaSection"));
 const FAQSection = lazy(() => import("@/components/FAQSection"));
 const AboutSection = lazy(() => import("@/components/AboutSection"));
 const Footer = lazy(() => import("@/components/Footer"));
 
 const SectionFallback = () => <div className="py-16" />;
 
+const RevealSection = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => el.classList.add("revealed"), delay);
+          observer.unobserve(el);
+        }
+      },
+      { threshold: 0.08 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [delay]);
+
+  return (
+    <div ref={ref} className="reveal-section">
+      {children}
+    </div>
+  );
+};
+
 const Index = () => {
   return (
-    <main className="snap-container">
+    <main>
       <Header />
-      <div className="snap-section">
-        <HeroSection />
-      </div>
-      <div className="snap-section">
+      <HeroSection />
+      <RevealSection>
         <TamanhosSection />
-      </div>
+      </RevealSection>
       <Suspense fallback={<SectionFallback />}>
-        <div className="snap-section">
+        <RevealSection delay={50}>
           <RegioesSection />
-        </div>
+        </RevealSection>
       </Suspense>
       <Suspense fallback={<SectionFallback />}>
-        <div className="snap-section">
+        <RevealSection delay={50}>
           <SocialProof />
-        </div>
+        </RevealSection>
       </Suspense>
       <Suspense fallback={<SectionFallback />}>
-        <div className="snap-section">
+        <RevealSection delay={50}>
           <ComoFuncionaSection />
-        </div>
+        </RevealSection>
       </Suspense>
       <Suspense fallback={<SectionFallback />}>
-        <div className="snap-section">
+        <RevealSection delay={50}>
           <FAQSection />
-        </div>
+        </RevealSection>
       </Suspense>
       <Suspense fallback={<SectionFallback />}>
-        <div className="snap-section">
+        <RevealSection delay={50}>
           <AboutSection />
-        </div>
+        </RevealSection>
       </Suspense>
       <Suspense fallback={<SectionFallback />}>
         <Footer />
