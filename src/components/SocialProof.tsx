@@ -1,5 +1,6 @@
-import { Star, ChevronLeft, ChevronRight, ShieldCheck } from "lucide-react";
+import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useMemo, useCallback, useRef } from "react";
+import googleLogo from "@/assets/google-logo.webp";
 
 const reviews = [
   // Shoppings
@@ -106,14 +107,17 @@ const SocialProof = () => {
           <p className="text-sm text-secondary-foreground/60 mb-3">
             Shoppings, construtoras, condomínios, escolas e centenas de empresas em São Paulo
           </p>
-          <div className="flex items-center justify-center gap-4 flex-wrap">
-            <div className="flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-2">
-              <ShieldCheck className="h-4 w-4 md:h-5 md:w-5 text-primary" />
-              <span className="text-xs md:text-sm font-bold text-secondary-foreground">+5.000 coletas realizadas</span>
-            </div>
-            <div className="flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-2">
-              <Star className="h-4 w-4 md:h-5 md:w-5 fill-star text-star" />
-              <span className="text-xs md:text-sm font-bold text-secondary-foreground">Empresa verificada desde 2021</span>
+          <div className="flex items-center justify-center gap-6 flex-wrap">
+            <div className="flex flex-col items-center gap-1">
+              <img src={googleLogo} alt="Google" className="h-6 md:h-7 w-auto" />
+              <div className="flex items-center gap-1.5">
+                <div className="flex gap-0.5">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-4 w-4 md:h-5 md:w-5 fill-star text-star" />
+                  ))}
+                </div>
+                <span className="text-xs md:text-sm font-bold text-secondary-foreground">4.8</span>
+              </div>
             </div>
           </div>
         </div>
