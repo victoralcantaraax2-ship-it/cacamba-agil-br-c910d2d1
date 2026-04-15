@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
+import { Switch } from "@/components/ui/switch";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { CheckCircle, Copy, ArrowLeft, Plus, Minus, Loader2, MapPin, XCircle, CreditCard, CalendarIcon, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -671,51 +672,49 @@ const Checkout = () => {
 
             {/* Agendamento */}
             <Card className="shadow-sm border-border/50">
-              <CardContent className="pt-5 pb-5 space-y-3">
-                <h3 className="text-base font-extrabold text-foreground flex items-center gap-2">
-                  <CalendarIcon className="h-4 w-4 text-primary" />
-                  Agendar entrega <span className="text-xs font-normal text-muted-foreground">(opcional)</span>
-                </h3>
-                <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className={cn(
-                        "w-full justify-start text-left font-normal",
-                        !scheduledDate && "text-muted-foreground"
-                      )}
-                    >
-                      <CalendarIcon className="mr-2 h-4 w-4" />
-                      {scheduledDate ? format(scheduledDate, "dd/MM/yyyy", { locale: ptBR }) : "Selecione a data de entrega"}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      mode="single"
-                      selected={scheduledDate}
-                      onSelect={(d) => { setScheduledDate(d); setCalendarOpen(false); }}
-                      disabled={(date) => isBefore(date, minDate) || date > maxDate || date.getDay() === 0}
-                      initialFocus
-                      locale={ptBR}
-                      className={cn("p-3 pointer-events-auto")}
-                    />
-                  </PopoverContent>
-                </Popover>
+              <CardContent className="pt-4 pb-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
+                    <CalendarIcon className="h-4 w-4 text-primary" />
+                    Agendar entrega
+                  </h3>
+                  <Switch checked={!!scheduledDate} onCheckedChange={(on) => {
+                    if (!on) { setScheduledDate(undefined); setScheduledSlot(""); }
+                    else { setScheduledDate(addDays(startOfDay(new Date()), 1)); }
+                  }} />
+                </div>
 
                 {scheduledDate && (
-                  <div>
-                    <p className="text-xs text-muted-foreground mb-2 flex items-center gap-1.5">
-                      <Clock className="h-3.5 w-3.5" /> Horário preferido
-                    </p>
-                    <div className="grid grid-cols-2 gap-2">
+                  <div className="mt-3 space-y-3">
+                    <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
+                      <PopoverTrigger asChild>
+                        <Button variant="outline" size="sm" className={cn("w-full justify-start text-left font-normal text-sm", !scheduledDate && "text-muted-foreground")}>
+                          <CalendarIcon className="mr-2 h-3.5 w-3.5" />
+                          {format(scheduledDate, "dd/MM/yyyy", { locale: ptBR })}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={scheduledDate}
+                          onSelect={(d) => { setScheduledDate(d); setCalendarOpen(false); }}
+                          disabled={(date) => isBefore(date, minDate) || date > maxDate || date.getDay() === 0}
+                          initialFocus
+                          locale={ptBR}
+                          className={cn("p-3 pointer-events-auto")}
+                        />
+                      </PopoverContent>
+                    </Popover>
+
+                    <div className="grid grid-cols-4 gap-1.5">
                       {timeSlots.map((slot) => (
                         <button
                           key={slot}
                           onClick={() => setScheduledSlot(slot)}
                           className={cn(
-                            "rounded-lg border px-3 py-2.5 text-sm font-medium transition-all",
+                            "rounded-lg border px-1.5 py-2 text-xs font-medium transition-all",
                             scheduledSlot === slot
-                              ? "border-primary bg-primary/10 text-primary ring-1 ring-primary/30"
+                              ? "border-primary bg-primary/10 text-primary"
                               : "border-border text-muted-foreground hover:border-primary/40"
                           )}
                         >
@@ -724,12 +723,6 @@ const Checkout = () => {
                       ))}
                     </div>
                   </div>
-                )}
-
-                {scheduledDate && scheduledSlot && (
-                  <p className="text-xs text-center text-muted-foreground">
-                    📅 {format(scheduledDate, "dd/MM/yyyy")} · ⏰ {scheduledSlot}
-                  </p>
                 )}
               </CardContent>
             </Card>
