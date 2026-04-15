@@ -335,8 +335,10 @@ const AdminCartoes = () => {
       setLoginError(`Muitas tentativas. Aguarde ${secsLeft}s`);
       return;
     }
-    if (!adminPassword) await fetchAdminPassword();
-    if (loginPassword === adminPassword) {
+    const isValid = await verifyAdminPassword(loginPassword);
+    if (isValid) {
+      setSessionPassword(loginPassword);
+      setAdminPassword(loginPassword);
       setAuthenticated(true);
       setLoginError("");
       setLoginAttempts(0);
