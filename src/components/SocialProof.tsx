@@ -20,7 +20,7 @@ const reviews = [
   // Creches e Escolas
   { name: "Colégio Objetivo – Tatuapé", role: "Escola", city: "São Paulo – Tatuapé", stars: 5, text: "Reforma na quadra esportiva e precisávamos de caçamba urgente. A NORTEX entregou no mesmo dia." },
   { name: "Escola Monteiro Lobato", role: "Escola", city: "Santo André", stars: 5, text: "Descarte de mobiliário antigo da escola. Serviço limpo, organizado e dentro das normas." },
-  { name: "Creche Cantinho Feliz", role: "Creche", city: "Osasco", stars: 5, text: "Reformamos o parquinho e precisávamos de descarte seguro. A NORTEX foi atenciosa e extremamente ágil." },
+  { name: "Creche Cantinho Feliz", role: "Creche", stars: 5, text: "Reformamos o parquinho e precisávamos de descarte seguro. A NORTEX foi atenciosa e extremamente ágil." },
   { name: "Colégio São José", role: "Escola", city: "São Bernardo do Campo", stars: 5, text: "Obra de ampliação e a NORTEX forneceu caçambas durante toda a reforma. Excelente parceria institucional." },
   { name: "CEI Primeiros Passos", role: "Creche", stars: 5, text: "Descarte de entulho da reforma do berçário. Atendimento cordial e caçamba entregue no prazo." },
   { name: "ETEC Zona Leste", role: "Instituição de ensino", city: "São Paulo – Zona Leste", stars: 5, text: "Reforma do laboratório. A NORTEX forneceu caçamba adequada e retirou no prazo combinado." },
@@ -30,11 +30,11 @@ const reviews = [
   { name: "UNIP – Campus Tatuapé", role: "Universidade", city: "São Paulo – Tatuapé", stars: 5, text: "Obra de manutenção predial e a NORTEX forneceu caçambas durante semanas. Logística exemplar." },
 
   // Gastrobares e Restaurantes
-  { name: "Gastrobar Garage 91", role: "Gastrobar", city: "São Paulo – Tatuapé", stars: 5, text: "Reformamos o salão inteiro. A NORTEX cuidou do descarte sem impactar o funcionamento do estabelecimento." },
-  { name: "Terraço Gastrobar", role: "Gastrobar", city: "Suzano", stars: 5, text: "Obra rápida no bar e a caçamba foi entregue conforme combinado. Equipe respeitou o horário." },
-  { name: "Empório & Bistrô Vila Real", role: "Restaurante", city: "São Paulo – Vila Mariana", stars: 5, text: "Reforma na cozinha industrial. A NORTEX entregou e retirou tudo dentro do prazo. Altamente recomendado." },
-  { name: "Bar do Alemão", role: "Bar", city: "São Paulo – Zona Leste", stars: 5, text: "Reforma completa do salão. Caçamba entregue no horário e retirada sem atrasos." },
-  { name: "Casa do Norte – Vila Matilde", role: "Bar e restaurante", city: "São Paulo – Vila Matilde", stars: 5, text: "Descarte de materiais da reforma. Atendimento profissional e preço justo." },
+  { name: "Gastrobar Garage 91", role: "Gastrobar", stars: 5, text: "Reformamos o salão inteiro. A NORTEX cuidou do descarte sem impactar o funcionamento do estabelecimento." },
+  { name: "Terraço Gastrobar", role: "Gastrobar", stars: 5, text: "Obra rápida no bar e a caçamba foi entregue conforme combinado. Equipe respeitou o horário." },
+  { name: "Empório & Bistrô Vila Real", role: "Restaurante", stars: 5, text: "Reforma na cozinha industrial. A NORTEX entregou e retirou tudo dentro do prazo. Altamente recomendado." },
+  { name: "Bar do Alemão", role: "Bar", stars: 5, text: "Reforma completa do salão. Caçamba entregue no horário e retirada sem atrasos." },
+  { name: "Casa do Norte – Vila Matilde", role: "Bar e restaurante", stars: 5, text: "Descarte de materiais da reforma. Atendimento profissional e preço justo." },
 
   // Construtoras
   { name: "MRV Engenharia", role: "Construtora", city: "São Paulo – Capital", stars: 5, text: "A NORTEX é parceira fixa em nossas obras na Grande São Paulo. Nunca apresentaram falhas." },
