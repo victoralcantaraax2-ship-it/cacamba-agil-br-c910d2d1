@@ -77,7 +77,7 @@ const Logistica = () => {
     const e: Record<string, string> = {};
     if (!nome.trim()) e.nome = "Informe o nome";
     if (!validatePhone(telefone)) e.telefone = "Telefone inválido";
-    if (useCustom && (!valorCustom || parseFloat(valorCustom) <= 0)) e.valor = "Informe um valor válido";
+    if (useCustom && (!valorCustom || parseCurrency(valorCustom) <= 0)) e.valor = "Informe um valor válido";
     setErrors(e);
     if (Object.keys(e).length > 0) return;
 
