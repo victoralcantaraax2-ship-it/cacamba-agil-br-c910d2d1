@@ -19,26 +19,38 @@ const SectionFallback = () => <div className="py-16" />;
 
 const Index = () => {
   return (
-    <main>
+    <main className="snap-container">
       <Header />
-      <HeroSection />
-      <TamanhosSection />
-      {/* UrgenciaSection removida */}
-      {/* DiferenciaisSection removida — conteúdo já está no AboutSection */}
+      <div className="snap-section">
+        <HeroSection />
+      </div>
+      <div className="snap-section">
+        <TamanhosSection />
+      </div>
       <Suspense fallback={<SectionFallback />}>
-        <RegioesSection />
+        <div className="snap-section">
+          <RegioesSection />
+        </div>
       </Suspense>
       <Suspense fallback={<SectionFallback />}>
-        <SocialProof />
+        <div className="snap-section">
+          <SocialProof />
+        </div>
       </Suspense>
       <Suspense fallback={<SectionFallback />}>
-        <ComoFuncionaSection />
+        <div className="snap-section">
+          <ComoFuncionaSection />
+        </div>
       </Suspense>
       <Suspense fallback={<SectionFallback />}>
-        <FAQSection />
+        <div className="snap-section">
+          <FAQSection />
+        </div>
       </Suspense>
       <Suspense fallback={<SectionFallback />}>
-        <AboutSection />
+        <div className="snap-section">
+          <AboutSection />
+        </div>
       </Suspense>
       <Suspense fallback={<SectionFallback />}>
         <Footer />
