@@ -688,7 +688,6 @@ const Checkout = () => {
                     <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
                       <PopoverTrigger asChild>
                         <Button variant="outline" size="sm" className={cn("w-full justify-start text-left font-normal text-sm", !scheduledDate && "text-muted-foreground")}>
-                          <CalendarIcon className="mr-2 h-3.5 w-3.5" />
                           {format(scheduledDate, "dd/MM/yyyy", { locale: ptBR })}
                         </Button>
                       </PopoverTrigger>
