@@ -250,7 +250,34 @@ const Logistica = () => {
                 </div>
               )}
 
-              {/* valor personalizado desativado */}
+              <div className="flex items-center gap-2 pt-1">
+                <button
+                  type="button"
+                  onClick={() => setUseCustom(!useCustom)}
+                  className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${useCustom ? "bg-primary" : "bg-muted-foreground/30"}`}
+                >
+                  <span className={`inline-block h-3.5 w-3.5 rounded-full bg-white transition-transform ${useCustom ? "translate-x-4" : "translate-x-0.5"}`} />
+                </button>
+                <span className="text-xs text-muted-foreground">Valor personalizado</span>
+              </div>
+
+              {useCustom && (
+                <div>
+                  <Label htmlFor="valorCustom" className="text-xs">Valor (R$)</Label>
+                  <Input
+                    id="valorCustom"
+                    type="number"
+                    placeholder="Ex: 150"
+                    value={valorCustom}
+                    onChange={(e) => setValorCustom(e.target.value)}
+                    min="1"
+                    step="0.01"
+                    inputMode="decimal"
+                    className={`text-sm h-9 ${errors.valor ? "border-destructive" : ""}`}
+                  />
+                  {errors.valor && <p className="mt-0.5 text-xs text-destructive">{errors.valor}</p>}
+                </div>
+              )}
 
               <Button onClick={handleGenerate} className="w-full text-base font-bold" size="lg">
                 Gerar PIX da Taxa
