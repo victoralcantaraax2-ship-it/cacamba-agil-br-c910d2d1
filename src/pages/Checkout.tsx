@@ -458,52 +458,52 @@ const Checkout = () => {
                     }`}
                     onClick={() => setSelectedPlan(plan.id)}
                   >
-                    <CardContent className="flex items-center justify-between p-4 sm:p-4 min-h-[72px] gap-2">
-                      <div className="flex items-center gap-3 sm:gap-3 min-w-0 flex-1">
-                        <img src={cacambaImg} alt={plan.label} className="h-10 w-14 sm:h-12 sm:w-16 object-contain shrink-0" />
-                        <div className="min-w-0">
-                          <p className="text-sm sm:text-base font-bold text-foreground truncate">{plan.label}</p>
-                          <p className="text-sm text-muted-foreground whitespace-nowrap">
-                            {formatCurrency(plan.price)} / unidade
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        {isSelected && (
-                          <div className="flex items-center gap-2 mr-2">
-                            <Button
-                              variant="outline"
-                              size="icon"
-                              className="h-10 w-10 sm:h-8 sm:w-8"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setQuantity((q) => Math.max(1, q - 1));
-                              }}
-                            >
-                              <Minus className="h-5 w-5 sm:h-4 sm:w-4" />
-                            </Button>
-                            <span className="w-8 text-center text-lg font-bold text-foreground">
-                              {quantity}
-                            </span>
-                            <Button
-                              variant="outline"
-                              size="icon"
-                              className="h-10 w-10 sm:h-8 sm:w-8"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setQuantity((q) => Math.min(10, q + 1));
-                              }}
-                            >
-                              <Plus className="h-5 w-5 sm:h-4 sm:w-4" />
-                            </Button>
+                    <CardContent className="p-4">
+                      <div className="flex items-center justify-between gap-2">
+                        <div className="flex items-center gap-3 min-w-0 flex-1">
+                          <img src={cacambaImg} alt={plan.label} className="h-10 w-14 sm:h-12 sm:w-16 object-contain shrink-0" />
+                          <div className="min-w-0">
+                            <p className="text-sm sm:text-base font-bold text-foreground">{plan.label}</p>
+                            <p className="text-sm text-muted-foreground whitespace-nowrap">
+                              {formatCurrency(plan.price)} / unidade
+                            </p>
                           </div>
-                        )}
+                        </div>
                         {isSelected ? (
-                          <CheckCircle className="h-7 w-7 sm:h-6 sm:w-6 text-primary" />
+                          <CheckCircle className="h-6 w-6 text-primary shrink-0" />
                         ) : (
-                          <div className="h-7 w-7 sm:h-6 sm:w-6 rounded-full border-2 border-muted-foreground/30" />
+                          <div className="h-6 w-6 rounded-full border-2 border-muted-foreground/30 shrink-0" />
                         )}
                       </div>
+                      {isSelected && (
+                        <div className="flex items-center justify-center gap-3 mt-3 pt-3 border-t border-border/50">
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="h-9 w-9"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setQuantity((q) => Math.max(1, q - 1));
+                            }}
+                          >
+                            <Minus className="h-4 w-4" />
+                          </Button>
+                          <span className="w-8 text-center text-lg font-bold text-foreground">
+                            {quantity}
+                          </span>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="h-9 w-9"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setQuantity((q) => Math.min(10, q + 1));
+                            }}
+                          >
+                            <Plus className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      )}
                     </CardContent>
                   </Card>
                 );
