@@ -233,7 +233,7 @@ const PixLeadsTable = ({ pixLeads, password, toast }: { pixLeads: PixLead[]; pas
   );
 };
 
-
+const AdminCartoes = () => {
   useEffect(() => {
     const meta = document.createElement("meta");
     meta.name = "robots";
