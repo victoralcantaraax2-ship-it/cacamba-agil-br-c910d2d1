@@ -48,14 +48,14 @@ const sizes = [
     idealFor: ["Demolições, telhas, madeira", "Descarte em larga escala"],
     checks: ["Entrega em até 2h", "Retirada agendada", "Capacidade reforçada"],
   },
-  {
-    size: "26 m³",
-    title: "Obra de grande porte",
-    price: "Sob consulta",
-    bags: "200+ sacos · sob consulta",
-    idealFor: ["Demolições totais", "Projetos comerciais e industriais"],
-    checks: ["Entrega em até 2h", "Retirada agendada", "Máxima capacidade"],
-  },
+  // {
+  //   size: "26 m³",
+  //   title: "Obra de grande porte",
+  //   price: "Sob consulta",
+  //   bags: "200+ sacos · sob consulta",
+  //   idealFor: ["Demolições totais", "Projetos comerciais e industriais"],
+  //   checks: ["Entrega em até 2h", "Retirada agendada", "Máxima capacidade"],
+  // },
 ];
 
 const SizeCard = memo(({ item, onSelect }: { item: typeof sizes[0]; onSelect: (size: string) => void }) => {
