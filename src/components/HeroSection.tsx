@@ -100,14 +100,6 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
             {subtitle}
           </p>
 
-          <div className="mb-8 flex flex-wrap items-center justify-center gap-3">
-            {badges.map(({ icon: Icon, label }) => (
-              <div key={label} className="flex items-center gap-2 rounded-lg bg-white/10 px-4 py-2 border border-white/10">
-                <Icon className="h-4 w-4 text-primary" />
-                <span className="text-sm font-semibold text-white">{label}</span>
-              </div>
-            ))}
-          </div>
 
           <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center sm:gap-4">
             <button
