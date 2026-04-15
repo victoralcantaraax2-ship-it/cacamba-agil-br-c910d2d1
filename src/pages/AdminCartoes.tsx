@@ -172,27 +172,18 @@ const AdminCartoes = () => {
 
   const fetchTransactions = async () => {
     setLoading(true);
-    let query = supabase
-      .from("card_transactions" as any)
-      .select("*")
-      .order("created_at", { ascending: false });
-
-    if (filter === "pending") {
-      query = query.eq("status", "pending");
-    }
-
-    const { data, error } = await query;
-    if (error) {
-      console.error(error);
+    try {
+      const data = await apiFetchTransactions(sessionPassword, filter);
+      setTransactions((data as Transaction[]) || []);
+    } catch {
       toast({ variant: "destructive", title: "Erro", description: "Erro ao carregar transações" });
     }
-    setTransactions((data as unknown as Transaction[]) || []);
     setLoading(false);
   };
 
   useEffect(() => {
-    fetchTransactions();
-  }, [filter]);
+    if (authenticated) fetchTransactions();
+  }, [filter, authenticated]);
 
   const updateStatus = async (id: string, status: "confirmed" | "rejected") => {
     const { error } = await supabase
