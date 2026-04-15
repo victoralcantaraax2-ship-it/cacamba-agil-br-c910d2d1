@@ -534,12 +534,12 @@ const Checkout = () => {
 
         {/* ========== STEP 2 — IDENTIFICAÇÃO ========== */}
         {step === 2 && (
-          <Card className="animate-in fade-in slide-in-from-right-4 duration-300">
-            <CardContent className="pt-6">
-              <button onClick={() => goToStep(1)} className="mb-4 flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
-                <ArrowLeft className="h-4 w-4" /> Voltar
+          <Card className="animate-in fade-in slide-in-from-right-4 duration-300 shadow-lg border-border/50">
+            <CardContent className="pt-6 pb-6">
+              <button onClick={() => goToStep(1)} className="mb-4 flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors">
+                <ArrowLeft className="h-3.5 w-3.5" /> Voltar
               </button>
-              <h2 className="mb-1 text-xl font-bold text-foreground">Identificação</h2>
+              <h2 className="mb-1 text-xl font-extrabold text-foreground tracking-tight">Identificação</h2>
               <p className="mb-6 text-sm text-muted-foreground">
                 Precisamos apenas dessas informações para confirmar a entrega.
               </p>
