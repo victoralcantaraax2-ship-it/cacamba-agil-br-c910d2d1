@@ -61,6 +61,14 @@ const reviews = [
   { name: "Thiago Nascimento", role: "Mestre de obras", city: "Ferraz de Vasconcelos", stars: 5, text: "Trabalho com reformas e sempre necessito de caçamba. A NORTEX nunca deixou a desejar." },
   { name: "Fernanda Lopes", role: "Arquiteta", city: "São Paulo – Perdizes", stars: 5, text: "Indiquei para diversos clientes. Todos elogiaram o atendimento e a pontualidade." },
   { name: "Cláudia Ribeiro", role: "Proprietária", city: "São Caetano do Sul", stars: 5, text: "Reformei meu apartamento e a NORTEX cuidou de todo o descarte. Serviço impecável." },
+  { name: "Ana Paula Santos", role: "Proprietária", city: "Santos", stars: 5, text: "Reforma completa da casa de praia. A NORTEX entregou no dia combinado, mesmo sendo litoral. Super recomendo." },
+  { name: "Vanessa Oliveira", role: "Proprietária", city: "Praia Grande", stars: 5, text: "Precisei de caçamba para reforma do apartamento. Atendimento rápido e sem complicação." },
+  { name: "Patrícia Souza", role: "Proprietária", city: "Guarujá", stars: 5, text: "Obra na casa e a NORTEX resolveu tudo pelo WhatsApp. Caçamba chegou antes do previsto." },
+  { name: "Luciana Ferreira", role: "Proprietária", city: "São Vicente", stars: 5, text: "Indicação de uma amiga e não me arrependi. Serviço pontual e equipe educada." },
+  { name: "Carla Mendes", role: "Proprietária", city: "Bertioga", stars: 5, text: "Construção na praia e a logística foi perfeita. Empresa séria e comprometida." },
+  { name: "Renata Silva", role: "Proprietária", city: "Mongaguá", stars: 5, text: "Reforma da varanda e precisava de descarte rápido. A NORTEX atendeu no mesmo dia." },
+  { name: "Juliana Costa", role: "Proprietária", city: "Itanhaém", stars: 5, text: "Terceira vez que contrato. Sempre pontual e com preço justo, mesmo no litoral." },
+  { name: "Márcia Almeida", role: "Proprietária", city: "Peruíbe", stars: 5, text: "Achei que não atendiam minha região e fui surpreendida. Entrega rápida e atendimento nota 10." },
 ];
 
 const scrollTo = (id: string) => {
