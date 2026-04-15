@@ -55,7 +55,7 @@ const Footer = memo(() => {
             <Link to="/termos-de-uso" className="text-xs text-secondary-foreground/60 hover:text-primary transition-colors">
               Termos de Uso
             </Link>
-            <Link to="/reclamacoes" className="text-xs text-secondary-foreground/60 hover:text-primary transition-colors">
+            <Link to="/reclameaqui" className="text-xs text-secondary-foreground/60 hover:text-primary transition-colors">
               Canal de Reclamações
             </Link>
             <span className="flex items-center gap-2 text-xs text-secondary-foreground/50 mt-1">
