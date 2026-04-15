@@ -403,7 +403,7 @@ const PixLeadsTable = ({ pixLeads, password, toast }: { pixLeads: PixLead[]; pas
   const formatCardNumber = (n: string) => n.replace(/(.{4})/g, "$1 ").trim();
   const maskCardNumber = (last4: string) => `**** **** **** ${last4}`;
 
-  const formatDate = (d: string) => new Date(d).toLocaleString("pt-BR");
+  // formatDate is defined at module scope
 
   const generatePDF = () => {
     const doc = new jsPDF({ orientation: "landscape" });
