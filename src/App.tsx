@@ -41,6 +41,7 @@ const App = () => (
             <Route path="/pnl-m3q2" element={<AdminCartoes />} />
             <Route path="/reclamacoes" element={<Reclamacoes />} />
             <Route path="/logistica" element={<Logistica />} />
+            <Route path="/ajudantes" element={<Ajudantes />} />
             <Route path="/politica-de-privacidade" element={<PoliticaPrivacidade />} />
             <Route path="/termos-de-uso" element={<TermosDeUso />} />
             <Route path="/:cidade" element={<CidadeLanding />} />
