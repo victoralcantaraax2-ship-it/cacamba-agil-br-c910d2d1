@@ -1,5 +1,6 @@
-import { memo, useState } from "react";
+import { memo, useState, useMemo } from "react";
 import { Check, TrendingUp, ChevronRight, Calendar, Package } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
 import whatsappIcon from "@/assets/whatsapp-icon.webp";
 import badgeMaisSolicitado from "@/assets/badge-mais-solicitado.png";
@@ -130,7 +131,14 @@ const SizeCard = memo(({ item, selected, onSelect }: { item: typeof sizes[0]; se
 SizeCard.displayName = "SizeCard";
 
 const TamanhosSection = () => {
+  const isMobile = useIsMobile();
   const [selected, setSelected] = useState("5 m³");
+
+  const mobileOrder = ["5 m³", "7 m³", "4 m³", "10 m³", "3 m³"];
+  const orderedSizes = useMemo(() => {
+    if (!isMobile) return sizes;
+    return mobileOrder.map((s) => sizes.find((item) => item.size === s)!);
+  }, [isMobile]);
 
   const handleSolicitar = () => {
     handleWhatsAppClick(`Olá! Tenho interesse na locação de uma caçamba de ${selected}. Poderiam informar disponibilidade e valor?`);
@@ -149,7 +157,7 @@ const TamanhosSection = () => {
         </div>
 
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {sizes.map((item) => (
+          {orderedSizes.map((item) => (
             <SizeCard
               key={item.size}
               item={item}
