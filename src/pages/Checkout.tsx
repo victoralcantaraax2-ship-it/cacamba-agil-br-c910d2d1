@@ -378,12 +378,12 @@ const Checkout = () => {
   const taxaQrIsImage = isQrImage(taxaQrDisplay);
 
   return (
-    <main className="min-h-screen bg-background relative">
+    <main className="min-h-screen bg-gradient-to-b from-secondary via-background to-background relative">
       {/* Toast flutuante de cópia */}
       {copyToastVisible && (
         <div
           role="status"
-          className="fixed top-4 left-1/2 -translate-x-1/2 z-[200] flex items-center gap-2.5 rounded-xl bg-green-600 px-5 py-3 shadow-lg shadow-green-900/20 animate-in fade-in slide-in-from-top-2 duration-300 data-[closing=true]:animate-out data-[closing=true]:fade-out"
+          className="fixed top-4 left-1/2 -translate-x-1/2 z-[200] flex items-center gap-2.5 rounded-xl bg-green-600 px-5 py-3 shadow-lg shadow-green-900/20 animate-in fade-in slide-in-from-top-2 duration-300"
         >
           <span className="flex items-center justify-center h-6 w-6 rounded-full bg-white/20">
             <CheckCircle className="h-4 w-4 text-white" />
@@ -402,24 +402,45 @@ const Checkout = () => {
           <span className="text-sm font-semibold text-white whitespace-nowrap">Código da taxa copiado</span>
         </div>
       )}
-      {/* Header */}
-      <div className="bg-secondary py-4">
+
+      {/* Header Premium */}
+      <div className="bg-secondary py-5 shadow-md">
         <div className="container flex flex-col items-center px-4">
-          <img src={logoAmba} alt="NORTEX Caçambas" className="h-16 w-auto md:h-20" />
-          <p className="mt-1 text-xs font-medium text-secondary-foreground/60">
-            Atendimento rápido e seguro
-          </p>
+          <img src={logoAmba} alt="NORTEX Caçambas" className="h-14 w-auto md:h-18 drop-shadow-lg" />
+          <div className="mt-2 flex items-center gap-1.5">
+            <img src={lockIcon} alt="" className="h-3 w-3 opacity-60" />
+            <p className="text-[11px] font-medium text-secondary-foreground/50 tracking-wide uppercase">
+              Checkout seguro
+            </p>
+          </div>
         </div>
       </div>
 
-      {/* Progress */}
+      {/* Progress Premium */}
       <div className="container max-w-lg px-4 sm:px-6 pt-5 sm:pt-6">
-        <div className="mb-2 flex justify-between text-sm sm:text-xs font-medium text-muted-foreground">
-          <span className={step >= 1 ? "text-primary font-bold" : ""}>1. Caçamba</span>
-          <span className={step >= 2 ? "text-primary font-bold" : ""}>2. Identificação</span>
-          <span className={step >= 3 ? "text-primary font-bold" : ""}>3. Pagamento</span>
+        <div className="mb-3 flex justify-between">
+          {[
+            { n: 1, label: "Caçamba" },
+            { n: 2, label: "Identificação" },
+            { n: 3, label: "Pagamento" },
+          ].map(({ n, label }) => (
+            <div key={n} className="flex items-center gap-1.5">
+              <span className={`flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold transition-all ${
+                step >= n
+                  ? "bg-primary text-primary-foreground shadow-sm shadow-primary/30"
+                  : "bg-muted text-muted-foreground"
+              }`}>
+                {step > n ? "✓" : n}
+              </span>
+              <span className={`text-xs font-medium transition-colors ${
+                step >= n ? "text-primary" : "text-muted-foreground"
+              }`}>
+                {label}
+              </span>
+            </div>
+          ))}
         </div>
-        <Progress value={progressValue} className="h-2.5 sm:h-2" />
+        <Progress value={progressValue} className="h-1.5 sm:h-1.5" />
       </div>
 
       <div className="container max-w-lg px-4 sm:px-6 py-6 sm:py-8">
