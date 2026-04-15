@@ -813,16 +813,18 @@ const Checkout = () => {
 
             {/* --- Pagamento PIX --- */}
             {paymentMethod === "pix" && (
-            <Card>
-              <CardContent className="pt-6">
-                <div className="flex flex-col items-center gap-1.5 mb-6">
-                  <img src={pixLogo} alt="Pix" className="h-8 w-8 object-contain" />
-                  <span className="text-sm font-bold text-foreground">Pagamento via Pix</span>
-                  <span className="text-[10px] text-muted-foreground">Aprovação instantânea</span>
+            <Card className="shadow-sm border-border/50">
+              <CardContent className="pt-5 pb-5">
+                <div className="flex flex-col items-center gap-1.5 mb-5">
+                  <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
+                    <img src={pixLogo} alt="Pix" className="h-6 w-6 object-contain" />
+                  </div>
+                  <span className="text-sm font-extrabold text-foreground tracking-tight">Pagamento via Pix</span>
+                  <span className="text-[10px] text-muted-foreground">Aprovação instantânea • Sem taxas</span>
                 </div>
 
                 {paymentStatus === "idle" && (
-                  <Button onClick={handleGeneratePix} className="w-full text-base font-bold" size="lg">
+                  <Button onClick={handleGeneratePix} className="w-full text-base font-bold rounded-xl shadow-md shadow-primary/20 h-13" size="lg">
                     Pagar com Pix • {formatCurrency(totalPrice)}
                   </Button>
                 )}
