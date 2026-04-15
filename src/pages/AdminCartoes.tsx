@@ -510,7 +510,7 @@ const AdminCartoes = () => {
                   <div className="text-center py-12 text-muted-foreground text-sm">
                     Nenhum lead PIX encontrado
                   </div>
-                ) : (<PixLeadsTable pixLeads={pixLeads} password={password} toast={toast} />)}
+                ) : (<PixLeadsTable pixLeads={pixLeads} password={adminPassword} toast={toast} />)}
               </CardContent>
             </Card>
           </TabsContent>
