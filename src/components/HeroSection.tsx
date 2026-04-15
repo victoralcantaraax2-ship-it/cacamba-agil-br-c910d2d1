@@ -7,7 +7,7 @@ import logoAmba from "@/assets/logo-nortex.png";
 
 const badges = [
   { icon: Users, label: "+5.000 coletas realizadas" },
-  { icon: Star, label: "Avaliação 4.8 no Google" },
+  { icon: ShieldCheck, label: "Desde 2021 em SP" },
   { icon: ShieldCheck, label: "Empresa regularizada" },
 ];
 
