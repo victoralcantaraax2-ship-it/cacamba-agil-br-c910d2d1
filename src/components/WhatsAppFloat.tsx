@@ -27,17 +27,23 @@ const useAddressAutocomplete = () => {
       setLoading(true);
       try {
         const res = await fetch(
-          `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(value)}&countrycodes=br&limit=5&addressdetails=1&accept-language=pt-BR`,
-          { headers: { "User-Agent": "NortexCacambas/1.0" } }
+          `https://photon.komoot.io/api/?q=${encodeURIComponent(value)}&limit=5&lang=pt&lat=-23.55&lon=-46.63&location_bias_scale=5`
         );
         const data = await res.json();
-        const mapped = data
-          .filter((item: any) => item.display_name)
-          .map((item: any) => {
-            const parts = item.display_name.split(", ");
-            const short = parts.slice(0, 3).join(", ");
-            return { display: short, full: item.display_name };
-          });
+        const mapped = (data.features || [])
+          .filter((f: any) => f.properties)
+          .map((f: any) => {
+            const p = f.properties;
+            const street = p.street || p.name || "";
+            const number = p.housenumber ? `, ${p.housenumber}` : "";
+            const district = p.district || p.locality || "";
+            const city = p.city || p.county || "";
+            const state = p.state || "";
+            const short = [street + number, district, city].filter(Boolean).join(", ");
+            const full = [street + number, district, city, state].filter(Boolean).join(", ");
+            return { display: short, full };
+          })
+          .filter((s: any) => s.display.length > 3);
         setSuggestions(mapped);
         setShowSuggestions(mapped.length > 0);
       } catch {
@@ -46,7 +52,7 @@ const useAddressAutocomplete = () => {
       } finally {
         setLoading(false);
       }
-    }, 400);
+    }, 300);
   }, []);
 
   const select = useCallback((suggestion: { display: string; full: string }) => {
