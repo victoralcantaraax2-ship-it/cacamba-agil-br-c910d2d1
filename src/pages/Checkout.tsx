@@ -573,7 +573,7 @@ const Checkout = () => {
                   </p>
                 </div>
 
-                <Button onClick={validateStep2} className="w-full text-base font-bold" size="lg">
+                <Button onClick={validateStep2} className="w-full text-base font-bold rounded-xl shadow-md shadow-primary/20" size="lg">
                   Continuar
                 </Button>
               </div>
