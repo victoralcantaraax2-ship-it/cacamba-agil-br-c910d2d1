@@ -13,7 +13,7 @@ const reviews = [
   { name: "Cond. Parque dos Pássaros", role: "Síndico profissional", city: "Guarulhos", stars: 5, text: "Contratamos a NORTEX para descarte de entulho da reforma do salão de festas. Entrega pontual e equipe educada." },
   { name: "Cond. Reserva da Serra", role: "Síndico", city: "Cotia", stars: 5, text: "Precisávamos descartar material de poda e reforma. A NORTEX resolveu com agilidade. Moradores aprovaram." },
   { name: "Cond. Villa Lobos", role: "Administração condominial", city: "São Paulo – Mooca", stars: 5, text: "Utilizamos para limpeza geral do condomínio. Caçamba entregue no horário combinado. Recomendamos." },
-  { name: "Cond. Jardim Europa", role: "Síndico", stars: 5, text: "Reforma nos blocos e precisávamos de caçamba urgente. A NORTEX entregou no mesmo dia." },
+  { name: "Cond. Jardim Europa", role: "Síndico", city: "Osasco", stars: 5, text: "Reforma nos blocos e precisávamos de caçamba urgente. A NORTEX entregou no mesmo dia." },
   { name: "Cond. Alto da Boa Vista", role: "Administradora", city: "São Paulo – Zona Sul", stars: 5, text: "Quarta contratação consecutiva. Serviço impecável e valores justos para condomínios." },
   { name: "Cond. Residencial Alphaville", role: "Síndico profissional", city: "Barueri – Alphaville", stars: 5, text: "Gestão de resíduos da reforma das áreas comuns. A NORTEX ofereceu solução completa e eficiente." },
 
@@ -23,11 +23,11 @@ const reviews = [
   { name: "Creche Cantinho Feliz", role: "Creche", stars: 5, text: "Reformamos o parquinho e precisávamos de descarte seguro. A NORTEX foi atenciosa e extremamente ágil." },
   { name: "Colégio São José", role: "Escola", city: "São Bernardo do Campo", stars: 5, text: "Obra de ampliação e a NORTEX forneceu caçambas durante toda a reforma. Excelente parceria institucional." },
   { name: "CEI Primeiros Passos", role: "Creche", stars: 5, text: "Descarte de entulho da reforma do berçário. Atendimento cordial e caçamba entregue no prazo." },
-  { name: "ETEC Zona Leste", role: "Instituição de ensino", city: "São Paulo – Zona Leste", stars: 5, text: "Reforma do laboratório. A NORTEX forneceu caçamba adequada e retirou no prazo combinado." },
+  { name: "ETEC Zona Leste", role: "Instituição de ensino", city: "São Paulo – São Mateus", stars: 5, text: "Reforma do laboratório. A NORTEX forneceu caçamba adequada e retirou no prazo combinado." },
 
   // Faculdades / Universidades
   { name: "Universidade Cruzeiro do Sul", role: "Universidade", city: "São Paulo – Anália Franco", stars: 5, text: "Reforma no campus Anália Franco. A NORTEX atendeu com caçambas de grande porte e cumpriu todos os prazos." },
-  { name: "UNIP – Campus Tatuapé", role: "Universidade", city: "São Paulo – Tatuapé", stars: 5, text: "Obra de manutenção predial e a NORTEX forneceu caçambas durante semanas. Logística exemplar." },
+  { name: "UNIP – Campus Marquês", role: "Universidade", city: "São Paulo – Bela Vista", stars: 5, text: "Obra de manutenção predial e a NORTEX forneceu caçambas durante semanas. Logística exemplar." },
 
   // Gastrobares e Restaurantes
   { name: "Gastrobar Garage 91", role: "Gastrobar", stars: 5, text: "Reformamos o salão inteiro. A NORTEX cuidou do descarte sem impactar o funcionamento do estabelecimento." },
@@ -37,29 +37,29 @@ const reviews = [
   { name: "Casa do Norte – Vila Matilde", role: "Bar e restaurante", stars: 5, text: "Descarte de materiais da reforma. Atendimento profissional e preço justo." },
 
   // Construtoras
-  { name: "MRV Engenharia", role: "Construtora", city: "São Paulo – Capital", stars: 5, text: "A NORTEX é parceira fixa em nossas obras na Grande São Paulo. Nunca apresentaram falhas." },
-  { name: "Tenda Construtora", role: "Construtora", city: "Guarulhos", stars: 5, text: "Utilizamos a NORTEX em diversos canteiros. Caçamba sempre no prazo e equipe competente." },
-  { name: "Construtora Plano & Plano", role: "Construtora", city: "São Paulo – Zona Norte", stars: 5, text: "Entrega dentro do prazo. Logística impecável para obras de grande porte." },
+  { name: "MRV Engenharia", role: "Construtora", city: "São Paulo – Zona Norte", stars: 5, text: "A NORTEX é parceira fixa em nossas obras na Grande São Paulo. Nunca apresentaram falhas." },
+  { name: "Tenda Construtora", role: "Construtora", city: "Suzano", stars: 5, text: "Utilizamos a NORTEX em diversos canteiros. Caçamba sempre no prazo e equipe competente." },
+  { name: "Construtora Plano & Plano", role: "Construtora", city: "Carapicuíba", stars: 5, text: "Entrega dentro do prazo. Logística impecável para obras de grande porte." },
   { name: "Construtora Even", role: "Construtora", city: "São Paulo – Pinheiros", stars: 5, text: "Parceiro recorrente das nossas obras. Pontualidade e qualidade exemplares." },
   { name: "Rocha & Filhos Construções", role: "Construtora", city: "Mogi das Cruzes", stars: 5, text: "Obra de grande porte e a NORTEX atendeu todas as demandas. Empresa séria e confiável." },
   { name: "Construtora Planalto", role: "Construtora", city: "Campinas", stars: 5, text: "Logística perfeita. Já contratamos mais de 20 caçambas com a empresa." },
 
   // Madeireiras e Marmorarias
   { name: "Madeireira São Jorge", role: "Madeireira", city: "São Paulo – Ipiranga", stars: 5, text: "Descartamos sobras de madeira e resíduos. A NORTEX é ágil e pratica preços justos. Somos clientes regulares." },
-  { name: "Madeireira Pau Brasil", role: "Madeireira", stars: 5, text: "Utilizamos caçamba semanalmente para descartar retalhos. A NORTEX nunca atrasou uma entrega." },
-  { name: "Marmoraria Ipiranga", role: "Marmoraria", city: "São Paulo – Ipiranga", stars: 5, text: "Descarte de restos de mármore e granito. Atendimento ágil e em conformidade com as normas ambientais." },
+  { name: "Madeireira Pau Brasil", role: "Madeireira", city: "Itaquaquecetuba", stars: 5, text: "Utilizamos caçamba semanalmente para descartar retalhos. A NORTEX nunca atrasou uma entrega." },
+  { name: "Marmoraria Ipiranga", role: "Marmoraria", city: "São Paulo – Vila Prudente", stars: 5, text: "Descarte de restos de mármore e granito. Atendimento ágil e em conformidade com as normas ambientais." },
   { name: "Marmoraria Pedra Bonita", role: "Marmoraria", city: "Diadema", stars: 5, text: "Material pesado e a NORTEX atendeu perfeitamente. Caçamba reforçada e entrega rápida." },
 
   // Autopeças e Oficinas
-  { name: "Freios Master Autopeças", role: "Autopeças", city: "São Paulo – Penha", stars: 5, text: "Descartamos peças e materiais da oficina. A NORTEX atendeu rapidamente e resolveu nosso problema de espaço." },
+  { name: "Freios Master Autopeças", role: "Autopeças", city: "São Paulo – Ermelino Matarazzo", stars: 5, text: "Descartamos peças e materiais da oficina. A NORTEX atendeu rapidamente e resolveu nosso problema de espaço." },
   { name: "Centro Automotivo Freio Seguro", role: "Oficina mecânica", city: "Taboão da Serra", stars: 5, text: "Precisávamos limpar o depósito. Caçamba entregue no dia seguinte, tudo conforme o combinado." },
 
   // Profissionais e residenciais
   { name: "RC Reformas e Acabamentos", role: "Reformas", city: "São Paulo – Santana", stars: 5, text: "Já locamos mais de 15 caçambas com a NORTEX. Nunca houve atraso." },
   { name: "Josy Araujo", role: "Arquiteta", city: "São Paulo – Moema", stars: 5, text: "Atendimento ágil pelo WhatsApp. Caçamba entregue no mesmo dia. Recomendo fortemente." },
   { name: "JL Materiais de Construção", role: "Comércio", city: "Embu das Artes", stars: 5, text: "Indicamos a NORTEX para nossos clientes. Trabalho sério e confiável." },
-  { name: "Thiago Nascimento", role: "Mestre de obras", city: "São Paulo – Zona Sul", stars: 5, text: "Trabalho com reformas e sempre necessito de caçamba. A NORTEX nunca deixou a desejar." },
-  { name: "Fernanda Lopes", role: "Arquiteta", stars: 5, text: "Indiquei para diversos clientes. Todos elogiaram o atendimento e a pontualidade." },
+  { name: "Thiago Nascimento", role: "Mestre de obras", city: "Ferraz de Vasconcelos", stars: 5, text: "Trabalho com reformas e sempre necessito de caçamba. A NORTEX nunca deixou a desejar." },
+  { name: "Fernanda Lopes", role: "Arquiteta", city: "São Paulo – Perdizes", stars: 5, text: "Indiquei para diversos clientes. Todos elogiaram o atendimento e a pontualidade." },
   { name: "Cláudia Ribeiro", role: "Proprietária", city: "São Caetano do Sul", stars: 5, text: "Reformei meu apartamento e a NORTEX cuidou de todo o descarte. Serviço impecável." },
 ];
 
