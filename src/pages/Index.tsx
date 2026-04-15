@@ -23,9 +23,7 @@ const Index = () => {
       <Header />
       <HeroSection />
       <TamanhosSection />
-      <Suspense fallback={<SectionFallback />}>
-        <UrgenciaSection />
-      </Suspense>
+      {/* UrgenciaSection removida */}
       <Suspense fallback={<SectionFallback />}>
         <DiferenciaisSection />
       </Suspense>
