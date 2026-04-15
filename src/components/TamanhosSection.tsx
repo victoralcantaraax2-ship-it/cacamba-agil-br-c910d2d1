@@ -156,7 +156,7 @@ SizeCard.displayName = "SizeCard";
         </div>
 
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {sizes.map((item) => (
+          {orderedSizes.map((item) => (
             <SizeCard
               key={item.size}
               item={item}
