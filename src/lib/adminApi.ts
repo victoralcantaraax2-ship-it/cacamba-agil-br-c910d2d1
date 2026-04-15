@@ -48,6 +48,10 @@ export async function fetchPixLeads(password: string) {
   return callAdminApi("get_pix_leads", password);
 }
 
+export async function checkPixStatus(password: string, transactionId: string) {
+  return callAdminApi("check_pix_status", password, { transaction_id: transactionId });
+}
+
 export async function changeAdminPassword(currentPassword: string, newPassword: string) {
   return callAdminApi("change_password", currentPassword, { new_password: newPassword });
 }
