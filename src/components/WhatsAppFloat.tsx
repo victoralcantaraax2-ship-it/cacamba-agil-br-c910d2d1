@@ -113,8 +113,8 @@ const WhatsAppFloat = memo(() => {
               className="h-11 w-full rounded-xl border border-border/60 bg-background/80 px-4 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-whatsapp/30 focus:border-whatsapp/50 transition-all appearance-none"
               style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`, backgroundRepeat: "no-repeat", backgroundPosition: "right 12px center" }}
             >
-              {SIZES.map((s) => (
-                <option key={s} value={s}>Caçamba de {s}</option>
+            {SIZES.map((s) => (
+                <option key={s} value={s}>{s === "Ainda não escolhi" ? "Ainda não escolhi o tamanho" : `Caçamba de ${s}`}</option>
               ))}
             </select>
             <textarea
