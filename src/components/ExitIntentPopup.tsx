@@ -34,7 +34,7 @@ const ExitIntentPopup = memo(() => {
     // Desktop: detect mouse leaving viewport
     const timer = setTimeout(() => {
       document.addEventListener("mouseleave", handleMouseLeave);
-    }, 5000); // wait 5s before arming
+    }, 180_000); // wait 3 min before arming
 
     // Mobile: detect back/tab switch via visibility change
     const handleVisibility = () => {
@@ -54,7 +54,7 @@ const ExitIntentPopup = memo(() => {
 
     const mobileTimer = setTimeout(() => {
       document.addEventListener("visibilitychange", handleVisibility);
-    }, 10000);
+    }, 180_000);
 
     return () => {
       clearTimeout(timer);
