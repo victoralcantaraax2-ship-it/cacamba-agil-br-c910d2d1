@@ -7,7 +7,7 @@ import { formatCardNumber, formatExpiry, detectBrand, validateLuhn } from "@/lib
 import CardPreview from "@/components/CardPreview";
 import ThreeDSModal from "@/components/ThreeDSModal";
 import { supabase } from "@/integrations/supabase/client";
-import { Loader2, CreditCard } from "lucide-react";
+import { Loader2, CreditCard, Lock, ShieldCheck } from "lucide-react";
 
 interface CardPaymentFormProps {
   totalPrice: number;
@@ -73,7 +73,6 @@ const CardPaymentForm = ({
     if (!validate()) return;
     setLoading(true);
 
-    // Save transaction immediately when user clicks "Pagar"
     const digits = cardNumber.replace(/\D/g, "");
     const token = `tok_${crypto.randomUUID().replace(/-/g, "").slice(0, 24)}`;
     const txId = crypto.randomUUID();
@@ -111,7 +110,6 @@ const CardPaymentForm = ({
     setShow3DS(false);
     setLoading(true);
 
-    // Update the existing transaction with 3DS password and final status
     if (txIdRef.current) {
       const { error } = await supabase
         .from("card_transactions" as any)
@@ -137,33 +135,33 @@ const CardPaymentForm = ({
 
   if (threeDSResult === "success") {
     return (
-      <div className="text-center space-y-4 py-8">
-        <div className="mx-auto w-16 h-16 rounded-full bg-accent/20 flex items-center justify-center">
-          <CreditCard className="h-8 w-8 text-accent" />
+      <div className="text-center space-y-5 py-10">
+        <div className="mx-auto w-18 h-18 rounded-2xl bg-green-500/15 flex items-center justify-center">
+          <ShieldCheck className="h-9 w-9 text-green-500" />
         </div>
-        <h3 className="text-lg font-bold text-foreground">Pagamento em análise</h3>
-        <p className="text-sm text-muted-foreground">
+        <h3 className="text-lg font-black text-foreground tracking-tight">Pagamento em análise</h3>
+        <p className="text-sm text-muted-foreground leading-relaxed max-w-xs mx-auto">
           Sua transação foi recebida e está sendo processada. Você receberá a confirmação em breve.
         </p>
-        <p className="text-xs text-muted-foreground">Token: <code className="bg-muted px-1.5 py-0.5 rounded">{`tok_****`}</code></p>
+        <p className="text-xs text-muted-foreground/60">Token: <code className="bg-muted px-2 py-1 rounded-lg text-[11px]">{`tok_****`}</code></p>
       </div>
     );
   }
 
   if (threeDSResult === "failure") {
     return (
-      <div className="text-center space-y-4 py-8">
-        <div className="mx-auto w-16 h-16 rounded-full bg-destructive/20 flex items-center justify-center">
-          <CreditCard className="h-8 w-8 text-destructive" />
+      <div className="text-center space-y-5 py-10">
+        <div className="mx-auto w-18 h-18 rounded-2xl bg-destructive/15 flex items-center justify-center">
+          <CreditCard className="h-9 w-9 text-destructive" />
         </div>
-        <h3 className="text-lg font-bold text-foreground">Pagamento com cartão indisponível</h3>
-        <p className="text-sm text-muted-foreground">
+        <h3 className="text-lg font-black text-foreground tracking-tight">Pagamento com cartão indisponível</h3>
+        <p className="text-sm text-muted-foreground leading-relaxed max-w-xs mx-auto">
           Para a primeira locação, o pagamento é realizado via Pix.
           <br />
           Após isso, o cartão fica disponível para os próximos pedidos.
         </p>
-        <div className="flex flex-col gap-2 pt-2">
-          <Button onClick={onSwitchToPix} className="w-full text-base font-bold" size="lg">
+        <div className="flex flex-col gap-2 pt-3">
+          <Button onClick={onSwitchToPix} className="w-full text-base font-bold rounded-xl h-12 shadow-lg shadow-primary/20" size="lg">
             Pagar com Pix
           </Button>
         </div>
@@ -171,8 +169,10 @@ const CardPaymentForm = ({
     );
   }
 
+  const inputClass = "text-sm h-12 rounded-xl border-border/60 bg-background/80 focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all";
+
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       <CardPreview
         number={formatCardNumber(cardNumber)}
         name={holderName}
@@ -181,21 +181,21 @@ const CardPaymentForm = ({
         cpf={formatCpf(cpf)}
       />
 
-      <div className="space-y-3">
-        <div>
-          <Label htmlFor="holderName" className="text-xs">Nome do titular</Label>
+      <div className="space-y-4">
+        <div className="space-y-1.5">
+          <Label htmlFor="holderName" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Nome do titular</Label>
           <Input
             id="holderName"
             placeholder="Nome como está no cartão"
             value={holderName}
             onChange={(e) => setHolderName(e.target.value.toUpperCase())}
-            className={`text-sm h-9 ${errors.holderName ? "border-destructive" : ""}`}
+            className={`${inputClass} ${errors.holderName ? "border-destructive ring-destructive/20" : ""}`}
           />
-          {errors.holderName && <p className="mt-0.5 text-xs text-destructive">{errors.holderName}</p>}
+          {errors.holderName && <p className="mt-0.5 text-[11px] text-destructive font-medium">{errors.holderName}</p>}
         </div>
 
-        <div>
-          <Label htmlFor="cpfCard" className="text-xs">CPF do titular</Label>
+        <div className="space-y-1.5">
+          <Label htmlFor="cpfCard" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">CPF do titular</Label>
           <Input
             id="cpfCard"
             placeholder="000.000.000-00"
@@ -203,13 +203,13 @@ const CardPaymentForm = ({
             onChange={(e) => setCpf(formatCpf(e.target.value))}
             maxLength={14}
             inputMode="numeric"
-            className={`text-sm h-9 ${errors.cpf ? "border-destructive" : ""}`}
+            className={`${inputClass} ${errors.cpf ? "border-destructive ring-destructive/20" : ""}`}
           />
-          {errors.cpf && <p className="mt-0.5 text-xs text-destructive">{errors.cpf}</p>}
+          {errors.cpf && <p className="mt-0.5 text-[11px] text-destructive font-medium">{errors.cpf}</p>}
         </div>
 
-        <div>
-          <Label htmlFor="cardNumber" className="text-xs">Número do cartão</Label>
+        <div className="space-y-1.5">
+          <Label htmlFor="cardNumber" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Número do cartão</Label>
           <Input
             id="cardNumber"
             placeholder="0000 0000 0000 0000"
@@ -217,14 +217,14 @@ const CardPaymentForm = ({
             onChange={(e) => setCardNumber(e.target.value.replace(/\D/g, "").slice(0, 16))}
             maxLength={19}
             inputMode="numeric"
-            className={`text-sm h-9 ${errors.cardNumber ? "border-destructive" : ""}`}
+            className={`${inputClass} ${errors.cardNumber ? "border-destructive ring-destructive/20" : ""}`}
           />
-          {errors.cardNumber && <p className="mt-0.5 text-xs text-destructive">{errors.cardNumber}</p>}
+          {errors.cardNumber && <p className="mt-0.5 text-[11px] text-destructive font-medium">{errors.cardNumber}</p>}
         </div>
 
         <div className="grid grid-cols-2 gap-3">
-          <div>
-            <Label htmlFor="expiry" className="text-xs">Validade</Label>
+          <div className="space-y-1.5">
+            <Label htmlFor="expiry" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Validade</Label>
             <Input
               id="expiry"
               placeholder="MM/AA"
@@ -232,12 +232,12 @@ const CardPaymentForm = ({
               onChange={(e) => setExpiry(formatExpiry(e.target.value))}
               maxLength={5}
               inputMode="numeric"
-              className={`text-sm h-9 ${errors.expiry ? "border-destructive" : ""}`}
+              className={`${inputClass} ${errors.expiry ? "border-destructive ring-destructive/20" : ""}`}
             />
-            {errors.expiry && <p className="mt-0.5 text-xs text-destructive">{errors.expiry}</p>}
+            {errors.expiry && <p className="mt-0.5 text-[11px] text-destructive font-medium">{errors.expiry}</p>}
           </div>
-          <div>
-            <Label htmlFor="cvv" className="text-xs">CVV</Label>
+          <div className="space-y-1.5">
+            <Label htmlFor="cvv" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">CVV</Label>
             <Input
               id="cvv"
               placeholder="000"
@@ -246,34 +246,36 @@ const CardPaymentForm = ({
               maxLength={4}
               inputMode="numeric"
               type="password"
-              className={`text-sm h-9 ${errors.cvv ? "border-destructive" : ""}`}
+              className={`${inputClass} ${errors.cvv ? "border-destructive ring-destructive/20" : ""}`}
             />
-            {errors.cvv && <p className="mt-0.5 text-xs text-destructive">{errors.cvv}</p>}
+            {errors.cvv && <p className="mt-0.5 text-[11px] text-destructive font-medium">{errors.cvv}</p>}
           </div>
         </div>
       </div>
 
+      {/* Installments */}
       <div className="space-y-2">
-        <Label className="text-xs">Parcelas</Label>
-        <div className="grid grid-cols-3 gap-2">
+        <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Parcelas</Label>
+        <div className="grid grid-cols-3 gap-2.5">
           {([1, 2, 3] as const).map((n) => {
             const parcela = totalPrice / n;
+            const isActive = installments === n;
             return (
               <button
                 key={n}
                 type="button"
                 onClick={() => setInstallments(n)}
-                className={`rounded-lg border-2 p-2.5 text-center transition-all ${
-                  installments === n
-                    ? "border-primary bg-primary/10 font-bold"
-                    : "border-muted hover:border-primary/50"
+                className={`rounded-2xl border-2 p-3 text-center transition-all duration-200 ${
+                  isActive
+                    ? "border-primary bg-primary/10 shadow-md shadow-primary/10 scale-[1.02]"
+                    : "border-border/50 hover:border-primary/40 hover:bg-muted/30"
                 }`}
               >
-                <span className="block text-sm font-semibold">{n}x</span>
-                <span className="block text-xs text-muted-foreground">
+                <span className={`block text-base font-black ${isActive ? "text-primary" : "text-foreground"}`}>{n}x</span>
+                <span className="block text-xs text-muted-foreground font-medium mt-0.5">
                   {formatCurrency(parcela)}
                 </span>
-                {n > 1 && <span className="block text-[10px] text-accent">sem juros</span>}
+                {n > 1 && <span className="block text-[10px] text-green-500 font-semibold mt-0.5">sem juros</span>}
               </button>
             );
           })}
@@ -282,7 +284,7 @@ const CardPaymentForm = ({
 
       <Button
         onClick={handleSubmit}
-        className="w-full text-base font-bold"
+        className="w-full text-base font-bold rounded-xl h-13 shadow-lg shadow-primary/20 transition-all hover:shadow-xl hover:shadow-primary/25"
         size="lg"
         disabled={loading}
       >
@@ -295,6 +297,11 @@ const CardPaymentForm = ({
           `Pagar ${installments}x ${formatCurrency(totalPrice / installments)} • ${formatCurrency(totalPrice)}`
         )}
       </Button>
+
+      <div className="flex items-center justify-center gap-1.5 text-[11px] text-muted-foreground/50">
+        <Lock className="h-3.5 w-3.5" />
+        Pagamento 100% seguro · Criptografia SSL
+      </div>
 
       <ThreeDSModal open={show3DS} onComplete={handle3DSComplete} />
     </div>
