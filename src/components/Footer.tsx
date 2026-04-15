@@ -13,7 +13,7 @@ const Footer = memo(() => {
           <div>
             <img src={logoAmba} alt="NORTEX Caçambas" className="mx-auto mb-3 h-12 w-auto md:mx-0" width={160} height={48} loading="lazy" />
             <p className="mb-4 max-w-sm text-sm text-secondary-foreground/60">
-              Atendemos todo o estado de São Paulo e região. Logística ágil e descarte regularizado.
+              Cobertura em todo o estado de São Paulo e região metropolitana. Logística ágil e descarte ambientalmente regularizado.
             </p>
             <div className="flex flex-col gap-2 text-sm text-secondary-foreground/70">
               <a
@@ -45,7 +45,7 @@ const Footer = memo(() => {
             className="inline-flex items-center gap-2 rounded-lg bg-whatsapp px-6 py-3 text-sm font-bold text-whatsapp-foreground transition-colors hover:bg-whatsapp-hover"
           >
             <MessageCircle className="h-4 w-4 fill-current" />
-            Pedir Cotação
+            Solicitar Orçamento
           </button>
         </div>
 

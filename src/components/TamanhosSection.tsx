@@ -1,5 +1,5 @@
 import { memo, useState } from "react";
-import { Check, Award, TrendingUp, ChevronRight } from "lucide-react";
+import { Check, Award, TrendingUp, ChevronRight, Ruler, Calendar, Package } from "lucide-react";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
 import whatsappIcon from "@/assets/whatsapp-icon.webp";
 
@@ -8,35 +8,39 @@ const sizes = [
     size: "3 m³",
     title: "Pequenas reformas",
     price: "R$ 230",
-    bags: "20–25 sacos · 2 a 7 dias",
-    idealFor: ["Reparos pontuais", "Remoção de piso e entulho leve"],
-    checks: ["Entrega em até 2h", "Retirada agendada", "Cabe em espaços compactos"],
+    capacity: "20–25 sacos",
+    period: "2 a 7 dias",
+    idealFor: ["Reparos pontuais e manutenções", "Remoção de pisos e entulho leve"],
+    checks: ["Entrega em até 2h", "Retirada agendada", "Ideal para espaços compactos"],
   },
   {
     size: "4 m³",
     title: "Obras médias",
     price: "R$ 300",
-    bags: "30–35 sacos · 2 a 7 dias",
-    idealFor: ["Reformas de médio porte", "Resíduos de construção"],
-    checks: ["Entrega em até 2h", "Retirada agendada", "Boa relação custo-volume"],
+    capacity: "30–35 sacos",
+    period: "2 a 7 dias",
+    idealFor: ["Reformas de médio porte", "Resíduos de construção civil"],
+    checks: ["Entrega em até 2h", "Retirada agendada", "Excelente custo-volume"],
   },
   {
     size: "5 m³",
     title: "Residencial completa",
     price: "R$ 360",
-    bags: "40–45 sacos · 3 a 7 dias",
-    idealFor: ["Obras em casas e apartamentos", "Contrapiso e reforma geral"],
+    capacity: "40–45 sacos",
+    period: "3 a 7 dias",
+    idealFor: ["Obras residenciais completas", "Contrapiso e reforma geral"],
     checks: ["Entrega em até 2h", "Retirada agendada", "Melhor custo por m³"],
-    badge: "Mais pedido",
+    badge: "Mais solicitado",
     badgeIcon: Award,
   },
   {
     size: "7 m³",
     title: "Construção pesada",
     price: "R$ 460",
-    bags: "60–70 sacos · 3 a 7 dias",
+    capacity: "60–70 sacos",
+    period: "3 a 7 dias",
     idealFor: ["Grande volume de resíduos", "Demolições parciais"],
-    checks: ["Entrega em até 2h", "Retirada agendada", "Suporta grandes quantidades"],
+    checks: ["Entrega em até 2h", "Retirada agendada", "Alta capacidade"],
     badge: "Melhor custo-benefício",
     badgeIcon: TrendingUp,
   },
@@ -44,8 +48,9 @@ const sizes = [
     size: "10 m³",
     title: "Grande volume",
     price: "R$ 620",
-    bags: "90–100 sacos · 5 a 7 dias",
-    idealFor: ["Demolições, telhas, madeira", "Descarte em larga escala"],
+    capacity: "90–100 sacos",
+    period: "5 a 7 dias",
+    idealFor: ["Demolições e descartes em larga escala", "Telhas, madeira e materiais diversos"],
     checks: ["Entrega em até 2h", "Retirada agendada", "Capacidade reforçada"],
   },
 ];
@@ -78,23 +83,34 @@ const SizeCard = memo(({ item, selected, onSelect }: { item: typeof sizes[0]; se
         {selected && <Check className="h-3 w-3 text-white" />}
       </div>
 
-      <div className={`mb-3 ${hasBadge ? "mt-2" : ""}`}>
+      <div className={`mb-4 ${hasBadge ? "mt-2" : ""}`}>
         <div className="flex items-baseline gap-2">
           <span className="text-3xl md:text-4xl font-black text-foreground">{item.size}</span>
-          <span className="text-sm font-medium text-muted-foreground">— {item.title}</span>
         </div>
-        <p className="mt-2 text-2xl md:text-3xl font-black text-primary">{item.price}</p>
-        <p className="mt-0.5 text-xs text-muted-foreground/60">{item.bags}</p>
+        <p className="mt-0.5 text-sm font-medium text-muted-foreground">{item.title}</p>
+        <p className="mt-3 text-2xl md:text-3xl font-black text-primary">{item.price}</p>
+      </div>
+
+      {/* Specs */}
+      <div className="mb-4 flex gap-4">
+        <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+          <Package className="h-3.5 w-3.5 text-primary/60" />
+          {item.capacity}
+        </div>
+        <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+          <Calendar className="h-3.5 w-3.5 text-primary/60" />
+          {item.period}
+        </div>
       </div>
 
       <div className="mb-3">
-        <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide mb-1">Uso recomendado:</p>
+        <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide mb-1.5">Aplicação recomendada</p>
         {item.idealFor.map((text) => (
           <p key={text} className="text-sm text-card-foreground leading-relaxed">{text}</p>
         ))}
       </div>
 
-      <ul className="flex-1 space-y-1">
+      <ul className="flex-1 space-y-1.5 pt-3 border-t border-border/50">
         {item.checks.map((b) => (
           <li key={b} className="flex items-start gap-1.5 text-xs text-card-foreground/80">
             <Check className="mt-0.5 h-3 w-3 shrink-0 text-green-500" />
@@ -112,7 +128,7 @@ const TamanhosSection = () => {
   const [selected, setSelected] = useState("5 m³");
 
   const handleSolicitar = () => {
-    handleWhatsAppClick(`Olá! Tenho interesse em uma caçamba de ${selected}. Podem informar disponibilidade e valor?`);
+    handleWhatsAppClick(`Olá! Tenho interesse na locação de uma caçamba de ${selected}. Poderiam informar disponibilidade e valor?`);
   };
 
   return (
@@ -120,10 +136,10 @@ const TamanhosSection = () => {
       <div className="container px-4">
         <div className="mb-8 md:mb-12 text-center">
           <h2 className="mb-2 text-2xl font-extrabold text-foreground md:text-3xl lg:text-4xl">
-            Qual caçamba você precisa?
+            Qual caçamba atende sua necessidade?
           </h2>
           <p className="mx-auto max-w-lg text-sm md:text-base text-muted-foreground">
-            Selecione o tamanho ideal e solicite pelo WhatsApp.
+            Selecione o tamanho ideal para o seu projeto e solicite pelo WhatsApp.
           </p>
         </div>
 
@@ -149,7 +165,7 @@ const TamanhosSection = () => {
             <ChevronRight className="h-5 w-5" />
           </button>
           <p className="text-xs text-muted-foreground">
-            Resposta imediata · Sem compromisso
+            Atendimento imediato · Sem compromisso
           </p>
         </div>
       </div>
