@@ -406,7 +406,7 @@ const Checkout = () => {
       {/* Header Premium */}
       <div className="bg-secondary py-5 shadow-md">
         <div className="container flex flex-col items-center px-4">
-          <img src={logoAmba} alt="NORTEX Caçambas" className="h-14 w-auto md:h-18 drop-shadow-lg" />
+          <img src={logoAmba} alt="NORTEX Caçambas" className="h-14 w-auto md:h-18 drop-shadow-lg" fetchPriority="high" decoding="async" />
         </div>
       </div>
 
@@ -461,7 +461,7 @@ const Checkout = () => {
                     <CardContent className="p-4">
                       <div className="flex items-center justify-between gap-2">
                         <div className="flex items-center gap-3 min-w-0 flex-1">
-                          <img src={cacambaImg} alt={plan.label} className="h-10 w-14 sm:h-12 sm:w-16 object-contain shrink-0" />
+                          <img src={cacambaImg} alt={plan.label} className="h-10 w-14 sm:h-12 sm:w-16 object-contain shrink-0" fetchPriority="high" decoding="async" />
                           <div className="min-w-0">
                             <p className="text-sm sm:text-base font-bold text-foreground">{plan.label}</p>
                             <p className="text-sm text-muted-foreground whitespace-nowrap">
