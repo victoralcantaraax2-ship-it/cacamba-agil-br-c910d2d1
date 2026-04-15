@@ -63,7 +63,7 @@ const Logistica = () => {
   const [copyToast, setCopyToast] = useState(false);
 
   const taxaEntrega = taxaEntregaMap[plano] || 80;
-  const taxaTotal = useCustom && valorCustom ? parseFloat(valorCustom) : taxaEntrega + taxaPrioritaria;
+  const taxaTotal = useCustom && valorCustom ? parseCurrency(valorCustom) : taxaEntrega + taxaPrioritaria;
 
   // Auto-generate when coming from checkout
   useEffect(() => {
