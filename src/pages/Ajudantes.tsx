@@ -16,7 +16,7 @@ import pixLogo from "@/assets/pix-logo.webp";
 import lockIcon from "@/assets/lock-icon.webp";
 import mercadopagoLogo from "@/assets/mercadopago-logo.webp";
 
-const PRECO_AJUDANTE = 80;
+const PRECOS: Record<number, number> = { 1: 90, 2: 160 };
 const isQrImage = (v: string) => /^(data:image|https?:\/\/)/.test(v);
 
 const Ajudantes = () => {
