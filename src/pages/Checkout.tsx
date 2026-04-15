@@ -517,16 +517,16 @@ const Checkout = () => {
             </div>
 
             {selectedPlan && (
-              <div className="rounded-lg bg-muted p-5 sm:p-4 text-center">
-                <p className="text-base sm:text-sm text-muted-foreground">Total estimado</p>
-                <p className="text-3xl sm:text-2xl font-bold text-primary">{formatCurrency(totalPrice)}</p>
-                <p className="text-sm sm:text-xs text-muted-foreground">
+              <div className="rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 p-5 text-center shadow-sm">
+                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Total estimado</p>
+                <p className="text-3xl font-extrabold text-primary mt-1">{formatCurrency(totalPrice)}</p>
+                <p className="text-xs text-muted-foreground mt-0.5">
                   {quantity}x {currentPlan?.label}
                 </p>
               </div>
             )}
 
-            <Button onClick={validateStep1} className="w-full text-lg sm:text-base font-bold h-14 sm:h-11" size="lg">
+            <Button onClick={validateStep1} className="w-full text-base font-bold h-13 rounded-xl shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/30 transition-all" size="lg">
               Continuar
             </Button>
           </div>
