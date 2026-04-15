@@ -674,8 +674,7 @@ const Checkout = () => {
             <Card className="shadow-sm border-border/50">
               <CardContent className="pt-4 pb-4">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
-                    <CalendarIcon className="h-4 w-4 text-primary" />
+                  <h3 className="text-sm font-bold text-foreground">
                     Agendar entrega
                   </h3>
                   <Switch checked={!!scheduledDate} onCheckedChange={(on) => {
