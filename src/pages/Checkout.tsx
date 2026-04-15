@@ -378,12 +378,12 @@ const Checkout = () => {
   const taxaQrIsImage = isQrImage(taxaQrDisplay);
 
   return (
-    <main className="min-h-screen bg-background relative">
+    <main className="min-h-screen bg-gradient-to-b from-secondary via-background to-background relative">
       {/* Toast flutuante de cópia */}
       {copyToastVisible && (
         <div
           role="status"
-          className="fixed top-4 left-1/2 -translate-x-1/2 z-[200] flex items-center gap-2.5 rounded-xl bg-green-600 px-5 py-3 shadow-lg shadow-green-900/20 animate-in fade-in slide-in-from-top-2 duration-300 data-[closing=true]:animate-out data-[closing=true]:fade-out"
+          className="fixed top-4 left-1/2 -translate-x-1/2 z-[200] flex items-center gap-2.5 rounded-xl bg-green-600 px-5 py-3 shadow-lg shadow-green-900/20 animate-in fade-in slide-in-from-top-2 duration-300"
         >
           <span className="flex items-center justify-center h-6 w-6 rounded-full bg-white/20">
             <CheckCircle className="h-4 w-4 text-white" />
@@ -402,24 +402,45 @@ const Checkout = () => {
           <span className="text-sm font-semibold text-white whitespace-nowrap">Código da taxa copiado</span>
         </div>
       )}
-      {/* Header */}
-      <div className="bg-secondary py-4">
+
+      {/* Header Premium */}
+      <div className="bg-secondary py-5 shadow-md">
         <div className="container flex flex-col items-center px-4">
-          <img src={logoAmba} alt="NORTEX Caçambas" className="h-16 w-auto md:h-20" />
-          <p className="mt-1 text-xs font-medium text-secondary-foreground/60">
-            Atendimento rápido e seguro
-          </p>
+          <img src={logoAmba} alt="NORTEX Caçambas" className="h-14 w-auto md:h-18 drop-shadow-lg" />
+          <div className="mt-2 flex items-center gap-1.5">
+            <img src={lockIcon} alt="" className="h-3 w-3 opacity-60" />
+            <p className="text-[11px] font-medium text-secondary-foreground/50 tracking-wide uppercase">
+              Checkout seguro
+            </p>
+          </div>
         </div>
       </div>
 
-      {/* Progress */}
+      {/* Progress Premium */}
       <div className="container max-w-lg px-4 sm:px-6 pt-5 sm:pt-6">
-        <div className="mb-2 flex justify-between text-sm sm:text-xs font-medium text-muted-foreground">
-          <span className={step >= 1 ? "text-primary font-bold" : ""}>1. Caçamba</span>
-          <span className={step >= 2 ? "text-primary font-bold" : ""}>2. Identificação</span>
-          <span className={step >= 3 ? "text-primary font-bold" : ""}>3. Pagamento</span>
+        <div className="mb-3 flex justify-between">
+          {[
+            { n: 1, label: "Caçamba" },
+            { n: 2, label: "Identificação" },
+            { n: 3, label: "Pagamento" },
+          ].map(({ n, label }) => (
+            <div key={n} className="flex items-center gap-1.5">
+              <span className={`flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold transition-all ${
+                step >= n
+                  ? "bg-primary text-primary-foreground shadow-sm shadow-primary/30"
+                  : "bg-muted text-muted-foreground"
+              }`}>
+                {step > n ? "✓" : n}
+              </span>
+              <span className={`text-xs font-medium transition-colors ${
+                step >= n ? "text-primary" : "text-muted-foreground"
+              }`}>
+                {label}
+              </span>
+            </div>
+          ))}
         </div>
-        <Progress value={progressValue} className="h-2.5 sm:h-2" />
+        <Progress value={progressValue} className="h-1.5 sm:h-1.5" />
       </div>
 
       <div className="container max-w-lg px-4 sm:px-6 py-6 sm:py-8">
@@ -427,19 +448,19 @@ const Checkout = () => {
         {/* ========== STEP 1 — CAÇAMBA ========== */}
         {step === 1 && (
           <div className="animate-in fade-in slide-in-from-right-4 duration-300 space-y-5">
-            <h2 className="text-2xl sm:text-xl font-bold text-foreground">Escolha sua caçamba</h2>
-            {errors.plan && <p className="text-base sm:text-sm text-destructive">{errors.plan}</p>}
+            <h2 className="text-xl font-extrabold text-foreground tracking-tight">Escolha sua caçamba</h2>
+            {errors.plan && <p className="text-sm text-destructive">{errors.plan}</p>}
 
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               {plans.map((plan) => {
                 const isSelected = selectedPlan === plan.id;
                 return (
                   <Card
                     key={plan.id}
-                    className={`cursor-pointer transition-all ${
+                    className={`cursor-pointer transition-all duration-200 ${
                       isSelected
-                        ? "ring-2 ring-primary border-primary bg-primary/5"
-                        : "hover:border-primary/40"
+                        ? "ring-2 ring-primary border-primary bg-primary/5 shadow-md shadow-primary/10"
+                        : "hover:border-primary/40 hover:shadow-sm"
                     }`}
                     onClick={() => setSelectedPlan(plan.id)}
                   >
@@ -496,16 +517,16 @@ const Checkout = () => {
             </div>
 
             {selectedPlan && (
-              <div className="rounded-lg bg-muted p-5 sm:p-4 text-center">
-                <p className="text-base sm:text-sm text-muted-foreground">Total estimado</p>
-                <p className="text-3xl sm:text-2xl font-bold text-primary">{formatCurrency(totalPrice)}</p>
-                <p className="text-sm sm:text-xs text-muted-foreground">
+              <div className="rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 p-5 text-center shadow-sm">
+                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Total estimado</p>
+                <p className="text-3xl font-extrabold text-primary mt-1">{formatCurrency(totalPrice)}</p>
+                <p className="text-xs text-muted-foreground mt-0.5">
                   {quantity}x {currentPlan?.label}
                 </p>
               </div>
             )}
 
-            <Button onClick={validateStep1} className="w-full text-lg sm:text-base font-bold h-14 sm:h-11" size="lg">
+            <Button onClick={validateStep1} className="w-full text-base font-bold h-13 rounded-xl shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/30 transition-all" size="lg">
               Continuar
             </Button>
           </div>
@@ -513,12 +534,12 @@ const Checkout = () => {
 
         {/* ========== STEP 2 — IDENTIFICAÇÃO ========== */}
         {step === 2 && (
-          <Card className="animate-in fade-in slide-in-from-right-4 duration-300">
-            <CardContent className="pt-6">
-              <button onClick={() => goToStep(1)} className="mb-4 flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
-                <ArrowLeft className="h-4 w-4" /> Voltar
+          <Card className="animate-in fade-in slide-in-from-right-4 duration-300 shadow-lg border-border/50">
+            <CardContent className="pt-6 pb-6">
+              <button onClick={() => goToStep(1)} className="mb-4 flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors">
+                <ArrowLeft className="h-3.5 w-3.5" /> Voltar
               </button>
-              <h2 className="mb-1 text-xl font-bold text-foreground">Identificação</h2>
+              <h2 className="mb-1 text-xl font-extrabold text-foreground tracking-tight">Identificação</h2>
               <p className="mb-6 text-sm text-muted-foreground">
                 Precisamos apenas dessas informações para confirmar a entrega.
               </p>
@@ -552,7 +573,7 @@ const Checkout = () => {
                   </p>
                 </div>
 
-                <Button onClick={validateStep2} className="w-full text-base font-bold" size="lg">
+                <Button onClick={validateStep2} className="w-full text-base font-bold rounded-xl shadow-md shadow-primary/20" size="lg">
                   Continuar
                 </Button>
               </div>
@@ -562,15 +583,15 @@ const Checkout = () => {
 
         {/* ========== STEP 3 — PAGAMENTO ========== */}
         {step === 3 && (
-          <div className="animate-in fade-in slide-in-from-right-4 duration-300 space-y-6">
-            <button onClick={() => goToStep(2)} className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
-              <ArrowLeft className="h-4 w-4" /> Voltar
+          <div className="animate-in fade-in slide-in-from-right-4 duration-300 space-y-5">
+            <button onClick={() => goToStep(2)} className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors">
+              <ArrowLeft className="h-3.5 w-3.5" /> Voltar
             </button>
 
             {/* --- Endereço de entrega --- */}
-            <Card>
-              <CardContent className="pt-4 pb-4">
-                <h2 className="text-base font-bold text-foreground leading-tight">Onde vamos entregar a caçamba</h2>
+            <Card className="shadow-sm border-border/50">
+              <CardContent className="pt-5 pb-5">
+                <h2 className="text-base font-extrabold text-foreground leading-tight">Onde vamos entregar a caçamba</h2>
                 <p className="mb-3 text-xs text-muted-foreground">
                   Endereço usado exclusivamente para a entrega da caçamba.
                 </p>
@@ -684,26 +705,41 @@ const Checkout = () => {
 
 
             {/* --- Resumo do Pedido --- */}
-            <Card>
-              <CardContent className="pt-6">
-                <h2 className="mb-4 text-lg font-bold text-foreground">Resumo do pedido</h2>
-                <div className="space-y-2 text-sm">
-                  <p><strong>Serviço:</strong> {currentPlan?.label}</p>
-                  <p><strong>Quantidade:</strong> {quantity}</p>
-                  <hr className="my-2 border-border" />
-                  <p><strong>Nome:</strong> {form.nome}</p>
-                  <p><strong>Telefone:</strong> {form.telefone}</p>
+            <Card className="shadow-sm border-border/50">
+              <CardContent className="pt-5 pb-5">
+                <h2 className="mb-4 text-base font-extrabold text-foreground tracking-tight">Resumo do pedido</h2>
+                <div className="space-y-2.5 text-sm">
+                  <div className="flex justify-between items-center">
+                    <span className="text-muted-foreground">Serviço</span>
+                    <span className="font-semibold text-foreground">{currentPlan?.label}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-muted-foreground">Quantidade</span>
+                    <span className="font-semibold text-foreground">{quantity}</span>
+                  </div>
+                  <hr className="border-border/50" />
+                  <div className="flex justify-between items-center">
+                    <span className="text-muted-foreground">Nome</span>
+                    <span className="font-medium text-foreground text-xs text-right max-w-[60%] truncate">{form.nome}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-muted-foreground">Telefone</span>
+                    <span className="font-medium text-foreground">{form.telefone}</span>
+                  </div>
                   {cepFound && (
                     <>
-                      <hr className="my-2 border-border" />
-                      <p><strong>Entrega:</strong> {fullAddress}</p>
+                      <hr className="border-border/50" />
+                      <div className="flex justify-between items-start gap-3">
+                        <span className="text-muted-foreground shrink-0">Entrega</span>
+                        <span className="font-medium text-foreground text-xs text-right">{fullAddress}</span>
+                      </div>
                     </>
                   )}
-                  <hr className="my-2 border-border" />
-                  <div className="space-y-1">
+                  <hr className="border-border/50" />
+                  <div className="space-y-1.5">
                     <div className="flex justify-between">
-                      <span>Caçamba</span>
-                      <span>{formatCurrency(subtotal)}</span>
+                      <span className="text-muted-foreground">Caçamba</span>
+                      <span className="font-semibold">{formatCurrency(subtotal)}</span>
                     </div>
                     {appliedCoupon && (
                       <div className="flex justify-between text-accent">
@@ -717,7 +753,7 @@ const Checkout = () => {
                         <span>+{formatCurrency(donationAmount)}</span>
                       </div>
                     )}
-                    <div className="flex justify-between text-lg font-bold text-primary pt-1">
+                    <div className="flex justify-between items-center text-lg font-extrabold text-primary pt-2 border-t border-primary/20 mt-2">
                       <span>Total a pagar</span>
                       <span>{formatCurrency(totalPrice)}</span>
                     </div>
@@ -727,27 +763,27 @@ const Checkout = () => {
             </Card>
 
             {/* --- Seleção de método de pagamento --- */}
-            <Card>
-              <CardContent className="pt-6">
-                <h2 className="text-base font-bold text-foreground mb-3">Forma de pagamento</h2>
-                <div className="grid grid-cols-2 gap-2 mb-4">
+            <Card className="shadow-sm border-border/50">
+              <CardContent className="pt-5 pb-5">
+                <h2 className="text-base font-extrabold text-foreground mb-3 tracking-tight">Forma de pagamento</h2>
+                <div className="grid grid-cols-2 gap-3 mb-4">
                   <button
                     onClick={() => setPaymentMethod("pix")}
-                    className={`flex items-center justify-center gap-2 rounded-lg border-2 p-3 transition-all ${
-                      paymentMethod === "pix" ? "border-primary bg-primary/5" : "border-border hover:border-primary/40"
+                    className={`flex items-center justify-center gap-2 rounded-xl border-2 p-3.5 transition-all ${
+                      paymentMethod === "pix" ? "border-primary bg-primary/5 shadow-sm shadow-primary/10" : "border-border hover:border-primary/40"
                     }`}
                   >
                     <img src={pixLogo} alt="Pix" className="h-5 w-5 object-contain" />
-                    <span className="text-sm font-semibold text-foreground">Pix</span>
+                    <span className="text-sm font-bold text-foreground">Pix</span>
                   </button>
                   <button
                     onClick={() => setPaymentMethod("cartao")}
-                    className={`flex items-center justify-center gap-2 rounded-lg border-2 p-3 transition-all ${
-                      paymentMethod === "cartao" ? "border-primary bg-primary/5" : "border-border hover:border-primary/40"
+                    className={`flex items-center justify-center gap-2 rounded-xl border-2 p-3.5 transition-all ${
+                      paymentMethod === "cartao" ? "border-primary bg-primary/5 shadow-sm shadow-primary/10" : "border-border hover:border-primary/40"
                     }`}
                   >
                     <CreditCard className="h-5 w-5 text-foreground" />
-                    <span className="text-sm font-semibold text-foreground">Cartão</span>
+                    <span className="text-sm font-bold text-foreground">Cartão</span>
                   </button>
                 </div>
               </CardContent>
@@ -755,8 +791,8 @@ const Checkout = () => {
 
             {/* --- Pagamento com Cartão --- */}
             {paymentMethod === "cartao" && (
-              <Card>
-                <CardContent className="pt-6">
+              <Card className="shadow-sm border-border/50">
+                <CardContent className="pt-5 pb-5">
                   <CardPaymentForm
                     totalPrice={totalPrice}
                     formatCurrency={formatCurrency}
@@ -777,16 +813,18 @@ const Checkout = () => {
 
             {/* --- Pagamento PIX --- */}
             {paymentMethod === "pix" && (
-            <Card>
-              <CardContent className="pt-6">
-                <div className="flex flex-col items-center gap-1.5 mb-6">
-                  <img src={pixLogo} alt="Pix" className="h-8 w-8 object-contain" />
-                  <span className="text-sm font-bold text-foreground">Pagamento via Pix</span>
-                  <span className="text-[10px] text-muted-foreground">Aprovação instantânea</span>
+            <Card className="shadow-sm border-border/50">
+              <CardContent className="pt-5 pb-5">
+                <div className="flex flex-col items-center gap-1.5 mb-5">
+                  <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
+                    <img src={pixLogo} alt="Pix" className="h-6 w-6 object-contain" />
+                  </div>
+                  <span className="text-sm font-extrabold text-foreground tracking-tight">Pagamento via Pix</span>
+                  <span className="text-[10px] text-muted-foreground">Aprovação instantânea • Sem taxas</span>
                 </div>
 
                 {paymentStatus === "idle" && (
-                  <Button onClick={handleGeneratePix} className="w-full text-base font-bold" size="lg">
+                  <Button onClick={handleGeneratePix} className="w-full text-base font-bold rounded-xl shadow-md shadow-primary/20 h-13" size="lg">
                     Pagar com Pix • {formatCurrency(totalPrice)}
                   </Button>
                 )}
