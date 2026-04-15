@@ -1,7 +1,8 @@
 import { memo, useState } from "react";
-import { Check, Award, TrendingUp, ChevronRight, Ruler, Calendar, Package } from "lucide-react";
+import { Check, TrendingUp, ChevronRight, Calendar, Package } from "lucide-react";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
 import whatsappIcon from "@/assets/whatsapp-icon.webp";
+import badgeMaisSolicitado from "@/assets/badge-mais-solicitado.png";
 
 const sizes = [
   {
@@ -9,7 +10,7 @@ const sizes = [
     title: "Pequenas reformas",
     price: "R$ 230",
     capacity: "20–25 sacos",
-    period: "2 a 7 dias",
+    period: "2 a 7 dias úteis",
     idealFor: ["Reparos pontuais e manutenções", "Remoção de pisos e entulho leve"],
     checks: ["Entrega em até 2h", "Retirada agendada", "Ideal para espaços compactos"],
   },
@@ -18,7 +19,7 @@ const sizes = [
     title: "Obras médias",
     price: "R$ 300",
     capacity: "30–35 sacos",
-    period: "2 a 7 dias",
+    period: "2 a 7 dias úteis",
     idealFor: ["Reformas de médio porte", "Resíduos de construção civil"],
     checks: ["Entrega em até 2h", "Retirada agendada", "Excelente custo-volume"],
   },
@@ -27,18 +28,18 @@ const sizes = [
     title: "Residencial completa",
     price: "R$ 360",
     capacity: "40–45 sacos",
-    period: "3 a 7 dias",
+    period: "3 a 7 dias úteis",
     idealFor: ["Obras residenciais completas", "Contrapiso e reforma geral"],
     checks: ["Entrega em até 2h", "Retirada agendada", "Melhor custo por m³"],
-    badge: "Mais solicitado",
-    badgeIcon: Award,
+    badge: "Mais solicitada",
+    badgeType: "image" as const,
   },
   {
     size: "7 m³",
     title: "Construção pesada",
     price: "R$ 460",
     capacity: "60–70 sacos",
-    period: "3 a 7 dias",
+    period: "3 a 7 dias úteis",
     idealFor: ["Grande volume de resíduos", "Demolições parciais"],
     checks: ["Entrega em até 2h", "Retirada agendada", "Alta capacidade"],
     badge: "Melhor custo-benefício",
@@ -49,7 +50,7 @@ const sizes = [
     title: "Grande volume",
     price: "R$ 620",
     capacity: "90–100 sacos",
-    period: "5 a 7 dias",
+    period: "5 a 7 dias úteis",
     idealFor: ["Demolições e descartes em larga escala", "Telhas, madeira e materiais diversos"],
     checks: ["Entrega em até 2h", "Retirada agendada", "Capacidade reforçada"],
   },
@@ -72,7 +73,11 @@ const SizeCard = memo(({ item, selected, onSelect }: { item: typeof sizes[0]; se
     >
       {hasBadge && (
         <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 rounded-full bg-primary px-4 py-1.5 text-xs font-black uppercase tracking-wide text-white shadow-md whitespace-nowrap">
-          {BadgeIcon && <BadgeIcon className="h-3.5 w-3.5" />}
+          {item.badgeType === "image" ? (
+            <img src={badgeMaisSolicitado} alt="Mais solicitada" className="h-5 w-5" />
+          ) : BadgeIcon ? (
+            <BadgeIcon className="h-3.5 w-3.5" />
+          ) : null}
           {item.badge}
         </div>
       )}
