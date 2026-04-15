@@ -407,12 +407,6 @@ const Checkout = () => {
       <div className="bg-secondary py-5 shadow-md">
         <div className="container flex flex-col items-center px-4">
           <img src={logoAmba} alt="NORTEX Caçambas" className="h-14 w-auto md:h-18 drop-shadow-lg" />
-          <div className="mt-2 flex items-center gap-1.5">
-            <img src={lockIcon} alt="" className="h-3 w-3 opacity-60" />
-            <p className="text-[11px] font-medium text-secondary-foreground/50 tracking-wide uppercase">
-              Checkout seguro
-            </p>
-          </div>
         </div>
       </div>
 
@@ -464,12 +458,12 @@ const Checkout = () => {
                     }`}
                     onClick={() => setSelectedPlan(plan.id)}
                   >
-                    <CardContent className="flex items-center justify-between p-4 sm:p-4 min-h-[72px]">
-                      <div className="flex items-center gap-3 sm:gap-3">
-                        <img src={cacambaImg} alt={plan.label} className="h-14 w-18 sm:h-12 sm:w-16 object-contain shrink-0" />
-                        <div>
-                          <p className="text-base sm:text-base font-bold text-foreground">{plan.label}</p>
-                          <p className="text-base sm:text-sm text-muted-foreground">
+                    <CardContent className="flex items-center justify-between p-4 sm:p-4 min-h-[72px] gap-2">
+                      <div className="flex items-center gap-3 sm:gap-3 min-w-0 flex-1">
+                        <img src={cacambaImg} alt={plan.label} className="h-10 w-14 sm:h-12 sm:w-16 object-contain shrink-0" />
+                        <div className="min-w-0">
+                          <p className="text-sm sm:text-base font-bold text-foreground truncate">{plan.label}</p>
+                          <p className="text-sm text-muted-foreground whitespace-nowrap">
                             {formatCurrency(plan.price)} / unidade
                           </p>
                         </div>
