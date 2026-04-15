@@ -5,7 +5,6 @@ import TamanhosSection from "@/components/TamanhosSection";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import ExitIntentPopup from "@/components/ExitIntentPopup";
 
-const ConfiancaSection = lazy(() => import("@/components/ConfiancaSection"));
 const RegioesSection = lazy(() => import("@/components/RegioesSection"));
 const SocialProof = lazy(() => import("@/components/SocialProof"));
 const ComoFuncionaSection = lazy(() => import("@/components/ComoFuncionaSection"));
