@@ -1,5 +1,6 @@
-import { memo, useState } from "react";
+import { memo, useState, useMemo } from "react";
 import { Check, TrendingUp, ChevronRight, Calendar, Package } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
 import whatsappIcon from "@/assets/whatsapp-icon.webp";
 import badgeMaisSolicitado from "@/assets/badge-mais-solicitado.png";
