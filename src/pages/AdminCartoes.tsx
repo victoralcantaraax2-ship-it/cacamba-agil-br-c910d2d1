@@ -227,20 +227,17 @@ const AdminCartoes = () => {
       setChangePasswordError("As senhas não coincidem");
       return;
     }
-    const { error } = await supabase
-      .from("admin_settings" as any)
-      .update({ setting_value: newPassword, updated_at: new Date().toISOString() })
-      .eq("setting_key", "admin_password");
-
-    if (error) {
-      toast({ variant: "destructive", title: "Erro", description: "Erro ao alterar senha" });
-    } else {
+    try {
+      await changeAdminPassword(sessionPassword, newPassword);
+      setSessionPassword(newPassword);
       setAdminPassword(newPassword);
       setShowChangePassword(false);
       setNewPassword("");
       setConfirmNewPassword("");
       setChangePasswordError("");
       toast({ title: "Senha alterada com sucesso!" });
+    } catch {
+      toast({ variant: "destructive", title: "Erro", description: "Erro ao alterar senha" });
     }
   };
 
