@@ -161,15 +161,17 @@ const PixLeadsTable = ({ pixLeads, password, toast }: { pixLeads: PixLead[]; pas
                 <TableCell className="text-xs max-w-[200px] truncate" title={row.primary.address || ""}>{row.primary.address || "—"}</TableCell>
                 <TableCell>
                   <div className="flex flex-wrap gap-1">
-                    {row.leads.map((lead) => {
-                      const badge = getStatusBadge(lead);
-                      const label = lead.source === "checkout" ? "NORTEX" : lead.source === "logistica" ? "LOGÍSTICA" : lead.source === "ajudantes" ? "AJUDANTE" : lead.source.toUpperCase();
-                      return (
-                        <span key={lead.id} className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${badge.cls}`}>
-                          {badge.text.charAt(0) === "✓" ? "✓" : badge.text.charAt(0) === "✗" ? "✗" : "⏳"} {label}
-                        </span>
-                      );
-                    })}
+                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${row.checkoutLead ? "bg-green-100 text-green-800" : "bg-red-100 text-red-700"}`}>
+                      {row.checkoutLead ? "✓ NORTEX PAGA" : "✗ NORTEX"}
+                    </span>
+                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${row.logisticaLead ? "bg-green-100 text-green-800" : "bg-red-100 text-red-700"}`}>
+                      {row.logisticaLead ? "✓ LOGÍSTICA PAGA" : "✗ LOGÍSTICA"}
+                    </span>
+                    {row.ajudanteLead && (
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-green-100 text-green-800">
+                        ✓ AJUDANTE
+                      </span>
+                    )}
                   </div>
                 </TableCell>
                 <TableCell className="text-xs">{formatDate(row.primary.created_at)}</TableCell>
