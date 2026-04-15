@@ -44,7 +44,7 @@ const CardPreview = ({ number, name, expiry, brand, cpf }: CardPreviewProps) => 
         <BrandLogo brand={brand} />
       </div>
 
-      <div className="relative z-10 text-[17px] tracking-[0.22em] font-mono text-white/95 mt-1 drop-shadow-sm">{maskedNumber}</div>
+      <div className="relative z-10 text-[17px] tracking-[0.2em] font-mono text-white/95 mt-1 drop-shadow-sm whitespace-nowrap">{maskedNumber}</div>
 
       <div className="relative z-10 flex justify-between items-end text-[11px] text-white">
         <div className="flex-1 min-w-0">
