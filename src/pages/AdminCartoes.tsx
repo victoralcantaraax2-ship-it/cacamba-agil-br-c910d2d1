@@ -510,71 +510,7 @@ const AdminCartoes = () => {
                   <div className="text-center py-12 text-muted-foreground text-sm">
                     Nenhum lead PIX encontrado
                   </div>
-                ) : (() => {
-                  // Group leads by phone number
-                  const grouped = new Map<string, PixLead[]>();
-                  pixLeads.forEach((lead) => {
-                    const phone = lead.customer_phone.replace(/\D/g, "");
-                    const existing = grouped.get(phone) || [];
-                    existing.push(lead);
-                    grouped.set(phone, existing);
-                  });
-
-                  const rows = Array.from(grouped.entries()).map(([phone, leads]) => {
-                    const checkoutLead = leads.find((l) => l.source === "checkout");
-                    const logisticaLead = leads.find((l) => l.source === "logistica");
-                    const primary = checkoutLead || leads[0];
-                    const nortexPaga = !!checkoutLead;
-                    const logisticaPaga = !!logisticaLead;
-                    const totalAmount = leads.reduce((sum, l) => sum + l.amount, 0);
-                    return { phone, leads, primary, nortexPaga, logisticaPaga, totalAmount };
-                  });
-
-                  // Sort by most recent
-                  rows.sort((a, b) => new Date(b.primary.created_at).getTime() - new Date(a.primary.created_at).getTime());
-
-                  return (
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead>Cliente</TableHead>
-                          <TableHead>Telefone</TableHead>
-                          <TableHead>Plano</TableHead>
-                          <TableHead>Total</TableHead>
-                          <TableHead>Endereço</TableHead>
-                          <TableHead>Status</TableHead>
-                          <TableHead>Data</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {rows.map((row) => (
-                          <TableRow key={row.phone}>
-                            <TableCell className="font-medium text-xs">{row.primary.customer_name}</TableCell>
-                            <TableCell className="text-xs font-mono">{row.phone}</TableCell>
-                            <TableCell className="text-xs">{row.primary.plan_label || "—"}</TableCell>
-                            <TableCell className="text-xs font-mono">
-                              {row.totalAmount.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
-                            </TableCell>
-                            <TableCell className="text-xs max-w-[200px] truncate" title={row.primary.address || ""}>
-                              {row.primary.address || "—"}
-                            </TableCell>
-                            <TableCell>
-                              <div className="flex flex-wrap gap-1">
-                                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${row.nortexPaga ? "bg-green-100 text-green-800" : "bg-red-100 text-red-700"}`}>
-                                  {row.nortexPaga ? "✓ NORTEX PAGA" : "✗ NORTEX"}
-                                </span>
-                                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${row.logisticaPaga ? "bg-green-100 text-green-800" : "bg-red-100 text-red-700"}`}>
-                                  {row.logisticaPaga ? "✓ LOGÍSTICA PAGA" : "✗ LOGÍSTICA"}
-                                </span>
-                              </div>
-                            </TableCell>
-                            <TableCell className="text-xs">{formatDate(row.primary.created_at)}</TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  );
-                })()}
+                ) : (<PixLeadsTable pixLeads={pixLeads} password={password} toast={toast} />)}
               </CardContent>
             </Card>
           </TabsContent>
