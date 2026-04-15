@@ -37,7 +37,7 @@ const Obrigado = () => {
         </div>
 
         <p className="mt-10 text-xs text-muted-foreground">
-          © 2021–{new Date().getFullYear()} NORTEX Locação de Caçambas — Todos os direitos reservados.
+          © 2021–{new Date().getFullYear()} NORTEX Locação de Caçambas LTDA — Todos os direitos reservados.
         </p>
       </div>
     </main>
