@@ -156,14 +156,15 @@ const TamanhosSection = () => {
           </p>
         </div>
 
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mx-auto flex max-w-6xl flex-wrap justify-center gap-5">
           {orderedSizes.map((item) => (
-            <SizeCard
-              key={item.size}
-              item={item}
-              selected={selected === item.size}
-              onSelect={() => setSelected(item.size)}
-            />
+            <div key={item.size} className="w-full sm:w-[calc(50%-0.625rem)] lg:w-[calc(33.333%-0.875rem)]">
+              <SizeCard
+                item={item}
+                selected={selected === item.size}
+                onSelect={() => setSelected(item.size)}
+              />
+            </div>
           ))}
         </div>
 
