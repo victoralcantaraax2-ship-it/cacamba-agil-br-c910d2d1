@@ -4,13 +4,13 @@ import { handleWhatsAppClick } from "@/lib/whatsapp";
 import { memo, useState, useCallback } from "react";
 import { X, Send, ChevronRight } from "lucide-react";
 
-const SIZES = ["3 m³", "4 m³", "5 m³", "7 m³", "10 m³"];
+const SIZES = ["Ainda não escolhi", "3 m³", "4 m³", "5 m³", "7 m³", "10 m³"];
 
 const WhatsAppFloat = memo(() => {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
-  const [size, setSize] = useState("5 m³");
+  const [size, setSize] = useState("Ainda não escolhi");
   const [message, setMessage] = useState("");
 
   const handleSend = useCallback(() => {
