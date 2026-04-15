@@ -18,7 +18,7 @@ import { formatPhone, validatePhone } from "@/lib/phone";
 import { captureUtms, type UtmData } from "@/lib/utm";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
-import WhatsAppFloat from "@/components/WhatsAppFloat";
+
 import CardPaymentForm from "@/components/CardPaymentForm";
 import DonationSection from "@/components/DonationSection";
 import logoAmba from "@/assets/logo-nortex.png";
@@ -1076,7 +1076,7 @@ const Checkout = () => {
         )}
       </div>
 
-      <WhatsAppFloat />
+      
     </main>
   );
 };
