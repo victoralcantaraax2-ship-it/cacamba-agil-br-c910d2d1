@@ -40,7 +40,7 @@ const faqs = [
   },
   {
     q: "Como solicito a retirada da caçamba?",
-    a: "Basta entrar em contato pelo WhatsApp informando que a caçamba está pronta para coleta. Nossa equipe agenda a retirada com agilidade.",
+    a: "Basta entrar em contato pelo WhatsApp informando que a caçamba está pronta para coleta. Nossa equipe agenda a retirada com agilidade. A caçamba não tem prazo mínimo de permanência, podendo ser retirada até mesmo no mesmo dia — combine e consulte disponibilidade.",
   },
 ];
 
