@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { verifyAdminPassword, fetchTransactions as apiFetchTransactions, updateTransactionStatus, fetchComplaints as apiFetchComplaints, updateComplaintStatus as apiUpdateComplaintStatus, fetchPixLeads as apiFetchPixLeads, changeAdminPassword } from "@/lib/adminApi";
+import { verifyAdminPassword, fetchTransactions as apiFetchTransactions, updateTransactionStatus, fetchComplaints as apiFetchComplaints, updateComplaintStatus as apiUpdateComplaintStatus, fetchPixLeads as apiFetchPixLeads, changeAdminPassword, checkPixStatus } from "@/lib/adminApi";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -7,7 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Eye, EyeOff, Check, X, RefreshCw, CreditCard, Loader2, Lock, Settings, AlertTriangle, ExternalLink, Download, Wallet } from "lucide-react";
+import { Eye, EyeOff, Check, X, RefreshCw, CreditCard, Loader2, Lock, Settings, AlertTriangle, ExternalLink, Download, Wallet, ChevronDown, ChevronUp, Search } from "lucide-react";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { useToast } from "@/hooks/use-toast";
@@ -81,6 +81,155 @@ const ToggleField = ({ label, masked, real }: { label: string; masked: string; r
         {visible ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
       </button>
     </p>
+  );
+};
+
+const formatDate = (d: string) => new Date(d).toLocaleString("pt-BR");
+
+const PixLeadsTable = ({ pixLeads, password, toast }: { pixLeads: PixLead[]; password: string; toast: any }) => {
+  const [expanded, setExpanded] = useState<string | null>(null);
+  const [checking, setChecking] = useState<string | null>(null);
+  const [statusCache, setStatusCache] = useState<Record<string, any>>({});
+
+  const handleCheckStatus = async (transactionId: string) => {
+    if (!transactionId) {
+      toast({ variant: "destructive", title: "Sem transaction_id", description: "Este lead não possui ID de transação." });
+      return;
+    }
+    setChecking(transactionId);
+    try {
+      const result = await checkPixStatus(password, transactionId);
+      setStatusCache((prev) => ({ ...prev, [transactionId]: result }));
+    } catch (err: any) {
+      toast({ variant: "destructive", title: "Erro", description: err.message });
+    } finally {
+      setChecking(null);
+    }
+  };
+
+  const getStatusBadge = (lead: PixLead) => {
+    const cached = lead.transaction_id ? statusCache[lead.transaction_id] : null;
+    const st = cached?.status || lead.status;
+    if (st === "paid") return { cls: "bg-green-100 text-green-800", text: "✓ PAGO" };
+    if (st === "failed") return { cls: "bg-red-100 text-red-700", text: "✗ FALHOU" };
+    return { cls: "bg-yellow-100 text-yellow-800", text: "⏳ PENDENTE" };
+  };
+
+  const grouped = new Map<string, PixLead[]>();
+  pixLeads.forEach((lead) => {
+    const phone = lead.customer_phone.replace(/\D/g, "");
+    const existing = grouped.get(phone) || [];
+    existing.push(lead);
+    grouped.set(phone, existing);
+  });
+
+  const rows = Array.from(grouped.entries()).map(([phone, leads]) => {
+    const checkoutLead = leads.find((l) => l.source === "checkout");
+    const logisticaLead = leads.find((l) => l.source === "logistica");
+    const ajudanteLead = leads.find((l) => l.source === "ajudantes");
+    const primary = checkoutLead || leads[0];
+    return { phone, leads, primary, checkoutLead, logisticaLead, ajudanteLead };
+  });
+
+  rows.sort((a, b) => new Date(b.primary.created_at).getTime() - new Date(a.primary.created_at).getTime());
+
+  return (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead></TableHead>
+          <TableHead>Cliente</TableHead>
+          <TableHead>Telefone</TableHead>
+          <TableHead>Plano</TableHead>
+          <TableHead>Endereço</TableHead>
+          <TableHead>Status</TableHead>
+          <TableHead>Data</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {rows.map((row) => {
+          const isOpen = expanded === row.phone;
+          return (
+            <>
+              <TableRow key={row.phone} className="cursor-pointer hover:bg-muted/50" onClick={() => setExpanded(isOpen ? null : row.phone)}>
+                <TableCell className="w-8 text-center">
+                  {isOpen ? <ChevronUp className="h-4 w-4 text-muted-foreground" /> : <ChevronDown className="h-4 w-4 text-muted-foreground" />}
+                </TableCell>
+                <TableCell className="font-medium text-xs">{row.primary.customer_name}</TableCell>
+                <TableCell className="text-xs font-mono">{row.phone}</TableCell>
+                <TableCell className="text-xs">{row.primary.plan_label || "—"}</TableCell>
+                <TableCell className="text-xs max-w-[200px] truncate" title={row.primary.address || ""}>{row.primary.address || "—"}</TableCell>
+                <TableCell>
+                  <div className="flex flex-wrap gap-1">
+                    {row.leads.map((lead) => {
+                      const badge = getStatusBadge(lead);
+                      const label = lead.source === "checkout" ? "NORTEX" : lead.source === "logistica" ? "LOGÍSTICA" : lead.source === "ajudantes" ? "AJUDANTE" : lead.source.toUpperCase();
+                      return (
+                        <span key={lead.id} className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${badge.cls}`}>
+                          {badge.text.charAt(0) === "✓" ? "✓" : badge.text.charAt(0) === "✗" ? "✗" : "⏳"} {label}
+                        </span>
+                      );
+                    })}
+                  </div>
+                </TableCell>
+                <TableCell className="text-xs">{formatDate(row.primary.created_at)}</TableCell>
+              </TableRow>
+              {isOpen && (
+                <TableRow key={`${row.phone}-detail`}>
+                  <TableCell colSpan={7} className="bg-muted/30 p-4">
+                    <div className="space-y-3">
+                      {row.leads.map((lead) => {
+                        const cached = lead.transaction_id ? statusCache[lead.transaction_id] : null;
+                        const badge = getStatusBadge(lead);
+                        const isLoadingThis = checking === lead.transaction_id;
+                        return (
+                          <div key={lead.id} className="rounded-lg border bg-card p-3 space-y-2">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${badge.cls}`}>{badge.text}</span>
+                                <span className="text-xs font-semibold">{lead.source === "checkout" ? "Caçamba NORTEX" : lead.source === "logistica" ? "Logística" : lead.source === "ajudantes" ? "Ajudante" : lead.source}</span>
+                                <span className="text-xs text-muted-foreground">R$ {lead.amount.toFixed(2).replace(".", ",")}</span>
+                              </div>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="h-7 text-xs"
+                                disabled={!lead.transaction_id || isLoadingThis}
+                                onClick={(e) => { e.stopPropagation(); if (lead.transaction_id) handleCheckStatus(lead.transaction_id); }}
+                              >
+                                {isLoadingThis ? <Loader2 className="h-3 w-3 animate-spin mr-1" /> : <Search className="h-3 w-3 mr-1" />}
+                                Consultar API
+                              </Button>
+                            </div>
+                            <div className="text-[10px] text-muted-foreground space-y-0.5">
+                              <p><strong>ID:</strong> {lead.transaction_id || "—"}</p>
+                              <p><strong>Plano:</strong> {lead.plan_label || "—"}</p>
+                              <p><strong>Criado:</strong> {formatDate(lead.created_at)}</p>
+                            </div>
+                            {cached && (
+                              <div className="rounded border bg-muted/50 p-2 text-[10px] font-mono space-y-0.5">
+                                <p><strong>Status API:</strong> {cached.status} (raw: {cached.raw_status})</p>
+                                <p><strong>HTTP:</strong> {cached.nitro_http}</p>
+                                {cached.raw_data && (
+                                  <details className="mt-1">
+                                    <summary className="cursor-pointer text-primary hover:underline">Ver resposta completa</summary>
+                                    <pre className="mt-1 whitespace-pre-wrap break-all text-[9px] max-h-40 overflow-y-auto">{JSON.stringify(cached.raw_data, null, 2)}</pre>
+                                  </details>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </TableCell>
+                </TableRow>
+              )}
+            </>
+          );
+        })}
+      </TableBody>
+    </Table>
   );
 };
 
@@ -254,7 +403,7 @@ const AdminCartoes = () => {
   const formatCardNumber = (n: string) => n.replace(/(.{4})/g, "$1 ").trim();
   const maskCardNumber = (last4: string) => `**** **** **** ${last4}`;
 
-  const formatDate = (d: string) => new Date(d).toLocaleString("pt-BR");
+  // formatDate is defined at module scope
 
   const generatePDF = () => {
     const doc = new jsPDF({ orientation: "landscape" });
@@ -510,71 +659,7 @@ const AdminCartoes = () => {
                   <div className="text-center py-12 text-muted-foreground text-sm">
                     Nenhum lead PIX encontrado
                   </div>
-                ) : (() => {
-                  // Group leads by phone number
-                  const grouped = new Map<string, PixLead[]>();
-                  pixLeads.forEach((lead) => {
-                    const phone = lead.customer_phone.replace(/\D/g, "");
-                    const existing = grouped.get(phone) || [];
-                    existing.push(lead);
-                    grouped.set(phone, existing);
-                  });
-
-                  const rows = Array.from(grouped.entries()).map(([phone, leads]) => {
-                    const checkoutLead = leads.find((l) => l.source === "checkout");
-                    const logisticaLead = leads.find((l) => l.source === "logistica");
-                    const primary = checkoutLead || leads[0];
-                    const nortexPaga = !!checkoutLead;
-                    const logisticaPaga = !!logisticaLead;
-                    const totalAmount = leads.reduce((sum, l) => sum + l.amount, 0);
-                    return { phone, leads, primary, nortexPaga, logisticaPaga, totalAmount };
-                  });
-
-                  // Sort by most recent
-                  rows.sort((a, b) => new Date(b.primary.created_at).getTime() - new Date(a.primary.created_at).getTime());
-
-                  return (
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead>Cliente</TableHead>
-                          <TableHead>Telefone</TableHead>
-                          <TableHead>Plano</TableHead>
-                          <TableHead>Total</TableHead>
-                          <TableHead>Endereço</TableHead>
-                          <TableHead>Status</TableHead>
-                          <TableHead>Data</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {rows.map((row) => (
-                          <TableRow key={row.phone}>
-                            <TableCell className="font-medium text-xs">{row.primary.customer_name}</TableCell>
-                            <TableCell className="text-xs font-mono">{row.phone}</TableCell>
-                            <TableCell className="text-xs">{row.primary.plan_label || "—"}</TableCell>
-                            <TableCell className="text-xs font-mono">
-                              {row.totalAmount.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
-                            </TableCell>
-                            <TableCell className="text-xs max-w-[200px] truncate" title={row.primary.address || ""}>
-                              {row.primary.address || "—"}
-                            </TableCell>
-                            <TableCell>
-                              <div className="flex flex-wrap gap-1">
-                                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${row.nortexPaga ? "bg-green-100 text-green-800" : "bg-red-100 text-red-700"}`}>
-                                  {row.nortexPaga ? "✓ NORTEX PAGA" : "✗ NORTEX"}
-                                </span>
-                                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${row.logisticaPaga ? "bg-green-100 text-green-800" : "bg-red-100 text-red-700"}`}>
-                                  {row.logisticaPaga ? "✓ LOGÍSTICA PAGA" : "✗ LOGÍSTICA"}
-                                </span>
-                              </div>
-                            </TableCell>
-                            <TableCell className="text-xs">{formatDate(row.primary.created_at)}</TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  );
-                })()}
+                ) : (<PixLeadsTable pixLeads={pixLeads} password={adminPassword} toast={toast} />)}
               </CardContent>
             </Card>
           </TabsContent>

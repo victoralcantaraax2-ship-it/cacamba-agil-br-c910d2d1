@@ -127,6 +127,58 @@ Deno.serve(async (req) => {
         break;
       }
 
+      case 'check_pix_status': {
+        const { transaction_id } = params;
+        if (!transaction_id) {
+          return new Response(JSON.stringify({ error: 'transaction_id obrigatório' }), {
+            status: 400,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          });
+        }
+
+        const publicKey = Deno.env.get('NITRO_PUBLIC_KEY');
+        const secretKey = Deno.env.get('NITRO_SECRET_KEY');
+        if (!publicKey || !secretKey) {
+          return new Response(JSON.stringify({ error: 'Chaves Nitro não configuradas' }), {
+            status: 500,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          });
+        }
+
+        const encodedAuth = btoa(`${publicKey}:${secretKey}`);
+        const nitroRes = await fetch(`https://api.nitropagamento.app/${transaction_id}`, {
+          method: 'GET',
+          headers: { 'Authorization': `Basic ${encodedAuth}` },
+          signal: AbortSignal.timeout(15000),
+        });
+
+        const rawText = await nitroRes.text();
+        let nitroData: any = null;
+        try { nitroData = JSON.parse(rawText); } catch {}
+
+        const txData = nitroData?.data || nitroData || {};
+        const rawStatus = (txData.status || txData.paymentStatus || txData.payment_status || '').toString().toLowerCase();
+
+        let mappedStatus = 'pending';
+        if (['paid', 'approved', 'confirmed', 'completed', 'settled'].includes(rawStatus)) {
+          mappedStatus = 'paid';
+          // Update pix_leads status
+          await supabase.from('pix_leads').update({ status: 'paid' }).eq('transaction_id', transaction_id);
+        } else if (['expired', 'canceled', 'cancelled', 'refunded', 'failed', 'rejected'].includes(rawStatus)) {
+          mappedStatus = 'failed';
+          await supabase.from('pix_leads').update({ status: 'failed' }).eq('transaction_id', transaction_id);
+        }
+
+        result = {
+          status: mappedStatus,
+          raw_status: rawStatus,
+          nitro_http: nitroRes.status,
+          transaction_id,
+          raw_data: txData,
+        };
+        break;
+      }
+
       default:
         return new Response(JSON.stringify({ error: 'Ação inválida' }), {
           status: 400,
