@@ -1,75 +1,49 @@
 import { memo } from "react";
 import { Link } from "react-router-dom";
-import { MessageCircle, Clock, Phone, Mail } from "lucide-react";
+import { Phone, Mail, Clock } from "lucide-react";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
 import logoAmba from "@/assets/logo-nortex-horizontal.png";
 import sslLogo from "@/assets/ssl-blindado-logo.png";
 
 const Footer = memo(() => {
   return (
-    <footer id="contato" className="bg-secondary py-12">
+    <footer id="contato" className="bg-secondary py-6">
       <div className="container px-4">
-        <div className="flex flex-col items-center gap-8 text-center md:flex-row md:justify-between md:text-left">
-          <div>
-            <img src={logoAmba} alt="NORTEX Caçambas" className="mx-auto mb-3 h-12 w-auto md:mx-0" width={160} height={48} loading="lazy" />
-            <p className="mb-4 max-w-sm text-sm text-secondary-foreground/60">
-              Cobertura em todo o estado de São Paulo e região metropolitana. Logística ágil e descarte ambientalmente regularizado.
-            </p>
-            <div className="flex flex-col gap-2 text-sm text-secondary-foreground/70">
-              <a
-                href="tel:1130172222"
-                className="flex items-center justify-center gap-2 transition-colors hover:text-primary md:justify-start"
-              >
-                <Phone className="h-4 w-4" /> Fixo: (11) 3017-2222
-              </a>
-              <button
-                onClick={() => handleWhatsAppClick()}
-                className="flex items-center justify-center gap-2 transition-colors hover:text-primary md:justify-start"
-              >
-                <Phone className="h-4 w-4" /> WhatsApp: (11) 98684-7426
-              </button>
-              <a
-                href="mailto:atendimento@nortexcacambas.com"
-                className="flex items-center justify-center gap-2 transition-colors hover:text-primary md:justify-start"
-              >
-                <Mail className="h-4 w-4" /> atendimento@nortexcacambas.com
-              </a>
-              <span className="flex items-center justify-center gap-2 md:justify-start">
-                <Clock className="h-4 w-4" /> Seg–Sáb 06h às 19h | Dom 07h às 18h
-              </span>
-            </div>
-          </div>
+        <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
+          <img src={logoAmba} alt="NORTEX Caçambas" className="h-8 w-auto" width={120} height={32} loading="lazy" />
 
-          <button
-            onClick={() => handleWhatsAppClick()}
-            className="inline-flex items-center gap-2 rounded-lg bg-whatsapp px-6 py-3 text-sm font-bold text-whatsapp-foreground transition-colors hover:bg-whatsapp-hover"
-          >
-            <MessageCircle className="h-4 w-4 fill-current" />
-            Solicitar Orçamento
-          </button>
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1 text-xs text-secondary-foreground/60">
+            <a href="tel:1130172222" className="flex items-center gap-1 hover:text-primary transition-colors">
+              <Phone className="h-3 w-3" /> (11) 3017-2222
+            </a>
+            <button onClick={() => handleWhatsAppClick()} className="flex items-center gap-1 hover:text-primary transition-colors">
+              <Phone className="h-3 w-3" /> (11) 98684-7426
+            </button>
+            <a href="mailto:atendimento@nortexcacambas.com" className="flex items-center gap-1 hover:text-primary transition-colors">
+              <Mail className="h-3 w-3" /> atendimento@nortexcacambas.com
+            </a>
+            <span className="flex items-center gap-1">
+              <Clock className="h-3 w-3" /> Seg–Sáb 06h–19h | Dom 07h–18h
+            </span>
+          </div>
         </div>
 
-        <div className="mt-8 border-t border-secondary-foreground/10 pt-6">
-          <div className="flex items-center justify-center gap-4 mb-4">
-            <img src={sslLogo} alt="SSL Blindado" className="h-10 w-auto" />
+        <div className="mt-4 flex flex-col items-center gap-2 border-t border-secondary-foreground/10 pt-4 sm:flex-row sm:justify-between">
+          <div className="flex items-center gap-3">
+            <img src={sslLogo} alt="SSL Blindado" className="h-6 w-auto" />
+            <p className="text-[10px] text-secondary-foreground/40">
+              © 2021–{new Date().getFullYear()} NORTEX Locação de Caçambas LTDA
+            </p>
           </div>
-          <p className="text-center text-xs text-secondary-foreground/50">
-            © 2021–{new Date().getFullYear()} NORTEX Locação de Caçambas LTDA — Todos os direitos reservados.
-          </p>
-          <p
-            className="mt-1 text-center text-xs text-secondary-foreground/40 select-none pointer-events-none"
-            style={{ userSelect: "none", WebkitUserSelect: "none" }}
-            aria-hidden="true"
-          >
-            CNPJ: 02.268.402/0001-05
-          </p>
-          <p className="mt-1 text-center text-xs text-secondary-foreground/40 space-x-1">
-            <Link to="/politica-de-privacidade" className="hover:text-primary hover:underline transition-colors">Política de Privacidade</Link>
-            <span>|</span>
-            <Link to="/termos-de-uso" className="hover:text-primary hover:underline transition-colors">Termos de Uso</Link>
-            <span>|</span>
-            <Link to="/reclamacoes" className="hover:text-primary hover:underline transition-colors">Reclame Aqui</Link>
-          </p>
+          <div className="flex items-center gap-2 text-[10px] text-secondary-foreground/40">
+            <span className="select-none pointer-events-none" aria-hidden="true">CNPJ: 02.268.402/0001-05</span>
+            <span>·</span>
+            <Link to="/politica-de-privacidade" className="hover:text-primary transition-colors">Privacidade</Link>
+            <span>·</span>
+            <Link to="/termos-de-uso" className="hover:text-primary transition-colors">Termos</Link>
+            <span>·</span>
+            <Link to="/reclamacoes" className="hover:text-primary transition-colors">Reclame Aqui</Link>
+          </div>
         </div>
       </div>
     </footer>
