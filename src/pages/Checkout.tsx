@@ -457,10 +457,10 @@ const Checkout = () => {
                 return (
                   <Card
                     key={plan.id}
-                    className={`cursor-pointer transition-all ${
+                    className={`cursor-pointer transition-all duration-200 ${
                       isSelected
-                        ? "ring-2 ring-primary border-primary bg-primary/5"
-                        : "hover:border-primary/40"
+                        ? "ring-2 ring-primary border-primary bg-primary/5 shadow-md shadow-primary/10"
+                        : "hover:border-primary/40 hover:shadow-sm"
                     }`}
                     onClick={() => setSelectedPlan(plan.id)}
                   >
