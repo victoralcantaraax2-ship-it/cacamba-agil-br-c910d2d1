@@ -117,7 +117,7 @@ export default {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "pulse-green": "pulse-green 2s ease-in-out infinite",
+        "pulse-green": "pulse-green 4s ease-in-out infinite",
         "bounce-subtle": "bounce-subtle 2s ease-in-out infinite",
         "glow-breathe": "glow-breathe 3s ease-in-out infinite",
         "border-glow": "border-glow 4s ease-in-out infinite",
