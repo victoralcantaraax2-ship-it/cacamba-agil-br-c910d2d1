@@ -16,7 +16,7 @@ import pixLogo from "@/assets/pix-logo.webp";
 import lockIcon from "@/assets/lock-icon.webp";
 import mercadopagoLogo from "@/assets/mercadopago-logo.webp";
 
-const PRECO_AJUDANTE = 80;
+const PRECOS: Record<number, number> = { 1: 90, 2: 160 };
 const isQrImage = (v: string) => /^(data:image|https?:\/\/)/.test(v);
 
 const Ajudantes = () => {
@@ -38,7 +38,7 @@ const Ajudantes = () => {
   const [status, setStatus] = useState<"idle" | "loading" | "generated" | "confirmed">("idle");
   const [copyToast, setCopyToast] = useState(false);
 
-  const total = quantidade * PRECO_AJUDANTE;
+  const total = PRECOS[quantidade] || 90;
 
   const handleGenerate = async () => {
     const e: Record<string, string> = {};
@@ -201,7 +201,7 @@ const Ajudantes = () => {
                         <span className="text-sm font-semibold">{qtd} ajudante{qtd > 1 ? "s" : ""}</span>
                       </div>
                       <span className="block text-xs text-muted-foreground mt-1">
-                        R$ {(qtd * PRECO_AJUDANTE).toFixed(2).replace(".", ",")}
+                        R$ {PRECOS[qtd].toFixed(2).replace(".", ",")}
                       </span>
                     </button>
                   ))}
@@ -210,8 +210,8 @@ const Ajudantes = () => {
 
               <div className="rounded-lg border bg-muted/30 p-3 space-y-1">
                 <div className="flex justify-between text-xs">
-                  <span className="text-muted-foreground">Ajudante (R$ {PRECO_AJUDANTE},00 cada)</span>
-                  <span className="font-semibold text-foreground">x{quantidade}</span>
+                  <span className="text-muted-foreground">{quantidade} ajudante{quantidade > 1 ? "s" : ""}</span>
+                  <span className="font-semibold text-foreground">R$ {total.toFixed(2).replace(".", ",")}</span>
                 </div>
                 <div className="border-t pt-1 flex justify-between text-sm font-bold">
                   <span>Total</span>
@@ -253,8 +253,8 @@ const Ajudantes = () => {
 
               <div className="rounded-lg border bg-muted/30 p-3 mb-4 space-y-1">
                 <div className="flex justify-between text-xs">
-                  <span className="text-muted-foreground">Ajudante (R$ {PRECO_AJUDANTE},00 cada)</span>
-                  <span className="font-semibold text-foreground">x{quantidade}</span>
+                  <span className="text-muted-foreground">{quantidade} ajudante{quantidade > 1 ? "s" : ""}</span>
+                  <span className="font-semibold text-foreground">R$ {total.toFixed(2).replace(".", ",")}</span>
                 </div>
                 <div className="border-t pt-1 flex justify-between text-sm font-bold">
                   <span>Total</span>
