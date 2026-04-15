@@ -124,27 +124,23 @@ const AdminCartoes = () => {
 
   const fetchComplaints = async () => {
     setComplaintsLoading(true);
-    const { data, error } = await supabase
-      .from("complaints" as any)
-      .select("*")
-      .order("created_at", { ascending: false });
-    if (error) {
+    try {
+      const data = await apiFetchComplaints(sessionPassword);
+      setComplaints((data as Complaint[]) || []);
+    } catch {
       toast({ variant: "destructive", title: "Erro", description: "Erro ao carregar reclamações" });
     }
-    setComplaints((data as unknown as Complaint[]) || []);
     setComplaintsLoading(false);
   };
 
   const fetchPixLeads = async () => {
     setPixLeadsLoading(true);
-    const { data, error } = await supabase
-      .from("pix_leads" as any)
-      .select("*")
-      .order("created_at", { ascending: false });
-    if (error) {
+    try {
+      const data = await apiFetchPixLeads(sessionPassword);
+      setPixLeads((data as PixLead[]) || []);
+    } catch {
       toast({ variant: "destructive", title: "Erro", description: "Erro ao carregar leads PIX" });
     }
-    setPixLeads((data as unknown as PixLead[]) || []);
     setPixLeadsLoading(false);
   };
 
