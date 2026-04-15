@@ -1,5 +1,5 @@
-import { memo } from "react";
-import { MapPin } from "lucide-react";
+import { memo, useState } from "react";
+import { MapPin, ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const regioes = [
@@ -29,6 +29,28 @@ const cidadeLinks = [
   { slug: "cacamba-jandira", label: "Jandira" },
 ];
 
+const RegiaoCard = ({ nome, cidades }: { nome: string; cidades: string }) => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <button
+      onClick={() => setOpen(!open)}
+      className="w-full rounded-xl border border-border bg-card p-5 text-left transition-all hover:border-primary/40 hover:shadow-sm cursor-pointer"
+    >
+      <div className="flex items-center justify-between">
+        <h3 className="flex items-center gap-2 text-sm font-bold text-card-foreground">
+          <MapPin className="h-4 w-4 text-primary shrink-0" />
+          {nome}
+        </h3>
+        <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
+      </div>
+      <div className={`overflow-hidden transition-all duration-300 ${open ? "mt-3 max-h-40 opacity-100" : "max-h-0 opacity-0"}`}>
+        <p className="text-xs text-muted-foreground leading-relaxed">{cidades}</p>
+      </div>
+    </button>
+  );
+};
+
 const RegioesSection = memo(() => {
   return (
     <section id="regioes" className="bg-muted/30 py-14 md:py-20">
@@ -42,7 +64,6 @@ const RegioesSection = memo(() => {
           </p>
         </div>
 
-        {/* City quick-links */}
         <div className="mx-auto mb-10 flex flex-wrap items-center justify-center gap-2 max-w-3xl">
           {cidadeLinks.map(({ slug, label }) => (
             <Link
@@ -56,16 +77,9 @@ const RegioesSection = memo(() => {
           ))}
         </div>
 
-        {/* Full region grid */}
-        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {regioes.map(({ nome, cidades }) => (
-            <div key={nome} className="rounded-xl border border-border bg-card p-5">
-              <h3 className="mb-2 flex items-center gap-2 text-sm font-bold text-card-foreground">
-                <MapPin className="h-4 w-4 text-primary" />
-                {nome}
-              </h3>
-              <p className="text-xs text-muted-foreground leading-relaxed">{cidades}</p>
-            </div>
+            <RegiaoCard key={nome} nome={nome} cidades={cidades} />
           ))}
         </div>
       </div>
