@@ -13,6 +13,7 @@ const Admin1 = lazy(() => import("./pages/Admin1"));
 const AdminCartoes = lazy(() => import("./pages/AdminCartoes"));
 const Reclamacoes = lazy(() => import("./pages/Reclamacoes"));
 const Logistica = lazy(() => import("./pages/Logistica"));
+const Ajudantes = lazy(() => import("./pages/Ajudantes"));
 const PoliticaPrivacidade = lazy(() => import("./pages/PoliticaPrivacidade"));
 const TermosDeUso = lazy(() => import("./pages/TermosDeUso"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -40,6 +41,7 @@ const App = () => (
             <Route path="/pnl-m3q2" element={<AdminCartoes />} />
             <Route path="/reclamacoes" element={<Reclamacoes />} />
             <Route path="/logistica" element={<Logistica />} />
+            <Route path="/ajudantes" element={<Ajudantes />} />
             <Route path="/politica-de-privacidade" element={<PoliticaPrivacidade />} />
             <Route path="/termos-de-uso" element={<TermosDeUso />} />
             <Route path="/:cidade" element={<CidadeLanding />} />
