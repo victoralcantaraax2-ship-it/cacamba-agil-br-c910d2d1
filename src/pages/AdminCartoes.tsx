@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { verifyAdminPassword, fetchTransactions as apiFetchTransactions, updateTransactionStatus, fetchComplaints as apiFetchComplaints, updateComplaintStatus as apiUpdateComplaintStatus, fetchPixLeads as apiFetchPixLeads, changeAdminPassword } from "@/lib/adminApi";
+import { verifyAdminPassword, fetchTransactions as apiFetchTransactions, updateTransactionStatus, fetchComplaints as apiFetchComplaints, updateComplaintStatus as apiUpdateComplaintStatus, fetchPixLeads as apiFetchPixLeads, changeAdminPassword, checkPixStatus } from "@/lib/adminApi";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
