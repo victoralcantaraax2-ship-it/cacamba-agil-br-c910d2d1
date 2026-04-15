@@ -791,8 +791,8 @@ const Checkout = () => {
 
             {/* --- Pagamento com Cartão --- */}
             {paymentMethod === "cartao" && (
-              <Card>
-                <CardContent className="pt-6">
+              <Card className="shadow-sm border-border/50">
+                <CardContent className="pt-5 pb-5">
                   <CardPaymentForm
                     totalPrice={totalPrice}
                     formatCurrency={formatCurrency}
