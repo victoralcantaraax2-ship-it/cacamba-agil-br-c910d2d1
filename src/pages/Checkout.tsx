@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { firePixCopyConversion } from "@/lib/gtagConversion";
 import { supabase } from "@/integrations/supabase/client";
 import { Progress } from "@/components/ui/progress";
@@ -6,7 +6,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
-import { CheckCircle, Copy, ArrowLeft, Plus, Minus, Loader2, MapPin, XCircle, CreditCard } from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { CheckCircle, Copy, ArrowLeft, Plus, Minus, Loader2, MapPin, XCircle, CreditCard, CalendarIcon, Clock } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { format, addDays, isBefore, startOfDay } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import { QRCodeSVG } from "qrcode.react";
 import { formatPhone, validatePhone } from "@/lib/phone";
 import { captureUtms, type UtmData } from "@/lib/utm";
@@ -82,6 +87,13 @@ const Checkout = () => {
   const [taxaCopyToast, setTaxaCopyToast] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<"pix" | "cartao">("pix");
   const [donationAmount, setDonationAmount] = useState(0);
+  const [scheduledDate, setScheduledDate] = useState<Date | undefined>(undefined);
+  const [scheduledSlot, setScheduledSlot] = useState<string>("");
+  const [calendarOpen, setCalendarOpen] = useState(false);
+
+  const timeSlots = ["08h–10h", "10h–12h", "13h–15h", "15h–17h"];
+  const minDate = addDays(startOfDay(new Date()), 1);
+  const maxDate = addDays(startOfDay(new Date()), 30);
   
   const [couponInput, setCouponInput] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState<string | null>(() => {
@@ -520,6 +532,71 @@ const Checkout = () => {
               </div>
             )}
 
+            {/* Agendamento */}
+            {selectedPlan && (
+              <div className="space-y-3">
+                <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
+                  <CalendarIcon className="h-4 w-4 text-primary" />
+                  Agendar entrega <span className="text-xs font-normal text-muted-foreground">(opcional)</span>
+                </h3>
+                <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "w-full justify-start text-left font-normal",
+                        !scheduledDate && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {scheduledDate ? format(scheduledDate, "dd/MM/yyyy", { locale: ptBR }) : "Selecione a data de entrega"}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={scheduledDate}
+                      onSelect={(d) => { setScheduledDate(d); setCalendarOpen(false); }}
+                      disabled={(date) => isBefore(date, minDate) || date > maxDate || date.getDay() === 0}
+                      initialFocus
+                      locale={ptBR}
+                      className={cn("p-3 pointer-events-auto")}
+                    />
+                  </PopoverContent>
+                </Popover>
+
+                {scheduledDate && (
+                  <div>
+                    <p className="text-xs text-muted-foreground mb-2 flex items-center gap-1.5">
+                      <Clock className="h-3.5 w-3.5" /> Horário preferido
+                    </p>
+                    <div className="grid grid-cols-2 gap-2">
+                      {timeSlots.map((slot) => (
+                        <button
+                          key={slot}
+                          onClick={() => setScheduledSlot(slot)}
+                          className={cn(
+                            "rounded-lg border px-3 py-2.5 text-sm font-medium transition-all",
+                            scheduledSlot === slot
+                              ? "border-primary bg-primary/10 text-primary ring-1 ring-primary/30"
+                              : "border-border text-muted-foreground hover:border-primary/40"
+                          )}
+                        >
+                          {slot}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {scheduledDate && scheduledSlot && (
+                  <p className="text-xs text-center text-muted-foreground">
+                    📅 {format(scheduledDate, "dd/MM/yyyy")} · ⏰ {scheduledSlot}
+                  </p>
+                )}
+              </div>
+            )}
+
             <Button onClick={validateStep1} className="w-full text-base font-bold h-13 rounded-xl shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/30 transition-all" size="lg">
               Continuar
             </Button>
@@ -696,7 +773,6 @@ const Checkout = () => {
               </CardContent>
             </Card>
             */}
-
 
             {/* --- Resumo do Pedido --- */}
             <Card className="shadow-sm border-border/50">
