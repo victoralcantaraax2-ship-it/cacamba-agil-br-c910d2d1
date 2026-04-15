@@ -86,7 +86,7 @@ const Logistica = () => {
       const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
       const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
-      const finalAmount = useCustom ? parseFloat(valorCustom) : taxaEntrega + taxaPrioritaria;
+      const finalAmount = useCustom ? parseCurrency(valorCustom) : taxaEntrega + taxaPrioritaria;
 
       const res = await fetch(`${supabaseUrl}/functions/v1/criar-pix`, {
         method: "POST",
