@@ -674,8 +674,7 @@ const Checkout = () => {
             <Card className="shadow-sm border-border/50">
               <CardContent className="pt-4 pb-4">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
-                    <CalendarIcon className="h-4 w-4 text-primary" />
+                  <h3 className="text-sm font-bold text-foreground">
                     Agendar entrega
                   </h3>
                   <Switch checked={!!scheduledDate} onCheckedChange={(on) => {
@@ -689,7 +688,6 @@ const Checkout = () => {
                     <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
                       <PopoverTrigger asChild>
                         <Button variant="outline" size="sm" className={cn("w-full justify-start text-left font-normal text-sm", !scheduledDate && "text-muted-foreground")}>
-                          <CalendarIcon className="mr-2 h-3.5 w-3.5" />
                           {format(scheduledDate, "dd/MM/yyyy", { locale: ptBR })}
                         </Button>
                       </PopoverTrigger>
