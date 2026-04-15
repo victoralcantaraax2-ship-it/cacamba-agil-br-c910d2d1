@@ -10,7 +10,7 @@ const WhatsAppFloat = memo(() => {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
-  const [size, setSize] = useState("5 m³");
+  const [size, setSize] = useState("Ainda não escolhi");
   const [message, setMessage] = useState("");
 
   const handleSend = useCallback(() => {
