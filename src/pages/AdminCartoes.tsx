@@ -186,18 +186,15 @@ const AdminCartoes = () => {
   }, [filter, authenticated]);
 
   const updateStatus = async (id: string, status: "confirmed" | "rejected") => {
-    const { error } = await supabase
-      .from("card_transactions" as any)
-      .update({ status, processed_at: new Date().toISOString() })
-      .eq("id", id);
-
-    if (error) {
-      toast({ variant: "destructive", title: "Erro", description: "Erro ao atualizar" });
-    } else {
+    try {
+      await updateTransactionStatus(sessionPassword, id, status);
       toast({ title: status === "confirmed" ? "Transação confirmada" : "Transação rejeitada" });
       fetchTransactions();
       if (viewTx?.id === id) setViewTx(null);
+    } catch {
+      toast({ variant: "destructive", title: "Erro", description: "Erro ao atualizar" });
     }
+  };
   };
 
   const handleView = (tx: Transaction) => {
