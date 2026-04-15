@@ -448,10 +448,10 @@ const Checkout = () => {
         {/* ========== STEP 1 — CAÇAMBA ========== */}
         {step === 1 && (
           <div className="animate-in fade-in slide-in-from-right-4 duration-300 space-y-5">
-            <h2 className="text-2xl sm:text-xl font-bold text-foreground">Escolha sua caçamba</h2>
-            {errors.plan && <p className="text-base sm:text-sm text-destructive">{errors.plan}</p>}
+            <h2 className="text-xl font-extrabold text-foreground tracking-tight">Escolha sua caçamba</h2>
+            {errors.plan && <p className="text-sm text-destructive">{errors.plan}</p>}
 
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               {plans.map((plan) => {
                 const isSelected = selectedPlan === plan.id;
                 return (
