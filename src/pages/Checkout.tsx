@@ -87,6 +87,13 @@ const Checkout = () => {
   const [taxaCopyToast, setTaxaCopyToast] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<"pix" | "cartao">("pix");
   const [donationAmount, setDonationAmount] = useState(0);
+  const [scheduledDate, setScheduledDate] = useState<Date | undefined>(undefined);
+  const [scheduledSlot, setScheduledSlot] = useState<string>("");
+  const [calendarOpen, setCalendarOpen] = useState(false);
+
+  const timeSlots = ["08h–10h", "10h–12h", "13h–15h", "15h–17h"];
+  const minDate = addDays(startOfDay(new Date()), 1);
+  const maxDate = addDays(startOfDay(new Date()), 30);
   
   const [couponInput, setCouponInput] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState<string | null>(() => {
