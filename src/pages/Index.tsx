@@ -116,6 +116,10 @@ const jsonLd = {
 const Index = () => {
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Header />
       <HeroSection />
       <RevealSection>
