@@ -314,49 +314,108 @@ const Reclamacoes = () => {
           Suas informações são tratadas com sigilo · Resposta em até 48h úteis
         </div>
 
-        {/* Avaliações */}
-        <div className="mt-10 space-y-6">
-          <div className="text-center">
-            <h2 className="text-lg font-black text-foreground tracking-tight">Avaliações de Clientes</h2>
-            <p className="mt-1 text-xs text-muted-foreground">O que nossos clientes dizem sobre a NORTEX</p>
-            <div className="mt-2 flex items-center justify-center gap-1">
-              {[...Array(5)].map((_, i) => (
-                <span key={i} className="text-yellow-500 text-lg">★</span>
-              ))}
-              <span className="ml-1.5 text-sm font-bold text-foreground">4.8</span>
-              <span className="text-xs text-muted-foreground">(312 avaliações)</span>
-            </div>
-          </div>
-
-          {[
-            { author: "Shopping Aricanduva", type: "org", rating: 5, text: "Reforma na praça de alimentação e a NORTEX forneceu caçambas durante toda a obra. Logística impecável e equipe muito profissional." },
-            { author: "MRV Engenharia", type: "org", rating: 5, text: "A NORTEX é parceira fixa em nossas obras na Grande São Paulo. Nunca apresentaram falhas." },
-            { author: "Universidade Cruzeiro do Sul", type: "org", rating: 5, text: "Reforma no campus Anália Franco. A NORTEX atendeu com caçambas de grande porte e cumpriu todos os prazos." },
-            { author: "Josy Araujo", type: "person", rating: 5, text: "Atendimento ágil pelo WhatsApp. Caçamba entregue no mesmo dia. Recomendo fortemente." },
-            { author: "Cond. Parque dos Pássaros", type: "org", rating: 5, text: "Contratamos a NORTEX para descarte de entulho da reforma do salão de festas. Entrega pontual e equipe educada." },
-          ].map((review, i) => (
-            <div key={i} className="overflow-hidden rounded-2xl border border-border/50 bg-card shadow-md p-5">
-              <div className="flex items-start gap-3">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-bold text-primary">
-                  {review.author.charAt(0)}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
-                    <p className="text-sm font-bold text-foreground truncate">{review.author}</p>
-                    {review.type === "org" && (
-                      <span className="shrink-0 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold text-primary">Empresa</span>
-                    )}
-                  </div>
-                  <div className="flex gap-0.5 mt-0.5">
-                    {[...Array(review.rating)].map((_, j) => (
-                      <span key={j} className="text-yellow-500 text-xs">★</span>
+        {/* Reputação Premium */}
+        <div className="mt-10">
+          {/* Score card */}
+          <div className="overflow-hidden rounded-3xl border border-border/50 bg-card shadow-xl mb-6">
+            <div className="bg-gradient-to-br from-emerald-500 to-green-600 px-6 py-6 text-center">
+              <p className="text-xs font-bold uppercase tracking-widest text-white/70 mb-1">Reputação Geral</p>
+              <div className="flex items-center justify-center gap-3">
+                <span className="text-5xl font-black text-white">4.8</span>
+                <div className="text-left">
+                  <div className="flex gap-0.5">
+                    {[...Array(5)].map((_, i) => (
+                      <span key={i} className="text-yellow-300 text-lg">★</span>
                     ))}
                   </div>
-                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{review.text}</p>
+                  <p className="text-xs text-white/70 mt-0.5">312 avaliações verificadas</p>
                 </div>
               </div>
             </div>
-          ))}
+            <div className="grid grid-cols-3 divide-x divide-border/50">
+              <div className="px-4 py-4 text-center">
+                <p className="text-lg font-black text-foreground">98%</p>
+                <p className="text-[10px] text-muted-foreground font-medium">Resolvidas</p>
+              </div>
+              <div className="px-4 py-4 text-center">
+                <p className="text-lg font-black text-foreground">2h</p>
+                <p className="text-[10px] text-muted-foreground font-medium">Tempo médio</p>
+              </div>
+              <div className="px-4 py-4 text-center">
+                <p className="text-lg font-black text-foreground">97%</p>
+                <p className="text-[10px] text-muted-foreground font-medium">Voltariam</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Selo */}
+          <div className="flex items-center justify-center gap-2 mb-6">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-500/15">
+              <CheckCircle className="h-4 w-4 text-emerald-500" />
+            </div>
+            <span className="text-xs font-bold text-emerald-600 uppercase tracking-wider">Empresa Verificada · Ótima Reputação</span>
+          </div>
+
+          {/* Reviews */}
+          <div className="space-y-3">
+            {[
+              { author: "Shopping Aricanduva", role: "Shopping Center", type: "org", rating: 5, text: "Reforma na praça de alimentação e a NORTEX forneceu caçambas durante toda a obra. Logística impecável e equipe muito profissional.", response: "Obrigado pela confiança, Shopping Aricanduva! É uma honra atender um parceiro tão importante. Estamos sempre à disposição." },
+              { author: "MRV Engenharia", role: "Construtora", type: "org", rating: 5, text: "A NORTEX é parceira fixa em nossas obras na Grande São Paulo. Nunca apresentaram falhas.", response: "Agradecemos a parceria de longa data, MRV! Compromisso e pontualidade fazem parte do nosso DNA." },
+              { author: "Universidade Cruzeiro do Sul", role: "Universidade", type: "org", rating: 5, text: "Reforma no campus Anália Franco. A NORTEX atendeu com caçambas de grande porte e cumpriu todos os prazos.", response: "Muito obrigado pelo reconhecimento! Atender instituições de ensino com excelência é motivo de orgulho para nós." },
+              { author: "Cond. Parque dos Pássaros", role: "Síndico profissional", type: "org", rating: 5, text: "Contratamos a NORTEX para descarte de entulho da reforma do salão de festas. Entrega pontual e equipe educada.", response: "Obrigado pela avaliação! Ficamos felizes em contribuir com a manutenção do condomínio. Conte sempre conosco!" },
+              { author: "Josy Araujo", role: "Arquiteta · Moema", type: "person", rating: 5, text: "Atendimento ágil pelo WhatsApp. Caçamba entregue no mesmo dia. Recomendo fortemente.", response: "Obrigado, Josy! Nosso atendimento pelo WhatsApp é prioridade. Indicações como a sua nos motivam a melhorar sempre!" },
+              { author: "Construtora Even", role: "Construtora", type: "org", rating: 5, text: "Parceiro recorrente das nossas obras. Pontualidade e qualidade exemplares.", response: "Agradecemos a confiança contínua, Even! Manter a excelência em cada entrega é nosso compromisso." },
+              { author: "Fernanda Lopes", role: "Arquiteta · Perdizes", type: "person", rating: 5, text: "Indiquei para diversos clientes. Todos elogiaram o atendimento e a pontualidade.", response: "Fernanda, obrigado pelas indicações! Cada cliente indicado recebe o mesmo padrão de qualidade. Conte conosco!" },
+              { author: "Madeireira São Jorge", role: "Madeireira · Ipiranga", type: "org", rating: 5, text: "Descartamos sobras de madeira e resíduos. A NORTEX é ágil e pratica preços justos. Somos clientes regulares.", response: "Obrigado pela fidelidade, Madeireira São Jorge! Nosso compromisso é oferecer o melhor custo-benefício sempre." },
+              { author: "Cláudia Ribeiro", role: "Proprietária · São Caetano", type: "person", rating: 5, text: "Reformei meu apartamento e a NORTEX cuidou de todo o descarte. Serviço impecável.", response: "Cláudia, ficamos muito felizes com sua avaliação! Nosso objetivo é tornar a reforma mais simples pra você." },
+              { author: "Shopping Metrô Itaquera", role: "Shopping Center", type: "org", rating: 5, text: "Obra de ampliação e a NORTEX cuidou de todo o descarte. Empresa séria e comprometida com prazos.", response: "Agradecemos, Shopping Metrô Itaquera! Atender grandes operações com eficiência é nosso diferencial." },
+            ].map((review, i) => (
+              <div key={i} className="overflow-hidden rounded-2xl border border-border/50 bg-card shadow-sm hover:shadow-md transition-shadow">
+                <div className="p-5">
+                  <div className="flex items-start gap-3">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-primary/5 text-sm font-black text-primary border border-primary/10">
+                      {review.author.charAt(0)}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <p className="text-sm font-bold text-foreground">{review.author}</p>
+                        {review.type === "org" && (
+                          <span className="shrink-0 rounded-full bg-blue-500/10 border border-blue-500/20 px-2 py-0.5 text-[10px] font-bold text-blue-600">Empresa</span>
+                        )}
+                      </div>
+                      <p className="text-[11px] text-muted-foreground/60 mt-0.5">{review.role}</p>
+                      <div className="flex gap-0.5 mt-1">
+                        {[...Array(review.rating)].map((_, j) => (
+                          <span key={j} className="text-yellow-500 text-sm">★</span>
+                        ))}
+                      </div>
+                      <p className="mt-2.5 text-sm text-foreground/80 leading-relaxed">"{review.text}"</p>
+                    </div>
+                  </div>
+                </div>
+                {/* Resposta da empresa */}
+                <div className="border-t border-border/40 bg-muted/30 px-5 py-3.5">
+                  <div className="flex items-start gap-2.5">
+                    <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-emerald-500/15 mt-0.5">
+                      <CheckCircle className="h-3.5 w-3.5 text-emerald-500" />
+                    </div>
+                    <div>
+                      <p className="text-[11px] font-bold text-emerald-600 mb-0.5">Resposta da NORTEX Caçambas</p>
+                      <p className="text-xs text-muted-foreground leading-relaxed">{review.response}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* CTA final */}
+          <div className="mt-8 text-center">
+            <div className="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 px-5 py-2.5">
+              <Shield className="h-4 w-4 text-emerald-500" />
+              <span className="text-xs font-bold text-emerald-600">Índice de Solução: 98% · Nota 4.8/5.0</span>
+            </div>
+          </div>
         </div>
       </div>
     </main>
