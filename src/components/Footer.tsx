@@ -55,7 +55,7 @@ const Footer = memo(() => {
               Termos de Uso
             </Link>
             <Link to="/reclameaqui" className="text-xs text-secondary-foreground/60 hover:text-primary transition-colors">
-              Canal de Reclamações
+              Reclame Aqui
             </Link>
             <span className="flex items-center gap-2 text-xs text-secondary-foreground/50 mt-1">
               <MapPin className="h-3.5 w-3.5" /> São Paulo, SP
