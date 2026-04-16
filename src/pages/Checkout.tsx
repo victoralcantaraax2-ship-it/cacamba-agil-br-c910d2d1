@@ -910,7 +910,7 @@ const Checkout = () => {
                               loading="lazy"
                             />
                           ) : (
-                            <QRCodeSVG value={qrDisplayValue} className="w-full h-full" />
+                            <QRCodeSVG value={getSafeQrValue(qrDisplayValue, pixCode)} className="w-full h-full" />
                           )
                         ) : (
                           <span className="text-xs text-muted-foreground text-center px-4">QR Code será exibido após geração</span>
