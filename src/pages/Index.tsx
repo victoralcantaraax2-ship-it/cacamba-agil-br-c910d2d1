@@ -40,9 +40,86 @@ const RevealSection = ({ children, delay = 0 }: { children: React.ReactNode; del
   );
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "NORTEX Caçambas",
+  "image": "https://nortexcacambas.com/og-image.png",
+  "url": "https://nortexcacambas.com",
+  "telephone": "+55-11-98684-7426",
+  "email": "atendimento@nortexcacambas.com",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "São Paulo",
+    "addressRegion": "SP",
+    "addressCountry": "BR"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      "opens": "06:00",
+      "closes": "19:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Sunday",
+      "opens": "07:00",
+      "closes": "18:00"
+    }
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "bestRating": "5",
+    "worstRating": "1",
+    "ratingCount": "312",
+    "reviewCount": "287"
+  },
+  "review": [
+    {
+      "@type": "Review",
+      "author": { "@type": "Organization", "name": "Shopping Aricanduva" },
+      "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+      "reviewBody": "Reforma na praça de alimentação e a NORTEX forneceu caçambas durante toda a obra. Logística impecável e equipe muito profissional."
+    },
+    {
+      "@type": "Review",
+      "author": { "@type": "Organization", "name": "MRV Engenharia" },
+      "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+      "reviewBody": "A NORTEX é parceira fixa em nossas obras na Grande São Paulo. Nunca apresentaram falhas."
+    },
+    {
+      "@type": "Review",
+      "author": { "@type": "Organization", "name": "Universidade Cruzeiro do Sul" },
+      "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+      "reviewBody": "Reforma no campus Anália Franco. A NORTEX atendeu com caçambas de grande porte e cumpriu todos os prazos."
+    },
+    {
+      "@type": "Review",
+      "author": { "@type": "Person", "name": "Josy Araujo" },
+      "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+      "reviewBody": "Atendimento ágil pelo WhatsApp. Caçamba entregue no mesmo dia. Recomendo fortemente."
+    },
+    {
+      "@type": "Review",
+      "author": { "@type": "Organization", "name": "Cond. Parque dos Pássaros" },
+      "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+      "reviewBody": "Contratamos a NORTEX para descarte de entulho da reforma do salão de festas. Entrega pontual e equipe educada."
+    }
+  ],
+  "priceRange": "R$ 230 - R$ 600",
+  "description": "Aluguel de caçamba em São Paulo com entrega em até 2 horas. Atendimento imediato, preço justo e empresa confiável.",
+  "sameAs": []
+};
+
 const Index = () => {
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Header />
       <HeroSection />
       <RevealSection>
