@@ -22,10 +22,9 @@ const Footer = memo(() => {
             </p>
             <div className="flex items-center gap-2">
               <img src={sslLogo} alt="SSL Blindado" className="h-5 w-auto opacity-60" />
-              <div className="flex items-center gap-1 text-[10px] text-secondary-foreground/40">
-                <Shield className="h-3 w-3" />
-                Site seguro
-              </div>
+              <span className="text-[10px] text-secondary-foreground/40">
+                Empresa Confiável
+              </span>
             </div>
           </div>
 
