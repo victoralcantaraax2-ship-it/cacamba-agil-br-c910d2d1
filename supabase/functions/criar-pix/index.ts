@@ -199,8 +199,14 @@ Deno.serve(async (req) => {
     const gatewayData = data?.data || {};
     const paymentData = gatewayData.paymentData || gatewayData;
     const pixCodeValue = paymentData.copyPaste || paymentData.pix_code || paymentData.qrCode || paymentData.pix_qr_code || '';
+    let qrCodeValue = paymentData.qrCode || paymentData.qrCodeBase64 || paymentData.qrCodeUrl || paymentData.pix_qr_code || pixCodeValue;
+    // Normalize raw base64 PNG into a data URL so the frontend renders it as an image
+    // instead of trying to encode the huge base64 string into a new QR code (RangeError: Data too long)
+    if (typeof qrCodeValue === 'string' && qrCodeValue.startsWith('iVBOR') && !qrCodeValue.startsWith('data:')) {
+      qrCodeValue = `data:image/png;base64,${qrCodeValue}`;
+    }
     const result = {
-      qr_code: paymentData.qrCode || paymentData.qrCodeBase64 || paymentData.qrCodeUrl || paymentData.pix_qr_code || pixCodeValue,
+      qr_code: qrCodeValue,
       pix_code: pixCodeValue,
       transaction_id: gatewayData.transactionId || gatewayData.id || '',
       invoice_url: gatewayData.invoiceUrl || gatewayData.invoice_url || '',
