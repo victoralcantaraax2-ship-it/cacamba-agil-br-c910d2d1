@@ -44,6 +44,22 @@ const Reclamacoes = () => {
   const fileRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
+  useEffect(() => {
+    document.title = "Reclame Aqui NORTEX Caçambas | Avaliações e Reclamações";
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute("content", "Reclame Aqui NORTEX Caçambas — Avaliada com 4.8 estrelas por mais de 280 clientes. Canal oficial para reclamações, elogios e avaliações. Empresa confiável com atendimento rápido em São Paulo.");
+    } else {
+      const meta = document.createElement("meta");
+      meta.name = "description";
+      meta.content = "Reclame Aqui NORTEX Caçambas — Avaliada com 4.8 estrelas por mais de 280 clientes. Canal oficial para reclamações, elogios e avaliações. Empresa confiável com atendimento rápido em São Paulo.";
+      document.head.appendChild(meta);
+    }
+    return () => {
+      document.title = "Aluguel de Caçamba SP | Entrega em 2h | NORTEX Caçambas";
+    };
+  }, []);
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0];
     if (!selected) return;
@@ -150,21 +166,7 @@ const Reclamacoes = () => {
     );
   }
 
-  useEffect(() => {
-    document.title = "Reclame Aqui NORTEX Caçambas | Avaliações e Reclamações";
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute("content", "Reclame Aqui NORTEX Caçambas — Avaliada com 4.8 estrelas por mais de 280 clientes. Canal oficial para reclamações, elogios e avaliações. Empresa confiável com atendimento rápido em São Paulo.");
-    } else {
-      const meta = document.createElement("meta");
-      meta.name = "description";
-      meta.content = "Reclame Aqui NORTEX Caçambas — Avaliada com 4.8 estrelas por mais de 280 clientes. Canal oficial para reclamações, elogios e avaliações. Empresa confiável com atendimento rápido em São Paulo.";
-      document.head.appendChild(meta);
-    }
-    return () => {
-      document.title = "Aluguel de Caçamba SP | Entrega em 2h | NORTEX Caçambas";
-    };
-  }, []);
+
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-background to-muted/30 py-10 px-4">
