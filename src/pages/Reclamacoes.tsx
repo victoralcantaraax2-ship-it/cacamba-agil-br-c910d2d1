@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,6 +10,29 @@ import { Link } from "react-router-dom";
 import logoAmba from "@/assets/logo-nortex.png";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
+
+const reclameAquiJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "NORTEX Caçambas",
+  "url": "https://nortexcacambas.com/reclameaqui",
+  "telephone": "+55-11-98684-7426",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "São Paulo",
+    "addressRegion": "SP",
+    "addressCountry": "BR"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "bestRating": "5",
+    "worstRating": "1",
+    "ratingCount": "312",
+    "reviewCount": "287"
+  },
+  "description": "Reclame Aqui NORTEX Caçambas — Canal oficial de reclamações e avaliações. Empresa avaliada com 4.8 estrelas por clientes reais. Atendimento ágil e resolução rápida."
+};
 
 const Reclamacoes = () => {
   const [fullName, setFullName] = useState("");
@@ -127,8 +150,28 @@ const Reclamacoes = () => {
     );
   }
 
+  useEffect(() => {
+    document.title = "Reclame Aqui NORTEX Caçambas | Avaliações e Reclamações";
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute("content", "Reclame Aqui NORTEX Caçambas — Avaliada com 4.8 estrelas por mais de 280 clientes. Canal oficial para reclamações, elogios e avaliações. Empresa confiável com atendimento rápido em São Paulo.");
+    } else {
+      const meta = document.createElement("meta");
+      meta.name = "description";
+      meta.content = "Reclame Aqui NORTEX Caçambas — Avaliada com 4.8 estrelas por mais de 280 clientes. Canal oficial para reclamações, elogios e avaliações. Empresa confiável com atendimento rápido em São Paulo.";
+      document.head.appendChild(meta);
+    }
+    return () => {
+      document.title = "Aluguel de Caçamba SP | Entrega em 2h | NORTEX Caçambas";
+    };
+  }, []);
+
   return (
     <main className="min-h-screen bg-gradient-to-b from-background to-muted/30 py-10 px-4">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(reclameAquiJsonLd) }}
+      />
       <div className="mx-auto max-w-lg">
         {/* Header */}
         <div className="text-center mb-8">
@@ -137,11 +180,11 @@ const Reclamacoes = () => {
           </Link>
           <div className="inline-flex items-center gap-2 rounded-full bg-destructive/10 border border-destructive/20 px-5 py-2 mb-5">
             <AlertTriangle className="h-4 w-4 text-destructive" />
-            <span className="text-xs font-bold text-destructive uppercase tracking-wider">Canal de Reclamações</span>
+            <span className="text-xs font-bold text-destructive uppercase tracking-wider">Reclame Aqui</span>
           </div>
-          <h1 className="text-2xl font-black text-foreground tracking-tight">Reclame Aqui</h1>
+          <h1 className="text-2xl font-black text-foreground tracking-tight">Reclame Aqui — NORTEX Caçambas</h1>
           <p className="mt-2 text-sm text-muted-foreground max-w-sm mx-auto leading-relaxed">
-            Preencha o formulário abaixo para registrar sua reclamação. Nossa equipe analisará o mais breve possível.
+            Avaliada com ★ 4.8 por mais de 280 clientes. Registre sua reclamação ou elogio abaixo.
           </p>
         </div>
 
