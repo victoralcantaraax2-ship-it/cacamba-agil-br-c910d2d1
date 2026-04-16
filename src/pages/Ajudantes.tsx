@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { CheckCircle, Copy, Loader2, Users } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
+import { getSafeQrValue } from "@/lib/qrPix";
 import { useToast } from "@/hooks/use-toast";
 import { formatPhone, validatePhone } from "@/lib/phone";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
@@ -269,7 +270,7 @@ const Ajudantes = () => {
                       qrIsImage ? (
                         <img src={qrDisplay} alt="QR Code Pix" className="w-full h-full object-contain" />
                       ) : (
-                        <QRCodeSVG value={qrDisplay} className="w-full h-full" />
+                        <QRCodeSVG value={getSafeQrValue(qrDisplay, pixCode)} className="w-full h-full" />
                       )
                     ) : (
                       <span className="text-xs text-muted-foreground text-center px-4">QR Code será exibido após geração</span>
