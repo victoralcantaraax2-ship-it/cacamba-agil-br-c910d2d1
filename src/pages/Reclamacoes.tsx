@@ -504,8 +504,8 @@ const Reclamacoes = () => {
               <p className="text-xs font-medium text-gray-400 mb-3">NORTEX Caçambas é confiável?</p>
 
               <div className="flex items-center gap-3 mb-4">
-                <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-emerald-100">
-                  <CheckCircle className="h-7 w-7 text-emerald-600" />
+                <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gray-900 p-1.5">
+                  <img src={logoNortex} alt="NORTEX" className="h-full w-full object-contain" />
                 </div>
                 <div>
                   <p className="text-xs text-gray-500">Reputação</p>
