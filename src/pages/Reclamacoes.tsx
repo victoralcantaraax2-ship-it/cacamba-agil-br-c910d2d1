@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { AlertTriangle, Upload, CheckCircle, Loader2, ArrowLeft, FileText, Image, X, Shield } from "lucide-react";
+import { AlertTriangle, Upload, CheckCircle, Loader2, ArrowLeft, FileText, Image, X, Shield, MapPin, Calendar, ThumbsUp, MessageSquare } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
 import logoAmba from "@/assets/logo-nortex.png";
