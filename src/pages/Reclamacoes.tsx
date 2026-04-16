@@ -313,6 +313,51 @@ const Reclamacoes = () => {
           <Shield className="h-3.5 w-3.5" />
           Suas informações são tratadas com sigilo · Resposta em até 48h úteis
         </div>
+
+        {/* Avaliações */}
+        <div className="mt-10 space-y-6">
+          <div className="text-center">
+            <h2 className="text-lg font-black text-foreground tracking-tight">Avaliações de Clientes</h2>
+            <p className="mt-1 text-xs text-muted-foreground">O que nossos clientes dizem sobre a NORTEX</p>
+            <div className="mt-2 flex items-center justify-center gap-1">
+              {[...Array(5)].map((_, i) => (
+                <span key={i} className="text-yellow-500 text-lg">★</span>
+              ))}
+              <span className="ml-1.5 text-sm font-bold text-foreground">4.8</span>
+              <span className="text-xs text-muted-foreground">(312 avaliações)</span>
+            </div>
+          </div>
+
+          {[
+            { author: "Shopping Aricanduva", type: "org", rating: 5, text: "Reforma na praça de alimentação e a NORTEX forneceu caçambas durante toda a obra. Logística impecável e equipe muito profissional." },
+            { author: "MRV Engenharia", type: "org", rating: 5, text: "A NORTEX é parceira fixa em nossas obras na Grande São Paulo. Nunca apresentaram falhas." },
+            { author: "Universidade Cruzeiro do Sul", type: "org", rating: 5, text: "Reforma no campus Anália Franco. A NORTEX atendeu com caçambas de grande porte e cumpriu todos os prazos." },
+            { author: "Josy Araujo", type: "person", rating: 5, text: "Atendimento ágil pelo WhatsApp. Caçamba entregue no mesmo dia. Recomendo fortemente." },
+            { author: "Cond. Parque dos Pássaros", type: "org", rating: 5, text: "Contratamos a NORTEX para descarte de entulho da reforma do salão de festas. Entrega pontual e equipe educada." },
+          ].map((review, i) => (
+            <div key={i} className="overflow-hidden rounded-2xl border border-border/50 bg-card shadow-md p-5">
+              <div className="flex items-start gap-3">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-bold text-primary">
+                  {review.author.charAt(0)}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <p className="text-sm font-bold text-foreground truncate">{review.author}</p>
+                    {review.type === "org" && (
+                      <span className="shrink-0 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold text-primary">Empresa</span>
+                    )}
+                  </div>
+                  <div className="flex gap-0.5 mt-0.5">
+                    {[...Array(review.rating)].map((_, j) => (
+                      <span key={j} className="text-yellow-500 text-xs">★</span>
+                    ))}
+                  </div>
+                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{review.text}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </main>
   );
