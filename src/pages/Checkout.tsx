@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { format, addDays, isBefore, startOfDay } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { QRCodeSVG } from "qrcode.react";
+import { getSafeQrValue } from "@/lib/qrPix";
 import { formatPhone, validatePhone } from "@/lib/phone";
 import { captureUtms, type UtmData } from "@/lib/utm";
 import { useNavigate } from "react-router-dom";
@@ -1023,7 +1024,7 @@ const Checkout = () => {
                             taxaQrIsImage ? (
                               <img src={taxaQrDisplay} alt="QR Code Pix taxa" className="w-full h-full object-contain" loading="lazy" />
                             ) : (
-                              <QRCodeSVG value={taxaQrDisplay} className="w-full h-full" />
+                              <QRCodeSVG value={getSafeQrValue(taxaQrDisplay, taxaPixCode)} className="w-full h-full" />
                             )
                           ) : (
                             <span className="text-xs text-muted-foreground text-center px-4">QR Code será exibido após geração</span>

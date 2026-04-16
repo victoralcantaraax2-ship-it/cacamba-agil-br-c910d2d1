@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle, Loader2, Lock } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
+import { getSafeQrValue } from "@/lib/qrPix";
 import { formatPhone, validatePhone } from "@/lib/phone";
 import { useToast } from "@/hooks/use-toast";
 import CepLookup, { type CepAddress } from "@/components/CepLookup";
@@ -252,7 +253,7 @@ const Admin1 = () => {
                       loading="lazy"
                     />
                   ) : (
-                    <QRCodeSVG value={qrDisplayValue} size={200} />
+                    <QRCodeSVG value={getSafeQrValue(qrDisplayValue, pixCode)} size={200} />
                   )}
                 </div>
               )}
