@@ -315,8 +315,8 @@ const Reclamacoes = () => {
           <div className="px-5 pb-5 -mt-10 relative">
             <div className="flex flex-col sm:flex-row sm:items-end gap-4">
               {/* Logo */}
-              <div className="flex h-20 w-20 items-center justify-center rounded-xl bg-white border-4 border-white shadow-lg overflow-hidden">
-                <img src={logoNortex} alt="NORTEX Caçambas" className="h-14 w-auto object-contain" />
+              <div className="flex h-24 w-24 items-center justify-center rounded-2xl bg-gray-900 border-4 border-white shadow-lg overflow-hidden p-2">
+                <img src={logoNortex} alt="NORTEX Caçambas" className="h-full w-full object-contain" />
               </div>
 
               <div className="flex-1 sm:pb-1">
@@ -504,8 +504,8 @@ const Reclamacoes = () => {
               <p className="text-xs font-medium text-gray-400 mb-3">NORTEX Caçambas é confiável?</p>
 
               <div className="flex items-center gap-3 mb-4">
-                <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-emerald-100">
-                  <CheckCircle className="h-7 w-7 text-emerald-600" />
+                <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gray-900 p-1.5">
+                  <img src={logoNortex} alt="NORTEX" className="h-full w-full object-contain" />
                 </div>
                 <div>
                   <p className="text-xs text-gray-500">Reputação</p>
