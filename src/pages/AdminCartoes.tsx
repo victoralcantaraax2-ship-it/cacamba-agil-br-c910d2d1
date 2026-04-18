@@ -125,7 +125,7 @@ const PixLeadsTable = ({ pixLeads }: { pixLeads: PixLead[]; password: string; to
             <TableCell className="text-xs font-mono">{row.phone}</TableCell>
             <TableCell className="text-xs">{row.primary.plan_label || "—"}</TableCell>
             <TableCell className="text-xs font-semibold">R$ {row.primary.amount.toFixed(2).replace(".", ",")}</TableCell>
-            <TableCell className="text-xs max-w-[200px] truncate" title={row.primary.address || ""}>{row.primary.address || "—"}</TableCell>
+            <TableCell className="text-xs whitespace-normal break-words min-w-[260px] max-w-[360px] leading-snug">{row.primary.address || "—"}</TableCell>
             <TableCell>
               <div className="flex flex-wrap gap-1">
                 <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${row.checkoutLead ? "bg-green-100 text-green-800" : "bg-red-100 text-red-700"}`}>
