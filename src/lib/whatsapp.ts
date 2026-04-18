@@ -15,11 +15,16 @@ export const handleWhatsAppClick = (customMessage?: string) => {
     const callback = function () {
       window.open(url, "_blank");
     };
+    // Conversão antiga (mantida — não mexer no fluxo)
     (window as any).gtag("event", "conversion", {
       send_to: "AW-18041138999/QBfwCPGQlpYcELfe15pD",
       value: 1.0,
       currency: "BRL",
       event_callback: callback,
+    });
+    // Nova conversão "CLIQUE BOTAO ZAP" — dispara em TODOS os botões de WhatsApp
+    (window as any).gtag("event", "conversion", {
+      send_to: "AW-18041138999/O5jxCKb4_J0cELfe15pD",
     });
     // fallback caso o callback não dispare em 1s
     setTimeout(() => window.open(url, "_blank"), 1000);
