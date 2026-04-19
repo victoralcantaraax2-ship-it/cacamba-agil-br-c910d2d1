@@ -34,7 +34,7 @@ const Footer = memo(() => {
             <a href="tel:1130172222" className="flex items-center gap-2 text-xs text-secondary-foreground/60 hover:text-primary transition-colors">
               <Phone className="h-3.5 w-3.5" /> (11) 3017-2222
             </a>
-            <button onClick={() => handleWhatsAppClick()} className="flex items-center gap-2 text-xs text-secondary-foreground/60 hover:text-primary transition-colors">
+            <button onClick={() => handleWhatsAppClick()} aria-label="Falar no WhatsApp (11) 98684-7426" className="flex items-center gap-2 text-xs text-secondary-foreground/60 hover:text-primary transition-colors">
               <img src={whatsappIcon} alt="" className="h-3.5 w-3.5" /> (11) 98684-7426
             </button>
             <a href="mailto:atendimento@nortexcacambas.com" className="flex items-center gap-2 text-xs text-secondary-foreground/60 hover:text-primary transition-colors">

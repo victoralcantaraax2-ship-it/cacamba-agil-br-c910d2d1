@@ -77,7 +77,7 @@ const ToggleField = ({ label, masked, real }: { label: string; masked: string; r
   return (
     <p className="flex items-center gap-1.5 text-sm">
       <strong>{label}:</strong> {visible ? real : masked}
-      <button onClick={() => setVisible(!visible)} className="ml-1 text-muted-foreground hover:text-foreground transition-colors">
+      <button onClick={() => setVisible(!visible)} aria-label={visible ? `Ocultar ${label}` : `Mostrar ${label}`} className="ml-1 text-muted-foreground hover:text-foreground transition-colors">
         {visible ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
       </button>
     </p>

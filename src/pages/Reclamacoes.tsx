@@ -445,7 +445,7 @@ const Reclamacoes = () => {
                             <p className="text-xs font-semibold truncate">{file.name}</p>
                             <p className="text-[10px] text-gray-400">{isPdf ? "PDF" : "Imagem"} · {(file.size / 1024).toFixed(0)} KB</p>
                           </div>
-                          <button type="button" onClick={() => setFile(null)} className="p-1 text-gray-400 hover:text-red-500">
+                          <button type="button" onClick={() => setFile(null)} aria-label="Remover anexo" className="p-1 text-gray-400 hover:text-red-500">
                             <X className="h-4 w-4" />
                           </button>
                         </div>
