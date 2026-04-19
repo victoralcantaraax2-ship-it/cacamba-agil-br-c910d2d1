@@ -93,9 +93,22 @@ const Checkout = () => {
   const [scheduledSlot, setScheduledSlot] = useState<string>("");
   const [calendarOpen, setCalendarOpen] = useState(false);
 
-  const timeSlots = ["08h–10h", "10h–12h", "13h–15h", "15h–17h"];
-  const minDate = addDays(startOfDay(new Date()), 1);
+  const allTimeSlots = ["08h–10h", "10h–12h", "13h–15h", "15h–17h", "17h–19h", "19h–21h"];
+  const defaultSlots = ["08h–10h", "10h–12h", "13h–15h", "15h–17h"];
+  const minDate = startOfDay(new Date());
   const maxDate = addDays(startOfDay(new Date()), 30);
+
+  const isToday = (d?: Date) => !!d && startOfDay(d).getTime() === startOfDay(new Date()).getTime();
+  const availableSlots = (() => {
+    if (!scheduledDate) return defaultSlots;
+    if (!isToday(scheduledDate)) return defaultSlots;
+    // For today, only show slots whose end-hour is still in the future, capped at 21h
+    const currentHour = new Date().getHours();
+    return allTimeSlots.filter((slot) => {
+      const endHour = parseInt(slot.split("–")[1], 10); // "10h" -> 10
+      return endHour <= 21 && currentHour < endHour;
+    });
+  })();
   
   const [couponInput, setCouponInput] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState<string | null>(() => {
@@ -680,7 +693,7 @@ const Checkout = () => {
                   </h3>
                   <Switch checked={!!scheduledDate} onCheckedChange={(on) => {
                     if (!on) { setScheduledDate(undefined); setScheduledSlot(""); }
-                    else { setScheduledDate(addDays(startOfDay(new Date()), 1)); }
+                    else { setScheduledDate(startOfDay(new Date())); setScheduledSlot(""); }
                   }} />
                 </div>
 
@@ -690,13 +703,14 @@ const Checkout = () => {
                       <PopoverTrigger asChild>
                         <Button variant="outline" size="sm" className={cn("w-full justify-start text-left font-normal text-sm", !scheduledDate && "text-muted-foreground")}>
                           {format(scheduledDate, "dd/MM/yyyy", { locale: ptBR })}
+                          {isToday(scheduledDate) && <span className="ml-2 text-xs text-primary font-semibold">(Hoje)</span>}
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-0" align="start">
                         <Calendar
                           mode="single"
                           selected={scheduledDate}
-                          onSelect={(d) => { setScheduledDate(d); setCalendarOpen(false); }}
+                          onSelect={(d) => { setScheduledDate(d); setScheduledSlot(""); setCalendarOpen(false); }}
                           disabled={(date) => isBefore(date, minDate) || date > maxDate || date.getDay() === 0}
                           initialFocus
                           locale={ptBR}
@@ -705,22 +719,28 @@ const Checkout = () => {
                       </PopoverContent>
                     </Popover>
 
-                    <div className="grid grid-cols-4 gap-1.5">
-                      {timeSlots.map((slot) => (
-                        <button
-                          key={slot}
-                          onClick={() => setScheduledSlot(slot)}
-                          className={cn(
-                            "rounded-lg border px-1.5 py-2 text-xs font-medium transition-all",
-                            scheduledSlot === slot
-                              ? "border-primary bg-primary/10 text-primary"
-                              : "border-border text-muted-foreground hover:border-primary/40"
-                          )}
-                        >
-                          {slot}
-                        </button>
-                      ))}
-                    </div>
+                    {availableSlots.length === 0 ? (
+                      <p className="text-xs text-muted-foreground text-center py-2">
+                        Sem horários disponíveis hoje. Selecione outra data.
+                      </p>
+                    ) : (
+                      <div className={cn("grid gap-1.5", availableSlots.length > 4 ? "grid-cols-3" : "grid-cols-4")}>
+                        {availableSlots.map((slot) => (
+                          <button
+                            key={slot}
+                            onClick={() => setScheduledSlot(slot)}
+                            className={cn(
+                              "rounded-lg border px-1.5 py-2 text-xs font-medium transition-all",
+                              scheduledSlot === slot
+                                ? "border-primary bg-primary/10 text-primary"
+                                : "border-border text-muted-foreground hover:border-primary/40"
+                            )}
+                          >
+                            {slot}
+                          </button>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 )}
               </CardContent>
