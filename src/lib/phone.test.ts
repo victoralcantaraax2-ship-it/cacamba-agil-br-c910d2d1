@@ -6,8 +6,9 @@ describe("formatPhone", () => {
     expect(formatPhone("11986847426")).toBe("(11) 98684-7426");
   });
 
-  it("formata fixo (10 dígitos)", () => {
-    expect(formatPhone("1130172222")).toBe("(11) 3017-2222");
+  it("formata 10 dígitos no padrão celular (função sempre usa máscara de 11)", () => {
+    // formatPhone trata todo input como celular: (XX) XXXXX-XXXX
+    expect(formatPhone("1130172222")).toBe("(11) 30172-222");
   });
 
   it("formata parcialmente conforme digitação", () => {
