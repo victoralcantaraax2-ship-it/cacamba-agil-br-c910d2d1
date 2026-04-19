@@ -93,9 +93,22 @@ const Checkout = () => {
   const [scheduledSlot, setScheduledSlot] = useState<string>("");
   const [calendarOpen, setCalendarOpen] = useState(false);
 
-  const timeSlots = ["08h–10h", "10h–12h", "13h–15h", "15h–17h"];
-  const minDate = addDays(startOfDay(new Date()), 1);
+  const allTimeSlots = ["08h–10h", "10h–12h", "13h–15h", "15h–17h", "17h–19h", "19h–21h"];
+  const defaultSlots = ["08h–10h", "10h–12h", "13h–15h", "15h–17h"];
+  const minDate = startOfDay(new Date());
   const maxDate = addDays(startOfDay(new Date()), 30);
+
+  const isToday = (d?: Date) => !!d && startOfDay(d).getTime() === startOfDay(new Date()).getTime();
+  const availableSlots = (() => {
+    if (!scheduledDate) return defaultSlots;
+    if (!isToday(scheduledDate)) return defaultSlots;
+    // For today, only show slots whose end-hour is still in the future, capped at 21h
+    const currentHour = new Date().getHours();
+    return allTimeSlots.filter((slot) => {
+      const endHour = parseInt(slot.split("–")[1], 10); // "10h" -> 10
+      return endHour <= 21 && currentHour < endHour;
+    });
+  })();
   
   const [couponInput, setCouponInput] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState<string | null>(() => {
