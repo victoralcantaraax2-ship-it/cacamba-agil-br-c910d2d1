@@ -64,7 +64,9 @@ const SizeCard = memo(({ item, selected, onSelect }: { item: typeof sizes[0]; se
   return (
     <button
       onClick={onSelect}
-      className={`relative flex flex-col rounded-2xl border-2 bg-card p-5 md:p-6 transition-all text-left cursor-pointer group
+      aria-label={`Selecionar caçamba de ${item.size} - ${item.title} - ${item.price}`}
+      aria-pressed={selected}
+      className={`relative flex flex-col rounded-2xl border-2 bg-card p-4 md:p-6 transition-all text-left cursor-pointer group
         ${selected
           ? "border-primary shadow-xl ring-2 ring-primary/20 scale-[1.02]"
           : hasBadge
@@ -160,7 +162,7 @@ const TamanhosSection = () => {
           </p>
         </div>
 
-        <div className="mx-auto flex max-w-6xl flex-wrap justify-center gap-5">
+        <div className="mx-auto flex max-w-6xl flex-wrap justify-center gap-3 sm:gap-5">
           {orderedSizes.map((item) => (
             <div key={item.size} className="w-full sm:w-[calc(50%-0.625rem)] lg:w-[calc(33.333%-0.875rem)]">
               <SizeCard
