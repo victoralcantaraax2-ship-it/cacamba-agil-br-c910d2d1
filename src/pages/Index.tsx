@@ -4,6 +4,7 @@ import HeroSection from "@/components/HeroSection";
 import TamanhosSection from "@/components/TamanhosSection";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import ExitIntentPopup from "@/components/ExitIntentPopup";
+import { getWhatsAppUrl } from "@/lib/whatsapp";
 
 const RegioesSection = lazy(() => import("@/components/RegioesSection"));
 const SocialProof = lazy(() => import("@/components/SocialProof"));
@@ -114,6 +115,12 @@ const jsonLd = {
 };
 
 const Index = () => {
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.location.hash === "#1") {
+      window.location.replace(getWhatsAppUrl());
+    }
+  }, []);
+
   return (
     <main>
       <script
