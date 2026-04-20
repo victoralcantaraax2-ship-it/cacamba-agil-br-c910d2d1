@@ -115,6 +115,12 @@ const jsonLd = {
 };
 
 const Index = () => {
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.location.hash === "#1") {
+      window.location.replace(getWhatsAppUrl());
+    }
+  }, []);
+
   return (
     <main>
       <script
