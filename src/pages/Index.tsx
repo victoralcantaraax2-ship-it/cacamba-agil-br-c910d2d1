@@ -116,7 +116,7 @@ const jsonLd = {
 
 const Index = () => {
   useEffect(() => {
-    if (typeof window !== "undefined" && window.location.hash === "#1") {
+    if (typeof window !== "undefined" && ["#1", "#whatsapp"].includes(window.location.hash.toLowerCase())) {
       window.location.replace(getWhatsAppUrl());
     }
   }, []);
