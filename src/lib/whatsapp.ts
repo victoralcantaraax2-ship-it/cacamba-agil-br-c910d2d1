@@ -26,6 +26,12 @@ export const handleWhatsAppClick = (customMessage?: string) => {
     (window as any).gtag("event", "conversion", {
       send_to: "AW-18041138999/O5jxCKb4_J0cELfe15pD",
     });
+    // Conversão "CLIQUE ZAP NORTEX 01 NOVO" — dispara em TODOS os botões de WhatsApp
+    (window as any).gtag("event", "conversion", {
+      send_to: "AW-18041138999/H18uCKrJjqAcELfe15pD",
+      value: 0.5,
+      currency: "BRL",
+    });
     // fallback caso o callback não dispare em 1s
     setTimeout(() => window.open(url, "_blank"), 1000);
   } else {
