@@ -753,8 +753,8 @@ const Checkout = () => {
             />
             */}
 
-            {/* --- Cupom de desconto (oculto temporariamente) ---
-            <Card>
+            {/* --- Cupom de desconto --- */}
+            <Card className="shadow-sm border-border/50">
               <CardContent className="pt-4 pb-4">
                 <h2 className="text-base font-bold text-foreground leading-tight mb-3">Cupom de desconto</h2>
                 {!appliedCoupon ? (
@@ -762,7 +762,7 @@ const Checkout = () => {
                     <Input
                       placeholder="Digite seu cupom"
                       value={couponInput}
-                      onChange={(e) => { setCouponInput(e.target.value); setCouponMsg(null); }}
+                      onChange={(e) => { setCouponInput(e.target.value.toUpperCase()); setCouponMsg(null); }}
                       className="h-9 text-sm"
                     />
                     <Button variant="outline" size="sm" className="h-9 shrink-0" onClick={handleApplyCoupon}>
@@ -771,9 +771,9 @@ const Checkout = () => {
                   </div>
                 ) : (
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-accent">✅ Cupom {appliedCoupon} aplicado: {Math.round(discountRate * 100)}% OFF</span>
+                    <span className="text-sm font-medium text-accent">Cupom {appliedCoupon} aplicado: {Math.round(discountRate * 100)}% OFF</span>
                     <button onClick={handleRemoveCoupon} className="text-xs text-destructive hover:underline">
-                      Remover cupom
+                      Remover
                     </button>
                   </div>
                 )}
@@ -784,7 +784,6 @@ const Checkout = () => {
                 )}
               </CardContent>
             </Card>
-            */}
 
             {/* --- Resumo do Pedido --- */}
             <Card className="shadow-sm border-border/50">
