@@ -758,17 +758,41 @@ const Checkout = () => {
               <CardContent className="pt-4 pb-4">
                 <h2 className="text-base font-bold text-foreground leading-tight mb-3">Cupom de desconto</h2>
                 {!appliedCoupon ? (
-                  <div className="flex gap-2">
-                    <Input
-                      placeholder="Digite seu cupom"
-                      value={couponInput}
-                      onChange={(e) => { setCouponInput(e.target.value.toUpperCase()); setCouponMsg(null); }}
-                      className="h-9 text-sm"
-                    />
-                    <Button variant="outline" size="sm" className="h-9 shrink-0" onClick={handleApplyCoupon}>
-                      Aplicar
-                    </Button>
-                  </div>
+                  <>
+                    <div className="flex gap-2">
+                      <Input
+                        placeholder="Digite seu cupom"
+                        value={couponInput}
+                        maxLength={20}
+                        onChange={(e) => {
+                          const val = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 20);
+                          setCouponInput(val);
+                          if (!val) {
+                            setCouponMsg(null);
+                          } else if (validCoupons[val]) {
+                            setCouponMsg({ type: "success", text: `Cupom válido: ${Math.round(validCoupons[val] * 100)}% OFF` });
+                          } else {
+                            setCouponMsg({ type: "error", text: "Cupom inválido" });
+                          }
+                        }}
+                        className={`h-9 text-sm ${couponInput && couponMsg?.type === "error" ? "border-destructive focus-visible:ring-destructive/30" : ""} ${couponInput && couponMsg?.type === "success" ? "border-accent focus-visible:ring-accent/30" : ""}`}
+                      />
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="h-9 shrink-0"
+                        onClick={handleApplyCoupon}
+                        disabled={!couponInput || couponMsg?.type === "error"}
+                      >
+                        Aplicar
+                      </Button>
+                    </div>
+                    {couponInput && couponMsg && (
+                      <p className={`mt-2 text-xs font-medium ${couponMsg.type === "error" ? "text-destructive" : "text-accent"}`}>
+                        {couponMsg.text}
+                      </p>
+                    )}
+                  </>
                 ) : (
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-medium text-accent">Cupom {appliedCoupon} aplicado: {Math.round(discountRate * 100)}% OFF</span>
@@ -776,11 +800,6 @@ const Checkout = () => {
                       Remover
                     </button>
                   </div>
-                )}
-                {couponMsg && !appliedCoupon && (
-                  <p className={`mt-2 text-xs ${couponMsg.type === "error" ? "text-destructive" : "text-accent"}`}>
-                    {couponMsg.text}
-                  </p>
                 )}
               </CardContent>
             </Card>
