@@ -9,7 +9,7 @@ const sizes = [
   {
     size: "3 m³",
     title: "Pequenas reformas",
-    price: "R$ 175",
+    price: "R$ 190",
     capacity: "20–25 sacos",
     period: "2 a 7 dias úteis",
     idealFor: ["Reparos pontuais e manutenções", "Remoção de pisos e entulho leve"],
@@ -18,7 +18,7 @@ const sizes = [
   {
     size: "4 m³",
     title: "Obras médias",
-    price: "R$ 240",
+    price: "R$ 280",
     capacity: "30–35 sacos",
     period: "2 a 7 dias úteis",
     idealFor: ["Reformas de médio porte", "Resíduos de construção civil"],
