@@ -114,9 +114,11 @@ const Agendar = () => {
     [selectedPlan]
   );
   const CARD_FEE_RATE = 0.05;
+  const PIX_DISCOUNT_RATE = 0.10;
   const basePrice = currentPlan.price;
+  const pixPrice = Math.round(basePrice * (1 - PIX_DISCOUNT_RATE) * 100) / 100;
   const cardPrice = Math.round(basePrice * (1 + CARD_FEE_RATE));
-  const totalPrice = paymentMethod === "cartao" ? cardPrice : basePrice;
+  const totalPrice = paymentMethod === "cartao" ? cardPrice : pixPrice;
 
   const fullAddress = `${logradouro}${numero ? `, ${numero}` : ""}${complemento ? ` – ${complemento}` : ""}${bairro ? ` – ${bairro}` : ""}, ${localidade}/${uf}`;
 
@@ -184,6 +186,8 @@ const Agendar = () => {
         },
         body: JSON.stringify({
           nome, telefone, plano: selectedPlan, quantidade: 1,
+          valor_custom: pixPrice,
+          descricao_custom: `${currentPlan.label} – Pagamento PIX (10% OFF)`,
         }),
       });
       const data = await res.json();
