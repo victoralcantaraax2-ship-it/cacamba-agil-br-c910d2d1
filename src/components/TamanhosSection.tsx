@@ -32,8 +32,7 @@ const sizes = [
     period: "3 a 7 dias úteis",
     idealFor: ["Obras residenciais completas", "Contrapiso e reforma geral"],
     checks: ["Entrega em até 2h", "Retirada agendada", "Melhor custo por m³"],
-    badge: "Mais solicitada",
-    badgeType: "image" as const,
+    badge: "Padrão",
   },
   {
     size: "7 m³",
