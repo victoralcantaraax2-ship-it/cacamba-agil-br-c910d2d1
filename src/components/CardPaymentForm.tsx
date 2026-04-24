@@ -56,6 +56,19 @@ const CardPaymentForm = ({
 
   const brand = detectBrand(cardNumber);
 
+  const installmentOptions = useMemo(() => {
+    return Array.from({ length: MAX_INSTALLMENTS }, (_, i) => {
+      const n = i + 1;
+      const total = n === 1 ? totalPrice : totalPrice * Math.pow(1 + INSTALLMENT_FEE_RATE, n - 1);
+      const parcela = total / n;
+      return { n, parcela, total, hasFee: n > 1 };
+    });
+  }, [totalPrice]);
+
+  const selectedOption = installmentOptions.find((o) => o.n === installments) || installmentOptions[0];
+  const finalTotal = selectedOption.total;
+  const finalParcela = selectedOption.parcela;
+
   const validate = (): boolean => {
     const e: Record<string, string> = {};
     if (!holderName.trim() || holderName.trim().length < 3) e.holderName = "Informe o nome do titular";
@@ -260,30 +273,32 @@ const CardPaymentForm = ({
       {/* Installments */}
       <div className="space-y-2">
         <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Parcelas</Label>
-        <div className="grid grid-cols-3 gap-2.5">
-          {([1, 2, 3] as const).map((n) => {
-            const parcela = totalPrice / n;
-            const isActive = installments === n;
-            return (
-              <button
-                key={n}
-                type="button"
-                onClick={() => setInstallments(n)}
-                className={`rounded-2xl border-2 p-3 text-center transition-all duration-200 ${
-                  isActive
-                    ? "border-primary bg-primary/10 shadow-md shadow-primary/10 scale-[1.02]"
-                    : "border-border/50 hover:border-primary/40 hover:bg-muted/30"
-                }`}
-              >
-                <span className={`block text-base font-black ${isActive ? "text-primary" : "text-foreground"}`}>{n}x</span>
-                <span className="block text-xs text-muted-foreground font-medium mt-0.5">
-                  {formatCurrency(parcela)}
+        <Select value={String(installments)} onValueChange={(v) => setInstallments(Number(v))}>
+          <SelectTrigger className="h-12 rounded-xl border-border/60 bg-background/80 text-sm font-semibold">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent className="max-h-72">
+            {installmentOptions.map((opt) => (
+              <SelectItem key={opt.n} value={String(opt.n)} className="text-sm">
+                <span className="flex items-center justify-between gap-3 w-full">
+                  <span className="font-bold">
+                    {opt.n}x de {formatCurrency(opt.parcela)}
+                  </span>
+                  <span className={`text-[11px] font-semibold ${opt.hasFee ? "text-amber-600" : "text-green-600"}`}>
+                    {opt.hasFee
+                      ? `total ${formatCurrency(opt.total)} c/ juros`
+                      : "à vista sem juros"}
+                  </span>
                 </span>
-                {n > 1 && <span className="block text-[10px] text-green-500 font-semibold mt-0.5">sem juros</span>}
-              </button>
-            );
-          })}
-        </div>
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        {selectedOption.hasFee && (
+          <p className="text-[11px] text-muted-foreground/80">
+            Total parcelado: <span className="font-bold text-foreground">{formatCurrency(finalTotal)}</span> · juros 12% a.m.
+          </p>
+        )}
       </div>
 
       <Button
@@ -298,7 +313,7 @@ const CardPaymentForm = ({
             Processando...
           </>
         ) : (
-          `Pagar ${installments}x ${formatCurrency(totalPrice / installments)} • ${formatCurrency(totalPrice)}`
+          `Pagar ${installments}x ${formatCurrency(finalParcela)} • ${formatCurrency(finalTotal)}`
         )}
       </Button>
 
