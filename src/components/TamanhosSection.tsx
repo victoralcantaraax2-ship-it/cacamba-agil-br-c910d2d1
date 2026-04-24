@@ -57,7 +57,7 @@ const sizes = [
 
 const SizeCard = memo(({ item, selected, onSelect }: { item: typeof sizes[0]; selected: boolean; onSelect: () => void }) => {
   const hasBadge = !!item.badge;
-  const BadgeIcon = item.badgeIcon;
+  const BadgeIcon = (item as any).badgeIcon;
 
   return (
     <button
