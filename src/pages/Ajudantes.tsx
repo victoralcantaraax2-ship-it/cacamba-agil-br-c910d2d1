@@ -11,7 +11,7 @@ import { QRCodeSVG } from "qrcode.react";
 import { getSafeQrValue } from "@/lib/qrPix";
 import { useToast } from "@/hooks/use-toast";
 import { formatPhone, validatePhone } from "@/lib/phone";
-import WhatsAppFloat from "@/components/WhatsAppFloat";
+
 import logoNortex from "@/assets/logo-nortex.png";
 import pixLogo from "@/assets/pix-logo.webp";
 import lockIcon from "@/assets/lock-icon.webp";
@@ -323,8 +323,6 @@ const Ajudantes = () => {
           </Card>
         )}
       </div>
-
-      <WhatsAppFloat />
     </main>
   );
 };

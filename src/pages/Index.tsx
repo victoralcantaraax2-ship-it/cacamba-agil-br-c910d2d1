@@ -2,7 +2,6 @@ import { lazy, Suspense, useEffect, useRef } from "react";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import TamanhosSection from "@/components/TamanhosSection";
-import WhatsAppFloat from "@/components/WhatsAppFloat";
 import ExitIntentPopup from "@/components/ExitIntentPopup";
 import { getWhatsAppUrl } from "@/lib/whatsapp";
 
@@ -160,7 +159,6 @@ const Index = () => {
       <Suspense fallback={<SectionFallback />}>
         <Footer />
       </Suspense>
-      <WhatsAppFloat />
       <ExitIntentPopup />
     </main>
   );

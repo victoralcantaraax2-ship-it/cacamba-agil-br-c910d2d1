@@ -90,8 +90,8 @@ export default {
           to: { height: "0" },
         },
         "pulse-green": {
-          "0%, 100%": { boxShadow: "0 0 0 0 hsl(145 70% 42% / 0.3)" },
-          "70%": { boxShadow: "0 0 0 10px hsl(145 70% 42% / 0)" },
+          "0%, 100%": { boxShadow: "0 0 0 0 hsl(145 70% 42% / 0.18)" },
+          "70%": { boxShadow: "0 0 0 8px hsl(145 70% 42% / 0)" },
         },
         "bounce-subtle": {
           "0%, 100%": { transform: "translateY(0)" },
@@ -117,7 +117,7 @@ export default {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "pulse-green": "pulse-green 4s ease-in-out infinite",
+        "pulse-green": "pulse-green 6s ease-in-out infinite",
         "bounce-subtle": "bounce-subtle 2s ease-in-out infinite",
         "glow-breathe": "glow-breathe 3s ease-in-out infinite",
         "border-glow": "border-glow 4s ease-in-out infinite",

@@ -4,7 +4,7 @@ import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import TamanhosSection from "@/components/TamanhosSection";
 import CepSection from "@/components/CepSection";
-import WhatsAppFloat from "@/components/WhatsAppFloat";
+
 
 const SocialProof = lazy(() => import("@/components/SocialProof"));
 const ComoFuncionaSection = lazy(() => import("@/components/ComoFuncionaSection"));
@@ -117,7 +117,6 @@ const CidadeLanding = () => {
       <Suspense fallback={<SectionFallback />}>
         <Footer />
       </Suspense>
-      <WhatsAppFloat />
     </main>
   );
 };
