@@ -17,12 +17,7 @@ const scrollTo = (id: string) => {
 };
 
 const HeroSection = ({ cityName }: { cityName?: string }) => {
-  const h1Text = cityName
-    ? `Caçamba em ${cityName}. Entrega Imediata Hoje.`
-    : "Caçamba na Sua Obra Hoje. Entrega Imediata.";
-  const subtitle = cityName
-    ? `Locação ágil e sem burocracia em ${cityName}. Solicite pelo WhatsApp e receba em até 2 horas.`
-    : "Locação ágil em São Paulo, sem burocracia. Solicite pelo WhatsApp e tenha sua caçamba em até 2 horas.";
+  const subtitle = "Solicite agora. Entrega em até 2h. Retirada programada.";
 
   const [cep, setCep] = useState("");
   const [address, setAddress] = useState<{ logradouro: string; bairro: string; localidade: string; uf: string; cep: string } | null>(null);
