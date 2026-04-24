@@ -618,6 +618,9 @@ const Agendar = () => {
               >
                 <img src={pixLogo} alt="" className="h-4 w-4" />
                 PIX
+                <span className="ml-1 rounded-full bg-emerald-600 px-1.5 py-0.5 text-[9px] font-black text-white shadow-sm">
+                  10% OFF
+                </span>
                 {paymentMethod === "pix" && (
                   <span className="hidden sm:inline ml-1 rounded-full bg-emerald-100 px-1.5 py-0.5 text-[8px] font-bold text-emerald-700">
                     Instantâneo
