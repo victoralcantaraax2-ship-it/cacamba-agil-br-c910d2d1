@@ -30,8 +30,8 @@ import pixLogo from "@/assets/pix-logo.webp";
 
 type Plan = { id: string; label: string; short: string; price: number; periodo: string; uso: string; popular?: boolean };
 const plans: Plan[] = [
-  { id: "cacamba_3m", label: "Caçamba 3m³", short: "3m³", price: 175.0, periodo: "2 a 7 dias", uso: "Pequena reforma", popular: true },
-  { id: "cacamba_4m", label: "Caçamba 4m³", short: "4m³", price: 240.0, periodo: "2 a 7 dias", uso: "Reforma residencial" },
+  { id: "cacamba_3m", label: "Caçamba 3m³", short: "3m³", price: 190.0, periodo: "2 a 7 dias", uso: "Pequena reforma", popular: true },
+  { id: "cacamba_4m", label: "Caçamba 4m³", short: "4m³", price: 280.0, periodo: "2 a 7 dias", uso: "Reforma residencial" },
   { id: "cacamba_5m", label: "Caçamba 5m³", short: "5m³", price: 360.0, periodo: "3 a 7 dias", uso: "Obra média" },
   { id: "cacamba_7m", label: "Caçamba 7m³", short: "7m³", price: 450.0, periodo: "3 a 7 dias", uso: "Obra grande" },
   { id: "cacamba_10m", label: "Caçamba 10m³", short: "10m³", price: 590.0, periodo: "5 a 7 dias", uso: "Demolição" },
