@@ -211,7 +211,7 @@ const Agendar = () => {
         address: fullAddress + ` | Agendado: ${scheduledDate ? format(scheduledDate, "dd/MM/yyyy") : ""} ${scheduledSlot}`,
         plan_id: selectedPlan,
         plan_label: currentPlan.label,
-        amount: currentPlan.price,
+        amount: pixPrice,
         transaction_id: data.transaction_id || null,
         source: "agendar",
       }).then(() => {});
@@ -342,12 +342,24 @@ const Agendar = () => {
               <p className="text-xs text-gray-500 mt-0.5">Período de locação: {currentPlan.periodo} úteis</p>
             </div>
             <div className="text-right shrink-0">
-              <p className="text-[11px] text-gray-500">Total{paymentMethod === "cartao" ? " no PIX" : ""}</p>
-              <p className="text-2xl font-black text-emerald-600 leading-none">{formatCurrency(basePrice)}</p>
-              {paymentMethod === "cartao" && (
-                <p className="text-[10px] text-amber-600 font-medium mt-1">
-                  Cartão: {formatCurrency(cardPrice)} (+5%)
-                </p>
+              <p className="text-[11px] text-gray-500">
+                {paymentMethod === "pix" ? "Total c/ PIX" : "Total no Cartão"}
+              </p>
+              {paymentMethod === "pix" ? (
+                <>
+                  <p className="text-2xl font-black text-emerald-600 leading-none">{formatCurrency(pixPrice)}</p>
+                  <p className="text-[10px] text-gray-400 line-through font-medium mt-0.5">{formatCurrency(basePrice)}</p>
+                  <span className="inline-block mt-1 rounded-full bg-emerald-100 px-2 py-0.5 text-[9px] font-black text-emerald-700">
+                    10% OFF aplicado
+                  </span>
+                </>
+              ) : (
+                <>
+                  <p className="text-2xl font-black text-emerald-600 leading-none">{formatCurrency(cardPrice)}</p>
+                  <p className="text-[10px] text-amber-600 font-medium mt-1">
+                    PIX: {formatCurrency(pixPrice)} (-10%)
+                  </p>
+                </>
               )}
             </div>
           </div>
