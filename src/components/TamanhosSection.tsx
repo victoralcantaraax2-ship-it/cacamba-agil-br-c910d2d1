@@ -9,7 +9,7 @@ const sizes = [
   {
     size: "3 m³",
     title: "Pequenas reformas",
-    price: "R$ 207",
+    price: "R$ 175",
     capacity: "20–25 sacos",
     period: "2 a 7 dias úteis",
     idealFor: ["Reparos pontuais e manutenções", "Remoção de pisos e entulho leve"],
