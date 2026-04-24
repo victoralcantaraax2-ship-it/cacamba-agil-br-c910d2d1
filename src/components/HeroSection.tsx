@@ -81,7 +81,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
           <img
             src={logoAmba}
             alt="NORTEX Caçambas"
-            className="mx-auto mb-6 h-32 w-auto drop-shadow-2xl md:h-44"
+            className="mx-auto mb-6 h-44 w-auto drop-shadow-2xl md:h-56"
             width={400}
             height={140}
             fetchPriority="high"
