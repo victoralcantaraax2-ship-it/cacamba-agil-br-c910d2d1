@@ -90,8 +90,8 @@ export default {
           to: { height: "0" },
         },
         "pulse-green": {
-          "0%, 100%": { boxShadow: "0 0 0 0 hsl(145 70% 42% / 0.3)" },
-          "70%": { boxShadow: "0 0 0 10px hsl(145 70% 42% / 0)" },
+          "0%, 100%": { boxShadow: "0 0 0 0 hsl(145 70% 42% / 0.18)" },
+          "70%": { boxShadow: "0 0 0 8px hsl(145 70% 42% / 0)" },
         },
         "bounce-subtle": {
           "0%, 100%": { transform: "translateY(0)" },
