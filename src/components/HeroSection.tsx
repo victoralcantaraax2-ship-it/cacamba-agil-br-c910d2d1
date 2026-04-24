@@ -118,26 +118,22 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
               <MapPin className="mr-1 inline h-4 w-4 text-primary" />
               Consulte disponibilidade na sua região
             </p>
-            <div className="flex gap-2 rounded-2xl bg-white/10 p-2 backdrop-blur-sm border border-white/10">
-              <div className="relative flex-1">
+            <div className="rounded-2xl bg-white/15 p-2 backdrop-blur-sm border-2 border-white/20 shadow-lg">
+              <div className="relative">
+                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-primary pointer-events-none" />
                 <input
                   placeholder="Informe seu CEP"
                   value={cep}
                   onChange={(e) => handleCepChange(e.target.value)}
                   maxLength={9}
                   inputMode="numeric"
-                  className="h-12 w-full rounded-xl bg-white pl-4 pr-3 text-base font-semibold tracking-wider text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all"
+                  className="h-14 w-full rounded-xl bg-white pl-12 pr-12 text-base font-semibold tracking-wider text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all"
                   style={{ fontSize: "16px" }}
                 />
+                {cepLoading && (
+                  <Loader2 className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 animate-spin text-primary" />
+                )}
               </div>
-              <button
-                onClick={() => { const d = cep.replace(/\D/g, ""); if (d.length === 8) fetchCep(d); }}
-                disabled={cep.replace(/\D/g, "").length < 8 || cepLoading}
-                className="flex h-12 items-center gap-2 rounded-xl bg-primary px-5 text-sm font-bold text-white transition-all hover:brightness-110 disabled:opacity-50 shrink-0"
-              >
-                {cepLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Search className="h-4 w-4" />}
-                Consultar
-              </button>
             </div>
 
             {cepError && (
