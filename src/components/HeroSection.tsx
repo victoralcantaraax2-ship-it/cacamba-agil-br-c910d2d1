@@ -36,14 +36,24 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
     setCepError(false);
     setAddress(null);
     setCepVisible(false);
+    const startedAt = Date.now();
+    const minDelay = 3000 + Math.random() * 2000; // 3-5s simulated lookup
+    const waitMinDelay = async () => {
+      const elapsed = Date.now() - startedAt;
+      if (elapsed < minDelay) await new Promise((r) => setTimeout(r, minDelay - elapsed));
+    };
     try {
       const res = await fetch(`https://viacep.com.br/ws/${digits}/json/`, { signal: AbortSignal.timeout(5000) });
       const data = await res.json();
+      await waitMinDelay();
       if (data.erro) { setCepError(true); } else {
         setAddress({ logradouro: data.logradouro, bairro: data.bairro, localidade: data.localidade, uf: data.uf, cep: data.cep });
         setTimeout(() => setCepVisible(true), 30);
       }
-    } catch { setCepError(true); }
+    } catch {
+      await waitMinDelay();
+      setCepError(true);
+    }
     setCepLoading(false);
   };
 
