@@ -142,7 +142,9 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
                   style={{ fontSize: "16px" }}
                 />
                 {cepLoading && (
-                  <Loader2 className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 animate-spin text-primary" />
+                  <div className="absolute right-4 top-1/2 -translate-y-1/2">
+                    <Loader2 className="h-5 w-5 animate-spin text-primary" />
+                  </div>
                 )}
               </div>
             </div>
