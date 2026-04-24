@@ -401,8 +401,6 @@ const Logistica = () => {
           </Card>
         )}
       </div>
-
-      <WhatsAppFloat />
     </main>
   );
 };
