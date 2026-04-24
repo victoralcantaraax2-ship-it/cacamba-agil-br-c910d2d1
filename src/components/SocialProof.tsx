@@ -17,6 +17,15 @@ const reviews = [
   { name: "Cond. Alto da Boa Vista", role: "Administradora", city: "São Paulo – Zona Sul", stars: 5, text: "Quarta contratação consecutiva. Serviço impecável e valores justos para condomínios." },
   { name: "Cond. Residencial Alphaville", role: "Síndico profissional", city: "Barueri – Alphaville", stars: 5, text: "Gestão de resíduos da reforma das áreas comuns. A NORTEX ofereceu solução completa e eficiente." },
 
+  // Condomínios em Guarulhos
+  { name: "Residencial Parque Maia", role: "Síndico", city: "Guarulhos – Jardim Maia", stars: 5, text: "Reforma da fachada e troca de pisos das áreas comuns. A NORTEX entregou caçamba no mesmo dia e retirou no prazo combinado." },
+  { name: "Cond. Via Alameda", role: "Administração condominial", city: "Guarulhos – Jardim Maia", stars: 5, text: "Obra na garagem e precisávamos de descarte rápido. Atendimento pelo WhatsApp foi extremamente ágil. Recomendo." },
+  { name: "Cond. Spazio Santa Isabel", role: "Síndica", city: "Guarulhos – Jardim Maia", stars: 5, text: "Já é a segunda vez que contratamos para reformas internas. Equipe educada e caçamba sempre no horário." },
+  { name: "Cond. Vida Plena", role: "Síndico", city: "Guarulhos – Jardim Maia", stars: 5, text: "Reforma do salão de festas. A NORTEX cuidou de todo o descarte sem incomodar moradores. Serviço impecável." },
+  { name: "Residencial Parque Cumbica", role: "Síndico profissional", city: "Guarulhos – Cumbica", stars: 5, text: "Manutenção predial e descarte de entulho. Caçamba reforçada entregue no prazo. Preço justo para condomínios." },
+  { name: "Cond. Villagio Golden Tower", role: "Administradora", city: "Guarulhos – Jardim Maia", stars: 5, text: "Atendimento profissional do início ao fim. Caçamba posicionada com cuidado e retirada sem deixar sujeira." },
+  { name: "Cond. Jardim Arapongas", role: "Síndico", city: "Guarulhos – Cumbica", stars: 5, text: "Obra no playground e a NORTEX atendeu com agilidade. Já indicamos para outros condomínios da região." },
+
   // Creches e Escolas
   { name: "Colégio Objetivo – Tatuapé", role: "Escola", city: "São Paulo – Tatuapé", stars: 5, text: "Reforma na quadra esportiva e precisávamos de caçamba urgente. A NORTEX entregou no mesmo dia." },
   { name: "Escola Monteiro Lobato", role: "Escola", city: "Santo André", stars: 5, text: "Descarte de mobiliário antigo da escola. Serviço limpo, organizado e dentro das normas." },
