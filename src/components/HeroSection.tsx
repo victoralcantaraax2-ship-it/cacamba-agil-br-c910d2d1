@@ -116,7 +116,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
           <div className="mx-auto mt-10 max-w-md">
             <p className="mb-3 text-sm font-bold uppercase tracking-wider text-white/50">
               <MapPin className="mr-1 inline h-4 w-4 text-primary" />
-              Verifique a cobertura na sua região
+              Consulte disponibilidade na sua região
             </p>
             <div className="flex gap-2 rounded-2xl bg-white/10 p-2 backdrop-blur-sm border border-white/10">
               <div className="relative flex-1">
