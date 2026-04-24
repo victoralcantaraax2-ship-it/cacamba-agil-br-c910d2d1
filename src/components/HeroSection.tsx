@@ -77,15 +77,6 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
         </div>
 
         <div className="container relative z-10 px-4 py-16 text-center md:py-24">
-          <img
-            src={logoAmba}
-            alt="NORTEX Caçambas"
-            className="mx-auto mb-6 h-24 w-auto md:h-32 lg:h-36"
-            width={320}
-            height={160}
-            loading="eager"
-            fetchPriority="high"
-          />
 
           <h1 className="mb-4 text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">
             Locação de Caçambas com <span className="text-star">Entrega Rápida</span>
