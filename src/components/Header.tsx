@@ -26,8 +26,8 @@ const Header = memo(() => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-secondary/95 backdrop-blur-md shadow-lg">
       <div className="container flex h-16 items-center justify-between px-4">
-        <Link to="/" className="shrink-0" aria-label="NORTEX Caçambas - Início">
-          <img src={logoHorizontal} alt="NORTEX Caçambas" className="h-9 w-auto" width={140} height={36} />
+        <Link to="/" className="shrink-0" aria-label="Início">
+          <span className="sr-only">NORTEX Caçambas</span>
         </Link>
 
         <nav className="hidden items-center gap-6 lg:flex">
