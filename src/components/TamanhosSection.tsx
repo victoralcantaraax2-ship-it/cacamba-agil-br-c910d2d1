@@ -41,7 +41,10 @@ const sizes = [
     price: "R$ 450",
     capacity: "60–70 sacos",
     period: "3 a 7 dias úteis",
-...
+    idealFor: ["Reformas estruturais", "Obras de médio porte"],
+    checks: ["Entrega rápida", "Retirada programada", "Suporte por WhatsApp"],
+  },
+  {
     size: "10 m³",
     title: "Grande volume",
     price: "R$ 590",
