@@ -117,7 +117,6 @@ const CidadeLanding = () => {
       <Suspense fallback={<SectionFallback />}>
         <Footer />
       </Suspense>
-      <WhatsAppFloat />
     </main>
   );
 };
