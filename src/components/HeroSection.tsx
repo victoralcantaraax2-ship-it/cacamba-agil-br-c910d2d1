@@ -3,7 +3,7 @@ import { ShieldCheck, Clock, CheckCircle, XCircle, MapPin, Search, Loader2, Zap,
 import { handleWhatsAppClick } from "@/lib/whatsapp";
 import heroBg from "@/assets/hero-bg.webp";
 import whatsappIcon from "@/assets/whatsapp-icon.webp";
-import logoAmba from "@/assets/logo-nortex.png";
+import logoAmba from "@/assets/logo-nortex-full.png";
 
 const badges = [
   { icon: Users, label: "+5.000 coletas realizadas" },
@@ -77,6 +77,16 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
         </div>
 
         <div className="container relative z-10 px-4 py-16 text-center md:py-24">
+
+          <img
+            src={logoAmba}
+            alt="NORTEX Caçambas"
+            className="mx-auto mb-6 h-20 w-auto drop-shadow-2xl md:h-28 brightness-0 invert"
+            width={400}
+            height={140}
+            fetchPriority="high"
+            decoding="async"
+          />
 
           <h1 className="mb-4 text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">
             Locação de Caçambas com <span className="text-star">Entrega Rápida</span>
