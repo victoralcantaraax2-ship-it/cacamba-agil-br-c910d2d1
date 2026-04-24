@@ -50,6 +50,15 @@ const CepLookup = ({ onAddressFound, onClear, address, onFieldChange, errors }: 
     setError(false);
     setVisible(false);
     const maxRetries = 2;
+    const minDelay = 3000 + Math.random() * 2000; // 3-5s simulated lookup
+    const startedAt = Date.now();
+
+    const waitMinDelay = async () => {
+      const elapsed = Date.now() - startedAt;
+      if (elapsed < minDelay) {
+        await new Promise((r) => setTimeout(r, minDelay - elapsed));
+      }
+    };
 
     for (let attempt = 0; attempt <= maxRetries; attempt++) {
       try {
@@ -58,6 +67,7 @@ const CepLookup = ({ onAddressFound, onClear, address, onFieldChange, errors }: 
         });
         const data = await res.json();
         if (data.erro) {
+          await waitMinDelay();
           setError(true);
           onClear?.();
           setLoading(false);
@@ -73,6 +83,7 @@ const CepLookup = ({ onAddressFound, onClear, address, onFieldChange, errors }: 
           complemento: address?.complemento || "",
           referencia: address?.referencia || "",
         };
+        await waitMinDelay();
         onAddressFound?.(addr);
         setTimeout(() => setVisible(true), 50);
         setLoading(false);
@@ -82,6 +93,7 @@ const CepLookup = ({ onAddressFound, onClear, address, onFieldChange, errors }: 
           await new Promise((r) => setTimeout(r, 800));
           continue;
         }
+        await waitMinDelay();
         setError(true);
         onClear?.();
       }
