@@ -88,7 +88,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
           />
 
           <h1 className="mb-4 text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">
-            {h1Text}
+            Locação de Caçambas com <span className="text-star">Entrega Rápida</span>
           </h1>
 
           <p className="mx-auto mb-8 max-w-xl text-base text-white/70 md:text-lg">
