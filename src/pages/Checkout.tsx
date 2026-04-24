@@ -841,12 +841,6 @@ const Checkout = () => {
                       <span className="text-muted-foreground">Caçamba</span>
                       <span className="font-semibold">{formatCurrency(subtotal)}</span>
                     </div>
-                    {appliedCoupon && (
-                      <div className="flex justify-between text-accent">
-                        <span>Desconto ({appliedCoupon})</span>
-                        <span>-{formatCurrency(discountAmount)}</span>
-                      </div>
-                    )}
                     {donationAmount > 0 && (
                       <div className="flex justify-between text-pink-600 dark:text-pink-400">
                         <span>Doação para ONG</span>
@@ -854,8 +848,8 @@ const Checkout = () => {
                       </div>
                     )}
                     <div className="flex justify-between items-center text-lg font-extrabold text-primary pt-2 border-t border-primary/20 mt-2">
-                      <span>Total a pagar</span>
-                      <span>{formatCurrency(totalPrice)}</span>
+                      <span>Total</span>
+                      <span>{formatCurrency(subtotal + donationAmount)}</span>
                     </div>
                   </div>
                 </div>
@@ -925,7 +919,7 @@ const Checkout = () => {
 
                 {paymentStatus === "idle" && (
                   <Button onClick={handleGeneratePix} className="w-full text-base font-bold rounded-xl shadow-md shadow-primary/20 h-13" size="lg">
-                    Pagar com Pix • {formatCurrency(totalPrice)}
+                    Gerar PIX {formatCurrency(totalPrice)}
                   </Button>
                 )}
 
