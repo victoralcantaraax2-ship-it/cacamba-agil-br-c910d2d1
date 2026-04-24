@@ -18,7 +18,7 @@ const sizes = [
   {
     size: "4 m³",
     title: "Obras médias",
-    price: "R$ 270",
+    price: "R$ 240",
     capacity: "30–35 sacos",
     period: "2 a 7 dias úteis",
     idealFor: ["Reformas de médio porte", "Resíduos de construção civil"],
