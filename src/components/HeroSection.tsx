@@ -187,7 +187,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
             </div>
             <div className="flex items-center gap-2">
               <Zap className="h-5 w-5 text-primary" />
-              <span className="text-sm font-semibold text-secondary-foreground">Atendimento imediato</span>
+              <span className="text-sm font-semibold text-secondary-foreground">Atendimento rápido</span>
             </div>
           </div>
         </div>
