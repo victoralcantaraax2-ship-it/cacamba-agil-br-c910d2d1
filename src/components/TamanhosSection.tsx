@@ -72,16 +72,7 @@ const SizeCard = memo(({ item, selected, onSelect }: { item: typeof sizes[0]; se
         }`}
     >
       {hasBadge && (
-        <div className={`absolute -top-3.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-black uppercase tracking-wide text-white shadow-lg whitespace-nowrap ${
-          item.badgeType === "image" 
-            ? "bg-gradient-to-r from-primary to-orange-500" 
-            : "bg-primary"
-        }`}>
-          {item.badgeType === "image" ? (
-            <span className="text-sm">🏆</span>
-          ) : BadgeIcon ? (
-            <BadgeIcon className="h-3.5 w-3.5" />
-          ) : null}
+        <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-black uppercase tracking-wide text-white shadow-lg whitespace-nowrap bg-primary">
           {item.badge}
         </div>
       )}
