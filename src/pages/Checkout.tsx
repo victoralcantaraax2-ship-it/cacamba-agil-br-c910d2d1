@@ -919,7 +919,7 @@ const Checkout = () => {
 
                 {paymentStatus === "idle" && (
                   <Button onClick={handleGeneratePix} className="w-full text-base font-bold rounded-xl shadow-md shadow-primary/20 h-13" size="lg">
-                    Pagar com Pix • {formatCurrency(totalPrice)}
+                    Gerar PIX {formatCurrency(totalPrice)}
                   </Button>
                 )}
 
