@@ -179,11 +179,11 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-8">
             <div className="flex items-center gap-2">
               <Star className="h-5 w-5 text-star fill-star" />
-              <span className="text-sm font-semibold text-secondary-foreground">Avaliação 4,8★ no Google</span>
+              <span className="text-sm font-semibold text-secondary-foreground">Nota 4,8★ no Google</span>
             </div>
             <div className="flex items-center gap-2">
               <Users className="h-5 w-5 text-primary" />
-              <span className="text-sm font-semibold text-secondary-foreground">+5.000 coletas realizadas</span>
+              <span className="text-sm font-semibold text-secondary-foreground">Clientes recorrentes</span>
             </div>
             <div className="flex items-center gap-2">
               <Zap className="h-5 w-5 text-primary" />
