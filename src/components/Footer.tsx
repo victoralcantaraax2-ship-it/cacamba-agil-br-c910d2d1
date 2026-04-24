@@ -20,12 +20,6 @@ const Footer = memo(() => {
             <p className="text-xs text-secondary-foreground/50 text-center sm:text-left leading-relaxed max-w-[220px]">
               Locação de caçambas estacionárias para obras, reformas e demolições em São Paulo.
             </p>
-            <div className="flex items-center gap-2">
-              <img src={sslLogo} alt="SSL Blindado" className="h-5 w-auto opacity-60" />
-              <span className="text-[10px] text-secondary-foreground/40">
-                Empresa Confiável
-              </span>
-            </div>
           </div>
 
           {/* Contact */}
