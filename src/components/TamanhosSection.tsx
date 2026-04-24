@@ -38,18 +38,16 @@ const sizes = [
   {
     size: "7 m³",
     title: "Construção pesada",
-    price: "R$ 460",
+    price: "R$ 450",
     capacity: "60–70 sacos",
     period: "3 a 7 dias úteis",
-    idealFor: ["Grande volume de resíduos", "Demolições parciais"],
-    checks: ["Entrega em até 2h", "Retirada agendada", "Alta capacidade"],
-    badge: "Melhor custo-benefício",
-    badgeIcon: TrendingUp,
+    idealFor: ["Reformas estruturais", "Obras de médio porte"],
+    checks: ["Entrega rápida", "Retirada programada", "Suporte por WhatsApp"],
   },
   {
     size: "10 m³",
     title: "Grande volume",
-    price: "R$ 620",
+    price: "R$ 590",
     capacity: "90–100 sacos",
     period: "5 a 7 dias úteis",
     idealFor: ["Demolições e descartes em larga escala", "Telhas, madeira e materiais diversos"],
@@ -59,7 +57,7 @@ const sizes = [
 
 const SizeCard = memo(({ item, selected, onSelect }: { item: typeof sizes[0]; selected: boolean; onSelect: () => void }) => {
   const hasBadge = !!item.badge;
-  const BadgeIcon = item.badgeIcon;
+  const BadgeIcon = (item as any).badgeIcon;
 
   return (
     <button

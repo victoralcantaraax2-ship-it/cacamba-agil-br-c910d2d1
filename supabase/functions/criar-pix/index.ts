@@ -9,8 +9,8 @@ const precos: Record<string, { amount: number; title: string; tamanho: string }>
   cacamba_3m: { amount: 17500, title: "Caçamba 3m³", tamanho: "3m³" },
   cacamba_4m: { amount: 24000, title: "Caçamba 4m³", tamanho: "4m³" },
   cacamba_5m: { amount: 36000, title: "Caçamba 5m³", tamanho: "5m³" },
-  cacamba_7m: { amount: 46000, title: "Caçamba 7m³", tamanho: "7m³" },
-  cacamba_10m: { amount: 62000, title: "Caçamba 10m³", tamanho: "10m³" },
+  cacamba_7m: { amount: 45000, title: "Caçamba 7m³", tamanho: "7m³" },
+  cacamba_10m: { amount: 59000, title: "Caçamba 10m³", tamanho: "10m³" },
 };
 
 function generateUniqueCpf(): string {
