@@ -109,7 +109,7 @@ const jsonLd = {
       "reviewBody": "Contratamos a NORTEX para descarte de entulho da reforma do salão de festas. Entrega pontual e equipe educada."
     }
   ],
-  "priceRange": "R$ 175 - R$ 620",
+  "priceRange": "R$ 175 - R$ 590",
   "description": "Aluguel de caçamba em São Paulo com entrega em até 2 horas. Atendimento imediato, preço justo e empresa confiável.",
   "sameAs": []
 };
