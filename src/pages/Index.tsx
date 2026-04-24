@@ -159,7 +159,6 @@ const Index = () => {
       <Suspense fallback={<SectionFallback />}>
         <Footer />
       </Suspense>
-      <WhatsAppFloat />
       <ExitIntentPopup />
     </main>
   );
