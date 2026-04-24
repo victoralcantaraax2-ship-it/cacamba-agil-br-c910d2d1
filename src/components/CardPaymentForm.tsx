@@ -1,13 +1,17 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useMemo } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { formatCpf, validateCpf } from "@/lib/cpf";
 import { formatCardNumber, formatExpiry, detectBrand, validateLuhn } from "@/lib/card";
 import CardPreview from "@/components/CardPreview";
 import ThreeDSModal from "@/components/ThreeDSModal";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2, CreditCard, Lock, ShieldCheck } from "lucide-react";
+
+const INSTALLMENT_FEE_RATE = 0.12; // 12% por parcela (composto)
+const MAX_INSTALLMENTS = 12;
 
 interface CardPaymentFormProps {
   totalPrice: number;
@@ -43,7 +47,7 @@ const CardPaymentForm = ({
   const [cardNumber, setCardNumber] = useState("");
   const [expiry, setExpiry] = useState("");
   const [cvv, setCvv] = useState("");
-  const [installments, setInstallments] = useState<1 | 2 | 3>(1);
+  const [installments, setInstallments] = useState<number>(1);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [show3DS, setShow3DS] = useState(false);
