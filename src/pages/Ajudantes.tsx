@@ -323,8 +323,6 @@ const Ajudantes = () => {
           </Card>
         )}
       </div>
-
-      <WhatsAppFloat />
     </main>
   );
 };
