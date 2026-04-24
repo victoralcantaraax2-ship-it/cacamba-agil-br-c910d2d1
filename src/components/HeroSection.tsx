@@ -102,7 +102,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
               className="inline-flex items-center gap-3 rounded-xl bg-whatsapp px-8 py-4 text-lg font-extrabold uppercase text-white shadow-2xl transition-all hover:scale-105 hover:bg-whatsapp-hover md:px-12 md:py-5 md:text-xl animate-pulse-green"
             >
               <img src={whatsappIcon} alt="WhatsApp" className="h-6 w-6" width={24} height={24} />
-              SOLICITAR PELO WHATSAPP
+              FALAR NO WHATSAPP
             </button>
             <button
               onClick={() => scrollTo("#tamanhos")}
