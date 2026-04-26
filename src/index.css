@@ -105,6 +105,17 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* ── Prevent horizontal scroll on all pages (mobile/app mode) ── */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+#root {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
 * {
   -webkit-tap-highlight-color: transparent;
 }
