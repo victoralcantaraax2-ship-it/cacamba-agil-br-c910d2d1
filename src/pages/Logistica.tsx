@@ -18,9 +18,9 @@ import lockIcon from "@/assets/lock-icon.webp";
 import mercadopagoLogo from "@/assets/mercadopago-logo.webp";
 
 const taxaEntregaMap: Record<string, number> = {
-  cacamba_3m: 70, cacamba_4m: 75, cacamba_5m: 80, cacamba_7m: 85, cacamba_10m: 95,
+  cacamba_3m: 91, cacamba_4m: 98, cacamba_5m: 104, cacamba_7m: 111, cacamba_10m: 124,
 };
-const taxaPrioritaria = 30;
+const taxaPrioritaria = 39;
 
 const isQrImage = (v: string) => /^(data:image|https?:\/\/)/.test(v);
 
