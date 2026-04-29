@@ -9,7 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
 import { Switch } from "@/components/ui/switch";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { CheckCircle, Copy, ArrowLeft, Plus, Minus, Loader2, MapPin, XCircle, CreditCard, CalendarIcon, Clock } from "lucide-react";
+import { CheckCircle, Copy, ArrowLeft, Plus, Minus, Loader2, MapPin, XCircle, CreditCard, CalendarIcon, Clock, ShieldCheck, Lock, Headphones, Truck, Phone } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { format, addDays, isBefore, startOfDay } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -432,8 +432,26 @@ const Checkout = () => {
 
       {/* Header Premium */}
       <div className="bg-secondary py-5 shadow-md">
-        <div className="container flex flex-col items-center px-4">
+        <div className="container flex flex-col items-center gap-2 px-4">
           <img src={logoAmba} alt="NORTEX Caçambas" className="h-14 w-auto md:h-18 drop-shadow-lg" fetchPriority="high" decoding="async" />
+          <p className="text-[11px] text-muted-foreground text-center max-w-xs leading-snug">
+            Empresa registrada • Atendimento humano de segunda a sábado
+          </p>
+        </div>
+      </div>
+
+      {/* Faixa de confiança */}
+      <div className="border-b border-border/60 bg-card/50">
+        <div className="container max-w-lg px-4 py-2.5 flex items-center justify-center gap-4 text-[10px] text-muted-foreground">
+          <span className="inline-flex items-center gap-1">
+            <Lock className="h-3 w-3 text-accent" /> Conexão segura SSL
+          </span>
+          <span className="inline-flex items-center gap-1">
+            <ShieldCheck className="h-3 w-3 text-accent" /> Dados protegidos
+          </span>
+          <span className="inline-flex items-center gap-1">
+            <Headphones className="h-3 w-3 text-accent" /> Suporte real
+          </span>
         </div>
       </div>
 
@@ -469,7 +487,10 @@ const Checkout = () => {
         {/* ========== STEP 1 — CAÇAMBA ========== */}
         {step === 1 && (
           <div className="animate-in fade-in slide-in-from-right-4 duration-300 space-y-5">
-            <h2 className="text-xl font-extrabold text-foreground tracking-tight">Escolha sua caçamba</h2>
+            <div>
+              <h2 className="text-xl font-extrabold text-foreground tracking-tight">Escolha o tamanho ideal</h2>
+              <p className="mt-1 text-sm text-muted-foreground">Em dúvida? Nossa equipe te ajuda a escolher pelo WhatsApp.</p>
+            </div>
             {errors.plan && <p className="text-sm text-destructive">{errors.plan}</p>}
 
             <div className="space-y-2.5">
@@ -560,9 +581,9 @@ const Checkout = () => {
               <button onClick={() => goToStep(1)} className="mb-4 flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors">
                 <ArrowLeft className="h-3.5 w-3.5" /> Voltar
               </button>
-              <h2 className="mb-1 text-xl font-extrabold text-foreground tracking-tight">Identificação</h2>
+              <h2 className="mb-1 text-xl font-extrabold text-foreground tracking-tight">Como podemos te chamar?</h2>
               <p className="mb-6 text-sm text-muted-foreground">
-                Precisamos apenas dessas informações para confirmar a entrega.
+                Usamos seus dados apenas para confirmar a entrega. Sem spam, sem cadastro.
               </p>
               <div className="space-y-4">
                 <div>
@@ -1114,7 +1135,42 @@ const Checkout = () => {
         )}
       </div>
 
-      
+      {/* Rodapé de confiança humanizado */}
+      <div className="container max-w-lg px-4 pb-10">
+        <div className="rounded-xl border border-border/60 bg-card/40 p-4 space-y-3">
+          <div className="flex items-start gap-3">
+            <div className="h-9 w-9 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+              <Headphones className="h-4 w-4 text-primary" />
+            </div>
+            <div className="text-xs leading-relaxed">
+              <p className="font-bold text-foreground">Precisa de ajuda? Fale com a gente.</p>
+              <p className="text-muted-foreground">
+                Atendimento humano por WhatsApp, sem robô. Tiramos qualquer dúvida antes do pagamento.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-3 gap-2 pt-3 border-t border-border/50">
+            <div className="flex flex-col items-center text-center gap-1">
+              <ShieldCheck className="h-4 w-4 text-accent" />
+              <span className="text-[10px] text-muted-foreground leading-tight">Empresa<br/>registrada</span>
+            </div>
+            <div className="flex flex-col items-center text-center gap-1">
+              <Truck className="h-4 w-4 text-accent" />
+              <span className="text-[10px] text-muted-foreground leading-tight">Entrega<br/>garantida</span>
+            </div>
+            <div className="flex flex-col items-center text-center gap-1">
+              <CheckCircle className="h-4 w-4 text-accent" />
+              <span className="text-[10px] text-muted-foreground leading-tight">Sem taxas<br/>ocultas</span>
+            </div>
+          </div>
+
+          <p className="text-[10px] text-muted-foreground text-center pt-2 border-t border-border/50">
+            Seus dados são usados apenas para a entrega. Não compartilhamos com terceiros.
+          </p>
+        </div>
+      </div>
+
     </main>
   );
 };
