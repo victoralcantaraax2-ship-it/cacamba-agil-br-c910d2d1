@@ -1135,7 +1135,42 @@ const Checkout = () => {
         )}
       </div>
 
-      
+      {/* Rodapé de confiança humanizado */}
+      <div className="container max-w-lg px-4 pb-10">
+        <div className="rounded-xl border border-border/60 bg-card/40 p-4 space-y-3">
+          <div className="flex items-start gap-3">
+            <div className="h-9 w-9 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+              <Headphones className="h-4 w-4 text-primary" />
+            </div>
+            <div className="text-xs leading-relaxed">
+              <p className="font-bold text-foreground">Precisa de ajuda? Fale com a gente.</p>
+              <p className="text-muted-foreground">
+                Atendimento humano por WhatsApp, sem robô. Tiramos qualquer dúvida antes do pagamento.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-3 gap-2 pt-3 border-t border-border/50">
+            <div className="flex flex-col items-center text-center gap-1">
+              <ShieldCheck className="h-4 w-4 text-accent" />
+              <span className="text-[10px] text-muted-foreground leading-tight">Empresa<br/>registrada</span>
+            </div>
+            <div className="flex flex-col items-center text-center gap-1">
+              <Truck className="h-4 w-4 text-accent" />
+              <span className="text-[10px] text-muted-foreground leading-tight">Entrega<br/>garantida</span>
+            </div>
+            <div className="flex flex-col items-center text-center gap-1">
+              <CheckCircle className="h-4 w-4 text-accent" />
+              <span className="text-[10px] text-muted-foreground leading-tight">Sem taxas<br/>ocultas</span>
+            </div>
+          </div>
+
+          <p className="text-[10px] text-muted-foreground text-center pt-2 border-t border-border/50">
+            Seus dados são usados apenas para a entrega. Não compartilhamos com terceiros.
+          </p>
+        </div>
+      </div>
+
     </main>
   );
 };
