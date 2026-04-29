@@ -17,7 +17,7 @@ const scrollTo = (id: string) => {
 };
 
 const HeroSection = ({ cityName }: { cityName?: string }) => {
-  const subtitle = "Atendimento direto pelo WhatsApp. Retirada programada.";
+  const subtitle = "Solicite em menos de 1 minuto pelo WhatsApp. Sem burocracia, sem cadastro.";
 
   const [cep, setCep] = useState("");
   const [address, setAddress] = useState<{ logradouro: string; bairro: string; localidade: string; uf: string; cep: string } | null>(null);
@@ -83,7 +83,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
             loading="eager"
             fetchPriority="high"
           />
-          <div className="absolute inset-0 bg-black/85" />
+          <div className="absolute inset-0 bg-black/90" />
         </div>
 
         <div className="container relative z-10 px-4 py-16 text-center md:py-24">
@@ -91,18 +91,18 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
           <img
             src={logoAmba}
             alt="NORTEX Caçambas"
-            className="mx-auto mb-6 h-44 w-auto drop-shadow-2xl md:h-56"
+            className="mx-auto mb-10 h-28 w-auto opacity-95 md:mb-12 md:h-36"
             width={400}
             height={140}
             fetchPriority="high"
             decoding="async"
           />
 
-          <h1 className="mb-4 text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">
-            Precisa de Caçamba Hoje? <span className="text-star">Entregamos em até 2 Horas</span> em São Paulo
+          <h1 className="mb-6 text-3xl font-bold leading-[1.15] tracking-tight text-white sm:text-4xl md:mb-7 md:text-5xl lg:text-[3.4rem]">
+            Alugue sua caçamba em São Paulo e receba em até <span className="font-extrabold text-white">2 horas</span>.
           </h1>
 
-          <p className="mx-auto mb-8 max-w-xl text-base text-white/70 md:text-lg">
+          <p className="mx-auto mb-10 max-w-xl text-base text-white/75 md:mb-12 md:text-lg">
             {subtitle}
           </p>
 
@@ -117,9 +117,9 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
             </button>
             <button
               onClick={() => scrollTo("#tamanhos")}
-              className="inline-flex items-center gap-2 rounded-xl border-2 border-white/30 bg-white/10 px-6 py-4 text-base font-bold text-white shadow-lg transition-all hover:scale-105 hover:bg-white/20 md:px-8 md:py-5 md:text-lg"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-white/70 underline-offset-4 transition-all hover:text-white hover:underline md:text-base"
             >
-              Ver Tamanhos e Preços
+              Ver tamanhos e preços
             </button>
           </div>
 
