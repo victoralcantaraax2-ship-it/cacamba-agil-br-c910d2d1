@@ -581,9 +581,9 @@ const Checkout = () => {
               <button onClick={() => goToStep(1)} className="mb-4 flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors">
                 <ArrowLeft className="h-3.5 w-3.5" /> Voltar
               </button>
-              <h2 className="mb-1 text-xl font-extrabold text-foreground tracking-tight">Identificação</h2>
+              <h2 className="mb-1 text-xl font-extrabold text-foreground tracking-tight">Como podemos te chamar?</h2>
               <p className="mb-6 text-sm text-muted-foreground">
-                Precisamos apenas dessas informações para confirmar a entrega.
+                Usamos seus dados apenas para confirmar a entrega. Sem spam, sem cadastro.
               </p>
               <div className="space-y-4">
                 <div>
