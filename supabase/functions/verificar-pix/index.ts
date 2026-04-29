@@ -36,8 +36,8 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Query Nitro API for transaction status
-    const response = await fetch(`https://api.nitropagamento.app/${transaction_id}`, {
+    // Query BlackCat API for transaction status
+    const response = await fetch(`https://api.blackcatpagamentos.com/v1/transactions/${transaction_id}`, {
       method: 'GET',
       headers: {
         'Authorization': `Basic ${encodedAuth}`,
@@ -46,7 +46,7 @@ Deno.serve(async (req) => {
     });
 
     const text = await response.text();
-    console.log('NITRO STATUS RESPONSE:', response.status, text.slice(0, 500));
+    console.log('BLACKCAT STATUS RESPONSE:', response.status, text.slice(0, 500));
 
     let data: any = null;
     try {
