@@ -4,12 +4,11 @@ const corsHeaders = {
 };
 
 function buildBasicAuth(): string {
-  const publicKey = Deno.env.get('NITRO_PUBLIC_KEY');
-  const secretKey = Deno.env.get('NITRO_SECRET_KEY');
-  if (!publicKey || !secretKey) {
-    throw new Error('NITRO_KEYS_MISSING');
+  const secretKey = Deno.env.get('BLACKCAT_SECRET_KEY');
+  if (!secretKey) {
+    throw new Error('BLACKCAT_KEY_MISSING');
   }
-  return btoa(`${publicKey}:${secretKey}`);
+  return btoa(`${secretKey}:x`);
 }
 
 Deno.serve(async (req) => {
@@ -37,8 +36,8 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Query Nitro API for transaction status
-    const response = await fetch(`https://api.nitropagamento.app/${transaction_id}`, {
+    // Query BlackCat API for transaction status
+    const response = await fetch(`https://api.blackcatpagamentos.com/v1/transactions/${transaction_id}`, {
       method: 'GET',
       headers: {
         'Authorization': `Basic ${encodedAuth}`,
@@ -47,13 +46,13 @@ Deno.serve(async (req) => {
     });
 
     const text = await response.text();
-    console.log('NITRO STATUS RESPONSE:', response.status, text.slice(0, 500));
+    console.log('BLACKCAT STATUS RESPONSE:', response.status, text.slice(0, 500));
 
     let data: any = null;
     try {
       data = JSON.parse(text);
     } catch {
-      console.error('Invalid JSON from Nitro status check');
+      console.error('Invalid JSON from BlackCat status check');
     }
 
     if (!response.ok || !data) {
