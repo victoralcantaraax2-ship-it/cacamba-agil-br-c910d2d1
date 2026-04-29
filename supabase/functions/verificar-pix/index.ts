@@ -52,7 +52,7 @@ Deno.serve(async (req) => {
     try {
       data = JSON.parse(text);
     } catch {
-      console.error('Invalid JSON from Nitro status check');
+      console.error('Invalid JSON from BlackCat status check');
     }
 
     if (!response.ok || !data) {
