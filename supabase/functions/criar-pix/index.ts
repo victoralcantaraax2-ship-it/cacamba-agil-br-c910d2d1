@@ -50,13 +50,12 @@ async function parseGatewayResponse(response: Response) {
 }
 
 function buildBasicAuth(): string {
-  const publicKey = Deno.env.get('NITRO_PUBLIC_KEY');
-  const secretKey = Deno.env.get('NITRO_SECRET_KEY');
-  if (!publicKey || !secretKey) {
-    throw new Error('NITRO_KEYS_MISSING');
+  const secretKey = Deno.env.get('BLACKCAT_SECRET_KEY');
+  if (!secretKey) {
+    throw new Error('BLACKCAT_KEY_MISSING');
   }
-  const credentials = `${publicKey}:${secretKey}`;
-  return btoa(credentials);
+  // BlackCat usa Basic auth com secret_key:x
+  return btoa(`${secretKey}:x`);
 }
 
 Deno.serve(async (req) => {
