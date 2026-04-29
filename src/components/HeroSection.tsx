@@ -17,7 +17,7 @@ const scrollTo = (id: string) => {
 };
 
 const HeroSection = ({ cityName }: { cityName?: string }) => {
-  const subtitle = "Solicite agora. Entrega em até 2h. Retirada programada.";
+  const subtitle = "Atendimento direto pelo WhatsApp. Retirada programada.";
 
   const [cep, setCep] = useState("");
   const [address, setAddress] = useState<{ logradouro: string; bairro: string; localidade: string; uf: string; cep: string } | null>(null);
@@ -99,7 +99,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
           />
 
           <h1 className="mb-4 text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">
-            Locação de Caçambas com <span className="text-star">Entrega Rápida</span>
+            Precisa de Caçamba Hoje? <span className="text-star">Entregamos em até 2 Horas</span> em São Paulo
           </h1>
 
           <p className="mx-auto mb-8 max-w-xl text-base text-white/70 md:text-lg">
