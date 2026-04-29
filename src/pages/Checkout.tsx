@@ -432,8 +432,26 @@ const Checkout = () => {
 
       {/* Header Premium */}
       <div className="bg-secondary py-5 shadow-md">
-        <div className="container flex flex-col items-center px-4">
+        <div className="container flex flex-col items-center gap-2 px-4">
           <img src={logoAmba} alt="NORTEX Caçambas" className="h-14 w-auto md:h-18 drop-shadow-lg" fetchPriority="high" decoding="async" />
+          <p className="text-[11px] text-muted-foreground text-center max-w-xs leading-snug">
+            Empresa registrada • Atendimento humano de segunda a sábado
+          </p>
+        </div>
+      </div>
+
+      {/* Faixa de confiança */}
+      <div className="border-b border-border/60 bg-card/50">
+        <div className="container max-w-lg px-4 py-2.5 flex items-center justify-center gap-4 text-[10px] text-muted-foreground">
+          <span className="inline-flex items-center gap-1">
+            <Lock className="h-3 w-3 text-accent" /> Conexão segura SSL
+          </span>
+          <span className="inline-flex items-center gap-1">
+            <ShieldCheck className="h-3 w-3 text-accent" /> Dados protegidos
+          </span>
+          <span className="inline-flex items-center gap-1">
+            <Headphones className="h-3 w-3 text-accent" /> Suporte real
+          </span>
         </div>
       </div>
 
