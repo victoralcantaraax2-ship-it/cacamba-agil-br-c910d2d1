@@ -133,30 +133,34 @@ Deno.serve(async (req) => {
     const uniqueCpf = generateUniqueCpf();
     console.log("USING CPF:", uniqueCpf);
 
-    const amountDecimal = amount / 100; // Nitro expects amount in BRL (e.g. 230.00), not cents
-
-    const nitroPayload = {
-      amount: amountDecimal,
-      payment_method: 'pix',
-      description: description,
+    // BlackCat: amount em CENTAVOS, paymentMethod camelCase, document como objeto
+    const blackcatPayload = {
+      amount: amount, // já está em centavos
+      paymentMethod: 'pix',
+      pix: {
+        expiresInDays: 1,
+      },
+      customer: {
+        name: nome,
+        email: `${telefone.replace(/\D/g, '')}@nortexlocacao.com.br`,
+        phone: telefone.replace(/\D/g, ''),
+        document: {
+          number: uniqueCpf,
+          type: 'cpf',
+        },
+      },
       items: [
         {
-          title: 'PAGAMENTO LTDA',
+          title: itemTitle,
           unitPrice: amount,
           quantity: itemQty,
           tangible: false,
         },
       ],
-      customer: {
-        name: nome,
-        email: `${telefone.replace(/\D/g, '')}@supsilencio.com.br`,
-        phone: telefone.replace(/\D/g, ''),
-        document: uniqueCpf,
-      },
     };
 
     const createSale = async (payload: Record<string, unknown>) => {
-      const response = await fetch('https://api.nitropagamento.app', {
+      const response = await fetch('https://api.blackcatpagamentos.com/v1/transactions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -170,12 +174,12 @@ Deno.serve(async (req) => {
       return { response, data: parsed.data, rawText: parsed.rawText };
     };
 
-    const { response: gatewayResponse, data, rawText } = await createSale(nitroPayload);
-    console.log("NITRO RESPONSE:", gatewayResponse.status, data ? JSON.stringify(data) : rawText.slice(0, 300));
+    const { response: gatewayResponse, data, rawText } = await createSale(blackcatPayload);
+    console.log("BLACKCAT RESPONSE:", gatewayResponse.status, data ? JSON.stringify(data) : rawText.slice(0, 500));
 
     if (!gatewayResponse.ok) {
       console.error(
-        'Nitro error - status:',
+        'BlackCat error - status:',
         gatewayResponse.status,
         'body:',
         data ? JSON.stringify(data) : rawText.slice(0, 500),
@@ -187,27 +191,25 @@ Deno.serve(async (req) => {
     }
 
     if (!data) {
-      console.error('Nitro returned success status but invalid JSON body:', rawText.slice(0, 500));
+      console.error('BlackCat returned success status but invalid JSON body:', rawText.slice(0, 500));
       return new Response(JSON.stringify({ error: 'Erro ao gerar PIX. Tente novamente.' }), {
         status: 502,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 
-    // Map response (supports old and new Nitro formats)
-    const gatewayData = data?.data || {};
-    const paymentData = gatewayData.paymentData || gatewayData;
-    const pixCodeValue = paymentData.copyPaste || paymentData.pix_code || paymentData.qrCode || paymentData.pix_qr_code || '';
-    let qrCodeValue = paymentData.qrCode || paymentData.qrCodeBase64 || paymentData.qrCodeUrl || paymentData.pix_qr_code || pixCodeValue;
-    // Normalize raw base64 PNG into a data URL so the frontend renders it as an image
-    // instead of trying to encode the huge base64 string into a new QR code (RangeError: Data too long)
+    // BlackCat response: { id, pix: { qrcode, ... }, ... } ou { data: {...} }
+    const gatewayData = data?.data || data || {};
+    const pixData = gatewayData.pix || {};
+    const pixCodeValue = pixData.qrcode || pixData.copyPaste || pixData.pix_code || gatewayData.copyPaste || '';
+    let qrCodeValue = pixData.qrcodeBase64 || pixData.qrCode || pixData.qrcode || pixCodeValue;
     if (typeof qrCodeValue === 'string' && qrCodeValue.startsWith('iVBOR') && !qrCodeValue.startsWith('data:')) {
       qrCodeValue = `data:image/png;base64,${qrCodeValue}`;
     }
     const result = {
       qr_code: qrCodeValue,
       pix_code: pixCodeValue,
-      transaction_id: gatewayData.transactionId || gatewayData.id || '',
+      transaction_id: String(gatewayData.id || gatewayData.transactionId || ''),
       invoice_url: gatewayData.invoiceUrl || gatewayData.invoice_url || '',
       valor_final: amount,
     };
