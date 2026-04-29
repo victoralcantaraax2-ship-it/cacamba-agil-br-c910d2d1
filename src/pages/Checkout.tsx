@@ -487,7 +487,10 @@ const Checkout = () => {
         {/* ========== STEP 1 — CAÇAMBA ========== */}
         {step === 1 && (
           <div className="animate-in fade-in slide-in-from-right-4 duration-300 space-y-5">
-            <h2 className="text-xl font-extrabold text-foreground tracking-tight">Escolha sua caçamba</h2>
+            <div>
+              <h2 className="text-xl font-extrabold text-foreground tracking-tight">Escolha o tamanho ideal</h2>
+              <p className="mt-1 text-sm text-muted-foreground">Em dúvida? Nossa equipe te ajuda a escolher pelo WhatsApp.</p>
+            </div>
             {errors.plan && <p className="text-sm text-destructive">{errors.plan}</p>}
 
             <div className="space-y-2.5">
