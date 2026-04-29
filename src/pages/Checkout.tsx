@@ -860,7 +860,9 @@ const Checkout = () => {
             <Card className="shadow-sm border-border/50">
               <CardContent className="pt-5 pb-5">
                 <h2 className="text-base font-extrabold text-foreground mb-3 tracking-tight">Forma de pagamento</h2>
-                <div className="grid grid-cols-2 gap-3 mb-4">
+                {/* SHOW_CARD_PAYMENT: alterar para true para reexibir a opção de cartão */}
+                {(() => { const SHOW_CARD_PAYMENT = false; return (
+                <div className={`grid ${SHOW_CARD_PAYMENT ? "grid-cols-2" : "grid-cols-1"} gap-3 mb-4`}>
                   <button
                     onClick={() => setPaymentMethod("pix")}
                     className={`flex items-center justify-center gap-2 rounded-xl border-2 p-3.5 transition-all ${
@@ -870,6 +872,7 @@ const Checkout = () => {
                     <img src={pixLogo} alt="Pix" className="h-5 w-5 object-contain" />
                     <span className="text-sm font-bold text-foreground">Pix</span>
                   </button>
+                  {SHOW_CARD_PAYMENT && (
                   <button
                     onClick={() => setPaymentMethod("cartao")}
                     className={`flex items-center justify-center gap-2 rounded-xl border-2 p-3.5 transition-all ${
@@ -879,7 +882,9 @@ const Checkout = () => {
                     <CreditCard className="h-5 w-5 text-foreground" />
                     <span className="text-sm font-bold text-foreground">Cartão</span>
                   </button>
+                  )}
                 </div>
+                ); })()}
               </CardContent>
             </Card>
 
