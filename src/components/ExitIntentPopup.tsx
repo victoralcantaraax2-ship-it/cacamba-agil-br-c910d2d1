@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, memo } from "react";
 import { X, MessageCircle, Clock } from "lucide-react";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
+import { fireNortexBackConversion } from "@/lib/gtagConversion";
 import phoneIcon from "@/assets/phone-icon.webp";
 import logoAmba from "@/assets/logo-nortex.png";
 
@@ -26,6 +27,7 @@ const ExitIntentPopup = memo(() => {
     const handleMouseLeave = (e: MouseEvent) => {
       if (e.clientY <= 5 && !triggered) {
         triggered = true;
+        fireNortexBackConversion();
         setVisible(true);
         setTimeout(() => setAnimate(true), 30);
       }
@@ -43,6 +45,7 @@ const ExitIntentPopup = memo(() => {
         // Show when they come back
         const showOnReturn = () => {
           if (document.visibilityState === "visible") {
+            fireNortexBackConversion();
             setVisible(true);
             setTimeout(() => setAnimate(true), 30);
             document.removeEventListener("visibilitychange", showOnReturn);
