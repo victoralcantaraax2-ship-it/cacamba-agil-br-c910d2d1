@@ -2,7 +2,7 @@ import { useState, memo } from "react";
 import { Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
-import logoHorizontal from "@/assets/logo-nortex-horizontal.png";
+import logoHorizontal from "@/assets/logo-nortex-horizontal.webp";
 import whatsappIcon from "@/assets/whatsapp-icon.webp";
 
 const navLinks = [
@@ -24,9 +24,10 @@ const Header = memo(() => {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-secondary/95 backdrop-blur-md shadow-lg">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-secondary/96 shadow-lg">
       <div className="container flex h-16 items-center justify-between px-4">
         <Link to="/" className="shrink-0" aria-label="Início">
+          <img src={logoHorizontal} alt="NORTEX Caçambas" className="h-8 w-auto" width={160} height={32} loading="eager" decoding="async" />
           <span className="sr-only">NORTEX Caçambas</span>
         </Link>
 
