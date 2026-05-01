@@ -46,7 +46,7 @@ const jsonLd = {
   "name": "NORTEX Caçambas",
   "image": "https://nortexcacambas.com/og-image.png",
   "url": "https://nortexcacambas.com",
-  "telephone": "+55-11-98684-7426",
+  "telephone": "+55-11-98684-7737",
   "email": "atendimento@nortexcacambas.com",
   "address": {
     "@type": "PostalAddress",
