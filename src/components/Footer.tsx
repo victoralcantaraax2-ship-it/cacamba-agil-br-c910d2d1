@@ -25,8 +25,8 @@ const Footer = memo(() => {
           {/* Contact */}
           <div className="flex flex-col items-center sm:items-start gap-2">
             <p className="text-xs font-bold text-secondary-foreground/70 uppercase tracking-wider mb-1">Contato</p>
-            <button onClick={() => handleWhatsAppClick()} aria-label="Falar no WhatsApp (11) 98684-7426" className="flex items-center gap-2 text-xs text-secondary-foreground/60 hover:text-primary transition-colors">
-              <img src={whatsappIcon} alt="" className="h-3.5 w-3.5" /> (11) 98684-7426
+            <button onClick={() => handleWhatsAppClick()} aria-label="Falar no WhatsApp (11) 98684-7737" className="flex items-center gap-2 text-xs text-secondary-foreground/60 hover:text-primary transition-colors">
+              <img src={whatsappIcon} alt="" className="h-3.5 w-3.5" /> (11) 98684-7737
             </button>
             <a href="mailto:atendimento@nortexcacambas.com" className="flex items-center gap-2 text-xs text-secondary-foreground/60 hover:text-primary transition-colors">
               <Mail className="h-3.5 w-3.5" /> atendimento@nortexcacambas.com
