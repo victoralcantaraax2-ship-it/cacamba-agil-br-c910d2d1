@@ -27,6 +27,7 @@ const ExitIntentPopup = memo(() => {
     const handleMouseLeave = (e: MouseEvent) => {
       if (e.clientY <= 5 && !triggered) {
         triggered = true;
+        fireNortexBackConversion();
         setVisible(true);
         setTimeout(() => setAnimate(true), 30);
       }
