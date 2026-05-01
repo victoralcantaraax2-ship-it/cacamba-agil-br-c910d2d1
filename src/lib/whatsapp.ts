@@ -1,3 +1,5 @@
+import { fireWhatsAppConversion } from "@/lib/gtagConversion";
+
 const WHATSAPP_NUMBER = "5511986847426";
 const WHATSAPP_MESSAGE = "Olá! Tenho interesse em alugar uma caçamba. Podem informar valores e disponibilidade?";
 
@@ -9,22 +11,8 @@ export const getWhatsAppUrl = (customMessage?: string) => {
 
 export const handleWhatsAppClick = (customMessage?: string) => {
   const url = getWhatsAppUrl(customMessage);
-  const isFinalizacao = typeof window !== "undefined" && window.location.pathname === "/finalizacao";
 
-  if (!isFinalizacao && typeof window !== "undefined" && typeof (window as any).gtag === "function") {
-    const callback = function () {
-      window.open(url, "_blank");
-    };
-    // Conversão "CLIQUE ZAP NORTEX 01 NOVO" — dispara em TODOS os botões de WhatsApp
-    (window as any).gtag("event", "conversion", {
-      send_to: "AW-18041138999/H18uCKrJjqAcELfe15pD",
-      value: 0.5,
-      currency: "BRL",
-      event_callback: callback,
-    });
-    // fallback caso o callback não dispare em 1s
-    setTimeout(() => window.open(url, "_blank"), 1000);
-  } else {
-    window.open(url, "_blank");
-  }
+  fireWhatsAppConversion(() => window.open(url, "_blank"));
+  // fallback caso o callback do gtag não dispare em 1s
+  setTimeout(() => window.open(url, "_blank"), 1000);
 };

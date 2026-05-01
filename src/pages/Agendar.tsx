@@ -9,7 +9,6 @@ import {
 } from "lucide-react";
 
 import { supabase } from "@/integrations/supabase/client";
-import { firePixCopyConversion } from "@/lib/gtagConversion";
 import { formatPhone, validatePhone } from "@/lib/phone";
 import { getSafeQrValue } from "@/lib/qrPix";
 import { captureUtms, type UtmData } from "@/lib/utm";
@@ -274,7 +273,6 @@ const Agendar = () => {
     }
     setCopyToast(true);
     setTimeout(() => setCopyToast(false), 4000);
-    firePixCopyConversion();
   };
 
   const handleCardSuccess = () => setPaymentStatus("confirmed");

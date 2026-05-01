@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { firePixCopyConversion } from "@/lib/gtagConversion";
 import { supabase } from "@/integrations/supabase/client";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
@@ -138,7 +137,6 @@ const Ajudantes = () => {
     setCopyToast(true);
     toast({ title: "Código copiado!" });
     setTimeout(() => setCopyToast(false), 2000);
-    firePixCopyConversion();
   };
 
   const qrDisplay = pixQr || pixCode;

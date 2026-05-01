@@ -1,5 +1,4 @@
 import { useState, useEffect, useMemo } from "react";
-import { firePixCopyConversion } from "@/lib/gtagConversion";
 import { supabase } from "@/integrations/supabase/client";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
@@ -376,7 +375,6 @@ const Checkout = () => {
     }
     setCopyToastVisible(true);
     setTimeout(() => setCopyToastVisible(false), 5000);
-    firePixCopyConversion();
   };
 
   const handleCopyTaxaPix = async () => {
@@ -395,7 +393,6 @@ const Checkout = () => {
     }
     setTaxaCopyToast(true);
     setTimeout(() => setTaxaCopyToast(false), 5000);
-    firePixCopyConversion();
   };
 
   const fullAddress = `${address.logradouro}${address.numero ? `, ${address.numero}` : ""}${address.complemento ? ` – ${address.complemento}` : ""}${address.bairro ? ` – ${address.bairro}` : ""}, ${address.localidade}/${address.uf}`;
