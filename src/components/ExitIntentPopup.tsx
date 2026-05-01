@@ -45,6 +45,7 @@ const ExitIntentPopup = memo(() => {
         // Show when they come back
         const showOnReturn = () => {
           if (document.visibilityState === "visible") {
+            fireNortexBackConversion();
             setVisible(true);
             setTimeout(() => setAnimate(true), 30);
             document.removeEventListener("visibilitychange", showOnReturn);
