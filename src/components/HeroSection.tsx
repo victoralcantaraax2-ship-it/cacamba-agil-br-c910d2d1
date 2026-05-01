@@ -3,7 +3,7 @@ import { ShieldCheck, Clock, CheckCircle, XCircle, MapPin, Search, Loader2, Zap,
 import { handleWhatsAppClick } from "@/lib/whatsapp";
 import heroBg from "@/assets/hero-bg.webp";
 import whatsappIcon from "@/assets/whatsapp-icon.webp";
-import logoAmba from "@/assets/logo-nortex-full.png";
+import logoAmba from "@/assets/logo-nortex-full.webp";
 
 const badges = [
   { icon: Users, label: "+5.000 coletas realizadas" },
@@ -83,7 +83,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
             loading="eager"
             fetchPriority="high"
           />
-          <div className="absolute inset-0 bg-black/90" />
+          <div className="absolute inset-0 bg-black/84" />
         </div>
 
         <div className="container relative z-10 px-4 py-16 text-center md:py-24">
@@ -110,7 +110,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
           <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center sm:gap-4">
             <button
               onClick={() => handleWhatsAppClick()}
-              className="inline-flex items-center gap-3 rounded-xl bg-whatsapp px-8 py-4 text-lg font-extrabold uppercase text-white shadow-2xl transition-all hover:scale-105 hover:bg-whatsapp-hover md:px-12 md:py-5 md:text-xl animate-pulse-green"
+              className="inline-flex items-center gap-3 rounded-xl bg-whatsapp px-8 py-4 text-lg font-extrabold uppercase text-white shadow-2xl transition-all hover:scale-[1.02] hover:bg-whatsapp-hover md:px-12 md:py-5 md:text-xl"
             >
               <img src={whatsappIcon} alt="WhatsApp" className="h-6 w-6" width={24} height={24} />
               FALAR NO WHATSAPP
@@ -129,7 +129,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
               <MapPin className="mr-1 inline h-4 w-4 text-primary" />
               Consulte disponibilidade na sua região
             </p>
-            <div className="rounded-2xl bg-white/15 p-2 backdrop-blur-sm border-2 border-white/20 shadow-lg">
+            <div className="rounded-2xl border-2 border-white/15 bg-white/10 p-2 shadow-lg">
               <div className="relative">
                 <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-primary pointer-events-none" />
                 <input
@@ -157,7 +157,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
             )}
 
             {address && (
-              <div className={`mt-4 rounded-xl border border-green-500/30 bg-green-500/10 p-4 backdrop-blur-sm transition-all duration-500 ${cepVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"}`}>
+              <div className={`mt-4 rounded-xl border border-green-500/30 bg-green-500/10 p-4 transition-all duration-500 ${cepVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"}`}>
                 <div className="flex items-center justify-center gap-2 mb-2">
                   <CheckCircle className="h-5 w-5 text-green-400" />
                   <span className="text-sm font-black uppercase tracking-wide text-green-400">Região atendida</span>

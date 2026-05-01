@@ -100,7 +100,7 @@ const WhatsAppFloat = memo(() => {
     <>
       {open && (
         <div
-          className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
+          className="fixed inset-0 z-50 bg-black/45"
           onClick={() => setOpen(false)}
         />
       )}
@@ -231,7 +231,7 @@ const WhatsAppFloat = memo(() => {
         className={`fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full shadow-lg shadow-whatsapp/30 transition-all duration-300 sm:h-16 sm:w-16
           ${open
             ? "bg-card border border-border rotate-0 hover:bg-muted"
-            : "bg-whatsapp hover:scale-110 hover:bg-whatsapp-hover hover:shadow-xl hover:shadow-whatsapp/40 animate-pulse-green"
+            : "bg-whatsapp hover:scale-110 hover:bg-whatsapp-hover hover:shadow-xl hover:shadow-whatsapp/40"
           }`}
         aria-label="Chamar no WhatsApp"
       >
