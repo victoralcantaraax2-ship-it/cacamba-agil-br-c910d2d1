@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, memo } from "react";
 import { X, MessageCircle, Clock } from "lucide-react";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
+import { fireNortexBackConversion } from "@/lib/gtagConversion";
 import phoneIcon from "@/assets/phone-icon.webp";
 import logoAmba from "@/assets/logo-nortex.png";
 
