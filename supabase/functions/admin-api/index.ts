@@ -11,50 +11,34 @@ function getServiceClient() {
   return createClient(url, key);
 }
 
-const BLACKCAT_BASE_URLS = [
-  'https://api.blackcatpay.com.br/api',
-  'https://api.blackcatpay.com.br',
-];
+const NITRO_BASE_URL = 'https://api.nitropagamento.app';
 
-function getBlackCatHeaders(): HeadersInit {
-  const secretKey = Deno.env.get('BLACKCAT_SECRET_KEY');
-  if (!secretKey) {
-    throw new Error('BLACKCAT_KEY_MISSING');
+function getNitroHeaders(): HeadersInit {
+  const publicKey = Deno.env.get('NITRO_PUBLIC_KEY');
+  const secretKey = Deno.env.get('NITRO_SECRET_KEY');
+  if (!publicKey || !secretKey) {
+    throw new Error('NITRO_KEYS_MISSING');
   }
 
   return {
-    'Authorization': `Bearer ${secretKey}`,
-    'x-api-key': secretKey,
+    'Authorization': `Basic ${btoa(`${publicKey}:${secretKey}`)}`,
+    'Content-Type': 'application/json',
   };
 }
 
-async function requestBlackCatStatus(transactionId: string) {
-  let lastResponse: Response | null = null;
-  let lastText = '';
-  let lastData: any = null;
+async function requestNitroStatus(transactionId: string) {
+  const requestUrl = `${NITRO_BASE_URL}/transactions/${encodeURIComponent(transactionId)}`;
+  const response = await fetch(requestUrl, {
+    method: 'GET',
+    headers: getNitroHeaders(),
+    signal: AbortSignal.timeout(15000),
+  });
 
-  for (const baseUrl of BLACKCAT_BASE_URLS) {
-    const response = await fetch(`${baseUrl}/transactions/${transactionId}`, {
-      method: 'GET',
-      headers: getBlackCatHeaders(),
-      signal: AbortSignal.timeout(15000),
-    });
+  const rawText = await response.text();
+  let data: any = null;
+  try { data = JSON.parse(rawText); } catch {}
 
-    const rawText = await response.text();
-    let data: any = null;
-    try { data = JSON.parse(rawText); } catch {}
-
-    lastResponse = response;
-    lastText = rawText;
-    lastData = data;
-
-    const errorCode = String(data?.code || '').toUpperCase();
-    if (response.ok || (response.status !== 404 && errorCode !== 'NOT_FOUND')) {
-      return { response, rawText, data, requestUrl: `${baseUrl}/transactions/${transactionId}` };
-    }
-  }
-
-  return { response: lastResponse, rawText: lastText, data: lastData, requestUrl: 'unknown' };
+  return { response, rawText, data, requestUrl };
 }
 
 async function verifyAdminPassword(supabase: ReturnType<typeof createClient>, password: string): Promise<boolean> {
@@ -182,16 +166,16 @@ Deno.serve(async (req) => {
           });
         }
 
-        if (!Deno.env.get('BLACKCAT_SECRET_KEY')) {
-          return new Response(JSON.stringify({ error: 'Chave BlackCat não configurada' }), {
+        if (!Deno.env.get('NITRO_PUBLIC_KEY') || !Deno.env.get('NITRO_SECRET_KEY')) {
+          return new Response(JSON.stringify({ error: 'Chaves Nitro não configuradas' }), {
             status: 500,
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
           });
         }
 
-        const { response: blackcatRes, rawText, data: blackcatData, requestUrl } = await requestBlackCatStatus(transaction_id);
+        const { response: nitroRes, data: nitroData, requestUrl } = await requestNitroStatus(transaction_id);
 
-        const txData = blackcatData?.data || blackcatData || {};
+        const txData = nitroData?.data || nitroData || {};
         const rawStatus = (txData.status || txData.paymentStatus || txData.payment_status || '').toString().toLowerCase();
 
         let mappedStatus = 'pending';
@@ -207,7 +191,7 @@ Deno.serve(async (req) => {
         result = {
           status: mappedStatus,
           raw_status: rawStatus,
-          gateway_http: blackcatRes.status,
+          gateway_http: nitroRes.status,
           gateway_url: requestUrl,
           transaction_id,
           raw_data: txData,
