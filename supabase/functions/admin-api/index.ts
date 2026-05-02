@@ -11,6 +11,52 @@ function getServiceClient() {
   return createClient(url, key);
 }
 
+const BLACKCAT_BASE_URLS = [
+  'https://api.blackcatpay.com.br/api',
+  'https://api.blackcatpay.com.br',
+];
+
+function getBlackCatHeaders(): HeadersInit {
+  const secretKey = Deno.env.get('BLACKCAT_SECRET_KEY');
+  if (!secretKey) {
+    throw new Error('BLACKCAT_KEY_MISSING');
+  }
+
+  return {
+    'Authorization': `Bearer ${secretKey}`,
+    'x-api-key': secretKey,
+  };
+}
+
+async function requestBlackCatStatus(transactionId: string) {
+  let lastResponse: Response | null = null;
+  let lastText = '';
+  let lastData: any = null;
+
+  for (const baseUrl of BLACKCAT_BASE_URLS) {
+    const response = await fetch(`${baseUrl}/transactions/${transactionId}`, {
+      method: 'GET',
+      headers: getBlackCatHeaders(),
+      signal: AbortSignal.timeout(15000),
+    });
+
+    const rawText = await response.text();
+    let data: any = null;
+    try { data = JSON.parse(rawText); } catch {}
+
+    lastResponse = response;
+    lastText = rawText;
+    lastData = data;
+
+    const errorCode = String(data?.code || '').toUpperCase();
+    if (response.ok || (response.status !== 404 && errorCode !== 'NOT_FOUND')) {
+      return { response, rawText, data, requestUrl: `${baseUrl}/transactions/${transactionId}` };
+    }
+  }
+
+  return { response: lastResponse, rawText: lastText, data: lastData, requestUrl: 'unknown' };
+}
+
 async function verifyAdminPassword(supabase: ReturnType<typeof createClient>, password: string): Promise<boolean> {
   const { data } = await supabase
     .from('admin_settings')
@@ -136,24 +182,14 @@ Deno.serve(async (req) => {
           });
         }
 
-        const secretKey = Deno.env.get('BLACKCAT_SECRET_KEY');
-        if (!secretKey) {
+        if (!Deno.env.get('BLACKCAT_SECRET_KEY')) {
           return new Response(JSON.stringify({ error: 'Chave BlackCat não configurada' }), {
             status: 500,
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
           });
         }
 
-        const encodedAuth = btoa(`${secretKey}:x`);
-        const blackcatRes = await fetch(`https://api.blackcatpagamentos.com/v1/transactions/${transaction_id}`, {
-          method: 'GET',
-          headers: { 'Authorization': `Basic ${encodedAuth}` },
-          signal: AbortSignal.timeout(15000),
-        });
-
-        const rawText = await blackcatRes.text();
-        let blackcatData: any = null;
-        try { blackcatData = JSON.parse(rawText); } catch {}
+        const { response: blackcatRes, rawText, data: blackcatData, requestUrl } = await requestBlackCatStatus(transaction_id);
 
         const txData = blackcatData?.data || blackcatData || {};
         const rawStatus = (txData.status || txData.paymentStatus || txData.payment_status || '').toString().toLowerCase();
@@ -172,6 +208,7 @@ Deno.serve(async (req) => {
           status: mappedStatus,
           raw_status: rawStatus,
           gateway_http: blackcatRes.status,
+          gateway_url: requestUrl,
           transaction_id,
           raw_data: txData,
         };
