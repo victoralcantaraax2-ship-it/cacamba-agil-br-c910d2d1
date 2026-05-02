@@ -49,22 +49,25 @@ async function parseGatewayResponse(response: Response) {
   }
 }
 
-const BLACKCAT_BASE_URL = 'https://api.blackcatpay.com.br/api';
+const NITRO_BASE_URL = 'https://api.nitropagamento.app';
 
-function getBlackCatHeaders(): HeadersInit {
-  const secretKey = Deno.env.get('BLACKCAT_SECRET_KEY');
-  if (!secretKey) {
-    throw new Error('BLACKCAT_KEY_MISSING');
+function getNitroHeaders(): HeadersInit {
+  const publicKey = Deno.env.get('NITRO_PUBLIC_KEY');
+  const secretKey = Deno.env.get('NITRO_SECRET_KEY');
+  if (!publicKey || !secretKey) {
+    throw new Error('NITRO_KEYS_MISSING');
   }
+
+  const credentials = btoa(`${publicKey}:${secretKey}`);
 
   return {
     'Content-Type': 'application/json',
-    'X-API-Key': secretKey,
+    'Authorization': `Basic ${credentials}`,
   };
 }
 
-async function requestBlackCat(path: string, init: RequestInit) {
-  const url = `${BLACKCAT_BASE_URL}${path}`;
+async function requestNitro(path: string, init: RequestInit) {
+  const url = `${NITRO_BASE_URL}${path}`;
   const response = await fetch(url, {
     ...init,
     signal: AbortSignal.timeout(90000),
@@ -136,7 +139,7 @@ Deno.serve(async (req) => {
 
     let headers: HeadersInit;
     try {
-      headers = getBlackCatHeaders();
+      headers = getNitroHeaders();
     } catch {
       console.error('Nitro payment keys not configured');
       return new Response(JSON.stringify({ error: 'Chave de pagamento não configurada' }), {
@@ -148,22 +151,15 @@ Deno.serve(async (req) => {
     const uniqueCpf = generateUniqueCpf();
     console.log("USING CPF:", uniqueCpf);
 
-    // BlackCat: amount em CENTAVOS, paymentMethod camelCase, document como objeto
-    const blackcatPayload = {
-      amount: amount,
-      currency: 'BRL',
-      paymentMethod: 'pix',
-      pix: {
-        expiresInDays: 1,
-      },
+    const nitroPayload = {
+      amount: Number((amount / 100).toFixed(2)),
+      payment_method: 'pix',
+      description,
       customer: {
         name: nome,
         email: `${telefone.replace(/\D/g, '')}@nortexlocacao.com.br`,
         phone: telefone.replace(/\D/g, ''),
-        document: {
-          number: uniqueCpf,
-          type: 'cpf',
-        },
+        document: uniqueCpf,
       },
       items: [
         {
@@ -173,18 +169,22 @@ Deno.serve(async (req) => {
           tangible: false,
         },
       ],
+      metadata: {
+        source: 'nortex-web',
+        plan: plano || 'custom',
+      },
     };
 
-    const { response: gatewayResponse, data, rawText, requestUrl } = await requestBlackCat('/sales/create-sale', {
+    const { response: gatewayResponse, data, rawText, requestUrl } = await requestNitro('', {
       method: 'POST',
       headers,
-      body: JSON.stringify(blackcatPayload),
+      body: JSON.stringify(nitroPayload),
     });
-    console.log("BLACKCAT RESPONSE:", requestUrl, gatewayResponse?.status, data ? JSON.stringify(data) : rawText.slice(0, 500));
+    console.log("NITRO RESPONSE:", requestUrl, gatewayResponse?.status, data ? JSON.stringify(data) : rawText.slice(0, 500));
 
     if (!gatewayResponse?.ok) {
       console.error(
-        'BlackCat error - status:',
+        'Nitro error - status:',
         gatewayResponse?.status,
         'url:',
         requestUrl,
@@ -199,24 +199,26 @@ Deno.serve(async (req) => {
     }
 
     if (!data) {
-      console.error('BlackCat returned success status but invalid JSON body:', rawText.slice(0, 500));
+      console.error('Nitro returned success status but invalid JSON body:', rawText.slice(0, 500));
       return new Response(JSON.stringify({ error: 'Erro ao gerar PIX. Tente novamente.' }), {
         status: 502,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 
-    // BlackCat response: { success, data: { transactionId, paymentData: { qrCode, qrCodeBase64, copyPaste }, invoiceUrl } }
     const gatewayData = (data as any)?.data || data || {};
     const paymentData = gatewayData.paymentData || gatewayData.pix || {};
     const pixCodeValue =
+      gatewayData.pix_code ||
+      paymentData.pix_code ||
       paymentData.copyPaste ||
       paymentData.qrCode ||
       paymentData.qrcode ||
-      paymentData.pix_code ||
       gatewayData.copyPaste ||
       '';
     let qrCodeValue =
+      gatewayData.pix_qr_code ||
+      paymentData.pix_qr_code ||
       paymentData.qrCodeBase64 ||
       paymentData.qrcodeBase64 ||
       paymentData.qrCode ||
@@ -228,7 +230,7 @@ Deno.serve(async (req) => {
     const result = {
       qr_code: qrCodeValue,
       pix_code: pixCodeValue,
-      transaction_id: String(gatewayData.transactionId || gatewayData.id || ''),
+      transaction_id: String(gatewayData.id || gatewayData.transactionId || ''),
       invoice_url: gatewayData.invoiceUrl || gatewayData.invoice_url || '',
       valor_final: amount,
     };
