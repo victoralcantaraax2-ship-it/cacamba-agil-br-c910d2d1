@@ -175,7 +175,7 @@ Deno.serve(async (req) => {
       },
     };
 
-    const { response: gatewayResponse, data, rawText, requestUrl } = await requestNitro('', {
+    const { response: gatewayResponse, data, rawText, requestUrl } = await requestNitro('/create-payment', {
       method: 'POST',
       headers,
       body: JSON.stringify(nitroPayload),
