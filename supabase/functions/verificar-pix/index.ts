@@ -3,24 +3,26 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
 };
 
-const BLACKCAT_BASE_URL = 'https://api.blackcatpay.com.br/api';
+const NITRO_BASE_URL = 'https://api.nitropagamento.app';
 
-function getBlackCatHeaders(): HeadersInit {
-  const secretKey = Deno.env.get('BLACKCAT_SECRET_KEY');
-  if (!secretKey) {
-    throw new Error('BLACKCAT_KEY_MISSING');
+function getNitroHeaders(): HeadersInit {
+  const publicKey = Deno.env.get('NITRO_PUBLIC_KEY');
+  const secretKey = Deno.env.get('NITRO_SECRET_KEY');
+  if (!publicKey || !secretKey) {
+    throw new Error('NITRO_KEYS_MISSING');
   }
 
   return {
-    'X-API-Key': secretKey,
+    'Authorization': `Basic ${btoa(`${publicKey}:${secretKey}`)}`,
+    'Content-Type': 'application/json',
   };
 }
 
-async function requestBlackCatStatus(transactionId: string) {
-  const url = `${BLACKCAT_BASE_URL}/sales/${encodeURIComponent(transactionId)}/status`;
+async function requestNitroStatus(transactionId: string) {
+  const url = `${NITRO_BASE_URL}/transactions/${encodeURIComponent(transactionId)}`;
   const response = await fetch(url, {
     method: 'GET',
-    headers: getBlackCatHeaders(),
+    headers: getNitroHeaders(),
     signal: AbortSignal.timeout(15000),
   });
 
@@ -50,7 +52,7 @@ Deno.serve(async (req) => {
 
     let result;
     try {
-      result = await requestBlackCatStatus(transaction_id);
+      result = await requestNitroStatus(transaction_id);
     } catch {
       return new Response(JSON.stringify({ error: 'Chave de pagamento não configurada' }), {
         status: 500,
@@ -59,8 +61,8 @@ Deno.serve(async (req) => {
     }
 
     const { response, text, data, requestUrl } = result;
-    console.log('BLACKCAT STATUS RESPONSE:', response.status, text.slice(0, 500));
-    console.log('BLACKCAT STATUS URL:', requestUrl);
+    console.log('NITRO STATUS RESPONSE:', response.status, text.slice(0, 500));
+    console.log('NITRO STATUS URL:', requestUrl);
 
     if (!response.ok || !data) {
       return new Response(JSON.stringify({ status: 'unknown', raw_status: response.status, gateway_message: data?.message || data?.error || null }), {
@@ -68,7 +70,6 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Nitro can return status in various fields
     const txData = data?.data || data;
     const rawStatus = (
       txData.status ||
