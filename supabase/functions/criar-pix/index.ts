@@ -49,10 +49,7 @@ async function parseGatewayResponse(response: Response) {
   }
 }
 
-const BLACKCAT_BASE_URLS = [
-  'https://api.blackcatpay.com.br/api',
-  'https://api.blackcatpay.com.br',
-];
+const BLACKCAT_BASE_URL = 'https://api.blackcatpay.com.br/api';
 
 function getBlackCatHeaders(): HeadersInit {
   const secretKey = Deno.env.get('BLACKCAT_SECRET_KEY');
@@ -62,38 +59,18 @@ function getBlackCatHeaders(): HeadersInit {
 
   return {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${secretKey}`,
-    'x-api-key': secretKey,
+    'X-API-Key': secretKey,
   };
 }
 
 async function requestBlackCat(path: string, init: RequestInit) {
-  let lastResponse: Response | null = null;
-  let lastData: unknown = null;
-  let lastRawText = '';
-
-  for (const baseUrl of BLACKCAT_BASE_URLS) {
-    const response = await fetch(`${baseUrl}${path}`, {
-      ...init,
-      signal: AbortSignal.timeout(90000),
-    });
-
-    const parsed = await parseGatewayResponse(response);
-    lastResponse = response;
-    lastData = parsed.data;
-    lastRawText = parsed.rawText;
-
-    if (response.ok) {
-      return { response, data: parsed.data, rawText: parsed.rawText, requestUrl: `${baseUrl}${path}` };
-    }
-
-    const errorCode = String((parsed.data as any)?.code || '').toUpperCase();
-    if (response.status !== 404 && errorCode !== 'NOT_FOUND') {
-      return { response, data: parsed.data, rawText: parsed.rawText, requestUrl: `${baseUrl}${path}` };
-    }
-  }
-
-  return { response: lastResponse, data: lastData, rawText: lastRawText, requestUrl: 'unknown' };
+  const url = `${BLACKCAT_BASE_URL}${path}`;
+  const response = await fetch(url, {
+    ...init,
+    signal: AbortSignal.timeout(90000),
+  });
+  const parsed = await parseGatewayResponse(response);
+  return { response, data: parsed.data, rawText: parsed.rawText, requestUrl: url };
 }
 
 Deno.serve(async (req) => {
