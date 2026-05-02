@@ -150,7 +150,8 @@ Deno.serve(async (req) => {
 
     // BlackCat: amount em CENTAVOS, paymentMethod camelCase, document como objeto
     const blackcatPayload = {
-      amount: amount, // já está em centavos
+      amount: amount,
+      currency: 'BRL',
       paymentMethod: 'pix',
       pix: {
         expiresInDays: 1,
@@ -174,7 +175,7 @@ Deno.serve(async (req) => {
       ],
     };
 
-    const { response: gatewayResponse, data, rawText, requestUrl } = await requestBlackCat('/transactions', {
+    const { response: gatewayResponse, data, rawText, requestUrl } = await requestBlackCat('/sales/create-sale', {
       method: 'POST',
       headers,
       body: JSON.stringify(blackcatPayload),
@@ -196,39 +197,4 @@ Deno.serve(async (req) => {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
-
-    if (!data) {
-      console.error('BlackCat returned success status but invalid JSON body:', rawText.slice(0, 500));
-      return new Response(JSON.stringify({ error: 'Erro ao gerar PIX. Tente novamente.' }), {
-        status: 502,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
-    }
-
-    // BlackCat response: { id, pix: { qrcode, ... }, ... } ou { data: {...} }
-    const gatewayData = data?.data || data || {};
-    const pixData = gatewayData.pix || {};
-    const pixCodeValue = pixData.qrcode || pixData.copyPaste || pixData.pix_code || gatewayData.copyPaste || '';
-    let qrCodeValue = pixData.qrcodeBase64 || pixData.qrCode || pixData.qrcode || pixCodeValue;
-    if (typeof qrCodeValue === 'string' && qrCodeValue.startsWith('iVBOR') && !qrCodeValue.startsWith('data:')) {
-      qrCodeValue = `data:image/png;base64,${qrCodeValue}`;
-    }
-    const result = {
-      qr_code: qrCodeValue,
-      pix_code: pixCodeValue,
-      transaction_id: String(gatewayData.id || gatewayData.transactionId || ''),
-      invoice_url: gatewayData.invoiceUrl || gatewayData.invoice_url || '',
-      valor_final: amount,
-    };
-    console.log("RETURNING TO FRONTEND:", JSON.stringify(result));
-    return new Response(JSON.stringify(result), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-  } catch (error) {
-    console.error('Server error:', error);
-    return new Response(JSON.stringify({ error: 'Erro interno do servidor' }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-  }
 });
