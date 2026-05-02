@@ -197,4 +197,50 @@ Deno.serve(async (req) => {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
+
+    if (!data) {
+      console.error('BlackCat returned success status but invalid JSON body:', rawText.slice(0, 500));
+      return new Response(JSON.stringify({ error: 'Erro ao gerar PIX. Tente novamente.' }), {
+        status: 502,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    // BlackCat response: { success, data: { transactionId, paymentData: { qrCode, qrCodeBase64, copyPaste }, invoiceUrl } }
+    const gatewayData = (data as any)?.data || data || {};
+    const paymentData = gatewayData.paymentData || gatewayData.pix || {};
+    const pixCodeValue =
+      paymentData.copyPaste ||
+      paymentData.qrCode ||
+      paymentData.qrcode ||
+      paymentData.pix_code ||
+      gatewayData.copyPaste ||
+      '';
+    let qrCodeValue =
+      paymentData.qrCodeBase64 ||
+      paymentData.qrcodeBase64 ||
+      paymentData.qrCode ||
+      paymentData.qrcode ||
+      pixCodeValue;
+    if (typeof qrCodeValue === 'string' && qrCodeValue.startsWith('iVBOR') && !qrCodeValue.startsWith('data:')) {
+      qrCodeValue = `data:image/png;base64,${qrCodeValue}`;
+    }
+    const result = {
+      qr_code: qrCodeValue,
+      pix_code: pixCodeValue,
+      transaction_id: String(gatewayData.transactionId || gatewayData.id || ''),
+      invoice_url: gatewayData.invoiceUrl || gatewayData.invoice_url || '',
+      valor_final: amount,
+    };
+    console.log("RETURNING TO FRONTEND:", JSON.stringify(result));
+    return new Response(JSON.stringify(result), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  } catch (error) {
+    console.error('Server error:', error);
+    return new Response(JSON.stringify({ error: 'Erro interno do servidor' }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
 });
