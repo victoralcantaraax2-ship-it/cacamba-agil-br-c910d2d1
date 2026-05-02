@@ -224,8 +224,32 @@ Deno.serve(async (req) => {
       paymentData.qrCode ||
       paymentData.qrcode ||
       pixCodeValue;
-    if (typeof qrCodeValue === 'string' && qrCodeValue.startsWith('iVBOR') && !qrCodeValue.startsWith('data:')) {
-      qrCodeValue = `data:image/png;base64,${qrCodeValue}`;
+
+    // Normalizar qr_code:
+    //  - Se já é URL/data URL de imagem, mantém.
+    //  - Se é PNG base64 cru (começa com iVBOR), prefixa data:image/png.
+    //  - Se é base64 do próprio BR Code (gateways tipo Nitro fazem isso),
+    //    decodifica e usa o BR Code direto. Caso contrário o frontend
+    //    geraria um QR apontando pra string base64 — ilegível pelo banco.
+    if (typeof qrCodeValue === 'string') {
+      const v = qrCodeValue.trim();
+      if (/^https?:\/\//i.test(v) || /^data:image\//i.test(v)) {
+        qrCodeValue = v;
+      } else if (v.startsWith('iVBOR')) {
+        qrCodeValue = `data:image/png;base64,${v}`;
+      } else if (/^[A-Za-z0-9+/=]+$/.test(v) && v.length > 80) {
+        // Tenta decodificar base64 -> se virar um BR Code Pix, usa ele
+        try {
+          const decoded = atob(v);
+          if (decoded.startsWith('00020126') || decoded.includes('br.gov.bcb.pix')) {
+            qrCodeValue = decoded;
+          } else {
+            qrCodeValue = pixCodeValue || v;
+          }
+        } catch {
+          qrCodeValue = pixCodeValue || v;
+        }
+      }
     }
     const result = {
       qr_code: qrCodeValue,
