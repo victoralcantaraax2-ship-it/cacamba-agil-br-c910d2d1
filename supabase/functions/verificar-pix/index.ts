@@ -80,9 +80,9 @@ Deno.serve(async (req) => {
 
     // Map to simplified status
     let status = 'pending';
-    if (['paid', 'approved', 'confirmed', 'completed', 'settled'].includes(rawStatus)) {
+    if (['paid', 'approved', 'confirmed', 'completed', 'settled', 'pago'].includes(rawStatus)) {
       status = 'paid';
-    } else if (['expired', 'canceled', 'cancelled', 'refunded', 'failed', 'rejected'].includes(rawStatus)) {
+    } else if (['expired', 'canceled', 'cancelled', 'refunded', 'failed', 'rejected', 'expirado', 'cancelado', 'reembolsado', 'recusado'].includes(rawStatus)) {
       status = 'failed';
     }
 
