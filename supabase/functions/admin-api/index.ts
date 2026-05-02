@@ -179,11 +179,11 @@ Deno.serve(async (req) => {
         const rawStatus = (txData.status || txData.paymentStatus || txData.payment_status || '').toString().toLowerCase();
 
         let mappedStatus = 'pending';
-        if (['paid', 'approved', 'confirmed', 'completed', 'settled'].includes(rawStatus)) {
+        if (['paid', 'approved', 'confirmed', 'completed', 'settled', 'pago'].includes(rawStatus)) {
           mappedStatus = 'paid';
           // Update pix_leads status
           await supabase.from('pix_leads').update({ status: 'paid' }).eq('transaction_id', transaction_id);
-        } else if (['expired', 'canceled', 'cancelled', 'refunded', 'failed', 'rejected'].includes(rawStatus)) {
+        } else if (['expired', 'canceled', 'cancelled', 'refunded', 'failed', 'rejected', 'expirado', 'cancelado', 'reembolsado', 'recusado'].includes(rawStatus)) {
           mappedStatus = 'failed';
           await supabase.from('pix_leads').update({ status: 'failed' }).eq('transaction_id', transaction_id);
         }
