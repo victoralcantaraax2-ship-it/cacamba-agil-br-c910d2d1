@@ -79,7 +79,7 @@ Deno.serve(async (req) => {
     console.log('BLACKCAT STATUS URL:', requestUrl);
 
     if (!response.ok || !data) {
-      return new Response(JSON.stringify({ status: 'unknown', raw_status: response.status }), {
+      return new Response(JSON.stringify({ status: 'unknown', raw_status: response.status, gateway_message: data?.message || data?.error || null }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }

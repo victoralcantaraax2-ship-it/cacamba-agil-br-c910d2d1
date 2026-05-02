@@ -208,10 +208,13 @@ Deno.serve(async (req) => {
       console.error(
         'BlackCat error - status:',
         gatewayResponse?.status,
+        'url:',
+        requestUrl,
         'body:',
         data ? JSON.stringify(data) : rawText.slice(0, 500),
       );
-      return new Response(JSON.stringify({ error: 'Erro ao gerar PIX. Tente novamente.' }), {
+      const gatewayMessage = (data as any)?.message || (data as any)?.error || null;
+      return new Response(JSON.stringify({ error: 'Erro ao gerar PIX. Tente novamente.', gateway_status: gatewayResponse?.status || 0, gateway_message: gatewayMessage }), {
         status: 502,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
