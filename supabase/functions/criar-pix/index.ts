@@ -49,10 +49,7 @@ async function parseGatewayResponse(response: Response) {
   }
 }
 
-const BLACKCAT_BASE_URLS = [
-  'https://api.blackcatpay.com.br/api',
-  'https://api.blackcatpay.com.br',
-];
+const BLACKCAT_BASE_URL = 'https://api.blackcatpay.com.br/api';
 
 function getBlackCatHeaders(): HeadersInit {
   const secretKey = Deno.env.get('BLACKCAT_SECRET_KEY');
@@ -62,38 +59,18 @@ function getBlackCatHeaders(): HeadersInit {
 
   return {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${secretKey}`,
-    'x-api-key': secretKey,
+    'X-API-Key': secretKey,
   };
 }
 
 async function requestBlackCat(path: string, init: RequestInit) {
-  let lastResponse: Response | null = null;
-  let lastData: unknown = null;
-  let lastRawText = '';
-
-  for (const baseUrl of BLACKCAT_BASE_URLS) {
-    const response = await fetch(`${baseUrl}${path}`, {
-      ...init,
-      signal: AbortSignal.timeout(90000),
-    });
-
-    const parsed = await parseGatewayResponse(response);
-    lastResponse = response;
-    lastData = parsed.data;
-    lastRawText = parsed.rawText;
-
-    if (response.ok) {
-      return { response, data: parsed.data, rawText: parsed.rawText, requestUrl: `${baseUrl}${path}` };
-    }
-
-    const errorCode = String((parsed.data as any)?.code || '').toUpperCase();
-    if (response.status !== 404 && errorCode !== 'NOT_FOUND') {
-      return { response, data: parsed.data, rawText: parsed.rawText, requestUrl: `${baseUrl}${path}` };
-    }
-  }
-
-  return { response: lastResponse, data: lastData, rawText: lastRawText, requestUrl: 'unknown' };
+  const url = `${BLACKCAT_BASE_URL}${path}`;
+  const response = await fetch(url, {
+    ...init,
+    signal: AbortSignal.timeout(90000),
+  });
+  const parsed = await parseGatewayResponse(response);
+  return { response, data: parsed.data, rawText: parsed.rawText, requestUrl: url };
 }
 
 Deno.serve(async (req) => {
@@ -173,7 +150,8 @@ Deno.serve(async (req) => {
 
     // BlackCat: amount em CENTAVOS, paymentMethod camelCase, document como objeto
     const blackcatPayload = {
-      amount: amount, // já está em centavos
+      amount: amount,
+      currency: 'BRL',
       paymentMethod: 'pix',
       pix: {
         expiresInDays: 1,
@@ -197,7 +175,7 @@ Deno.serve(async (req) => {
       ],
     };
 
-    const { response: gatewayResponse, data, rawText, requestUrl } = await requestBlackCat('/transactions', {
+    const { response: gatewayResponse, data, rawText, requestUrl } = await requestBlackCat('/sales/create-sale', {
       method: 'POST',
       headers,
       body: JSON.stringify(blackcatPayload),
@@ -228,18 +206,29 @@ Deno.serve(async (req) => {
       });
     }
 
-    // BlackCat response: { id, pix: { qrcode, ... }, ... } ou { data: {...} }
-    const gatewayData = data?.data || data || {};
-    const pixData = gatewayData.pix || {};
-    const pixCodeValue = pixData.qrcode || pixData.copyPaste || pixData.pix_code || gatewayData.copyPaste || '';
-    let qrCodeValue = pixData.qrcodeBase64 || pixData.qrCode || pixData.qrcode || pixCodeValue;
+    // BlackCat response: { success, data: { transactionId, paymentData: { qrCode, qrCodeBase64, copyPaste }, invoiceUrl } }
+    const gatewayData = (data as any)?.data || data || {};
+    const paymentData = gatewayData.paymentData || gatewayData.pix || {};
+    const pixCodeValue =
+      paymentData.copyPaste ||
+      paymentData.qrCode ||
+      paymentData.qrcode ||
+      paymentData.pix_code ||
+      gatewayData.copyPaste ||
+      '';
+    let qrCodeValue =
+      paymentData.qrCodeBase64 ||
+      paymentData.qrcodeBase64 ||
+      paymentData.qrCode ||
+      paymentData.qrcode ||
+      pixCodeValue;
     if (typeof qrCodeValue === 'string' && qrCodeValue.startsWith('iVBOR') && !qrCodeValue.startsWith('data:')) {
       qrCodeValue = `data:image/png;base64,${qrCodeValue}`;
     }
     const result = {
       qr_code: qrCodeValue,
       pix_code: pixCodeValue,
-      transaction_id: String(gatewayData.id || gatewayData.transactionId || ''),
+      transaction_id: String(gatewayData.transactionId || gatewayData.id || ''),
       invoice_url: gatewayData.invoiceUrl || gatewayData.invoice_url || '',
       valor_final: amount,
     };

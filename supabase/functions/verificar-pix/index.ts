@@ -3,10 +3,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
 };
 
-const BLACKCAT_BASE_URLS = [
-  'https://api.blackcatpay.com.br/api',
-  'https://api.blackcatpay.com.br',
-];
+const BLACKCAT_BASE_URL = 'https://api.blackcatpay.com.br/api';
 
 function getBlackCatHeaders(): HeadersInit {
   const secretKey = Deno.env.get('BLACKCAT_SECRET_KEY');
@@ -15,38 +12,25 @@ function getBlackCatHeaders(): HeadersInit {
   }
 
   return {
-    'Authorization': `Bearer ${secretKey}`,
-    'x-api-key': secretKey,
+    'X-API-Key': secretKey,
   };
 }
 
 async function requestBlackCatStatus(transactionId: string) {
-  let lastResponse: Response | null = null;
-  let lastText = '';
+  const url = `${BLACKCAT_BASE_URL}/sales/${encodeURIComponent(transactionId)}/status`;
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: getBlackCatHeaders(),
+    signal: AbortSignal.timeout(15000),
+  });
 
-  for (const baseUrl of BLACKCAT_BASE_URLS) {
-    const response = await fetch(`${baseUrl}/transactions/${transactionId}`, {
-      method: 'GET',
-      headers: getBlackCatHeaders(),
-      signal: AbortSignal.timeout(15000),
-    });
+  const text = await response.text();
+  let data: any = null;
+  try {
+    data = JSON.parse(text);
+  } catch {}
 
-    const text = await response.text();
-    lastResponse = response;
-    lastText = text;
-
-    let data: any = null;
-    try {
-      data = JSON.parse(text);
-    } catch {}
-
-    const errorCode = String(data?.code || '').toUpperCase();
-    if (response.ok || (response.status !== 404 && errorCode !== 'NOT_FOUND')) {
-      return { response, text, data, requestUrl: `${baseUrl}/transactions/${transactionId}` };
-    }
-  }
-
-  return { response: lastResponse, text: lastText, data: null, requestUrl: 'unknown' };
+  return { response, text, data, requestUrl: url };
 }
 
 Deno.serve(async (req) => {
