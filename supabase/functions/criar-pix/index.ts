@@ -49,13 +49,51 @@ async function parseGatewayResponse(response: Response) {
   }
 }
 
-function buildBasicAuth(): string {
+const BLACKCAT_BASE_URLS = [
+  'https://api.blackcatpay.com.br/api',
+  'https://api.blackcatpay.com.br',
+];
+
+function getBlackCatHeaders(): HeadersInit {
   const secretKey = Deno.env.get('BLACKCAT_SECRET_KEY');
   if (!secretKey) {
     throw new Error('BLACKCAT_KEY_MISSING');
   }
-  // BlackCat usa Basic auth com secret_key:x
-  return btoa(`${secretKey}:x`);
+
+  return {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${secretKey}`,
+    'x-api-key': secretKey,
+  };
+}
+
+async function requestBlackCat(path: string, init: RequestInit) {
+  let lastResponse: Response | null = null;
+  let lastData: unknown = null;
+  let lastRawText = '';
+
+  for (const baseUrl of BLACKCAT_BASE_URLS) {
+    const response = await fetch(`${baseUrl}${path}`, {
+      ...init,
+      signal: AbortSignal.timeout(90000),
+    });
+
+    const parsed = await parseGatewayResponse(response);
+    lastResponse = response;
+    lastData = parsed.data;
+    lastRawText = parsed.rawText;
+
+    if (response.ok) {
+      return { response, data: parsed.data, rawText: parsed.rawText, requestUrl: `${baseUrl}${path}` };
+    }
+
+    const errorCode = String((parsed.data as any)?.code || '').toUpperCase();
+    if (response.status !== 404 && errorCode !== 'NOT_FOUND') {
+      return { response, data: parsed.data, rawText: parsed.rawText, requestUrl: `${baseUrl}${path}` };
+    }
+  }
+
+  return { response: lastResponse, data: lastData, rawText: lastRawText, requestUrl: 'unknown' };
 }
 
 Deno.serve(async (req) => {
@@ -119,9 +157,9 @@ Deno.serve(async (req) => {
       console.log("COUPON:", couponCode, "DISCOUNT:", discountAmount, "FINAL AMOUNT:", amount);
     }
 
-    let encodedAuth: string;
+    let headers: HeadersInit;
     try {
-      encodedAuth = buildBasicAuth();
+      headers = getBlackCatHeaders();
     } catch {
       console.error('Nitro payment keys not configured');
       return new Response(JSON.stringify({ error: 'Chave de pagamento não configurada' }), {
@@ -159,28 +197,17 @@ Deno.serve(async (req) => {
       ],
     };
 
-    const createSale = async (payload: Record<string, unknown>) => {
-      const response = await fetch('https://api.blackcatpagamentos.com/v1/transactions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Basic ${encodedAuth}`,
-        },
-        body: JSON.stringify(payload),
-        signal: AbortSignal.timeout(90000),
-      });
+    const { response: gatewayResponse, data, rawText, requestUrl } = await requestBlackCat('/transactions', {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(blackcatPayload),
+    });
+    console.log("BLACKCAT RESPONSE:", requestUrl, gatewayResponse?.status, data ? JSON.stringify(data) : rawText.slice(0, 500));
 
-      const parsed = await parseGatewayResponse(response);
-      return { response, data: parsed.data, rawText: parsed.rawText };
-    };
-
-    const { response: gatewayResponse, data, rawText } = await createSale(blackcatPayload);
-    console.log("BLACKCAT RESPONSE:", gatewayResponse.status, data ? JSON.stringify(data) : rawText.slice(0, 500));
-
-    if (!gatewayResponse.ok) {
+    if (!gatewayResponse?.ok) {
       console.error(
         'BlackCat error - status:',
-        gatewayResponse.status,
+        gatewayResponse?.status,
         'body:',
         data ? JSON.stringify(data) : rawText.slice(0, 500),
       );
