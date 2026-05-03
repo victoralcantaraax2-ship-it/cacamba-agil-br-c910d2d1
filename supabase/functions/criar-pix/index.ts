@@ -49,25 +49,21 @@ async function parseGatewayResponse(response: Response) {
   }
 }
 
-const NITRO_BASE_URL = 'https://api.nitropagamento.app';
+const BLACKCAT_BASE_URL = 'https://api.blackcatpay.com.br/api';
 
-function getNitroHeaders(): HeadersInit {
-  const publicKey = Deno.env.get('NITRO_PUBLIC_KEY');
-  const secretKey = Deno.env.get('NITRO_SECRET_KEY');
-  if (!publicKey || !secretKey) {
-    throw new Error('NITRO_KEYS_MISSING');
+function getBlackcatHeaders(): HeadersInit {
+  const apiKey = Deno.env.get('BLACKCAT_SECRET_KEY');
+  if (!apiKey) {
+    throw new Error('BLACKCAT_KEY_MISSING');
   }
-
-  const credentials = btoa(`${publicKey}:${secretKey}`);
-
   return {
     'Content-Type': 'application/json',
-    'Authorization': `Basic ${credentials}`,
+    'X-API-Key': apiKey,
   };
 }
 
-async function requestNitro(path: string, init: RequestInit) {
-  const url = `${NITRO_BASE_URL}${path}`;
+async function requestBlackcat(path: string, init: RequestInit) {
+  const url = `${BLACKCAT_BASE_URL}${path}`;
   const response = await fetch(url, {
     ...init,
     signal: AbortSignal.timeout(90000),
