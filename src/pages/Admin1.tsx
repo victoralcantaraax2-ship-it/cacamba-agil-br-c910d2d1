@@ -179,7 +179,41 @@ const Admin1 = () => {
         </div>
       </div>
 
-      <div className="container max-w-md px-4 py-8">
+      <div className="container max-w-md px-4 py-8 space-y-4">
+        {/* Gateway Selector */}
+        <Card className="border-destructive/30">
+          <CardContent className="pt-6 space-y-3">
+            <div className="flex items-center gap-2">
+              <Server className="h-4 w-4 text-destructive" />
+              <h3 className="font-bold text-sm">Gateway de Pagamento</h3>
+              <span className="ml-auto text-xs font-mono px-2 py-0.5 rounded bg-muted">
+                Ativo: {activeGateway.toUpperCase()}
+              </span>
+            </div>
+            <Input
+              type="password"
+              placeholder="Senha admin (para trocar)"
+              value={gwPassword}
+              onChange={(e) => setGwPassword(e.target.value)}
+              className="h-9 text-sm"
+            />
+            <div className="grid grid-cols-3 gap-2">
+              {GATEWAYS.map((g) => (
+                <Button
+                  key={g.id}
+                  size="sm"
+                  variant={activeGateway === g.id ? "default" : "outline"}
+                  disabled={gwLoading || activeGateway === g.id}
+                  onClick={() => handleSwitchGateway(g.id)}
+                  className="text-xs"
+                >
+                  {gwLoading ? <Loader2 className="h-3 w-3 animate-spin" /> : g.label}
+                </Button>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
         {!pixCode ? (
           <Card>
             <CardContent className="pt-6 space-y-4">
