@@ -24,6 +24,31 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
   const [cepError, setCepError] = useState(false);
   const [cepLoading, setCepLoading] = useState(false);
   const [cepVisible, setCepVisible] = useState(false);
+  const [detectedCity, setDetectedCity] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (cityName) return;
+    const controller = new AbortController();
+    (async () => {
+      try {
+        const res = await fetch("https://ipapi.co/json/", { signal: controller.signal });
+        if (!res.ok) return;
+        const data = await res.json();
+        if (data?.city && typeof data.city === "string") {
+          setDetectedCity(data.city);
+        }
+      } catch {
+        // silencioso — usa fallback
+      }
+    })();
+    return () => controller.abort();
+  }, [cityName]);
+
+  const cityLine = cityName
+    ? `📍 Entregamos em ${cityName}`
+    : detectedCity
+      ? `📍 Entregamos em ${detectedCity}`
+      : "📍 Entregamos em toda São Paulo e região";
 
   const formatCep = (value: string) => {
     const digits = value.replace(/\D/g, "").slice(0, 8);
