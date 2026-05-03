@@ -57,6 +57,19 @@ Deno.serve(async (req) => {
     const body = await req.json();
     const { action, password, ...params } = body;
 
+    // Public action: just returns the active gateway name (non-sensitive)
+    if (action === 'get_active_gateway') {
+      const supabase = getServiceClient();
+      const { data } = await supabase
+        .from('admin_settings')
+        .select('setting_value')
+        .eq('setting_key', 'active_gateway')
+        .single();
+      return new Response(JSON.stringify({ data: { gateway: data?.setting_value || 'blackcat' } }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
     if (!password || typeof password !== 'string') {
       return new Response(JSON.stringify({ error: 'Senha obrigatória' }), {
         status: 401,
@@ -152,6 +165,46 @@ Deno.serve(async (req) => {
 
       case 'verify_password': {
         result = { valid: true };
+        break;
+      }
+
+      case 'get_active_gateway': {
+        const { data } = await supabase
+          .from('admin_settings')
+          .select('setting_value')
+          .eq('setting_key', 'active_gateway')
+          .single();
+        result = { gateway: data?.setting_value || 'blackcat' };
+        break;
+      }
+
+      case 'set_active_gateway': {
+        const { gateway } = params;
+        const allowed = ['blackcat', 'nitro', 'zeroonepay'];
+        if (!allowed.includes(gateway)) {
+          return new Response(JSON.stringify({ error: 'Gateway inválido' }), {
+            status: 400,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          });
+        }
+        const { data: existing } = await supabase
+          .from('admin_settings')
+          .select('id')
+          .eq('setting_key', 'active_gateway')
+          .maybeSingle();
+        if (existing) {
+          const { error } = await supabase
+            .from('admin_settings')
+            .update({ setting_value: gateway, updated_at: new Date().toISOString() })
+            .eq('setting_key', 'active_gateway');
+          if (error) throw error;
+        } else {
+          const { error } = await supabase
+            .from('admin_settings')
+            .insert({ setting_key: 'active_gateway', setting_value: gateway });
+          if (error) throw error;
+        }
+        result = { success: true, gateway };
         break;
       }
 

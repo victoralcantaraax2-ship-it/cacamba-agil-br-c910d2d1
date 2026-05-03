@@ -3,12 +3,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
-import { CheckCircle, Loader2, Lock } from "lucide-react";
+import { CheckCircle, Loader2, Lock, Server } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import { getSafeQrValue } from "@/lib/qrPix";
 import { formatPhone, validatePhone } from "@/lib/phone";
 import { useToast } from "@/hooks/use-toast";
 import CepLookup, { type CepAddress } from "@/components/CepLookup";
+import { getActiveGateway, setActiveGateway } from "@/lib/adminApi";
 import logoAmba from "@/assets/logo-nortex.png";
 import mercadoPagoLogo from "@/assets/mercadopago-logo.png";
 
@@ -32,6 +33,47 @@ const Admin1 = () => {
   const [valorFinal, setValorFinal] = useState(0);
   const [copied, setCopied] = useState(false);
   const { toast } = useToast();
+
+  // ===== Gateway selector =====
+  const GATEWAYS = [
+    { id: "blackcat", label: "Blackcat" },
+    { id: "nitro", label: "Nitro" },
+    { id: "zeroonepay", label: "ZeroOnePay" },
+  ];
+  const [activeGateway, setActiveGw] = useState<string>("blackcat");
+  const [gwPassword, setGwPassword] = useState("");
+  const [gwLoading, setGwLoading] = useState(false);
+  const [gwLoaded, setGwLoaded] = useState(false);
+
+  useEffect(() => {
+    // tenta carregar gateway ativo com senha em branco — falhará silenciosamente
+    (async () => {
+      try {
+        const g = await getActiveGateway("");
+        setActiveGw(g);
+        setGwLoaded(true);
+      } catch {
+        setGwLoaded(true);
+      }
+    })();
+  }, []);
+
+  const handleSwitchGateway = async (gw: string) => {
+    if (!gwPassword.trim()) {
+      toast({ variant: "destructive", title: "Informe a senha admin para trocar gateway" });
+      return;
+    }
+    setGwLoading(true);
+    try {
+      await setActiveGateway(gwPassword.trim(), gw);
+      setActiveGw(gw);
+      toast({ title: "Gateway alterado", description: `Agora usando: ${gw.toUpperCase()}` });
+    } catch (err: any) {
+      toast({ variant: "destructive", title: "Erro", description: err.message });
+    } finally {
+      setGwLoading(false);
+    }
+  };
 
   const formatCurrency = (v: number) =>
     v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
@@ -137,7 +179,41 @@ const Admin1 = () => {
         </div>
       </div>
 
-      <div className="container max-w-md px-4 py-8">
+      <div className="container max-w-md px-4 py-8 space-y-4">
+        {/* Gateway Selector */}
+        <Card className="border-destructive/30">
+          <CardContent className="pt-6 space-y-3">
+            <div className="flex items-center gap-2">
+              <Server className="h-4 w-4 text-destructive" />
+              <h3 className="font-bold text-sm">Gateway de Pagamento</h3>
+              <span className="ml-auto text-xs font-mono px-2 py-0.5 rounded bg-muted">
+                Ativo: {activeGateway.toUpperCase()}
+              </span>
+            </div>
+            <Input
+              type="password"
+              placeholder="Senha admin (para trocar)"
+              value={gwPassword}
+              onChange={(e) => setGwPassword(e.target.value)}
+              className="h-9 text-sm"
+            />
+            <div className="grid grid-cols-3 gap-2">
+              {GATEWAYS.map((g) => (
+                <Button
+                  key={g.id}
+                  size="sm"
+                  variant={activeGateway === g.id ? "default" : "outline"}
+                  disabled={gwLoading || activeGateway === g.id}
+                  onClick={() => handleSwitchGateway(g.id)}
+                  className="text-xs"
+                >
+                  {gwLoading ? <Loader2 className="h-3 w-3 animate-spin" /> : g.label}
+                </Button>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
         {!pixCode ? (
           <Card>
             <CardContent className="pt-6 space-y-4">
