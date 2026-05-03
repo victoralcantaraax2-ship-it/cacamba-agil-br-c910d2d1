@@ -55,3 +55,12 @@ export async function checkPixStatus(password: string, transactionId: string) {
 export async function changeAdminPassword(currentPassword: string, newPassword: string) {
   return callAdminApi("change_password", currentPassword, { new_password: newPassword });
 }
+
+export async function getActiveGateway(password: string): Promise<string> {
+  const result = await callAdminApi("get_active_gateway", password);
+  return result?.gateway || "blackcat";
+}
+
+export async function setActiveGateway(password: string, gateway: string) {
+  return callAdminApi("set_active_gateway", password, { gateway });
+}
