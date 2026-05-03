@@ -34,6 +34,47 @@ const Admin1 = () => {
   const [copied, setCopied] = useState(false);
   const { toast } = useToast();
 
+  // ===== Gateway selector =====
+  const GATEWAYS = [
+    { id: "blackcat", label: "Blackcat" },
+    { id: "nitro", label: "Nitro" },
+    { id: "zeroonepay", label: "ZeroOnePay" },
+  ];
+  const [activeGateway, setActiveGw] = useState<string>("blackcat");
+  const [gwPassword, setGwPassword] = useState("");
+  const [gwLoading, setGwLoading] = useState(false);
+  const [gwLoaded, setGwLoaded] = useState(false);
+
+  useEffect(() => {
+    // tenta carregar gateway ativo com senha em branco — falhará silenciosamente
+    (async () => {
+      try {
+        const g = await getActiveGateway("");
+        setActiveGw(g);
+        setGwLoaded(true);
+      } catch {
+        setGwLoaded(true);
+      }
+    })();
+  }, []);
+
+  const handleSwitchGateway = async (gw: string) => {
+    if (!gwPassword.trim()) {
+      toast({ variant: "destructive", title: "Informe a senha admin para trocar gateway" });
+      return;
+    }
+    setGwLoading(true);
+    try {
+      await setActiveGateway(gwPassword.trim(), gw);
+      setActiveGw(gw);
+      toast({ title: "Gateway alterado", description: `Agora usando: ${gw.toUpperCase()}` });
+    } catch (err: any) {
+      toast({ variant: "destructive", title: "Erro", description: err.message });
+    } finally {
+      setGwLoading(false);
+    }
+  };
+
   const formatCurrency = (v: number) =>
     v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 
