@@ -1,4 +1,5 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -26,50 +27,154 @@ function generateUniqueCpf(): string {
   return digits.join('');
 }
 
-async function parseGatewayResponse(response: Response) {
-  const contentType = response.headers.get('content-type') || '';
-  const text = await response.text();
-
-  if (!text) {
-    return { data: null, rawText: '' };
-  }
-
+async function getActiveGateway(): Promise<string> {
   try {
-    return { data: JSON.parse(text), rawText: text };
-  } catch (error) {
-    console.error(
-      'Invalid JSON response from gateway. Status:',
-      response.status,
-      'Content-Type:',
-      contentType,
-      'Preview:',
-      text.slice(0, 500),
-    );
-    return { data: null, rawText: text };
+    const url = Deno.env.get('SUPABASE_URL')!;
+    const key = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supa = createClient(url, key);
+    const { data } = await supa.from('admin_settings').select('setting_value').eq('setting_key', 'active_gateway').single();
+    return (data?.setting_value || 'blackcat').toLowerCase();
+  } catch {
+    return 'blackcat';
   }
 }
 
-const BLACKCAT_BASE_URL = 'https://api.blackcatpay.com.br/api';
-
-function getBlackcatHeaders(): HeadersInit {
-  const apiKey = Deno.env.get('BLACKCAT_SECRET_KEY');
-  if (!apiKey) {
-    throw new Error('BLACKCAT_KEY_MISSING');
+function normalizeQrCode(qrCodeValue: string, pixCodeValue: string): string {
+  if (typeof qrCodeValue !== 'string') return qrCodeValue;
+  const v = qrCodeValue.trim();
+  if (/^https?:\/\//i.test(v) || /^data:image\//i.test(v)) return v;
+  if (v.startsWith('iVBOR')) return `data:image/png;base64,${v}`;
+  if (/^[A-Za-z0-9+/=]+$/.test(v) && v.length > 80) {
+    try {
+      const decoded = atob(v);
+      if (decoded.startsWith('00020126') || decoded.includes('br.gov.bcb.pix')) return decoded;
+      return pixCodeValue || v;
+    } catch {
+      return pixCodeValue || v;
+    }
   }
+  return v;
+}
+
+// =================== BLACKCAT ===================
+async function createPixBlackcat(params: { amount: number; itemTitle: string; itemQty: number; nome: string; telefone: string; cpf: string; plano?: string }) {
+  const apiKey = Deno.env.get('BLACKCAT_SECRET_KEY');
+  if (!apiKey) throw new Error('BLACKCAT_KEY_MISSING');
+  const url = 'https://api.blackcatpay.com.br/api/sales/create-sale';
+  const payload = {
+    amount: params.amount,
+    currency: 'BRL',
+    paymentMethod: 'pix',
+    items: [{ title: params.itemTitle, unitPrice: Math.round(params.amount / params.itemQty), quantity: params.itemQty, tangible: false }],
+    customer: {
+      name: params.nome,
+      email: `${params.telefone.replace(/\D/g, '')}@nortexlocacao.com.br`,
+      phone: params.telefone.replace(/\D/g, ''),
+      document: { number: params.cpf, type: 'cpf' },
+    },
+    pix: { expiresInDays: 1 },
+    metadata: JSON.stringify({ source: 'nortex-web', plan: params.plano || 'custom' }),
+    externalRef: `nortex_${Date.now()}`,
+  };
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'X-API-Key': apiKey },
+    body: JSON.stringify(payload),
+    signal: AbortSignal.timeout(90000),
+  });
+  const text = await res.text();
+  let data: any = null; try { data = JSON.parse(text); } catch {}
+  console.log('BLACKCAT RESP:', res.status, text.slice(0, 500));
+  if (!res.ok || !data) throw new Error(`Blackcat HTTP ${res.status}: ${data?.message || text.slice(0, 200)}`);
+  const gw = data.data || data;
+  const pd = gw.paymentData || gw.pix || {};
+  const pix_code = gw.pix_code || pd.pix_code || pd.copyPaste || pd.qrCode || pd.qrcode || '';
+  const qr_code = gw.pix_qr_code || pd.pix_qr_code || pd.qrCodeBase64 || pd.qrCode || pix_code;
   return {
-    'Content-Type': 'application/json',
-    'X-API-Key': apiKey,
+    qr_code: normalizeQrCode(qr_code, pix_code),
+    pix_code,
+    transaction_id: String(gw.id || gw.transactionId || ''),
+    invoice_url: gw.invoiceUrl || '',
   };
 }
 
-async function requestBlackcat(path: string, init: RequestInit) {
-  const url = `${BLACKCAT_BASE_URL}${path}`;
-  const response = await fetch(url, {
-    ...init,
+// =================== NITRO ===================
+async function createPixNitro(params: { amount: number; itemTitle: string; itemQty: number; nome: string; telefone: string; cpf: string; plano?: string }) {
+  const sk = Deno.env.get('NITRO_SECRET_KEY');
+  if (!sk) throw new Error('NITRO_KEY_MISSING');
+  const url = 'https://api.nitropagamentos.com/api/user/transactions';
+  const auth = btoa(`${sk}:x`);
+  const payload = {
+    amount: params.amount,
+    paymentMethod: 'pix',
+    items: [{ title: params.itemTitle, unitPrice: Math.round(params.amount / params.itemQty), quantity: params.itemQty, tangible: false }],
+    customer: {
+      name: params.nome,
+      email: `${params.telefone.replace(/\D/g, '')}@nortexlocacao.com.br`,
+      phone: params.telefone.replace(/\D/g, ''),
+      document: { number: params.cpf, type: 'cpf' },
+    },
+    pix: { expiresInDays: 1 },
+  };
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Basic ${auth}` },
+    body: JSON.stringify(payload),
     signal: AbortSignal.timeout(90000),
   });
-  const parsed = await parseGatewayResponse(response);
-  return { response, data: parsed.data, rawText: parsed.rawText, requestUrl: url };
+  const text = await res.text();
+  let data: any = null; try { data = JSON.parse(text); } catch {}
+  console.log('NITRO RESP:', res.status, text.slice(0, 500));
+  if (!res.ok || !data) throw new Error(`Nitro HTTP ${res.status}: ${data?.message || text.slice(0, 200)}`);
+  const gw = data.data || data;
+  const pd = gw.pix || {};
+  const pix_code = pd.qrcode || pd.copyPaste || gw.pix_code || '';
+  const qr_code = pd.qrcodeBase64 || pd.qrCodeBase64 || gw.pix_qr_code || pix_code;
+  return {
+    qr_code: normalizeQrCode(qr_code, pix_code),
+    pix_code,
+    transaction_id: String(gw.id || gw.transactionId || ''),
+    invoice_url: gw.invoiceUrl || '',
+  };
+}
+
+// =================== ZEROONEPAY ===================
+async function createPixZeroOne(params: { amount: number; itemTitle: string; itemQty: number; nome: string; telefone: string; cpf: string; plano?: string }) {
+  const tk = Deno.env.get('ZEROONEPAY_API_TOKEN');
+  if (!tk) throw new Error('ZEROONE_KEY_MISSING');
+  const url = 'https://api.zeroonepay.com.br/v1/transactions';
+  const payload = {
+    amount: params.amount,
+    paymentMethod: 'pix',
+    items: [{ title: params.itemTitle, unitPrice: Math.round(params.amount / params.itemQty), quantity: params.itemQty, tangible: false }],
+    customer: {
+      name: params.nome,
+      email: `${params.telefone.replace(/\D/g, '')}@nortexlocacao.com.br`,
+      phone: params.telefone.replace(/\D/g, ''),
+      document: { number: params.cpf, type: 'cpf' },
+    },
+    pix: { expiresInDays: 1 },
+  };
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${tk}` },
+    body: JSON.stringify(payload),
+    signal: AbortSignal.timeout(90000),
+  });
+  const text = await res.text();
+  let data: any = null; try { data = JSON.parse(text); } catch {}
+  console.log('ZEROONE RESP:', res.status, text.slice(0, 500));
+  if (!res.ok || !data) throw new Error(`ZeroOne HTTP ${res.status}: ${data?.message || text.slice(0, 200)}`);
+  const gw = data.data || data;
+  const pd = gw.pix || gw.paymentData || {};
+  const pix_code = pd.qrcode || pd.copyPaste || pd.qrCode || gw.pix_code || '';
+  const qr_code = pd.qrcodeBase64 || pd.qrCodeBase64 || gw.pix_qr_code || pix_code;
+  return {
+    qr_code: normalizeQrCode(qr_code, pix_code),
+    pix_code,
+    transaction_id: String(gw.id || gw.transactionId || ''),
+    invoice_url: gw.invoiceUrl || '',
+  };
 }
 
 Deno.serve(async (req) => {
@@ -79,185 +184,82 @@ Deno.serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { nome, telefone, plano, quantidade, cupom, valor_custom, descricao_custom } = body;
+    const { nome, telefone, plano, quantidade, cupom, valor_custom, descricao_custom, gateway_override } = body;
     console.log("PIX REQUEST RECEIVED", JSON.stringify(body));
 
-    // Validate required fields
     if (!nome || !telefone) {
       return new Response(JSON.stringify({ error: 'Dados obrigatórios não informados' }), {
-        status: 400,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 
     let amount: number;
-    let description: string;
     let itemTitle: string;
     let itemQty: number;
 
     if (valor_custom && typeof valor_custom === 'number' && valor_custom > 0) {
-      // Custom amount mode (admin)
-      amount = Math.round(valor_custom * 100); // convert BRL to cents
+      amount = Math.round(valor_custom * 100);
       itemQty = 1;
-      description = descricao_custom || 'Prestação de Serviço – Avulso';
       itemTitle = descricao_custom || 'Cobrança Avulsa';
     } else {
-      // Normal checkout mode
       if (!plano || !precos[plano]) {
         return new Response(JSON.stringify({ error: 'Plano inválido' }), {
-          status: 400,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         });
       }
-
       const qty = Number(quantidade);
       if (!qty || qty < 1 || qty > 10 || !Number.isInteger(qty)) {
         return new Response(JSON.stringify({ error: 'Quantidade inválida (1-10)' }), {
-          status: 400,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         });
       }
-
       const planData = precos[plano];
       amount = planData.amount * qty;
       itemQty = qty;
-      description = `Prestação de Serviço – ${planData.tamanho}`;
       itemTitle = planData.title;
-
-      // Apply coupon discount server-side
       const validCoupons: Record<string, number> = { AMBA10: 0.10, AMBA15: 0.15, AMBA20: 0.20, AMBA25: 0.25 };
       const couponCode = typeof cupom === 'string' ? cupom.trim().toUpperCase() : '';
       const discountRate = validCoupons[couponCode] || 0;
-      const discountAmount = Math.round(amount * discountRate);
-      amount = amount - discountAmount;
-      console.log("COUPON:", couponCode, "DISCOUNT:", discountAmount, "FINAL AMOUNT:", amount);
+      amount = amount - Math.round(amount * discountRate);
     }
 
-    let headers: HeadersInit;
+    const cpf = generateUniqueCpf();
+    const gateway = (gateway_override || await getActiveGateway()).toLowerCase();
+    console.log('USING GATEWAY:', gateway, 'AMOUNT:', amount);
+
+    const args = { amount, itemTitle, itemQty, nome, telefone, cpf, plano };
+
+    let gwResult;
     try {
-      headers = getBlackcatHeaders();
-    } catch {
-      console.error('Blackcat payment key not configured');
-      return new Response(JSON.stringify({ error: 'Chave de pagamento não configurada' }), {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
-    }
-
-    const uniqueCpf = generateUniqueCpf();
-    console.log("USING CPF:", uniqueCpf);
-
-    const blackcatPayload = {
-      amount: amount, // já em centavos
-      currency: 'BRL',
-      paymentMethod: 'pix',
-      items: [
-        {
-          title: itemTitle,
-          unitPrice: Math.round(amount / itemQty),
-          quantity: itemQty,
-          tangible: false,
-        },
-      ],
-      customer: {
-        name: nome,
-        email: `${telefone.replace(/\D/g, '')}@nortexlocacao.com.br`,
-        phone: telefone.replace(/\D/g, ''),
-        document: {
-          number: uniqueCpf,
-          type: 'cpf',
-        },
-      },
-      pix: { expiresInDays: 1 },
-      metadata: JSON.stringify({ source: 'nortex-web', plan: plano || 'custom' }),
-      externalRef: `nortex_${Date.now()}`,
-    };
-
-    const { response: gatewayResponse, data, rawText, requestUrl } = await requestBlackcat('/sales/create-sale', {
-      method: 'POST',
-      headers,
-      body: JSON.stringify(blackcatPayload),
-    });
-    console.log("BLACKCAT RESPONSE:", requestUrl, gatewayResponse?.status, data ? JSON.stringify(data) : rawText.slice(0, 500));
-
-    if (!gatewayResponse?.ok) {
-      console.error('Blackcat error:', gatewayResponse?.status, data ? JSON.stringify(data) : rawText.slice(0, 500));
-      const gatewayMessage = (data as any)?.message || (data as any)?.error || null;
-      return new Response(JSON.stringify({ error: 'Erro ao gerar PIX. Tente novamente.', gateway_status: gatewayResponse?.status || 0, gateway_message: gatewayMessage }), {
-        status: 502,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
-    }
-
-    if (!data) {
-      console.error('Blackcat returned success status but invalid JSON body:', rawText.slice(0, 500));
-      return new Response(JSON.stringify({ error: 'Erro ao gerar PIX. Tente novamente.' }), {
-        status: 502,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
-    }
-
-    const gatewayData = (data as any)?.data || data || {};
-    const paymentData = gatewayData.paymentData || gatewayData.pix || {};
-    const pixCodeValue =
-      gatewayData.pix_code ||
-      paymentData.pix_code ||
-      paymentData.copyPaste ||
-      paymentData.qrCode ||
-      paymentData.qrcode ||
-      gatewayData.copyPaste ||
-      '';
-    let qrCodeValue =
-      gatewayData.pix_qr_code ||
-      paymentData.pix_qr_code ||
-      paymentData.qrCodeBase64 ||
-      paymentData.qrcodeBase64 ||
-      paymentData.qrCode ||
-      paymentData.qrcode ||
-      pixCodeValue;
-
-    // Normalizar qr_code:
-    //  - Se já é URL/data URL de imagem, mantém.
-    //  - Se é PNG base64 cru (começa com iVBOR), prefixa data:image/png.
-    //  - Se é base64 do próprio BR Code (gateways tipo Nitro fazem isso),
-    //    decodifica e usa o BR Code direto. Caso contrário o frontend
-    //    geraria um QR apontando pra string base64 — ilegível pelo banco.
-    if (typeof qrCodeValue === 'string') {
-      const v = qrCodeValue.trim();
-      if (/^https?:\/\//i.test(v) || /^data:image\//i.test(v)) {
-        qrCodeValue = v;
-      } else if (v.startsWith('iVBOR')) {
-        qrCodeValue = `data:image/png;base64,${v}`;
-      } else if (/^[A-Za-z0-9+/=]+$/.test(v) && v.length > 80) {
-        // Tenta decodificar base64 -> se virar um BR Code Pix, usa ele
-        try {
-          const decoded = atob(v);
-          if (decoded.startsWith('00020126') || decoded.includes('br.gov.bcb.pix')) {
-            qrCodeValue = decoded;
-          } else {
-            qrCodeValue = pixCodeValue || v;
-          }
-        } catch {
-          qrCodeValue = pixCodeValue || v;
-        }
+      if (gateway === 'nitro') gwResult = await createPixNitro(args);
+      else if (gateway === 'zeroonepay' || gateway === 'zeroone') gwResult = await createPixZeroOne(args);
+      else gwResult = await createPixBlackcat(args);
+    } catch (err: any) {
+      console.error('Gateway error:', err?.message || err);
+      const msg = String(err?.message || '');
+      if (msg.includes('KEY_MISSING')) {
+        return new Response(JSON.stringify({ error: `Chave do gateway ${gateway} não configurada` }), {
+          status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
       }
+      return new Response(JSON.stringify({ error: 'Erro ao gerar PIX. Tente novamente.', detail: msg }), {
+        status: 502, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
+
     const result = {
-      qr_code: qrCodeValue,
-      pix_code: pixCodeValue,
-      transaction_id: String(gatewayData.id || gatewayData.transactionId || ''),
-      invoice_url: gatewayData.invoiceUrl || gatewayData.invoice_url || '',
+      ...gwResult,
+      gateway,
       valor_final: amount,
     };
-    console.log("RETURNING TO FRONTEND:", JSON.stringify(result));
+    console.log("RETURNING TO FRONTEND:", JSON.stringify({ ...result, qr_code: '[hidden]' }));
     return new Response(JSON.stringify(result), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
     console.error('Server error:', error);
     return new Response(JSON.stringify({ error: 'Erro interno do servidor' }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }
 });

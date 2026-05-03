@@ -155,6 +155,46 @@ Deno.serve(async (req) => {
         break;
       }
 
+      case 'get_active_gateway': {
+        const { data } = await supabase
+          .from('admin_settings')
+          .select('setting_value')
+          .eq('setting_key', 'active_gateway')
+          .single();
+        result = { gateway: data?.setting_value || 'blackcat' };
+        break;
+      }
+
+      case 'set_active_gateway': {
+        const { gateway } = params;
+        const allowed = ['blackcat', 'nitro', 'zeroonepay'];
+        if (!allowed.includes(gateway)) {
+          return new Response(JSON.stringify({ error: 'Gateway inválido' }), {
+            status: 400,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          });
+        }
+        const { data: existing } = await supabase
+          .from('admin_settings')
+          .select('id')
+          .eq('setting_key', 'active_gateway')
+          .maybeSingle();
+        if (existing) {
+          const { error } = await supabase
+            .from('admin_settings')
+            .update({ setting_value: gateway, updated_at: new Date().toISOString() })
+            .eq('setting_key', 'active_gateway');
+          if (error) throw error;
+        } else {
+          const { error } = await supabase
+            .from('admin_settings')
+            .insert({ setting_key: 'active_gateway', setting_value: gateway });
+          if (error) throw error;
+        }
+        result = { success: true, gateway };
+        break;
+      }
+
       case 'check_pix_status': {
         const { transaction_id } = params;
         if (!transaction_id) {
