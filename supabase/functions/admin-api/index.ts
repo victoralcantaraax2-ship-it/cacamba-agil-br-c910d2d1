@@ -57,6 +57,19 @@ Deno.serve(async (req) => {
     const body = await req.json();
     const { action, password, ...params } = body;
 
+    // Public action: just returns the active gateway name (non-sensitive)
+    if (action === 'get_active_gateway') {
+      const supabase = getServiceClient();
+      const { data } = await supabase
+        .from('admin_settings')
+        .select('setting_value')
+        .eq('setting_key', 'active_gateway')
+        .single();
+      return new Response(JSON.stringify({ data: { gateway: data?.setting_value || 'blackcat' } }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
     if (!password || typeof password !== 'string') {
       return new Response(JSON.stringify({ error: 'Senha obrigatória' }), {
         status: 401,
