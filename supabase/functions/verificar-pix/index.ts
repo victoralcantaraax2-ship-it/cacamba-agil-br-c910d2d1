@@ -3,26 +3,24 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
 };
 
-const NITRO_BASE_URL = 'https://api.nitropagamento.app';
+const BLACKCAT_BASE_URL = 'https://api.blackcatpay.com.br/api';
 
-function getNitroHeaders(): HeadersInit {
-  const publicKey = Deno.env.get('NITRO_PUBLIC_KEY');
-  const secretKey = Deno.env.get('NITRO_SECRET_KEY');
-  if (!publicKey || !secretKey) {
-    throw new Error('NITRO_KEYS_MISSING');
+function getBlackcatHeaders(): HeadersInit {
+  const apiKey = Deno.env.get('BLACKCAT_SECRET_KEY');
+  if (!apiKey) {
+    throw new Error('BLACKCAT_KEY_MISSING');
   }
-
   return {
-    'Authorization': `Basic ${btoa(`${publicKey}:${secretKey}`)}`,
+    'X-API-Key': apiKey,
     'Content-Type': 'application/json',
   };
 }
 
-async function requestNitroStatus(transactionId: string) {
-  const url = `${NITRO_BASE_URL}/transactions/${encodeURIComponent(transactionId)}`;
+async function requestBlackcatStatus(transactionId: string) {
+  const url = `${BLACKCAT_BASE_URL}/sales/${encodeURIComponent(transactionId)}/status`;
   const response = await fetch(url, {
     method: 'GET',
-    headers: getNitroHeaders(),
+    headers: getBlackcatHeaders(),
     signal: AbortSignal.timeout(15000),
   });
 
