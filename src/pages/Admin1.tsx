@@ -3,12 +3,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
-import { CheckCircle, Loader2, Lock } from "lucide-react";
+import { CheckCircle, Loader2, Lock, Server } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import { getSafeQrValue } from "@/lib/qrPix";
 import { formatPhone, validatePhone } from "@/lib/phone";
 import { useToast } from "@/hooks/use-toast";
 import CepLookup, { type CepAddress } from "@/components/CepLookup";
+import { getActiveGateway, setActiveGateway } from "@/lib/adminApi";
 import logoAmba from "@/assets/logo-nortex.png";
 import mercadoPagoLogo from "@/assets/mercadopago-logo.png";
 
