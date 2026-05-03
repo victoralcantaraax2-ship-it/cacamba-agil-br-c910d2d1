@@ -50,7 +50,7 @@ Deno.serve(async (req) => {
 
     let result;
     try {
-      result = await requestNitroStatus(transaction_id);
+      result = await requestBlackcatStatus(transaction_id);
     } catch {
       return new Response(JSON.stringify({ error: 'Chave de pagamento não configurada' }), {
         status: 500,
@@ -59,8 +59,8 @@ Deno.serve(async (req) => {
     }
 
     const { response, text, data, requestUrl } = result;
-    console.log('NITRO STATUS RESPONSE:', response.status, text.slice(0, 500));
-    console.log('NITRO STATUS URL:', requestUrl);
+    console.log('BLACKCAT STATUS RESPONSE:', response.status, text.slice(0, 500));
+    console.log('BLACKCAT STATUS URL:', requestUrl);
 
     if (!response.ok || !data) {
       return new Response(JSON.stringify({ status: 'unknown', raw_status: response.status, gateway_message: data?.message || data?.error || null }), {
@@ -76,7 +76,7 @@ Deno.serve(async (req) => {
       ''
     ).toString().toLowerCase();
 
-    // Map to simplified status
+    // Map to simplified status (Blackcat: PENDING, PAID, CANCELLED)
     let status = 'pending';
     if (['paid', 'approved', 'confirmed', 'completed', 'settled', 'pago'].includes(rawStatus)) {
       status = 'paid';
