@@ -29,18 +29,60 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
   useEffect(() => {
     if (cityName) return;
     const controller = new AbortController();
-    (async () => {
-      try {
-        const res = await fetch("https://ipapi.co/json/", { signal: controller.signal });
-        if (!res.ok) return;
-        const data = await res.json();
-        if (data?.city && typeof data.city === "string") {
-          setDetectedCity(data.city);
-        }
-      } catch {
-        // silencioso — usa fallback
-      }
-    })();
+
+    const extractCity = (addr: any): string | null => {
+      if (!addr) return null;
+      return (
+        addr.city ||
+        addr.town ||
+        addr.village ||
+        addr.municipality ||
+        addr.suburb ||
+        addr.county ||
+        null
+      );
+    };
+
+    const tryNominatim = (lat: number, lon: number) =>
+      fetch(
+        `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&accept-language=pt-BR&zoom=10`,
+        {
+          signal: controller.signal,
+          headers: { Accept: "application/json" },
+        },
+      )
+        .then((r) => (r.ok ? r.json() : null))
+        .then((d) => extractCity(d?.address))
+        .catch(() => null);
+
+    const tryIpapi = () =>
+      fetch("https://ipapi.co/json/", { signal: controller.signal })
+        .then((r) => (r.ok ? r.json() : null))
+        .then((d) => (d?.city && typeof d.city === "string" ? d.city : null))
+        .catch(() => null);
+
+    const fallbackToIp = async () => {
+      const city = await tryIpapi();
+      if (city) setDetectedCity(city);
+    };
+
+    if (typeof navigator !== "undefined" && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (pos) => {
+          const city = await tryNominatim(pos.coords.latitude, pos.coords.longitude);
+          if (city) setDetectedCity(city);
+          else fallbackToIp();
+        },
+        () => {
+          // usuário negou ou timeout — fallback
+          fallbackToIp();
+        },
+        { timeout: 6000, maximumAge: 600000, enableHighAccuracy: false },
+      );
+    } else {
+      fallbackToIp();
+    }
+
     return () => controller.abort();
   }, [cityName]);
 
