@@ -83,7 +83,13 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
             loading="eager"
             fetchPriority="high"
           />
-          <div className="absolute inset-0 bg-black/84" />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.65) 60%, rgba(0,0,0,0.8) 100%)",
+            }}
+          />
         </div>
 
         <div className="container relative z-10 px-4 py-16 text-center md:py-24">
@@ -102,7 +108,10 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
             Alugue sua caçamba em São Paulo e receba em até <span className="font-extrabold text-white">2 horas</span>.
           </h1>
 
-          <p className="mx-auto mb-10 max-w-xl text-base text-white/75 md:mb-12 md:text-lg">
+          <p
+            className="mx-auto mb-10 max-w-xl text-white md:mb-12"
+            style={{ fontSize: "18px", color: "#FFFFFF", opacity: 1, textShadow: "0 1px 4px rgba(0,0,0,0.8)" }}
+          >
             {subtitle}
           </p>
 
@@ -117,7 +126,8 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
             </button>
             <button
               onClick={() => scrollTo("#tamanhos")}
-              className="inline-flex items-center gap-2 text-sm font-semibold text-white/70 underline-offset-4 transition-all hover:text-white hover:underline md:text-base"
+              className="inline-flex items-center gap-2 font-semibold text-white underline underline-offset-4 transition-all hover:text-white/90"
+              style={{ fontSize: "16px", textShadow: "0 1px 4px rgba(0,0,0,0.8)" }}
             >
               Ver tamanhos e preços
             </button>
