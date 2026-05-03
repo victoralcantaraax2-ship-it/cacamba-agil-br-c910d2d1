@@ -86,11 +86,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
     return () => controller.abort();
   }, [cityName]);
 
-  const cityLine = cityName
-    ? `📍 Entregamos em ${cityName}`
-    : detectedCity
-      ? `📍 Entregamos em ${detectedCity}`
-      : "📍 Entregamos em toda São Paulo e região";
+  const titleCity = cityName || detectedCity || "São Paulo";
 
   const formatCep = (value: string) => {
     const digits = value.replace(/\D/g, "").slice(0, 8);
@@ -171,15 +167,8 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
             decoding="async"
           />
 
-          <p
-            className="text-center font-bold"
-            style={{ fontSize: "14px", color: "#FF6B2B", marginBottom: "8px", textShadow: "0 1px 3px rgba(0,0,0,0.6)" }}
-          >
-            {cityLine}
-          </p>
-
           <h1 className="mb-6 text-3xl font-bold leading-[1.15] tracking-tight text-white sm:text-4xl md:mb-7 md:text-5xl lg:text-[3.4rem]">
-            Alugue sua caçamba em São Paulo e receba em até <span className="font-extrabold text-white">2 horas</span>.
+            Alugue sua caçamba em {titleCity} e receba em até <span className="font-extrabold text-white">2 horas</span>.
           </h1>
 
           <p
