@@ -87,7 +87,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.65) 60%, rgba(0,0,0,0.8) 100%)",
+                "linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.75) 75%, rgba(0,0,0,0.85) 100%)",
             }}
           />
         </div>
