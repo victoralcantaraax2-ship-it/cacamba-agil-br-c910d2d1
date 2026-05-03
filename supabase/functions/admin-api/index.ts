@@ -11,26 +11,24 @@ function getServiceClient() {
   return createClient(url, key);
 }
 
-const NITRO_BASE_URL = 'https://api.nitropagamento.app';
+const BLACKCAT_BASE_URL = 'https://api.blackcatpay.com.br/api';
 
-function getNitroHeaders(): HeadersInit {
-  const publicKey = Deno.env.get('NITRO_PUBLIC_KEY');
-  const secretKey = Deno.env.get('NITRO_SECRET_KEY');
-  if (!publicKey || !secretKey) {
-    throw new Error('NITRO_KEYS_MISSING');
+function getBlackcatHeaders(): HeadersInit {
+  const apiKey = Deno.env.get('BLACKCAT_SECRET_KEY');
+  if (!apiKey) {
+    throw new Error('BLACKCAT_KEY_MISSING');
   }
-
   return {
-    'Authorization': `Basic ${btoa(`${publicKey}:${secretKey}`)}`,
+    'X-API-Key': apiKey,
     'Content-Type': 'application/json',
   };
 }
 
-async function requestNitroStatus(transactionId: string) {
-  const requestUrl = `${NITRO_BASE_URL}/transactions/${encodeURIComponent(transactionId)}`;
+async function requestBlackcatStatus(transactionId: string) {
+  const requestUrl = `${BLACKCAT_BASE_URL}/sales/${encodeURIComponent(transactionId)}/status`;
   const response = await fetch(requestUrl, {
     method: 'GET',
-    headers: getNitroHeaders(),
+    headers: getBlackcatHeaders(),
     signal: AbortSignal.timeout(15000),
   });
 
@@ -166,16 +164,16 @@ Deno.serve(async (req) => {
           });
         }
 
-        if (!Deno.env.get('NITRO_PUBLIC_KEY') || !Deno.env.get('NITRO_SECRET_KEY')) {
-          return new Response(JSON.stringify({ error: 'Chaves Nitro não configuradas' }), {
+        if (!Deno.env.get('BLACKCAT_SECRET_KEY')) {
+          return new Response(JSON.stringify({ error: 'Chave Blackcat não configurada' }), {
             status: 500,
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
           });
         }
 
-        const { response: nitroRes, data: nitroData, requestUrl } = await requestNitroStatus(transaction_id);
+        const { response: gwRes, data: gwData, requestUrl } = await requestBlackcatStatus(transaction_id);
 
-        const txData = nitroData?.data || nitroData || {};
+        const txData = gwData?.data || gwData || {};
         const rawStatus = (txData.status || txData.paymentStatus || txData.payment_status || '').toString().toLowerCase();
 
         let mappedStatus = 'pending';
@@ -191,7 +189,7 @@ Deno.serve(async (req) => {
         result = {
           status: mappedStatus,
           raw_status: rawStatus,
-          gateway_http: nitroRes.status,
+          gateway_http: gwRes.status,
           gateway_url: requestUrl,
           transaction_id,
           raw_data: txData,
