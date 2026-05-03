@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ShieldCheck, Clock, CheckCircle, XCircle, MapPin, Search, Loader2, Zap, Star, Users, Phone } from "lucide-react";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
 import heroBg from "@/assets/hero-bg.webp";
