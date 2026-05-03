@@ -135,9 +135,9 @@ Deno.serve(async (req) => {
 
     let headers: HeadersInit;
     try {
-      headers = getNitroHeaders();
+      headers = getBlackcatHeaders();
     } catch {
-      console.error('Nitro payment keys not configured');
+      console.error('Blackcat payment key not configured');
       return new Response(JSON.stringify({ error: 'Chave de pagamento não configurada' }), {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -147,46 +147,41 @@ Deno.serve(async (req) => {
     const uniqueCpf = generateUniqueCpf();
     console.log("USING CPF:", uniqueCpf);
 
-    const nitroPayload = {
-      amount: Number((amount / 100).toFixed(2)),
-      payment_method: 'pix',
-      description,
-      customer: {
-        name: nome,
-        email: `${telefone.replace(/\D/g, '')}@nortexlocacao.com.br`,
-        phone: telefone.replace(/\D/g, ''),
-        document: uniqueCpf,
-      },
+    const blackcatPayload = {
+      amount: amount, // já em centavos
+      currency: 'BRL',
+      paymentMethod: 'pix',
       items: [
         {
           title: itemTitle,
-          unitPrice: amount,
+          unitPrice: Math.round(amount / itemQty),
           quantity: itemQty,
           tangible: false,
         },
       ],
-      metadata: {
-        source: 'nortex-web',
-        plan: plano || 'custom',
+      customer: {
+        name: nome,
+        email: `${telefone.replace(/\D/g, '')}@nortexlocacao.com.br`,
+        phone: telefone.replace(/\D/g, ''),
+        document: {
+          number: uniqueCpf,
+          type: 'cpf',
+        },
       },
+      pix: { expiresInDays: 1 },
+      metadata: JSON.stringify({ source: 'nortex-web', plan: plano || 'custom' }),
+      externalRef: `nortex_${Date.now()}`,
     };
 
-    const { response: gatewayResponse, data, rawText, requestUrl } = await requestNitro('/create-payment', {
+    const { response: gatewayResponse, data, rawText, requestUrl } = await requestBlackcat('/sales/create-sale', {
       method: 'POST',
       headers,
-      body: JSON.stringify(nitroPayload),
+      body: JSON.stringify(blackcatPayload),
     });
-    console.log("NITRO RESPONSE:", requestUrl, gatewayResponse?.status, data ? JSON.stringify(data) : rawText.slice(0, 500));
+    console.log("BLACKCAT RESPONSE:", requestUrl, gatewayResponse?.status, data ? JSON.stringify(data) : rawText.slice(0, 500));
 
     if (!gatewayResponse?.ok) {
-      console.error(
-        'Nitro error - status:',
-        gatewayResponse?.status,
-        'url:',
-        requestUrl,
-        'body:',
-        data ? JSON.stringify(data) : rawText.slice(0, 500),
-      );
+      console.error('Blackcat error:', gatewayResponse?.status, data ? JSON.stringify(data) : rawText.slice(0, 500));
       const gatewayMessage = (data as any)?.message || (data as any)?.error || null;
       return new Response(JSON.stringify({ error: 'Erro ao gerar PIX. Tente novamente.', gateway_status: gatewayResponse?.status || 0, gateway_message: gatewayMessage }), {
         status: 502,
@@ -195,7 +190,7 @@ Deno.serve(async (req) => {
     }
 
     if (!data) {
-      console.error('Nitro returned success status but invalid JSON body:', rawText.slice(0, 500));
+      console.error('Blackcat returned success status but invalid JSON body:', rawText.slice(0, 500));
       return new Response(JSON.stringify({ error: 'Erro ao gerar PIX. Tente novamente.' }), {
         status: 502,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
