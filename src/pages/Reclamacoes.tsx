@@ -23,7 +23,7 @@ const reclameAquiJsonLd = {
   "@type": "LocalBusiness",
   "name": "NORTEX Caçambas",
   "url": "https://nortexcacambas.com/reclameaqui",
-  "telephone": "+55-11-98684-7426",
+  "telephone": "+55-11-96455-3512",
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "São Paulo",
