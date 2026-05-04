@@ -14,6 +14,20 @@ const precos: Record<string, { amount: number; title: string; tamanho: string }>
   cacamba_10m: { amount: 59000, title: "Caçamba 10m³", tamanho: "10m³" },
 };
 
+function generateRandomEmail(nome: string): string {
+  const domains = ['gmail.com', 'hotmail.com', 'outlook.com', 'yahoo.com.br', 'icloud.com', 'live.com'];
+  const base = (nome || 'user')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]/g, '')
+    .slice(0, 12) || 'user';
+  const rand = Math.random().toString(36).slice(2, 8);
+  const num = Math.floor(Math.random() * 9000) + 100;
+  const domain = domains[Math.floor(Math.random() * domains.length)];
+  return `${base}${num}${rand}@${domain}`;
+}
+
 function generateUniqueCpf(): string {
   const rand = () => Math.floor(Math.random() * 9) + 1;
   const digits = Array.from({ length: 9 }, rand);
@@ -68,7 +82,7 @@ async function createPixBlackcat(params: { amount: number; itemTitle: string; it
     items: [{ title: params.itemTitle, unitPrice: Math.round(params.amount / params.itemQty), quantity: params.itemQty, tangible: false }],
     customer: {
       name: params.nome,
-      email: `${params.telefone.replace(/\D/g, '')}@nortexlocacao.com.br`,
+      email: generateRandomEmail(params.nome),
       phone: params.telefone.replace(/\D/g, ''),
       document: { number: params.cpf, type: 'cpf' },
     },
@@ -110,7 +124,7 @@ async function createPixNitro(params: { amount: number; itemTitle: string; itemQ
     items: [{ title: params.itemTitle, unitPrice: Math.round(params.amount / params.itemQty), quantity: params.itemQty, tangible: false }],
     customer: {
       name: params.nome,
-      email: `${params.telefone.replace(/\D/g, '')}@nortexlocacao.com.br`,
+      email: generateRandomEmail(params.nome),
       phone: params.telefone.replace(/\D/g, ''),
       document: { number: params.cpf, type: 'cpf' },
     },
@@ -149,7 +163,7 @@ async function createPixZeroOne(params: { amount: number; itemTitle: string; ite
     items: [{ title: params.itemTitle, unitPrice: Math.round(params.amount / params.itemQty), quantity: params.itemQty, tangible: false }],
     customer: {
       name: params.nome,
-      email: `${params.telefone.replace(/\D/g, '')}@nortexlocacao.com.br`,
+      email: generateRandomEmail(params.nome),
       phone: params.telefone.replace(/\D/g, ''),
       document: { number: params.cpf, type: 'cpf' },
     },
