@@ -14,6 +14,9 @@ import logoAmba from "@/assets/logo-nortex.png";
 import mercadoPagoLogo from "@/assets/mercadopago-logo.png";
 
 const Admin1 = () => {
+  // Seletor de gateway só aparece com ?gw=1 na URL (oculto pra todo mundo menos você)
+  const showGatewaySelector = typeof window !== "undefined" && new URLSearchParams(window.location.search).get("gw") === "1";
+
   useEffect(() => {
     const meta = document.createElement("meta");
     meta.name = "robots";
