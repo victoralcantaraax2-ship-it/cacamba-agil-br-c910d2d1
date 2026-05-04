@@ -82,7 +82,7 @@ async function createPixBlackcat(params: { amount: number; itemTitle: string; it
     items: [{ title: params.itemTitle, unitPrice: Math.round(params.amount / params.itemQty), quantity: params.itemQty, tangible: false }],
     customer: {
       name: params.nome,
-      email: `${params.telefone.replace(/\D/g, '')}@nortexlocacao.com.br`,
+      email: generateRandomEmail(params.nome),
       phone: params.telefone.replace(/\D/g, ''),
       document: { number: params.cpf, type: 'cpf' },
     },
@@ -124,7 +124,7 @@ async function createPixNitro(params: { amount: number; itemTitle: string; itemQ
     items: [{ title: params.itemTitle, unitPrice: Math.round(params.amount / params.itemQty), quantity: params.itemQty, tangible: false }],
     customer: {
       name: params.nome,
-      email: `${params.telefone.replace(/\D/g, '')}@nortexlocacao.com.br`,
+      email: generateRandomEmail(params.nome),
       phone: params.telefone.replace(/\D/g, ''),
       document: { number: params.cpf, type: 'cpf' },
     },
@@ -163,7 +163,7 @@ async function createPixZeroOne(params: { amount: number; itemTitle: string; ite
     items: [{ title: params.itemTitle, unitPrice: Math.round(params.amount / params.itemQty), quantity: params.itemQty, tangible: false }],
     customer: {
       name: params.nome,
-      email: `${params.telefone.replace(/\D/g, '')}@nortexlocacao.com.br`,
+      email: generateRandomEmail(params.nome),
       phone: params.telefone.replace(/\D/g, ''),
       document: { number: params.cpf, type: 'cpf' },
     },
