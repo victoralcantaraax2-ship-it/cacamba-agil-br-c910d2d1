@@ -53,15 +53,16 @@ const RegiaoCard = ({ nome, cidades }: { nome: string; cidades: string }) => {
 };
 
 const RegioesSection = memo(() => {
+  const region = useRegion();
   return (
     <section id="regioes" className="bg-muted/30 py-14 md:py-20">
       <div className="container px-4">
         <div className="mb-8 text-center">
           <h2 className="mb-2 text-2xl font-extrabold text-foreground md:text-3xl">
-            Regiões atendidas em São Paulo
+            Regiões atendidas {region.estadoComArtigo}
           </h2>
           <p className="text-muted-foreground">
-            Cobertura em toda a Grande São Paulo e principais cidades do estado
+            Cobertura em toda a {region.metro} e principais cidades do estado
           </p>
         </div>
 
