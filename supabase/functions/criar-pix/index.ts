@@ -93,8 +93,8 @@ async function createPixBlackcat(params: { amount: number; itemTitle: string; it
       document: { number: params.cpf, type: 'cpf' },
     },
     pix: { expiresInDays: 1 },
-    metadata: JSON.stringify({ source: 'nortex-web', plan: params.plano || 'custom' }),
-    externalRef: `nortex_${Date.now()}`,
+    metadata: JSON.stringify({ ref: Math.random().toString(36).slice(2, 10) }),
+    externalRef: `ref_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
   };
   const res = await fetch(url, {
     method: 'POST',
