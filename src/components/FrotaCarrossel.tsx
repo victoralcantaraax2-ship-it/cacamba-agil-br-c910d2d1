@@ -1,6 +1,7 @@
 import frota1 from "@/assets/frota-1.webp";
+import frota2 from "@/assets/frota-2.webp";
 
-const images = [frota1];
+const images = [frota1, frota2];
 
 const FrotaCarrossel = () => {
   // Duplicate for seamless loop
