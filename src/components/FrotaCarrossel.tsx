@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import frota1 from "@/assets/frota-1.webp";
 import frota2 from "@/assets/frota-2.webp";
 import frota3 from "@/assets/frota-3.webp";
@@ -49,6 +51,16 @@ const FrotaCarrossel = () => {
             </div>
           ))}
         </div>
+      </div>
+
+      <div className="container px-4 mt-8 flex justify-center">
+        <Button
+          asChild
+          size="lg"
+          className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold text-base md:text-lg px-8 py-6 shadow-lg animate-btn-breathe"
+        >
+          <Link to="/finalizacao">Agendar Caçamba</Link>
+        </Button>
       </div>
     </section>
   );
