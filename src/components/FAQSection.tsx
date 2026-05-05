@@ -46,6 +46,7 @@ const faqs = [
 ];
 
 const FAQSection = memo(() => {
+  const region = useRegion();
   return (
     <section id="faq" className="bg-card py-16 md:py-24">
       <div className="container px-4">
