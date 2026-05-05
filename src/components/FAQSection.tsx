@@ -21,7 +21,7 @@ const faqs = [
   },
   {
     q: "A NORTEX atende minha região?",
-    a: "Atendemos toda a cidade de São Paulo, Grande São Paulo e regiões adjacentes. Consulte a cobertura para seu endereço pelo WhatsApp.",
+    a: "__REGION_COVERAGE__",
   },
   {
     q: "Quais são as formas de pagamento aceitas?",
@@ -70,7 +70,9 @@ const FAQSection = memo(() => {
                   {faq.q}
                 </AccordionTrigger>
                 <AccordionContent className="text-sm text-muted-foreground leading-relaxed px-2 pb-4">
-                  {regionalize(faq.a, region)}
+                  {faq.a === "__REGION_COVERAGE__"
+                    ? `Atendemos toda a cidade de ${region.capital}, ${region.metro} e regiões adjacentes. Consulte a cobertura para seu endereço pelo WhatsApp.`
+                    : regionalize(faq.a, region)}
                 </AccordionContent>
               </AccordionItem>
             ))}

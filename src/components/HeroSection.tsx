@@ -1,15 +1,10 @@
 import { useState, useEffect } from "react";
 import { ShieldCheck, Clock, CheckCircle, XCircle, MapPin, Search, Loader2, Zap, Star, Users, Phone } from "lucide-react";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
+import { useRegion } from "@/lib/useRegion";
 import heroBg from "@/assets/hero-bg.webp";
 import whatsappIcon from "@/assets/whatsapp-icon.webp";
 import logoAmba from "@/assets/logo-nortex-full.webp";
-
-const badges = [
-  { icon: Users, label: "+5.000 coletas realizadas" },
-  { icon: ShieldCheck, label: "Desde 2021 em SP" },
-  { icon: ShieldCheck, label: "Empresa regularizada" },
-];
 
 const scrollTo = (id: string) => {
   const el = document.querySelector(id);
