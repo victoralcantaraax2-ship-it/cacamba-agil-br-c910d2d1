@@ -87,13 +87,18 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
     <>
       <section className="relative flex min-h-[85vh] items-center justify-center overflow-hidden pt-16 md:min-h-screen" style={{ willChange: "transform" }}>
         <div className="absolute inset-0 bg-black">
-          <img src={heroBg} alt="Caminhão NORTEX Caçambas pronto para entrega" className="hidden" aria-hidden="true" loading="eager" fetchPriority="high" />
-          <div
-            className="absolute inset-0 blur-[3px] scale-[1.03] bg-no-repeat bg-cover bg-[position:70%_center] md:bg-center"
-            style={{
-              backgroundImage: `url(${heroBg})`,
-            }}
-          />
+          <picture>
+            <source media="(max-width: 767px)" srcSet={heroBgMobile} />
+            <source media="(min-width: 768px)" srcSet={heroBg} />
+            <img
+              src={heroBg}
+              alt="Caminhão NORTEX Caçambas pronto para entrega"
+              className="absolute inset-0 h-full w-full object-cover blur-[3px] scale-[1.03] object-[center_30%] md:object-center"
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
+            />
+          </picture>
           <div
             className="absolute inset-0"
             style={{
