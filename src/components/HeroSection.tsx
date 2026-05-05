@@ -89,7 +89,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
           <img
             src={heroBg}
             alt="Caminhão NORTEX Caçambas pronto para entrega"
-            className="h-full w-full object-contain md:object-cover bg-black scale-100 blur-[3px]"
+            className="h-full w-full object-cover object-center scale-90 blur-[3px]"
             width={1920}
             height={1080}
             loading="eager"
