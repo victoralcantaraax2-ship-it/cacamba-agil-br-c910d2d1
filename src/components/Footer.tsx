@@ -2,11 +2,13 @@ import { memo } from "react";
 import { Link } from "react-router-dom";
 import { Phone, Mail, Clock, MapPin, Shield } from "lucide-react";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
+import { useRegion } from "@/lib/useRegion";
 import logoAmba from "@/assets/logo-nortex-horizontal.png";
 import sslLogo from "@/assets/ssl-blindado-logo.png";
 import whatsappIcon from "@/assets/whatsapp-icon.webp";
 
 const Footer = memo(() => {
+  const region = useRegion();
   const year = new Date().getFullYear();
 
   return (
