@@ -88,16 +88,17 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
         <div className="absolute inset-0 bg-black">
           <img src={heroBg} alt="Caminhão NORTEX Caçambas pronto para entrega" className="hidden" aria-hidden="true" />
           <div
-            className="absolute inset-0 blur-[1.5px] bg-no-repeat bg-cover bg-[position:65%_center] md:bg-[position:center_right]"
+            className="absolute inset-0 blur-[1.5px] bg-no-repeat bg-[position:65%_center] md:bg-[position:center_right]"
             style={{
               backgroundImage: `url(${heroBg})`,
+              backgroundSize: "115% auto",
             }}
           />
           <div
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.75) 75%, rgba(0,0,0,0.85) 100%)",
+                "linear-gradient(to bottom, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.45) 18%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.7) 82%, rgba(0,0,0,0.95) 100%)",
             }}
           />
         </div>
