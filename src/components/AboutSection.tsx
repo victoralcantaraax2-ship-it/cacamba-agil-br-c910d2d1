@@ -34,7 +34,7 @@ const AboutSection = memo(() => {
             Sobre a NORTEX Caçambas
           </h2>
           <p className="mb-4 text-muted-foreground leading-relaxed text-base md:text-lg">
-            A <span className="font-bold text-foreground">NORTEX Caçambas</span> é referência na locação de caçambas estacionárias para obras, reformas e demolições em São Paulo e Grande São Paulo.
+            A <span className="font-bold text-foreground">NORTEX Caçambas</span> é referência na locação de caçambas estacionárias para obras, reformas e demolições {region.estadoComArtigo} e {region.metro}.
           </p>
           <p className="mb-4 text-muted-foreground leading-relaxed">
             Atuamos com foco em eficiência operacional, organização logística e responsabilidade ambiental, oferecendo soluções completas para clientes residenciais, construtoras, condomínios e empresas.
