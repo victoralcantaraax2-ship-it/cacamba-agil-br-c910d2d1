@@ -131,7 +131,7 @@ const SocialProof = () => {
             Clientes que confiam na NORTEX
           </h2>
           <p className="text-sm text-secondary-foreground/60 mb-3">
-            Shoppings, construtoras, condomínios, escolas e centenas de empresas em São Paulo
+            Shoppings, construtoras, condomínios, escolas e centenas de empresas {region.estadoComArtigo}
           </p>
           <div className="flex items-center justify-center gap-6 flex-wrap">
             <div className="flex flex-col items-center gap-1">
