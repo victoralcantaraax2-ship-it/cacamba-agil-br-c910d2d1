@@ -127,6 +127,7 @@ export default {
         "border-glow": "border-glow 4s ease-in-out infinite",
         "btn-breathe": "btn-breathe 3.5s ease-in-out infinite",
         "badge-shimmer": "badge-shimmer 3s ease-in-out infinite",
+        "scroll-x": "scroll-x 40s linear infinite",
       },
     },
   },
