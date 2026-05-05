@@ -27,6 +27,7 @@ const segments = [
 ];
 
 const AboutSection = memo(() => {
+  const region = useRegion();
   return (
     <section id="sobre-nos" className="bg-background py-16 md:py-24">
       <div className="container px-4">
