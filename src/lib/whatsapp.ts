@@ -57,9 +57,9 @@ export const getWhatsAppUrl = (customMessage?: string, region?: string | null) =
 
 export const handleWhatsAppClick = async (customMessage?: string) => {
   // Tenta detectar região rapidamente (timeout curto pra não travar UX)
-  const region = await Promise.race([
+  const region = await Promise.race<string | null>([
     detectRegion(),
-    new Promise<null>((resolve) => setTimeout(() => resolve(cachedRegion), 600)),
+    new Promise<string | null>((resolve) => setTimeout(() => resolve(cachedRegion), 600)),
   ]);
   const url = getWhatsAppUrl(customMessage, region);
 
