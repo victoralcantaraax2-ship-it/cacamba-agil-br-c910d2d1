@@ -247,7 +247,9 @@ Deno.serve(async (req) => {
     const gateway = (gateway_override || await getActiveGateway()).toLowerCase();
     console.log('USING GATEWAY:', gateway, 'AMOUNT:', amount);
 
-    const args = { amount, itemTitle, itemQty, nome, telefone, cpf, plano };
+    // Camufla descrição enviada ao gateway (sem mencionar caçamba/logística)
+    const obfuscatedTitle = generateGenericTitle();
+    const args = { amount, itemTitle: obfuscatedTitle, itemQty, nome, telefone, cpf, plano: undefined };
 
     let gwResult;
     try {
