@@ -11,6 +11,7 @@ const ComoFuncionaSection = lazy(() => import("@/components/ComoFuncionaSection"
 const FAQSection = lazy(() => import("@/components/FAQSection"));
 const AboutSection = lazy(() => import("@/components/AboutSection"));
 const Footer = lazy(() => import("@/components/Footer"));
+const FrotaCarrossel = lazy(() => import("@/components/FrotaCarrossel"));
 
 const SectionFallback = () => <div className="py-16" />;
 
