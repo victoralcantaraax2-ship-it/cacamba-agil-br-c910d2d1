@@ -1,5 +1,6 @@
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useMemo, useCallback, useRef } from "react";
+import { useRegion, regionalize } from "@/lib/useRegion";
 import googleLogo from "@/assets/google-logo.webp";
 
 const reviews = [
