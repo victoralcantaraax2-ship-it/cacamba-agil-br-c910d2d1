@@ -134,12 +134,12 @@ const Index = () => {
       </RevealSection>
       <Suspense fallback={<SectionFallback />}>
         <RevealSection delay={50}>
-          <RegioesSection />
+          <FrotaCarrossel />
         </RevealSection>
       </Suspense>
       <Suspense fallback={<SectionFallback />}>
         <RevealSection delay={50}>
-          <FrotaCarrossel />
+          <RegioesSection />
         </RevealSection>
       </Suspense>
       <Suspense fallback={<SectionFallback />}>
