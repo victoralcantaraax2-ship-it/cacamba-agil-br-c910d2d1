@@ -122,13 +122,6 @@ const WhatsAppFloat = memo(() => {
               <X className="h-4 w-4" />
             </button>
             <div className="flex items-center gap-4">
-              <div className="relative">
-                <img src={evelinePhoto} alt="Eveline Duarte" className="h-14 w-14 rounded-2xl border-2 border-white/40 object-cover shadow-lg" />
-                <span className="absolute -bottom-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full border-2 border-whatsapp bg-green-400">
-                  <span className="h-2 w-2 animate-ping rounded-full bg-green-300 absolute" />
-                  <span className="h-2 w-2 rounded-full bg-white" />
-                </span>
-              </div>
               <div>
                 <p className="text-[15px] font-bold text-white leading-tight tracking-tight">Eveline Duarte</p>
                 <p className="text-xs text-white/70 font-medium mt-0.5">Consultora NORTEX</p>
