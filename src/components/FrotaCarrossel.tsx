@@ -20,7 +20,7 @@ const FrotaCarrossel = () => {
       </div>
 
       <div className="relative w-full overflow-hidden">
-        <div className="flex gap-4 md:gap-6 animate-scroll-x">
+        <div className="flex gap-4 md:gap-6 animate-scroll-x [animation-duration:20s] md:[animation-duration:40s]">
           {loop.map((src, i) => (
             <div
               key={i}
