@@ -51,7 +51,7 @@ const Footer = memo(() => {
               Reclame Aqui
             </Link>
             <span className="flex items-center gap-2 text-xs text-secondary-foreground/50 mt-1">
-              <MapPin className="h-3.5 w-3.5" /> São Paulo, SP
+              <MapPin className="h-3.5 w-3.5" /> {region.capital}, {region.uf}
             </span>
           </div>
         </div>
