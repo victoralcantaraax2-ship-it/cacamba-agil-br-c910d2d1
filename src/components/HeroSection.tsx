@@ -84,11 +84,11 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
 
   return (
     <>
-      <section className="relative flex min-h-[85vh] items-center justify-center overflow-hidden pt-16 md:min-h-screen">
+      <section className="relative flex min-h-[85vh] items-center justify-center overflow-hidden pt-16 md:min-h-screen" style={{ willChange: "transform" }}>
         <div className="absolute inset-0 bg-black">
-          <img src={heroBg} alt="Caminhão NORTEX Caçambas pronto para entrega" className="hidden" aria-hidden="true" />
+          <img src={heroBg} alt="Caminhão NORTEX Caçambas pronto para entrega" className="hidden" aria-hidden="true" loading="eager" fetchPriority="high" />
           <div
-            className="absolute inset-0 blur-[3px] scale-[1.03] bg-no-repeat bg-cover bg-[position:65%_center] md:bg-[position:center_right]"
+            className="absolute inset-0 blur-[3px] scale-[1.03] bg-no-repeat bg-cover bg-[position:70%_center] md:bg-center"
             style={{
               backgroundImage: `url(${heroBg})`,
             }}
@@ -97,7 +97,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.75) 75%, rgba(0,0,0,0.85) 100%)",
+                "linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.75) 100%)",
             }}
           />
         </div>
