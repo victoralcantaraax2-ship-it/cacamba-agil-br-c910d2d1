@@ -70,7 +70,7 @@ const FAQSection = memo(() => {
                   {faq.q}
                 </AccordionTrigger>
                 <AccordionContent className="text-sm text-muted-foreground leading-relaxed px-2 pb-4">
-                  {faq.a}
+                  {regionalize(faq.a, region)}
                 </AccordionContent>
               </AccordionItem>
             ))}
