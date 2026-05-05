@@ -88,8 +88,8 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
         <div className="absolute inset-0">
           <img
             src={heroBg}
-            alt="Caçamba estacionária posicionada em obra para descarte de resíduos"
-            className="h-full w-full object-cover"
+            alt="Caminhão NORTEX Caçambas pronto para entrega"
+            className="h-full w-full object-cover scale-105 blur-[2px]"
             width={1920}
             height={1080}
             loading="eager"
