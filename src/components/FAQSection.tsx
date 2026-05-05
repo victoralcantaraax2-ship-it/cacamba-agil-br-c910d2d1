@@ -21,7 +21,7 @@ const faqs = [
   },
   {
     q: "A NORTEX atende minha região?",
-    a: "Atendemos toda a cidade de São Paulo, Grande São Paulo e regiões adjacentes. Consulte a cobertura para seu endereço pelo WhatsApp.",
+    a: "__REGION_COVERAGE__",
   },
   {
     q: "Quais são as formas de pagamento aceitas?",
