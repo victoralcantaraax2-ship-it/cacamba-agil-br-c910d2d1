@@ -87,7 +87,15 @@ const scrollTo = (id: string) => {
 };
 
 const SocialProof = () => {
-  const shuffled = useMemo(() => [...reviews].sort(() => Math.random() - 0.5), []);
+  const region = useRegion();
+  const shuffled = useMemo(() => {
+    const list = reviews.map((r) => ({
+      ...r,
+      city: r.city ? regionalize(r.city.replace(/^São Paulo – /, `${region.capital} – `), region) : r.city,
+      text: regionalize(r.text, region),
+    }));
+    return list.sort(() => Math.random() - 0.5);
+  }, [region]);
   const [current, setCurrent] = useState(0);
   const touchStart = useRef<number | null>(null);
 
