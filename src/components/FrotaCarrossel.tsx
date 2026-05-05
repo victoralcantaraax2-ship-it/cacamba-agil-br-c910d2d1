@@ -41,7 +41,7 @@ const FrotaCarrossel = () => {
                 src={src}
                 alt={`Caçamba NORTEX ${i + 1}`}
                 className="h-full w-full object-cover pointer-events-none select-none"
-                loading="lazy"
+                loading="eager"
                 draggable={false}
                 onContextMenu={(e) => e.preventDefault()}
                 onDragStart={(e) => e.preventDefault()}
