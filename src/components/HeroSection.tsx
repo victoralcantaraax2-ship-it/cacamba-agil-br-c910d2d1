@@ -89,7 +89,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
           <img
             src={heroBg}
             alt="Caminhão NORTEX Caçambas pronto para entrega"
-            className="h-full w-full object-cover object-right"
+            className="h-full w-full object-cover object-right blur-[1.5px]"
             width={1920}
             height={1080}
             loading="eager"
@@ -109,7 +109,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
           <img
             src={logoAmba}
             alt="NORTEX Caçambas"
-            className="mx-auto mb-10 h-28 w-auto opacity-95 md:mb-12 md:h-36"
+            className="mx-auto mb-10 h-36 w-auto opacity-95 md:mb-12 md:h-48"
             width={400}
             height={140}
             fetchPriority="high"
