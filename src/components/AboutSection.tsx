@@ -1,6 +1,7 @@
 import { memo } from "react";
 import { HardHat, Home, Building2, Warehouse } from "lucide-react";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
+import { useRegion } from "@/lib/useRegion";
 import whatsappIcon from "@/assets/whatsapp-icon.webp";
 import badgeAward from "@/assets/badge-award.png";
 import iconHorario from "@/assets/icon-horario.png";
