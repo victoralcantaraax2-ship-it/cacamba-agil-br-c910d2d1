@@ -3,6 +3,7 @@ import { ShieldCheck, Clock, CheckCircle, XCircle, MapPin, Search, Loader2, Zap,
 import { handleWhatsAppClick } from "@/lib/whatsapp";
 import { useRegion } from "@/lib/useRegion";
 import heroBg from "@/assets/hero-bg.webp";
+import heroBgMobile from "@/assets/hero-bg-mobile.webp";
 import whatsappIcon from "@/assets/whatsapp-icon.webp";
 import logoAmba from "@/assets/logo-nortex-full.webp";
 
