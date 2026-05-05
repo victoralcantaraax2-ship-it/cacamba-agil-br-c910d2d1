@@ -5,7 +5,7 @@ import TamanhosSection from "@/components/TamanhosSection";
 import ExitIntentPopup from "@/components/ExitIntentPopup";
 import { getWhatsAppUrl } from "@/lib/whatsapp";
 
-const RegioesSection = lazy(() => import("@/components/RegioesSection"));
+
 const SocialProof = lazy(() => import("@/components/SocialProof"));
 const ComoFuncionaSection = lazy(() => import("@/components/ComoFuncionaSection"));
 const FAQSection = lazy(() => import("@/components/FAQSection"));
@@ -135,11 +135,6 @@ const Index = () => {
       <Suspense fallback={<SectionFallback />}>
         <RevealSection delay={50}>
           <FrotaCarrossel />
-        </RevealSection>
-      </Suspense>
-      <Suspense fallback={<SectionFallback />}>
-        <RevealSection delay={50}>
-          <RegioesSection />
         </RevealSection>
       </Suspense>
       <Suspense fallback={<SectionFallback />}>
