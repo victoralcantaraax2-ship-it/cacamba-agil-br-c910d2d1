@@ -2,11 +2,13 @@ import { memo } from "react";
 import { Link } from "react-router-dom";
 import { Phone, Mail, Clock, MapPin, Shield } from "lucide-react";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
+import { useRegion } from "@/lib/useRegion";
 import logoAmba from "@/assets/logo-nortex-horizontal.png";
 import sslLogo from "@/assets/ssl-blindado-logo.png";
 import whatsappIcon from "@/assets/whatsapp-icon.webp";
 
 const Footer = memo(() => {
+  const region = useRegion();
   const year = new Date().getFullYear();
 
   return (
@@ -18,7 +20,7 @@ const Footer = memo(() => {
           <div className="flex flex-col items-center sm:items-start gap-3">
             <img src={logoAmba} alt="NORTEX Caçambas" className="h-8 w-auto" width={120} height={32} loading="lazy" />
             <p className="text-xs text-secondary-foreground/50 text-center sm:text-left leading-relaxed max-w-[220px]">
-              Aluguel de caçambas estacionárias para obras, reformas, entulhos e demolições em São Paulo.
+              Aluguel de caçambas estacionárias para obras, reformas, entulhos e demolições {region.estadoComArtigo}.
             </p>
           </div>
 
@@ -49,7 +51,7 @@ const Footer = memo(() => {
               Reclame Aqui
             </Link>
             <span className="flex items-center gap-2 text-xs text-secondary-foreground/50 mt-1">
-              <MapPin className="h-3.5 w-3.5" /> São Paulo, SP
+              <MapPin className="h-3.5 w-3.5" /> {region.capital}, {region.uf}
             </span>
           </div>
         </div>

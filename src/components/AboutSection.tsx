@@ -1,6 +1,7 @@
 import { memo } from "react";
 import { HardHat, Home, Building2, Warehouse } from "lucide-react";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
+import { useRegion } from "@/lib/useRegion";
 import whatsappIcon from "@/assets/whatsapp-icon.webp";
 import badgeAward from "@/assets/badge-award.png";
 import iconHorario from "@/assets/icon-horario.png";
@@ -26,6 +27,7 @@ const segments = [
 ];
 
 const AboutSection = memo(() => {
+  const region = useRegion();
   return (
     <section id="sobre-nos" className="bg-background py-16 md:py-24">
       <div className="container px-4">
@@ -34,7 +36,7 @@ const AboutSection = memo(() => {
             Sobre a NORTEX Caçambas
           </h2>
           <p className="mb-4 text-muted-foreground leading-relaxed text-base md:text-lg">
-            A <span className="font-bold text-foreground">NORTEX Caçambas</span> é referência na locação de caçambas estacionárias para obras, reformas e demolições em São Paulo e Grande São Paulo.
+            A <span className="font-bold text-foreground">NORTEX Caçambas</span> é referência na locação de caçambas estacionárias para obras, reformas e demolições {region.estadoComArtigo} e {region.metro}.
           </p>
           <p className="mb-4 text-muted-foreground leading-relaxed">
             Atuamos com foco em eficiência operacional, organização logística e responsabilidade ambiental, oferecendo soluções completas para clientes residenciais, construtoras, condomínios e empresas.

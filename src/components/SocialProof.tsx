@@ -1,5 +1,6 @@
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useMemo, useCallback, useRef } from "react";
+import { useRegion, regionalize } from "@/lib/useRegion";
 import googleLogo from "@/assets/google-logo.webp";
 
 const reviews = [
@@ -86,7 +87,15 @@ const scrollTo = (id: string) => {
 };
 
 const SocialProof = () => {
-  const shuffled = useMemo(() => [...reviews].sort(() => Math.random() - 0.5), []);
+  const region = useRegion();
+  const shuffled = useMemo(() => {
+    const list = reviews.map((r) => ({
+      ...r,
+      city: r.city ? regionalize(r.city.replace(/^São Paulo – /, `${region.capital} – `), region) : r.city,
+      text: regionalize(r.text, region),
+    }));
+    return list.sort(() => Math.random() - 0.5);
+  }, [region]);
   const [current, setCurrent] = useState(0);
   const touchStart = useRef<number | null>(null);
 
@@ -122,7 +131,7 @@ const SocialProof = () => {
             Clientes que confiam na NORTEX
           </h2>
           <p className="text-sm text-secondary-foreground/60 mb-3">
-            Shoppings, construtoras, condomínios, escolas e centenas de empresas em São Paulo
+            Shoppings, construtoras, condomínios, escolas e centenas de empresas {region.estadoComArtigo}
           </p>
           <div className="flex items-center justify-center gap-6 flex-wrap">
             <div className="flex flex-col items-center gap-1">

@@ -6,6 +6,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
+import { useRegion, regionalize } from "@/lib/useRegion";
 import whatsappIcon from "@/assets/whatsapp-icon.webp";
 import { HelpCircle } from "lucide-react";
 
@@ -45,6 +46,7 @@ const faqs = [
 ];
 
 const FAQSection = memo(() => {
+  const region = useRegion();
   return (
     <section id="faq" className="bg-card py-16 md:py-24">
       <div className="container px-4">
@@ -68,7 +70,7 @@ const FAQSection = memo(() => {
                   {faq.q}
                 </AccordionTrigger>
                 <AccordionContent className="text-sm text-muted-foreground leading-relaxed px-2 pb-4">
-                  {faq.a}
+                  {regionalize(faq.a, region)}
                 </AccordionContent>
               </AccordionItem>
             ))}
