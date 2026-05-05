@@ -1,6 +1,7 @@
 import { memo, useState } from "react";
 import { MapPin, ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useRegion } from "@/lib/useRegion";
 
 const regioes = [
   { nome: "São Paulo (Capital)", cidades: "São Paulo, Zona Leste, Zona Sul, Zona Norte, Zona Oeste, Centro, Penha, Itaquera, Mooca, Ipiranga, Santana, Pinheiros, Butantã, Lapa, Vila Mariana, Tatuapé, Aricanduva, Ermelino Matarazzo, São Miguel Paulista, Guaianases, Cidade Tiradentes" },
