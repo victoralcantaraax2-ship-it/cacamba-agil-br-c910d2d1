@@ -4,8 +4,9 @@ import { Button } from "@/components/ui/button";
 import frota1 from "@/assets/frota-1.webp";
 import frota2 from "@/assets/frota-2.webp";
 import frota3 from "@/assets/frota-3.webp";
+import frota4 from "@/assets/frota-4.webp";
 
-const images = [frota1, frota2, frota3];
+const images = [frota1, frota2, frota3, frota4];
 
 const FrotaCarrossel = () => {
   const loop = [...images, ...images];
