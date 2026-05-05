@@ -7,7 +7,7 @@ import frota4 from "@/assets/frota-4.webp";
 const images = [frota1, frota2, frota3, frota4];
 
 const FrotaCarrossel = () => {
-  const loop = [...images, ...images, ...images, ...images, ...images, ...images];
+  const loop = [...images, ...images];
   const [paused, setPaused] = useState(false);
 
   return (
