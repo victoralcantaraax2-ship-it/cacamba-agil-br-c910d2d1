@@ -6,6 +6,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { handleWhatsAppClick } from "@/lib/whatsapp";
+import { useRegion, regionalize } from "@/lib/useRegion";
 import whatsappIcon from "@/assets/whatsapp-icon.webp";
 import { HelpCircle } from "lucide-react";
 
