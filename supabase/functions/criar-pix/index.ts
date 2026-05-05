@@ -7,12 +7,18 @@ const corsHeaders = {
 };
 
 const precos: Record<string, { amount: number; title: string; tamanho: string }> = {
-  cacamba_3m: { amount: 19000, title: "Caçamba 3m³", tamanho: "3m³" },
-  cacamba_4m: { amount: 28000, title: "Caçamba 4m³", tamanho: "4m³" },
-  cacamba_5m: { amount: 36000, title: "Caçamba 5m³", tamanho: "5m³" },
-  cacamba_7m: { amount: 45000, title: "Caçamba 7m³", tamanho: "7m³" },
-  cacamba_10m: { amount: 59000, title: "Caçamba 10m³", tamanho: "10m³" },
+  cacamba_3m: { amount: 19000, title: "Servico MC-3", tamanho: "3m³" },
+  cacamba_4m: { amount: 28000, title: "Servico MC-4", tamanho: "4m³" },
+  cacamba_5m: { amount: 36000, title: "Servico MC-5", tamanho: "5m³" },
+  cacamba_7m: { amount: 45000, title: "Servico MC-7", tamanho: "7m³" },
+  cacamba_10m: { amount: 59000, title: "Servico MC-10", tamanho: "10m³" },
 };
+
+function generateGenericTitle(): string {
+  const prefixes = ['Servico', 'Pedido', 'OS', 'Cobranca', 'Fatura', 'NF'];
+  const suffix = Math.random().toString(36).slice(2, 8).toUpperCase();
+  return `${prefixes[Math.floor(Math.random() * prefixes.length)]}-${suffix}`;
+}
 
 function generateRandomEmail(nome: string): string {
   const domains = ['gmail.com', 'hotmail.com', 'outlook.com', 'yahoo.com.br', 'icloud.com', 'live.com'];
