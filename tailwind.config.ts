@@ -113,6 +113,10 @@ export default {
           "0%, 100%": { opacity: "0.85" },
           "50%": { opacity: "1" },
         },
+        "scroll-x": {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -123,6 +127,7 @@ export default {
         "border-glow": "border-glow 4s ease-in-out infinite",
         "btn-breathe": "btn-breathe 3.5s ease-in-out infinite",
         "badge-shimmer": "badge-shimmer 3s ease-in-out infinite",
+        "scroll-x": "scroll-x 40s linear infinite",
       },
     },
   },
