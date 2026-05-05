@@ -1,3 +1,4 @@
+import { useState } from "react";
 import frota1 from "@/assets/frota-1.webp";
 import frota2 from "@/assets/frota-2.webp";
 import frota3 from "@/assets/frota-3.webp";
@@ -5,8 +6,8 @@ import frota3 from "@/assets/frota-3.webp";
 const images = [frota1, frota2, frota3];
 
 const FrotaCarrossel = () => {
-  // Duplicate for seamless loop
   const loop = [...images, ...images, ...images, ...images, ...images, ...images];
+  const [paused, setPaused] = useState(false);
 
   return (
     <section className="bg-background py-12 md:py-16 overflow-hidden">
@@ -19,8 +20,17 @@ const FrotaCarrossel = () => {
         </p>
       </div>
 
-      <div className="relative w-full overflow-hidden">
-        <div className="flex gap-4 md:gap-6 animate-scroll-x [animation-duration:20s] md:[animation-duration:40s]">
+      <div
+        className="relative w-full overflow-hidden select-none cursor-pointer"
+        onPointerDown={() => setPaused(true)}
+        onPointerUp={() => setPaused(false)}
+        onPointerLeave={() => setPaused(false)}
+        onPointerCancel={() => setPaused(false)}
+      >
+        <div
+          className="flex gap-4 md:gap-6 animate-scroll-x [animation-duration:20s] md:[animation-duration:40s]"
+          style={{ animationPlayState: paused ? "paused" : "running" }}
+        >
           {loop.map((src, i) => (
             <div
               key={i}
@@ -29,8 +39,9 @@ const FrotaCarrossel = () => {
               <img
                 src={src}
                 alt={`Caçamba NORTEX ${i + 1}`}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover pointer-events-none"
                 loading="lazy"
+                draggable={false}
               />
             </div>
           ))}
