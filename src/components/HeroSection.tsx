@@ -89,7 +89,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
           <img
             src={heroBg}
             alt="Caminhão NORTEX Caçambas pronto para entrega"
-            className="h-full w-full object-contain object-center blur-[3px] opacity-90"
+            className="h-full w-full object-cover object-right"
             width={1920}
             height={1080}
             loading="eager"
@@ -99,7 +99,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.8) 75%, rgba(0,0,0,0.9) 100%)",
+                "linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.75) 75%, rgba(0,0,0,0.85) 100%)",
             }}
           />
         </div>
