@@ -26,17 +26,55 @@ const normalizeRegion = (raw: string | undefined | null): string | null => {
   return STATE_ALIASES[up] || null;
 };
 
+const isDev = typeof import.meta !== "undefined" && (import.meta as any).env?.DEV;
+const debug = (...args: unknown[]) => {
+  if (isDev) console.log("[whatsapp/geo]", ...args);
+};
+
+const fetchWithTimeout = async (url: string, ms = 2500): Promise<any | null> => {
+  try {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), ms);
+    const res = await fetch(url, { signal: ctrl.signal });
+    clearTimeout(t);
+    if (!res.ok) return null;
+    return await res.json();
+  } catch {
+    return null;
+  }
+};
+
+type Provider = { name: string; url: string; pick: (d: any) => string | null | undefined };
+
+const PROVIDERS: Provider[] = [
+  { name: "ipapi.co", url: "https://ipapi.co/json/", pick: (d) => d?.region_code || d?.region },
+  { name: "ipwho.is", url: "https://ipwho.is/", pick: (d) => d?.region_code || d?.region },
+  { name: "geolocation-db", url: "https://geolocation-db.com/json/", pick: (d) => d?.state },
+];
+
 const detectRegion = (): Promise<string | null> => {
   if (cachedRegion) return Promise.resolve(cachedRegion);
   if (regionPromise) return regionPromise;
-  regionPromise = fetch("https://ipapi.co/json/")
-    .then((r) => (r.ok ? r.json() : null))
-    .then((d) => {
-      const region = normalizeRegion(d?.region_code) || normalizeRegion(d?.region);
-      if (region) cachedRegion = region;
-      return cachedRegion;
-    })
-    .catch(() => null);
+
+  regionPromise = (async () => {
+    for (const p of PROVIDERS) {
+      const data = await fetchWithTimeout(p.url);
+      if (!data) {
+        debug(`provider ${p.name} falhou`);
+        continue;
+      }
+      const region = normalizeRegion(p.pick(data));
+      if (region) {
+        cachedRegion = region;
+        debug(`provider ${p.name} detectou estado: ${region}`);
+        return region;
+      }
+      debug(`provider ${p.name} respondeu mas sem estado válido`);
+    }
+    debug("nenhum provider detectou — usando fallback SP");
+    return null;
+  })();
+
   return regionPromise;
 };
 
@@ -62,6 +100,7 @@ export const handleWhatsAppClick = async (customMessage?: string) => {
     new Promise<string | null>((resolve) => setTimeout(() => resolve(cachedRegion), 600)),
   ]);
   const url = getWhatsAppUrl(customMessage, region);
+  debug(`abrindo WhatsApp — região: ${region || "fallback SP"} — número: ${getWhatsAppNumber(region)}`);
 
   fireWhatsAppConversion(() => window.open(url, "_blank"));
   setTimeout(() => window.open(url, "_blank"), 1000);
