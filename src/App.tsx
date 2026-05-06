@@ -48,6 +48,7 @@ const App = () => (
             <Route path="/politica-de-privacidade" element={<PoliticaPrivacidade />} />
             <Route path="/termos-de-uso" element={<TermosDeUso />} />
             <Route path="/:cidade" element={<CidadeLanding />} />
+            <Route path="/cacamba/:cidade" element={<CidadeLanding />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
