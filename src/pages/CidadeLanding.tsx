@@ -81,6 +81,16 @@ const cities: Record<string, CityConfig> = {
     title: "Aluguel de Caçamba em Jandira SP | NORTEX Caçambas",
     description: "Aluguel de caçamba em Jandira/SP. Entrega ágil e atendimento pelo WhatsApp!",
   },
+  "parana": {
+    name: "Paraná",
+    title: "Aluguel de Caçamba no Paraná | NORTEX Caçambas",
+    description: "Aluguel de caçamba no Paraná com entrega rápida. Atendimento direto pelo WhatsApp!",
+  },
+  "curitiba": {
+    name: "Curitiba",
+    title: "Aluguel de Caçamba em Curitiba PR | NORTEX Caçambas",
+    description: "Aluguel de caçamba em Curitiba/PR com entrega rápida. Peça pelo WhatsApp!",
+  },
 };
 
 const CidadeLanding = () => {
