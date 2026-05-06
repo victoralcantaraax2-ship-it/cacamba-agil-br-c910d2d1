@@ -23,6 +23,18 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
   const [detectedCity, setDetectedCity] = useState<string | null>(null);
 
   useEffect(() => {
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+    const href = isMobile ? heroBgMobile : heroBg;
+    const link = document.createElement("link");
+    link.rel = "preload";
+    link.as = "image";
+    link.href = href;
+    link.fetchPriority = "high" as any;
+    document.head.appendChild(link);
+    return () => { document.head.removeChild(link); };
+  }, []);
+
+  useEffect(() => {
     if (cityName) return;
     const controller = new AbortController();
 
