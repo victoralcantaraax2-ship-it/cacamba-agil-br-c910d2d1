@@ -23,6 +23,18 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
   const [detectedCity, setDetectedCity] = useState<string | null>(null);
 
   useEffect(() => {
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+    const href = isMobile ? heroBgMobile : heroBg;
+    const link = document.createElement("link");
+    link.rel = "preload";
+    link.as = "image";
+    link.href = href;
+    link.fetchPriority = "high" as any;
+    document.head.appendChild(link);
+    return () => { document.head.removeChild(link); };
+  }, []);
+
+  useEffect(() => {
     if (cityName) return;
     const controller = new AbortController();
 
@@ -86,7 +98,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
   return (
     <>
       <section className="relative flex min-h-[85vh] items-center justify-center overflow-hidden pt-16 md:min-h-screen" style={{ willChange: "transform" }}>
-        <div className="absolute inset-0 bg-black">
+        <div className="absolute inset-0" style={{ backgroundColor: "#1a1a1a" }}>
           <picture>
             <source media="(max-width: 767px)" srcSet={heroBgMobile} />
             <source media="(min-width: 768px)" srcSet={heroBg} />
