@@ -98,7 +98,7 @@ const HeroSection = ({ cityName }: { cityName?: string }) => {
   return (
     <>
       <section className="relative flex min-h-[85vh] items-center justify-center overflow-hidden pt-16 md:min-h-screen" style={{ willChange: "transform" }}>
-        <div className="absolute inset-0 bg-black">
+        <div className="absolute inset-0" style={{ backgroundColor: "#1a1a1a" }}>
           <picture>
             <source media="(max-width: 767px)" srcSet={heroBgMobile} />
             <source media="(min-width: 768px)" srcSet={heroBg} />
